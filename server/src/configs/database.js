@@ -1,3 +1,5 @@
+// database.js
+
 import mongoose from "mongoose";
 import "dotenv/config";
 const DATABASE_CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING;
