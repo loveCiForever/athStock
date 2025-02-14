@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import HomePage from "./pages/HomePage";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 
 const App = () => {
   return (
-    <div className="flex w-full h-screen justify-center items-center bg-red-200">
-      <h1 className="flex w-full h-full justify-center items-center text-8xl font-bold">
-        Hi, we are ATH group
-      </h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<SignInPage />} />
+        <Route path="/register" element={<SignUpPage />} />
+      </Routes>
+      <ToastContainer />
+    </Router>
   );
 };
 
