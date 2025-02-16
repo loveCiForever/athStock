@@ -9,11 +9,15 @@ import LoginButton from "./LoginButton.jsx";
 import Notification from "./Notification.jsx";
 import { useAuthContext } from "../../context/AuthContext.jsx";
 import UserNav from "./UserNav.jsx";
+import useFetchCurrentDatetime from "./useFetchCurrentDatetime.jsx";
+import CurrentDatetime from "./CurrentDatetime.jsx";
+import MarketStatus from "./MarketStatus.jsx";
 
 const NavBar = ({ toggleSideBar }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [toggleLinks, setToggleLinks] = useState(false);
   const { user } = useAuthContext();
+  const { currentDatetime } = useFetchCurrentDatetime();
 
   const handleBlur = () => {
     setTimeout(() => {
@@ -48,17 +52,15 @@ const NavBar = ({ toggleSideBar }) => {
       </div>
 
       <div className="flex items-center justify-center">
-        <div className="mr-4">Market Status</div>
-        <div className="mr-4">Current Datetime</div>
-
-        {/* <p>{user ? "logged in" : "un logged in"}</p> */}
-
-        <div className="mr-3">
+        <div className="flex items-center justify-center mr-5">
+          <MarketStatus currentDatetime={currentDatetime} />
+          <CurrentDatetime currentDatetime={currentDatetime} />
+        </div>
+        <div className="mr-4">
           <Notification />
         </div>
 
         <div className="mr-7">
-          {/* <LoginButton /> */}
           {!user ? (
             <LoginButton />
           ) : (
@@ -76,6 +78,7 @@ const NavBar = ({ toggleSideBar }) => {
                   />
                 </button>
                 {toggleLinks && <UserNav />}
+                {/* {<UserNav />} */}
               </div>
             </>
           )}

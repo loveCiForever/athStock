@@ -7,18 +7,16 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 /*
-    This function is used to create username.
-
-    Summary:
-        Because at the RegisterForm, we just ask user to provide Fullname, Email and Password. 
-        So that we need to create a function to generate username.
-        But the user can update their username after they Logged In.
-        This function will create username by taking the string before the @ symbol. 
-        If that username is not unique, adding a random string to the end.
-
-    For example: 
-        email: quanghuy@gmail.com -> username: quanghuy (Unique)
-        email: nhatan123@gmail.com -> username: nhatan123 (Not unique) -> nhatan123-odhq
+  This function is used to create a username. 
+  Summary: 
+    Because at the RegisterForm, we just ask the user to provide Fullname, Email, and Password. 
+    So that we need to create a function to generate a username.
+    The user can update their username after they log in.
+    This function will create a username by taking the string before the @ symbol. 
+    If that username is not unique, it adds a random string to the end.
+  Example: 
+    email: quanghuy@gmail.com -> username: quanghuy (Unique)
+    email: nhatan123@gmail.com -> username: nhatan123 (Not unique) -> nhatan123-odhq
 */
 const genUserName = async (email) => {
   try {
@@ -38,11 +36,11 @@ const genUserName = async (email) => {
 };
 
 /*
-    This function is used to hashing password for security.
-
-    Summary:
-
-    For example:
+  This function is used to hash a password for security.
+  Summary: 
+    This function uses bcrypt to generate a salt and hash the password.
+  Example: 
+    const hashedPassword = await hashPassword("mySecurePassword123");
 */
 const hashPassword = async (password) => {
   try {
@@ -56,11 +54,11 @@ const hashPassword = async (password) => {
 };
 
 /*
-    This function is used to compare password and encryptedPassword
-
-    Summary:
-
-    For example:
+  This function is used to compare a password with an encrypted password.
+  Summary: 
+    This function uses bcrypt to check if the plain text password matches the hashed password.
+  Example: 
+    const isMatch = await comparePassword("mySecurePassword123", hashedPassword);
 */
 const comparePassword = async (password, encryptedPassword) => {
   try {
@@ -72,11 +70,12 @@ const comparePassword = async (password, encryptedPassword) => {
 };
 
 /*
-    This function used to create cookies Token
-
-    Summary:
-
-    For example:
+  This function is used to create a cookie token.
+  Summary: 
+    This function generates a JWT token for the user and sets it as a cookie in the response.
+    The token includes the user's ID and is configured with security options.
+  Example: 
+    await genCookieToken(userId, res);
 */
 const JWT_SECRET_TOKEN = process.env.JWT_SECRET_TOKEN;
 const genCookieToken = async (id, response) => {
@@ -88,6 +87,5 @@ const genCookieToken = async (id, response) => {
     maxAge: 21 * 24 * 60 * 60 * 1000,
   });
 };
-
 
 export { genUserName, hashPassword, comparePassword, genCookieToken };

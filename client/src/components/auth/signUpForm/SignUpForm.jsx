@@ -1,23 +1,25 @@
 import axios from "axios";
 import googleLogo from "../../../assets/logo/googleLogo.svg";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { authWithGoogle } from "../firebase";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    // console.log("Register button clicked");
+    console.log("Register button clicked");
 
-    // console.log("Fullname:", fullName);
-    // console.log("Email:", email);
-    // console.log("Password:", password);
+    console.log("Fullname:", fullName);
+    console.log("Email:", email);
+    console.log("Password:", password);
 
     axios
       .post("http://localhost:8000/api/auth/signup", {
@@ -56,6 +58,31 @@ const SignUpForm = () => {
         toast.error(error.response.data.error.message);
       });
   };
+
+  const handleGoogleAuth = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const { user } = await authWithGoogle();
+      if (!user) return;
+      const oauthData = {
+        fullName: user.displayName,
+        email: user.email,
+        profile_img: user.photoURL,
+      };
+
+      const { data } = await axios.post("/api/auth/oauth", oauthData);
+      configUser(data);
+      toast.success(`${type.replace("-", " ")} successfull`);
+      navigate("/", { replace: true });
+    } catch (error) {
+      // toast.error(JSON.parse(error.request.response).message);
+    }
+  };
+
+  useEffect(() => {
+    console.log(import.meta.env);
+  }, []);
 
   return (
     <div className="w-[300px] shadow-xs">
@@ -108,11 +135,14 @@ const SignUpForm = () => {
           <hr className="w-1/4 h-1/2 bg-placeholder-bg-color" />
         </div>
 
-        <button className="w-full flex items-center justify-center py-3 rounded-xl bg-gray-100 text-black font-normal hover:bg-gray-200 active:scale-[.98] active:duration-75 transition-all tracking-wide">
+        <button
+          className="w-full flex items-center justify-center py-3 rounded-xl bg-gray-100 text-black font-normal hover:bg-gray-200 active:scale-[.98] active:duration-75 transition-all tracking-wide"
+          onClick={handleGoogleAuth}
+        >
           <img src={googleLogo} className="w-5" />
-          <h1 className="ml-[10px] text-[13px] font-normal">
+          <h2 className="ml-[10px] text-[13px] font-normal">
             Sign in with Google
-          </h1>
+          </h2>
         </button>
 
         <div className="flex items-center content-center justify-center mt-[10px]">
@@ -122,6 +152,7 @@ const SignUpForm = () => {
           <button
             onClick={() => {
               navigate("/login");
+              console.log(import.meta.env.VITE_FIREBASE_API_KEY);
             }}
             className="ml-[3px] font-semibold text-[12px] text-black hover:text-black hover:underline active:scale-[.98] active:duration-75 transition-all tracking-wider"
           >

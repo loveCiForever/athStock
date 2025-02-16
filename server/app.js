@@ -11,6 +11,7 @@ import corsMiddleware from "./src/middlewares/cors.middleware.js";
 import helloworldRoute from "./src/routes/helloworld.route.js";
 import test_utilRoute from "./src/routes/test_util.route.js";
 import authRoute from "./src/routes/auth.route.js";
+import currentDateTimeRoute from "./src/routes/currentdatetime.route.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -23,6 +24,7 @@ app.use(responseEnhancer());
 app.use("/api", helloworldRoute);
 app.use("/api", test_utilRoute);
 app.use("/api/auth", authRoute);
+app.use("/api", currentDateTimeRoute);
 
 app.get("/test", (req, res) => {
   res.send("Server is working!");

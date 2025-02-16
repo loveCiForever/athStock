@@ -1,11 +1,12 @@
 // SignInFrom.jsx
 
 import googleLogo from "../../../assets/logo/googleLogo.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../../context/AuthContext";
+import { authWithGoogle } from "../firebase";
 
 const SignInForm = () => {
   const [email, setEmail] = useState("");
@@ -32,6 +33,33 @@ const SignInForm = () => {
         console.log(error.response.data.error.message);
         toast.error(error.response.data.error.message);
       });
+  };
+
+  const handleGoogleAuth = async (e) => {
+    e.preventDefault();
+    try {
+      const user = await authWithGoogle();
+      if (!user) {
+        toast.error("No user returned from GG sign-in");
+        return;
+      }
+      const oauthData = {
+        fullName: user.displayName,
+        email: user.email,
+        profile_img: user.photoURL,
+      };
+
+      const { data } = await axios.post(
+        "http://localhost:8000/api/auth/oauth",
+        oauthData
+      );
+      configUser(data);
+      toast.success(`Google sign-in successfull`);
+      navigate("/", { replace: true });
+    } catch (error) {
+      toast.error(JSON.parse(error.request.response).message);
+      console.log(error);
+    }
   };
 
   return (
@@ -76,7 +104,10 @@ const SignInForm = () => {
           <hr className="w-1/4 h-1/2 bg-placeholder-bg-color" />
         </div>
 
-        <button className="w-full flex items-center justify-center py-3 rounded-xl bg-gray-100 text-black font-normal hover:bg-gray-200 active:scale-[.98] active:duration-75 transition-all tracking-wide">
+        <button
+          className="w-full flex items-center justify-center py-3 rounded-xl bg-gray-100 text-black font-normal hover:bg-gray-200 active:scale-[.98] active:duration-75 transition-all tracking-wide"
+          onClick={handleGoogleAuth}
+        >
           <img src={googleLogo} className="w-5" />
           <h1 className="ml-[10px] text-[13px] font-normal">
             Sign in with Google
