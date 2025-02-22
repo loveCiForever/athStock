@@ -1,24 +1,24 @@
-const CurrentDatetime = ({ currentDatetime }) => {
-  const displayCurrentDaytime = (currentDatetime) => {
-    if (currentDatetime === null) {
-      return "Error: CurrentDatetime";
+const CurrentDatetime = ({ data }) => {
+  const displayCurrentDaytime = (data) => {
+    if (data === null) {
+      return "Error: Data null";
     }
     // console.log(currentDatetime);
 
-    const dayOfWeek = String(currentDatetime.dayOfWeek);
-    const dayOfMonth = String(currentDatetime.dayOfMonth).padStart(2, "0");
-    const month = String(currentDatetime.month).padStart(2, "0");
-    const year = currentDatetime.year;
-    const hour = String(currentDatetime.hour).padStart(2, "0");
-    const minute = String(currentDatetime.minute).padStart(2, "0");
-    const second = String(currentDatetime.second).padStart(2, "0");
+    const dayOfWeek = String(data.dayOfWeek);
+    const dayOfMonth = String(data.dayOfMonth).padStart(2, "0");
+    const month = String(data.month).padStart(2, "0");
+    const year = data.year;
+    const hour = String(data.hour).padStart(2, "0");
+    const minute = String(data.minute).padStart(2, "0");
+    const second = String(data.second).padStart(2, "0");
 
     return `${dayOfWeek} ${dayOfMonth}/${month}/${year} ${hour}:${minute}:${second}`;
   };
 
   return (
-    <div className="flex items-center justify-center font-normal font-mono text-gray-800 tracking-wider text-base">
-      {displayCurrentDaytime(currentDatetime)}
+    <div className="flex items-center justify-center font-mono text-[15px] font-normal tracking-wider">
+      {displayCurrentDaytime(data)}
     </div>
   );
 };

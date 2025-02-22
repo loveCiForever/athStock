@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 import LoginPicture from "../assets/picture/loginPicture.jpg";
-import SignInForm from "../components/auth/signInForm/SignInForm.jsx";
+import SignInForm from "../components/auth/SignInForm.jsx";
 
 const SignInPage = () => {
   useEffect(() => {
@@ -11,16 +11,19 @@ const SignInPage = () => {
   }, []);
 
   return (
-    // Fixed size for extra large
-    <div className="flex items-center justify-center w-full h-screen bg-gray-100 min-w-960">
-      <div className="flex items-center justify-center w-auto bg-white shadow-2xl rounded-3xl">
-        <img
-          src={LoginPicture}
-          alt="Login Picture"
-          className={`max-w-[480px] rounded-l-xl mr-10`}
-        />
-        <SignInForm />
-        <div className="mr-10"></div>
+    <div className="flex items-center justify-center w-full min-h-screen bg-gray-100">
+      <div className="flex flex-row items-center bg-white shadow-xl rounded-2xl sm:w-[65%] overflow-hidden">
+        <div className="hidden lg:block w-full">
+          <img
+            src={LoginPicture}
+            alt="Login"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="w-full py-8 px-10 sm:px-0 bg-red-200//">
+          <SignInForm />
+        </div>
       </div>
     </div>
   );

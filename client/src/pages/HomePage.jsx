@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
 import NavBar from "../components/navbar/NavBar";
-import SideBar from "../components/sideBar/SideBar";
+import SideBar from "../components/sidebar/SideBar";
 
 const HomePage = () => {
   useEffect(() => {

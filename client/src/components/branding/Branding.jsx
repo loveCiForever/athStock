@@ -11,7 +11,7 @@ const Branding = () => {
         navigate("/");
       }}
     >
-      <img src={athStockLogo} alt="Logo" className="w-[100px]" />
+      <img src={athStockLogo} alt="Logo" className="w-[70px] lg:w-[100px]" />
     </button>
   );
 };

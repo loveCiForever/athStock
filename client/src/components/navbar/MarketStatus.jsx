@@ -1,7 +1,7 @@
 const MarketStatus = ({ currentDateTime }) => {
   const checkMarketStatus = (data) => {
-    if (!data || !data.year) {
-      return "Market Close";
+    if (data === null || data === undefined) {
+      return "Data null";
     }
 
     const currentDate = new Date(
@@ -56,13 +56,22 @@ const MarketStatus = ({ currentDateTime }) => {
     return "bg-red-200";
   };
 
+  // Check if currentDateTime is defined before rendering
+  if (!currentDateTime) {
+    return (
+      <span className="flex items-center justify-center font-mono text-sm font-normal rounded-md py-1 px-4 bg-gray-200">
+        <p>Loading...</p>
+      </span>
+    );
+  }
+
   return (
     <span
-      className={`text-sm mr-6 font-normal font-mono text-gray-800 whitespace-pre p-2 rounded-md text-center px-4 py-1 ${getColorBaseOnMarketStatus(
+      className={`flex items-center justify-center font-mono text-sm font-normal rounded-md py-1 px-4 ${getColorBaseOnMarketStatus(
         currentDateTime
       )}`}
     >
-      {checkMarketStatus(currentDateTime)}
+      <p>{checkMarketStatus(currentDateTime)}</p>
     </span>
   );
 };

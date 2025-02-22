@@ -125,7 +125,7 @@ const signin = async (req, res) => {
   } catch (error) {
     console.log("Error: ", error.message);
 
-    res.formatter.internalServerError({
+    res.formatter.serverError({
       statusCode: 500,
       message: error.message,
       user: null,
