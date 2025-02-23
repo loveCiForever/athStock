@@ -1,0 +1,33 @@
+# Data process lin
+numpy==1.24.3
+pandas==1.5.3
+matplotlib==3.7.1
+seaborn==0.12.2
+scipy==1.10.1
+scikit-learn==1.2.2
+
+#Model ML
+xgboost==1.7.4
+tensorflow==2.12.0
+keras==2.12.0
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.1
+
+# RL
+gym==0.26.2
+stable-baselines3==2.1.0
+
+# Hard process
+joblib==1.2.0
+tqdm==4.65.0
+
+# Model Manager
+mlflow==2.3.1
+optuna==3.2.0
+
+# API and database
+fastapi==0.95.1
+uvicorn==0.22.0
+sqlalchemy==2.0.12
+
