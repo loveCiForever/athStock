@@ -1,4 +1,4 @@
-// UserNav.jsx
+// .client/src/components/navbar/UserNav.jsx
 
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
@@ -12,10 +12,11 @@ import LightModeIcon from "../../assets/icon/lightModeIcon.png";
 
 const UserNav = () => {
   const { user, signout } = useAuthContext();
+
   const signOutFunc = async () => {
     try {
       await axios.post("http://localhost:8000/api/auth/signout");
-      toast.success("Sign out successfull");
+      toast.success("Sign out successful");
       signout();
     } catch (error) {
       console.log();
@@ -73,7 +74,7 @@ const UserNav = () => {
             >
               <img
                 src={LanguageIcon}
-                alt="laguage switcher"
+                alt="language switcher"
                 className="w-5 h-5 opacity-100"
               />
               <p>Switch to Vietnamese</p>

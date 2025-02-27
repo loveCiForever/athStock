@@ -1,3 +1,5 @@
+// .client/src/components/navbar/Hamburger.jsx
+
 import HamburgerIcon from "../../assets/icon/hamburgerIcon.svg";
 
 const Hamburger = ({ toggleSideBar }) => {

@@ -1,3 +1,5 @@
+// .client/src/components/navbar/Notification.jsx
+
 import EmailUnRead from "../../assets/icon/unreadEmailIcon.png";
 
 const Notification = () => {
