@@ -1,4 +1,4 @@
-// firebase.jsx
+// .client/src/components/auth/firebase.jsx
 
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";

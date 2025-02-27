@@ -1,4 +1,4 @@
-// SignUpForm.jsx
+// .client/src/components/auth/SignUpForm.jsx
 
 import googleLogo from "../../assets/logo/googleLogo.svg";
 import { useState } from "react";

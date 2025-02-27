@@ -1,4 +1,4 @@
-// session.jsx
+// .client/src/components/auth/session.jsx
 
 const SESSION_KEY = "user";
 const EXPIRATION_DAYS = 21;
