@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NavBar from "../components/navbar/NavBar";
 import SideBar from "../components/sidebar/SideBar";
 
-const HomePage = () => {
+const HomePage = ({ theme }) => {
   useEffect(() => {
     document.title = "Home Page";
   });
@@ -28,9 +28,13 @@ const HomePage = () => {
   }, [isSideBarOpen]);
 
   return (
-    <div className="flex flex-col items-center min-w-full min-h-screen">
+    <div
+      className={`flex flex-col items-center min-w-full min-h-screen ${
+        theme == "light" ? "bg-white" : "bg-darkModeBackgroundColor"
+      }`}
+    >
       <NavBar toggleSideBar={() => toggleSideBar(!isSideBarOpen)} />
-      {isSideBarOpen && <SideBar toggleSideBar={toggleSideBar} />}
+      {/* {isSideBarOpen && <SideBar toggleSideBar={toggleSideBar} />} */}
     </div>
   );
 };

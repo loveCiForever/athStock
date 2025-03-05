@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import { toast } from "react-toastify";
-import BlogEditor from "../components/blog/BlogEditor.jsx";
-import PublishForm from "../components/blog/PublishForm.jsx";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext.jsx";
-
+import BlogEditor from "../components/blog/BlogEditor.jsx";
 import NavBar from "../components/navbar/NavBar";
 import SideBar from "../components/sidebar/SideBar";
+import Loader from "../components/common/Loader.jsx";
+import SignInPage from "./SignInPage.jsx";
 
 const blogStructure = {
   title: "",
@@ -13,14 +14,25 @@ const blogStructure = {
   content: [],
   tags: [],
   des: "",
+  author: { personal_info: {} },
 };
 
-const Editor = () => {
-  useEffect(() => {
-    document.title = "Edit Page";
-  });
+export const EditorContext = createContext({});
+
+const Editor = ({ theme }) => {
+  let { blog_id } = useParams();
+  const navigate = useNavigate();
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [blog, setBlog] = useState(blogStructure);
+  const [editorState, setEditorState] = useState("editor");
+  const [textEditor, setTextEditor] = useState({ isReady: false });
+  const [loading, setLoading] = useState(true);
+
+  const { user } = useAuthContext();
+
+  const VITE_BASE_URL =
+    import.meta.env.VITE_IP + import.meta.env.VITE_SERVER_PORT;
 
   const toggleSideBar = (isOpen) => {
     setIsSideBarOpen(isOpen);
@@ -40,33 +52,57 @@ const Editor = () => {
     };
   }, [isSideBarOpen]);
 
-  const { user } = useAuthContext();
-  const [editorState, setEditorState] = useState("editor");
-  const [blogEditor, setBlogEditor] = useState({ isReady: false });
-  const [blogDetail, setBlogDetail] = useState(blogStructure);
-  return (
-    <div className="flex flex-col items-center min-w-full min-h-screen w-full">
-      <NavBar toggleSideBar={() => toggleSideBar(!isSideBarOpen)} />
-      {isSideBarOpen && <SideBar toggleSideBar={toggleSideBar} />}
+  useEffect(() => {
+    if (!blog_id) {
+      return setLoading(false);
+    }
 
-      <div className="bg-red-200// mt-4 ">
-        {editorState === "editor" ? (
-          <BlogEditor
-            blog={blogDetail}
-            setBlog={setBlogDetail}
-            blogEditor={blogEditor}
-            setBlogEditor={setBlogEditor}
-            setEditorState={setEditorState}
-          />
-        ) : (
-          <PublishForm
-            blog={blogDetail}
-            setBlog={setBlogDetail}
-            setEditorState={setEditorState}
-          />
-        )}
-      </div>
-    </div>
+    axios
+      .post(`${VITE_BASE_URL + "/get-blog"}`, {
+        blog_id,
+        draft: true,
+        mode: "edit",
+      })
+      .then(({ data: { blog } }) => {
+        setBlog(blog);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setBlog(null);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    document.title = "Editor Page";
+  });
+
+  return (
+    <EditorContext.Provider
+      value={{
+        blog,
+        setBlog,
+        editorState,
+        setEditorState,
+        textEditor,
+        setTextEditor,
+      }}
+    >
+      {user ? (
+        <div
+          className={`flex flex-col items-center min-w-full min-h-screen ${
+            theme == "light" ? "bg-white" : "bg-black/85"
+          }`}
+        >
+          <NavBar toggleSideBar={() => toggleSideBar(!isSideBarOpen)} />
+          {/* {isSideBarOpen && <SideBar toggleSideBar={toggleSideBar} />} */}
+
+          <div className="mt-4 ">{loading ? <Loader /> : <BlogEditor />}</div>
+        </div>
+      ) : (
+        <SignInPage />
+      )}
+    </EditorContext.Provider>
   );
 };
 

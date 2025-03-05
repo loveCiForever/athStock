@@ -1,17 +1,24 @@
 // .client/src/components/navbar/WriteBlogButton.jsx
 
+import { useContext } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ThemeContext } from "../../App";
 
 const WriteBlogButton = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
+  let { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <button
-      className={`flex items-center justify-center active:scale-[.90] active:duration-75 transition-all shadow-xs rounded-full px-2 lg:px-4 py-2 lg:hover:bg-gray-200 ${
+      className={`flex items-center justify-center active:scale-[.90] active:duration-75 transition-all shadow-xs rounded-full px-2 lg:px-5 py-[8px]  ${
         window.location.pathname === "/editor" ? "hidden" : ""
+      } ${
+        theme == "light"
+          ? " lg:hover:bg-gray-200 text-black"
+          : "lg:hover:bg-black/40 text-white bg-darkModeButtonColor"
       }`}
       onClick={() => {
         if (!user) {

@@ -13,7 +13,7 @@ const LoggedUser = () => {
       className="flex items-center justify-center relative"
       onClick={() => setToggleLinks((prev) => !prev)}
     >
-      <button className="h-10 w-10 lg:w-12 lg:h-12 flex items-center justify-center">
+      <button className="h-10 w-10 lg:w-14 lg:h-14 flex items-center justify-center">
         <img
           src={user.profile_img}
           alt="profile image"
@@ -21,6 +21,7 @@ const LoggedUser = () => {
         />
       </button>
       {toggleLinks && <UserNav />}
+      {/* <UserNav /> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-// AuthContext.jsx
+// .client/src/context/AuthContext.jsx
 
 import { createContext, useContext, useEffect, useState } from "react";
 import {
@@ -12,18 +12,24 @@ export const useAuthContext = () => useContext(authContext);
 
 const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     const data = getSession();
-    if (data) setUser(data);
+    if (data) {
+      setUser(data);
+    }
   }, []);
+
   const configUser = (data) => {
     setSession(data);
     setUser(data);
   };
+
   const signout = () => {
     setUser(null);
     deleteSession();
   };
+
   return (
     <authContext.Provider value={{ user, configUser, signout }}>
       {children}

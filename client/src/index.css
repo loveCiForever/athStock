@@ -19,3 +19,14 @@ body {
 .sidebar.open {
   transform: translateX(0);
 }
+
+/* [data-theme='light'] .navbar {
+  background-color: white;
+  color: black;
+}
+
+[data-theme='dark'] .navbar {
+  background-color: black;
+  color: white; 
+} */
+

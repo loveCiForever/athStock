@@ -1,154 +1,160 @@
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  getStorage,
-} from "firebase/storage";
-import { app } from "../auth/firebase.jsx";
+// .client/src/components/blog/BlogEditor.jsx
 
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { tools } from "./Tools.jsx";
 import EditorJS from "@editorjs/editorjs";
-import Progress from "./Progress.jsx";
+import axios from "axios";
+import { EditorContext } from "../../pages/EditorPage.jsx";
+import { UserContext } from "../../App.jsx";
 
-const BlogEditor = ({
-  blog,
-  setBlog,
-  blogEditor,
-  setBlogEditor,
-  setEditorState,
-}) => {
-  const [progress, setProgress] = useState(0);
-  const handleKeyDown = (e) => {
-    if (e.keyCode == 13) {
-      // enter key
+const BlogEditor = ({ theme }) => {
+  const textRef = useRef();
+  const {
+    blog,
+    blog: { title, content },
+    setBlog,
+    textEditor,
+    setTextEditor,
+    setEditorState,
+  } = useContext(EditorContext);
+
+  const { userAuth } = useContext(UserContext);
+  const access_token = userAuth?.access_token;
+
+  const handleTitleChange = (e) => {
+    let input = e.target;
+
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+
+    setBlog({ ...blog, title: input.value });
+  };
+
+  const handleTitleKeyDown = (e) => {
+    if (e.keyCode === 13) {
       e.preventDefault();
     }
   };
 
-  const handleTitleChange = (e) => {
-    const input = e.target;
+  const handleClearAll = () => {
+    if (textEditor.isReady) {
+      textEditor.clear();
+    }
 
-    input.style.height = "auto";
-    input.style.height = input.scrollHeight + "px";
-    setBlog((prev) => ({ ...prev, title: input.value }));
+    if (textRef.current) {
+      textRef.current.value = "";
+    }
+
+    setBlog({ ...blog, title: "", content: {} });
   };
 
-  const handleBannerUpload = async (e) => {
-    const imgFile = e.target.files[0];
-    if (imgFile) {
-      setProgress(1);
+  const handlePublish = () => {
+    if (!title.length) {
+      return toast.error("You must enter the title for your blog");
+    }
 
-      const formData = new FormData();
-      formData.append("file", imgFile);
-      formData.append("upload_preset", "blog-banner");
+    if (textEditor.isReady) {
+      textEditor
+        .save()
+        .then((data) => {
+          if (data.blocks.length) {
+            const blogObj = {
+              title,
+              content: data,
+            };
 
-      try {
-        const response = await axios.post(
-          `https://api.cloudinary.com/v1_1/dnezwnstu/image/upload`,
-          formData
-        );
-
-        const url = response.data.secure_url; // Get the URL of the uploaded image
-        setProgress(0);
-        setBlog((prev) => ({ ...prev, banner: url }));
-      } catch (error) {
-        toast.error("Failed to upload banner.");
-        console.log(error);
-        setProgress(0);
-      }
+            // axios
+            //   .post(
+            //     `${import.meta.env.VITE_SERVER_DOMAIN}${
+            //       import.meta.env.VITE_SERVER_PORT
+            //     }/create-blog`,
+            //     blogObj,
+            //     {
+            //       headers: {
+            //         Authorization: `Bearer ${access_token}`,
+            //       },
+            //     }
+            //   )
+            //   .then(() => {
+            //     toast.success("Blog published successfully!");
+            //     handleClearAll();
+            //     setEditorState("editor");
+            //   })
+            //   .catch((error) => {
+            //     console.error("Error publishing blog:", error);
+            //     toast.error("Failed to publish blog. Please try again.");
+            //   });
+            console.log(blogObj);
+          } else {
+            return toast.error("Write something in your blog to publish it");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
-  const editorRef = useRef(null);
+
   useEffect(() => {
-    if (!editorRef.current) {
-      editorRef.current = new EditorJS({
-        holder: "blogEditor",
-        data: blog.content,
-        tools: tools,
-        placeholder: "Let's write an awesome blog",
-      });
-      setBlogEditor(editorRef.current);
+    if (!textEditor.isReady) {
+      setTextEditor(
+        new EditorJS({
+          holder: "textEditor",
+          data: Array.isArray(content) ? content[0] : content,
+          tools: tools,
+        })
+      );
     }
   }, []);
 
-  const handlePublish = async () => {
-    try {
-      if (!blog.banner)
-        return toast.error("Please upload banner image to publish");
-      else if (!blog.title)
-        return toast.error("Please write blog title to publish");
-      if (blogEditor.isReady) {
-        const data = await blogEditor.save();
-        if (data.blocks.length <= 0 || !data) {
-          return toast.error("Please write some content to publish");
-        } else {
-          setBlog((prev) => ({ ...prev, content: data }));
-          setEditorState("publish");
-        }
-      }
-    } catch (error) {
-      toast.error("Error publishing");
-    }
-  };
-
   return (
-    <div className="w-[600px]">
-      {/* <p className="max-md:hidden text-2xl text-black line-clamp-1">
-          {blog.title || "New Blog"}
-        </p> */}
-      {/* <div className="flex justify-between w-full bg-red-200// ml-auto">
+    <div
+      className={`w-[750px] h-auto px-6 py-6 my-10 z-30 rounded-2xl shadow-2xl ${
+        theme === "light"
+          ? "bg-white text-black border-gray-300"
+          : "bg-black/30 text-white"
+      }`}
+    >
+      <nav className="flex w-full items-center justify-end">
         <button
-          className="flex items-center justify-center active:scale-[.90] active:duration-75 transition-all shadow-xs rounded-full px-6 py-2 bg-orange-300 hover:bg-orange-200"
-          onClick={handlePublish}
+          onClick={handleClearAll}
+          className={`rounded-full bg-grey relative px-4 py-1.5 active:scale-[.90] active:duration-75 transition-all ${
+            theme === "light"
+              ? "hover:bg-lightModeButtonColor"
+              : "hover:bg-black/20"
+          }`}
         >
-          <p className="font-semibold text-sm lg:text-base tracking-wider">
-            Publish
-          </p>
+          Clear
         </button>
-      </div> */}
+      </nav>
+      <div className="w-full h-auto px-10">
+        <textarea
+          ref={textRef}
+          onChange={handleTitleChange}
+          defaultValue={title}
+          placeholder="Blog Title"
+          onKeyDown={handleTitleKeyDown}
+          className="text-3xl font-semibold w-full h-20 outline-none resize-none mt-10 leading-tight placeholder:opacity-60 bg-transparent"
+        ></textarea>
 
-      <section>
-        <div className="mx-auto w-full">
-          <textarea
-            placeholder="Blog Title"
-            className="text-3xl font-semibold w-full outline-none resize-none placeholder:opacity-40"
-            onKeyDown={handleKeyDown}
-            onChange={handleTitleChange}
-            value={blog.title}
-          />
-          <hr className="w-full opacity-50 my-6 py-[0.5px] bg-gray-500 " />
-          <div id="blogEditor" className="font-gelasio"></div>
-        </div>
+        <section className="w-full h-auto">
+          <div id="textEditor" className="h-auto font-gelasio mt-4"></div>
+        </section>
+      </div>
 
-        {/* <div className="relative aspect-video bg-white border-4 border-grey">
-          <label htmlFor="uploadBanner" className="cursor-pointer">
-            {progress ? (
-              <Progress
-                progress={progress}
-                className="flex items-center justify-center h-full min-w-full px-5"
-              />
-            ) : (
-              <img
-                src={blog.banner || "imgs/blog banner.png"}
-                alt="blog banner image"
-                className="z-20 hover:opacity-60"
-              />
-            )}
-
-            <input
-              type="file"
-              id="uploadBanner"
-              accept=".png,.jpg,.jpeg"
-              hidden
-              disabled={progress}
-              onChange={handleBannerUpload}
-            />
-          </label>
-        </div> */}
-      </section>
+      <button
+        className={`flex items-center justify-center w-full active:scale-[.97] active:duration-75 transition-all shadow-xs rounded-xl px-6 py-2 ${
+          theme === "light"
+            ? "bg-black text-white hover:bg-lightModeButtonColor"
+            : "bg-white text-black hover hover:bg-gray-300"
+        }`}
+        onClick={handlePublish}
+      >
+        <p className="font-semibold text-sm lg:text-base tracking-wider">
+          Submit
+        </p>
+      </button>
     </div>
   );
 };

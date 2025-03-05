@@ -1,18 +1,26 @@
 // .client/src/components/navbar/Notification.jsx
 
-import EmailUnRead from "../../assets/icon/unreadEmailIcon.png";
+import BlackNotification from "../../assets/icon/lightmode/notification.svg";
+import WhiteNotification from "../../assets/icon/darkmode/notification.svg";
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 
 const Notification = () => {
+  let { theme, setTheme } = useContext(ThemeContext);
   return (
     <button
-      className="notification p-2 hover:rounded-full lg:hover:bg-gray-200  active:scale-[.90] active:duration-75 transition-all"
+      className={`notification p-2 rounded-full  active:scale-[.90] active:duration-75 transition-all bg-darkModeButtonColor ${
+        theme == "light"
+          ? " lg:hover:bg-gray-200 text-black"
+          : "lg:hover:bg-black/40 text-white"
+      }`}
       onClick={() => {
         console.log("Notification button clicked");
       }}
     >
       <img
-        src={EmailUnRead}
-        className="w-4 h-4 lg:w-6 lg:h-6"
+        src={theme == "light" ? BlackNotification : WhiteNotification}
+        className="w-5 h-5 lg:w-6 lg:h-6"
         alt="Notification"
       />
     </button>

@@ -1,3 +1,5 @@
+// .client/src/components/blog/Progress.jsx
+
 const Progress = ({ progress = 0, text = "Uploading...", className }) => {
   return (
     <div className={className}>

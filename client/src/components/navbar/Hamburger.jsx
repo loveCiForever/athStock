@@ -1,19 +1,28 @@
 // .client/src/components/navbar/Hamburger.jsx
 
-import HamburgerIcon from "../../assets/icon/hamburgerIcon.svg";
+import WhiteHamburger from "../../assets/icon/darkmode/hamburger.svg";
+import BlackHamburger from "../../assets/icon/lightmode/hamburger.svg";
+import { ThemeContext } from "../../App";
+import { useContext } from "react";
 
 const Hamburger = ({ toggleSideBar }) => {
+  let { theme, setTheme } = useContext(ThemeContext);
+
   return (
     <button
-      className="hamburger p-3 lg:hover:rounded-full lg:hover:bg-gray-200 active:scale-[.90] active:duration-75 transition-all"
+      className={`notification p-2 rounded-full  active:scale-[.90] active:duration-75 transition-all bg-darkModeButtonColor ${
+        theme == "light"
+          ? " lg:hover:bg-gray-200 text-black"
+          : "lg:hover:bg-black/40 text-white"
+      }`}
       onClick={() => {
         toggleSideBar((prev) => !prev);
       }}
     >
       <img
-        src={HamburgerIcon}
+        src={theme == "light" ? BlackHamburger : WhiteHamburger}
         alt="Hamburger"
-        className="w-3 h-3 lg:w-4 lg:h-4"
+        className="w-5 h-5 lg:w-6 lg:h-6"
       />
     </button>
   );

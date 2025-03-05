@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import athStockLogo from "../assets/logo/athStockLogo.png";
 import HomeIcon from "../assets/icon/homeIcon.png";
 
 const NotFoundPage = () => {
@@ -20,7 +19,7 @@ const NotFoundPage = () => {
           <div className="flex flex-col lg:flex-row items-center w-full mt-8 gap-4 lg:gap-3">
             <button
               onClick={() => navigate(-1)}
-              className="flex items-center justify-center w-[80%] lg:w-1/2 px-5 py-3 text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 hover:bg-gray-100"
+              className="flex items-center justify-center w-[80%] lg:w-2/5 px-5 py-3 text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 hover:bg-gray-100"
               aria-label="Go back to previous page"
             >
               <svg

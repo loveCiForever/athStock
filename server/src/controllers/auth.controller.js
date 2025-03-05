@@ -55,6 +55,7 @@ const signup = async (req, res) => {
     }).save();
 
     const userToSend = {
+      fullName: user.personal_info.fullName,
       userName: user.personal_info.userName,
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
@@ -112,6 +113,7 @@ const signin = async (req, res) => {
     }
 
     const userToSend = {
+      fullName: user.personal_info.fullName,
       userName: user.personal_info.userName,
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
