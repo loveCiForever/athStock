@@ -35,38 +35,37 @@ def merge_data(stock_df, emotion_folder,save_path):
     if "time" not in stock_df.columns:
         print("Missing time column, can't merge data")
         return stock_df
-
     stock_df["date"] = pd.to_datetime(stock_df["time"])
-    stock_df["month_year"] = stock_df["date"].dt.strftime("%m_%Y")
+    for col in ["natural", "positive", "negative"]:
+        if col not in stock_df.columns:
+            stock_df[col] = 0
 
-    merged_data = stock_df.copy()
+    # merged_data["natural"] = 0
+    # merged_data["positive"] = 0
+    # merged_data["negative"] = 0
+    stock_df.to_csv(save_path, index=False)
+    # for month_year in stock_df["month_year"].unique():
+    #     emotion_file = os.path.join(emotion_folder, f"{month_year}.csv")
 
-    merged_data["natural"] = 0
-    merged_data["positive"] = 0
-    merged_data["negative"] = 0
+    #     if os.path.exists(emotion_file):
+    #         print(f"Merge {emotion_file}...")
+    #         emotion_df = pd.read_csv(emotion_file)
 
-    for month_year in stock_df["month_year"].unique():
-        emotion_file = os.path.join(emotion_folder, f"{month_year}.csv")
+    #         emotion_df.columns = emotion_df.columns.str.strip()  
+    #         required_cols = ["time", "natural", "positive", "negative"]
 
-        if os.path.exists(emotion_file):
-            print(f"Merge {emotion_file}...")
-            emotion_df = pd.read_csv(emotion_file)
+    #         if all(col in emotion_df.columns for col in required_cols):
+    #             emotion_df["date"] = pd.to_datetime(emotion_df["time"])
+    #             emotion_df.drop(columns=["time"], inplace=True)
 
-            emotion_df.columns = emotion_df.columns.str.strip()  
-            required_cols = ["time", "natural", "positive", "negative"]
+    #             merged_data = merged_data.merge(emotion_df, on="date", how="left")
+    #         else:
+    #             print(f"Emotions data {emotion_file} missing column {required_cols}!")
 
-            if all(col in emotion_df.columns for col in required_cols):
-                emotion_df["date"] = pd.to_datetime(emotion_df["time"])
-                emotion_df.drop(columns=["time"], inplace=True)
-
-                merged_data = merged_data.merge(emotion_df, on="date", how="left")
-            else:
-                print(f"Emotions data {emotion_file} missing column {required_cols}!")
-
-    merged_data[["natural", "positive", "negative"]] = merged_data[["natural", "positive", "negative"]].fillna(0)
-    merged_data.to_csv(save_path, index=False)
-    print(f"Merged emotions and stock data, size: {merged_data.shape}")
-    return merged_data
+    # merged_data[["natural", "positive", "negative"]] = merged_data[["natural", "positive", "negative"]].fillna(0)
+    # merged_data.to_csv(save_path, index=False)
+    print(f"Merged emotions and stock data, size: {stock_df.shape}")
+    return stock_df
 def process_data(file_path,emotion_path,save_path):
     df = load_data(file_path=file_path)
     df = clean_data(df)
