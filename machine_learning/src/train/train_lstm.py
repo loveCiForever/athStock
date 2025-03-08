@@ -71,12 +71,15 @@ def train_lstm_for_stock(stock_code, model_dir, xgb_output_dir, lstm_output_dir)
     print(f"Saved Model {stock_code} at {model_path}")
 
     y_pred_all = model.predict(X)
-
-    df = df.iloc[:len(y_pred_all)]  
-    df["lstm_prediction"] = y_pred_all
-
+    df_lstm = df_xgb.copy()
+    df_lstm["lstm_prediction"] = np.nan
+    df_lstm.iloc[time_steps:, df_lstm.columns.get_loc("lstm_prediction")] = y_pred_all.flatten()
+    
+    # Thay thế NaN bằng xgb_prediction để tránh lỗi NaN trong meta model
+    df_lstm["lstm_prediction"].fillna(df_lstm["xgb_prediction"], inplace=True)
+    
     output_path = os.path.join(lstm_output_dir, f"{stock_code}_lstm_predictions.csv")
-    df.to_csv(output_path, index=False)
+    df_lstm.to_csv(output_path, index=False)
     print(f"Saved LSTM predictions {stock_code} at {output_path}")
 
     return model

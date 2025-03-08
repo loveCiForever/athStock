@@ -7,7 +7,8 @@ def fetch_data(stock_code, start_date, end_date, save_path):
         print(f"fetching data {stock_code} from {start_date} to {end_date}...")
         stock = Vnstock().stock(symbol=stock_code, source="TCBS")
         df = stock.quote.history(start=start_date, end=end_date, interval="1D")
-
+        if os.path.exists(save_path):
+           return pd.read_csv(save_path)
         if df is None or df.empty:
             print(f"⚠ Cant found data of {stock_code}!")
             return
