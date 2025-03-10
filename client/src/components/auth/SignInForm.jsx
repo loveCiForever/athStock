@@ -1,4 +1,4 @@
-// .client/src/components/auth/SignInForm.jsx
+// ./client/src/components/auth/SignInForm.jsx
 
 import googleLogo from "../../assets/logo/googleLogo.svg";
 import { useState } from "react";
@@ -16,7 +16,7 @@ const SignInForm = () => {
   const navigate = useNavigate();
 
   const VITE_BASE_URL =
-    import.meta.env.VITE_IP + import.meta.env.VITE_SERVER_PORT;
+    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
   const isEmailValid = email.trim() !== "" && email.includes("@");
   const isPasswordValid = password.trim() !== "";
@@ -50,9 +50,12 @@ const SignInForm = () => {
         email,
         password,
       });
-
+      const user = result.data.user;
+      const access_token = result.data.user.access_token;
+      // console.log(access_token);
       toast.success("Sign in successful");
-      configUser(result.data.data.user);
+
+      configUser(user, access_token);
       navigate("/");
     } catch (error) {
       if (error.response?.data?.error?.message) {
@@ -60,7 +63,7 @@ const SignInForm = () => {
       } else {
         toast.error("Failed to sign in");
       }
-      console.error("Sign in error:", error.response?.data || error);
+      console.error("Sign in error:");
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +113,7 @@ const SignInForm = () => {
 
   return (
     <div className="w-full sm:max-w-sm mx-auto px-2 sm:px-10 bg-green-200//">
-      <h1 className="font-bold text-2xl sm:text-4xl">athStock</h1>
+      <h1 className="font-bold text-2xl lg:text-4xl">athStock</h1>
       <h2 className="tracking-wide text-sm text-gray-500">
         To continue, sign in to your account.
       </h2>

@@ -21,11 +21,16 @@
     "express-response-formatter": "^2.0.2",
     "firebase": "^11.3.1",
     "joi": "^17.13.3",
+    "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
     "nanoid": "^5.0.9"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.9",
     "nodemon": "^3.1.9"
   }
 }

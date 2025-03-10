@@ -11,23 +11,28 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import EditorPage from "./pages/EditorPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import BlogPage from "./pages/BlogPage.jsx";
 import "./index.css";
 
 export const ThemeContext = createContext({});
 export const UserContext = createContext({});
 
-const darkThemePreference = () =>
-  window.matchMedia("(prefers-color-scheme: dark)").matches;
+export const darkThemePreference = () =>
+  window.matchMedia("(prefers-color-scheme: light)").matches; // Default theme
 
 const App = () => {
+  const [userAuth, setUserAuth] = useState({});
   const [theme, setTheme] = useState(() =>
     darkThemePreference() ? "dark" : "light"
   );
 
-  const [userAuth, setUserAuth] = useState({});
-
   useEffect(() => {
+    let userInSession = getSession("user");
     let themeInSession = getSession("theme");
+
+    // userInSession
+    //   ? setUserAuth(JSON.parse(userInSession))
+    //   : setUserAuth({ access_token: null });
 
     if (themeInSession) {
       setTheme(() => {
@@ -52,6 +57,7 @@ const App = () => {
             <Route path="*" element={<NotFoundPage theme={theme} />} />
 
             <Route path="/editor" element={<EditorPage theme={theme} />} />
+            <Route path="/blog" element={<BlogPage theme={theme} />} />
           </Routes>
         </Router>
       </UserContext.Provider>

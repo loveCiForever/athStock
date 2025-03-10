@@ -1,36 +1,39 @@
+// ./server/src/models/blog.model.js
+
 import mongoose, { Schema } from "mongoose";
 
 const blogSchema = mongoose.Schema(
   {
     blog_id: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
     },
     title: {
       type: String,
-      required: true,
+      // required: true,
+    },
+    head: {
+      type: String,
+      maxLength: 300,
     },
     banner: {
       type: String,
-      // required: true,
     },
     des: {
       type: String,
-      maxlength: 200,
-      // required: true
+      maxLength: 200,
     },
+
     content: {
       type: [],
-      // required: true
     },
     tags: {
       type: [String],
-      // required: true
     },
     author: {
-      type: Schema.Types.ObjectId,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      // required: true,
       ref: "users",
     },
     activity: {
@@ -67,4 +70,5 @@ const blogSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("blogs", blogSchema);
+const blogModel = mongoose.model("blogs", blogSchema) || mongoose.model.blogs;
+export default blogModel;

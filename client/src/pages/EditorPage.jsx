@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext.jsx";
 import BlogEditor from "../components/blog/BlogEditor.jsx";
 import NavBar from "../components/navbar/NavBar";
-import SideBar from "../components/sidebar/SideBar";
 import Loader from "../components/common/Loader.jsx";
 import SignInPage from "./SignInPage.jsx";
 
@@ -23,7 +22,6 @@ const Editor = ({ theme }) => {
   let { blog_id } = useParams();
   const navigate = useNavigate();
 
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [blog, setBlog] = useState(blogStructure);
   const [editorState, setEditorState] = useState("editor");
   const [textEditor, setTextEditor] = useState({ isReady: false });
@@ -33,24 +31,6 @@ const Editor = ({ theme }) => {
 
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + import.meta.env.VITE_SERVER_PORT;
-
-  const toggleSideBar = (isOpen) => {
-    setIsSideBarOpen(isOpen);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const sidebar = document.querySelector(".sidebar");
-      if (sidebar && !sidebar.contains(event.target) && isSideBarOpen) {
-        toggleSideBar(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isSideBarOpen]);
 
   useEffect(() => {
     if (!blog_id) {
@@ -94,10 +74,10 @@ const Editor = ({ theme }) => {
             theme == "light" ? "bg-white" : "bg-black/85"
           }`}
         >
-          <NavBar toggleSideBar={() => toggleSideBar(!isSideBarOpen)} />
-          {/* {isSideBarOpen && <SideBar toggleSideBar={toggleSideBar} />} */}
-
-          <div className="mt-4 ">{loading ? <Loader /> : <BlogEditor />}</div>
+          <NavBar theme={theme} />
+          <div className="mt-4 ">
+            {loading ? <Loader /> : <BlogEditor theme={theme} />}
+          </div>
         </div>
       ) : (
         <SignInPage />

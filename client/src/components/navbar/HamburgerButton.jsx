@@ -1,13 +1,9 @@
-// .client/src/components/navbar/Hamburger.jsx
+// ./client/src/components/navbar/HamburgerButton.jsx
 
 import WhiteHamburger from "../../assets/icon/darkmode/hamburger.svg";
 import BlackHamburger from "../../assets/icon/lightmode/hamburger.svg";
-import { ThemeContext } from "../../App";
-import { useContext } from "react";
 
-const Hamburger = ({ toggleSideBar }) => {
-  let { theme, setTheme } = useContext(ThemeContext);
-
+const HamburgerButton = ({ toggleSideBar, theme }) => {
   return (
     <button
       className={`notification p-2 rounded-full  active:scale-[.90] active:duration-75 transition-all bg-darkModeButtonColor ${
@@ -28,4 +24,4 @@ const Hamburger = ({ toggleSideBar }) => {
   );
 };
 
-export default Hamburger;
+export default HamburgerButton;

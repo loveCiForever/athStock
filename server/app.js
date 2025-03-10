@@ -9,9 +9,9 @@ import ConnectDatabase from "./src/configs/database.js";
 import corsMiddleware from "./src/middlewares/cors.middleware.js";
 
 import helloworldRoute from "./src/routes/helloworld.route.js";
-import test_utilRoute from "./src/routes/test_util.route.js";
 import authRoute from "./src/routes/auth.route.js";
-import currentDateTimeRoute from "./src/routes/currentdatetime.route.js";
+import blogRoute from "./src/routes/blog.route.js";
+import jwt from "jsonwebtoken";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -22,9 +22,8 @@ app.use(corsMiddleware);
 app.use(responseEnhancer());
 
 app.use("/api", helloworldRoute);
-app.use("/api", test_utilRoute);
 app.use("/api/auth", authRoute);
-app.use("/api", currentDateTimeRoute);
+app.use("/api/blog", blogRoute);
 
 app.get("/test", (req, res) => {
   res.send("Server is working!");
@@ -32,5 +31,5 @@ app.get("/test", (req, res) => {
 
 app.listen(port, async () => {
   ConnectDatabase();
-  console.log(`Server is running on port ${port}`);
+  console.log(`[APP] Server is running on port ${port}`);
 });

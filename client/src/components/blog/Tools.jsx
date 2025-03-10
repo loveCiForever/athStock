@@ -1,4 +1,4 @@
-// .client/src/components/blog/Tools.jsx
+// ./client/src/components/blog/Tools.jsx
 
 import CheckList from "@editorjs/checklist";
 import Code from "@editorjs/code";

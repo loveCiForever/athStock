@@ -1,4 +1,4 @@
-// database.js
+// ./server/src/configs/database.js
 
 import mongoose from "mongoose";
 import "dotenv/config";
@@ -11,10 +11,9 @@ const ConnectDatabase = async () => {
       // useUnifiedTopology: true,
       // autoIndex: true,
     });
-    console.log(`Successfully connected to MongoDB`);
+    console.log(`[DATABASE] Successfully connected to MongoDB`);
   } catch (error) {
-    console.log("Unable to connect to MongoDB!");
-    console.error(error);
+    console.log("[DATABASE] Unable to connect to MongoDB! ", error);
   }
 };
 

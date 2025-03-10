@@ -1,4 +1,4 @@
-// auth.route.js
+// ./server/src/routes/auth.route.js
 
 import express from "express";
 import {

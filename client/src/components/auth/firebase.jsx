@@ -1,9 +1,8 @@
-// .client/src/components/auth/firebase.jsx
+// ./client/src/components/auth/firebase.jsx
 
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
-// import "dotenv/config";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,

@@ -1,4 +1,4 @@
-// .client/src/components/auth/SignUpForm.jsx
+// ./client/src/components/auth/SignUpForm.jsx
 
 import googleLogo from "../../assets/logo/googleLogo.svg";
 import { useState } from "react";
@@ -17,7 +17,7 @@ const SignUpForm = () => {
   const navigate = useNavigate();
 
   const VITE_BASE_URL =
-    import.meta.env.VITE_IP + import.meta.env.VITE_SERVER_PORT;
+    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
   const isFullNameValid = fullName.trim() !== "";
   const isEmailValid = email.trim() !== "" && email.includes("@");
@@ -43,12 +43,12 @@ const SignUpForm = () => {
       configUser(result.data.data.user);
       navigate("/");
     } catch (error) {
-      if (error.response?.data?.error?.message) {
-        toast.error(error.response.data.error.message);
-      } else {
-        toast.error("Failed to sign up");
-      }
-      console.error("Sign up error:", error.response?.data || error);
+      toast.error(
+        error.response.data.message
+          ? "Failed to sign up"
+          : error.response.data.message
+      );
+      console.error(error.response.data);
     } finally {
       setIsLoading(false);
     }

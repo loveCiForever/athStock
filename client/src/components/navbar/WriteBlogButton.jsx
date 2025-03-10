@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ThemeContext } from "../../App";
 
-const WriteBlogButton = () => {
+const WriteBlogButton = ({ theme }) => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
-  let { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <button
@@ -17,7 +16,7 @@ const WriteBlogButton = () => {
         window.location.pathname === "/editor" ? "hidden" : ""
       } ${
         theme == "light"
-          ? " lg:hover:bg-gray-200 text-black"
+          ? "bg-black lg:hover:bg-gray-200 text-white"
           : "lg:hover:bg-black/40 text-white bg-darkModeButtonColor"
       }`}
       onClick={() => {

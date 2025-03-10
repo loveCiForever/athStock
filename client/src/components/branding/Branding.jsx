@@ -1,12 +1,11 @@
-import { useContext } from "react";
+// ./client/src/components/branding/Branding.jsx
+
 import BlackathStockLogo from "../../assets/logo/black-athStockLogo.png";
 import WhiteathStockLogo from "../../assets/logo/white-athStockLogo.png";
 import { useNavigate } from "react-router-dom";
-import { ThemeContext } from "../../App";
 
-const Branding = () => {
+const Branding = ({ theme }) => {
   const navigate = useNavigate();
-  let { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <button
@@ -18,7 +17,7 @@ const Branding = () => {
       <img
         src={theme == "light" ? BlackathStockLogo : WhiteathStockLogo}
         alt="Logo"
-        className="w-[70px] lg:w-[100px]"
+        className="w-[70px] lg:w-[120px]"
       />
     </button>
   );

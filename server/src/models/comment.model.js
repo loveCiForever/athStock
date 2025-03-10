@@ -1,3 +1,5 @@
+// ./server/src/models/comment.model.js
+
 import mongoose, { Schema } from "mongoose";
 
 const commentSchema = mongoose.Schema(
@@ -40,5 +42,6 @@ const commentSchema = mongoose.Schema(
     },
   }
 );
-
-export default mongoose.model("comments", commentSchema);
+const commentModel =
+  mongoose.model("comments", commentSchema) || mongoose.model.comments;
+export default commentModel;

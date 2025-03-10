@@ -1,3 +1,5 @@
+// ./client/src/components/common/Loader.jsx
+
 const Loader = () => {
   return (
     <div className="w-12 mx-auto my-8">
