@@ -1,3 +1,5 @@
+// ./server/src/models/user.model.js
+
 import { mongoose, Schema } from "mongoose";
 
 let profile_imgs_name_list = [
@@ -59,7 +61,7 @@ const userSchema = new mongoose.Schema(
 
       bio: {
         type: String,
-        maxlength: [
+        maxLength: [
           200,
           "Bio's content should not be more than 200 characters",
         ],
@@ -69,7 +71,6 @@ const userSchema = new mongoose.Schema(
       profile_img: {
         type: String,
         default: () => {
-          // This API is used to fetch the default profile image
           return `https://api.dicebear.com/6.x/${
             profile_imgs_collections_list[
               Math.floor(Math.random() * profile_imgs_collections_list.length)

@@ -1,32 +1,51 @@
-// auth.controller.js
+// ./server/src/controller/auth.controller.js
 
 import {
   genUserName,
   hashPassword,
   comparePassword,
   genCookieToken,
-} from "../utils/function.util.js";
+} from "../utils/helper-function.utils.js";
 
 import {
   signInValidation,
   signUpValidation,
+  oauthValidation,
 } from "../services/auth.service.js";
 
 import Users from "../models/user.model.js";
+import "dotenv/config";
 
 const signup = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
-    const { error } = signUpValidation.validate({ fullName, email, password });
+
+    /*
+     * Read the general structure of error response at ./server/src/services/auth.service.js
+     */
+    const { error } = signUpValidation.validate({
+      fullName,
+      email,
+      password,
+    });
 
     if (error) {
-      //   return res.formatter.badRequest(error);
-      //   return res.status(400).json({ message: error.details[0].message });
-      return res.formatter.badRequest({
-        statusCode: error.statusCode,
-        message: error.details[0].message,
-        user: null,
-      });
+      if (error.details[0].path[0] == "fullName") {
+        return res.status(400).json({
+          message: "Invalid name",
+          error: "The fullname's length must be at least 5 characters long",
+        });
+      } else if (error.details[0].path[0] == "password") {
+        return res.status(400).json({
+          message: "Invalid password",
+          error: error.details[0].message,
+        });
+      } else if (error.details[0].path[0] == "email") {
+        return res.status(400).json({
+          message: "Invalid email",
+          error: "The email must follow the example format: abcde@example.com",
+        });
+      }
     }
 
     const isEmailNotUnique = await Users.exists({
@@ -34,11 +53,8 @@ const signup = async (req, res) => {
     });
 
     if (isEmailNotUnique) {
-      //   return res.status(400).json({ message: "Email is already taken" });
-      return res.formatter.badRequest({
-        statusCode: 400,
+      return res.status(400).json({
         message: "Email is already taken",
-        user: null,
       });
     }
 
@@ -46,8 +62,6 @@ const signup = async (req, res) => {
       hashPassword(password),
       genUserName(email),
     ]);
-
-    // console.log("=======> Username generated: ", userName);
 
     const user = await Users({
       personal_info: {
@@ -58,27 +72,25 @@ const signup = async (req, res) => {
       },
     }).save();
 
+    const access_token = genCookieToken(user._id, res);
+    console.log(`[AUTH.CONTROLLER] access_token: ${access_token}`);
+
     const userToSend = {
+      fullName: user.personal_info.fullName,
       userName: user.personal_info.userName,
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
+      access_token,
     };
-    genCookieToken(user._id, res);
-    // res.status(201).json(userToSend);
-    res.formatter.accepted({
-      statusCode: 202,
-      message: "User created successfully",
+
+    res.status(202).json({
+      message: "Registration successfully",
       user: userToSend,
     });
   } catch (error) {
-    console.log("Error: ", error);
-    // res
-    //   .status(error.status || 500)
-    //   .json({ message: error.message || "Interal server error" });
-    res.formatter.serverError({
-      statusCode: 500,
+    res.status(500).json({
       message: "Internal server error",
-      user: null,
+      error: error.message,
     });
   }
 };
@@ -86,62 +98,62 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    /*
+     * Read the general structure of error response at ./server/src/services/auth.service.js
+     */
     const { error } = signInValidation.validate({ email, password });
 
     if (error) {
-      //   return res.status(400).json({ message: error.details[0].message });
-      return res.formatter.badRequest({
-        statusCode: error.statusCode,
-        message: error.details[0].message,
-        user: null,
-      });
+      if (error.details[0].path[0] == "password") {
+        return res.status(400).json({
+          message: "Invalid password",
+          error: error.details[0].message,
+        });
+      } else if (error.details[0].path[0] == "email") {
+        return res.status(400).json({
+          message: "Invalid email",
+          error: "The email must follow the example format: abcde@example.com",
+        });
+      }
     }
 
     const user = await Users.findOne({ "personal_info.email": email });
     if (!user) {
-      //   return res.status(404).json({ message: "Incorrect email address" });
-      return res.formatter.notFound({
-        statusCode: 404,
-        message: "Incorrect email address",
-        user: null,
+      return res.status(404).json({
+        message: "Email not found",
       });
     }
 
-    const isMatch = await comparePassword(
+    const isPasswordMatch = await comparePassword(
       password,
       user.personal_info.password
     );
 
-    if (!isMatch) {
-      //   return res.status(403).json({ message: "Incorrect password" });
-      return res.formatter.forbidden({
-        statusCode: 403,
+    if (!isPasswordMatch) {
+      return res.status(403).json({
         message: "Incorrect password",
-        user: null,
       });
     }
 
+    const access_token = genCookieToken(user._id, res);
+    console.log(`[AUTH.CONTROLLER] access_token: ${access_token}`);
+
     const userToSend = {
+      fullName: user.personal_info.fullName,
       userName: user.personal_info.userName,
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
+      access_token,
     };
-    genCookieToken(user._id, res);
-    // res.status(200).json(userToSend);
-    res.formatter.accepted({
-      statusCode: 200,
+
+    res.status(200).json({
       message: "Sign in successful",
       user: userToSend,
     });
   } catch (error) {
-    console.log("Error: ", error.message);
-    // res
-    //   .status(error.status || 500)
-    //   .json({ message: error.message || "Internal server error" });
-    res.formatter.internalServerError({
-      statusCode: 500,
+    res.status(500).json({
       message: error.message,
-      user: null,
     });
   }
 };
@@ -149,13 +161,70 @@ const signin = async (req, res) => {
 const signout = async (req, res) => {
   try {
     res.clearCookie("blogToken");
-    res.status(200).json({ message: "Logged out successfully" });
+
+    res.status(200).json({
+      message: "Sign out successfully",
+    });
   } catch (error) {
-    console.log("Error: on singout => ", error.message);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+const oauth = async (req, res) => {
+  try {
+    const { fullName, email, profile_img } = req.body;
+    const { error } = oauthValidation.validate({
+      fullName,
+      email,
+      profile_img,
+    });
+
+    if (error)
+      return res.formatter.badRequest({
+        message: "Oauth validation error",
+        error: error,
+      });
+
+    const isUserExists = await Users.findOne({ "personal_info.email": email });
+    if (!isUserExists) {
+      const userName = await genUserName(email);
+      const user = await Users({
+        personal_info: {
+          fullName,
+          email,
+          profile_img: profile_img,
+          userName,
+        },
+        google_auth: true,
+      }).save();
+      const userToSend = {
+        userName: user.personal_info.userName,
+        email: user.personal_info.email,
+        profile_img: user.personal_info.profile_img,
+      };
+
+      genCookieToken(user._id, res);
+      return res.status(201).json(userToSend);
+    } else if (isUserExists) {
+      const userToSend = {
+        userName: isUserExists.personal_info.userName,
+        email: isUserExists.personal_info.email,
+        profile_img: isUserExists.personal_info.profile_img,
+      };
+      genCookieToken(isUserExists._id, res);
+      return res.status(201).json(userToSend);
+    }
+
+    res.status(404).json({ message: "Something went wrong" });
+  } catch (error) {
+    console.log("Error: on oauth => ", error.message);
     res
       .status(error.status || 500)
       .json({ message: error.message || "Internal server error" });
   }
 };
 
-export { signup, signin, signout };
+export { signup, signin, signout, oauth };

@@ -1,7 +1,10 @@
-import athStockLogo from "../../assets/logo/athStockLogo.png";
+// ./client/src/components/branding/Branding.jsx
+
+import BlackathStockLogo from "../../assets/logo/black-athStockLogo.png";
+import WhiteathStockLogo from "../../assets/logo/white-athStockLogo.png";
 import { useNavigate } from "react-router-dom";
 
-const Branding = () => {
+const Branding = ({ theme }) => {
   const navigate = useNavigate();
 
   return (
@@ -11,7 +14,11 @@ const Branding = () => {
         navigate("/");
       }}
     >
-      <img src={athStockLogo} alt="Logo" className="w-[100px]" />
+      <img
+        src={theme == "light" ? BlackathStockLogo : WhiteathStockLogo}
+        alt="Logo"
+        className="w-[70px] lg:w-[120px]"
+      />
     </button>
   );
 };

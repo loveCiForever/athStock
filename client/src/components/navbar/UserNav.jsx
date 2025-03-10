@@ -1,18 +1,38 @@
-// UserNav.jsx
+// .client/src/components/navbar/UserNav.jsx
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 import LogoutIcon from "../../assets/icon/logOutIcon.png";
-import AccountCircleIcon from "../../assets/icon/accountCircleIcon.png";
-
+import DarkMode from "../../assets/icon/darkmode.svg";
+import LightMode from "../../assets/icon/lightmode.svg";
+import { useEffect, useContext } from "react";
+import { ThemeContext, UserContext } from "../../App.jsx";
 const UserNav = () => {
   const { user, signout } = useAuthContext();
+  const navigate = useNavigate();
+
+  let { theme, setTheme } = useContext(ThemeContext);
+
+  const changeTheme = () => {
+    let newTheme = theme == "light" ? "dark" : "light";
+
+    setTheme(newTheme);
+
+    document.body.setAttribute("data-theme", newTheme);
+
+    setSession("theme", newTheme);
+  };
+
+  useEffect(() => {
+    // console.log(user);
+  });
+
   const signOutFunc = async () => {
     try {
       await axios.post("http://localhost:8000/api/auth/signout");
-      toast.success("Sign out successfull");
+      toast.success("Sign out successful");
       signout();
     } catch (error) {
       console.log();
@@ -20,32 +40,64 @@ const UserNav = () => {
     }
   };
 
+  const formatFullName = (fullName) => {
+    if (!fullName) {
+      return "User did not update Fullname";
+    }
+
+    return fullName
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
-    <div className="absolute right-2 z-50 mt-[65px]">
-      <div className="bg-white absolute right-0 rounded-b-md shadow-md border border-grey w-52 overflow-hidden duration-200">
-        <div className="text-left py-2 pl-8">
-          <span className="text-md font-bold text-dark-grey">
+    <div className="absolute right-0 z-50 mt-52">
+      <div className="flex flex-col items-start justify-center bg-white border-2 rounded-xl shadow-xl w-60 duration-200">
+        <Link
+          className="flex flex-col w-full text-left py-3 pl-8"
+          to={`/user/${user.userName}`}
+        >
+          <span className="text-md font-bold text-dark-grey mb-[5px]">
+            {formatFullName(user.fullName)}
+          </span>
+          <span className="text-md font-medium text-dark-grey">
             @{user.userName}
           </span>
-        </div>
-        <Link
-          to={`/user/${user.userName}`}
-          className="flex gap-2 link pl-8 py-2 hover:bg-gray-100 "
-        >
-          {/* <img
-            src={AccountCircleIcon}
-            alt="profile"
-            className="w-5 h-5 opacity-90"
-          /> */}
-          <p>Profile</p>
         </Link>
-        <button
-          className="flex gap-2 link pl-8 py-2 w-full items-center hover:bg-gray-100"
-          onClick={signOutFunc}
-        >
-          {/* <img src={LogoutIcon} alt="logout" className="w-5 h-5 opacity-90" /> */}
-          <p>Sign out</p>
-        </button>
+
+        <div className="w-full border-t-[1px]">
+          <button
+            className="flex gap-2 link pl-8 py-2 w-full items-center hover:bg-gray-200"
+            onClick={changeTheme}
+          >
+            <img
+              src={theme == "light" ? DarkMode : LightMode}
+              alt="logout"
+              className="w-5 h-5 opacity-100"
+            />
+            {theme == "light" ? (
+              <p>Switch to dark mode</p>
+            ) : (
+              <p>Switch to light mode</p>
+            )}
+          </button>
+        </div>
+
+        <div className="w-full">
+          <button
+            className="flex gap-2 link pl-8 py-2 w-full items-center hover:bg-gray-200"
+            onClick={signOutFunc}
+          >
+            <img
+              src={LogoutIcon}
+              alt="logout"
+              className="w-5 h-5 opacity-100"
+            />
+            <p>Sign out</p>
+          </button>
+        </div>
       </div>
     </div>
   );

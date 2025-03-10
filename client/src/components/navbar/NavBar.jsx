@@ -1,85 +1,115 @@
-// NavBar.jsx
+// ./client/src/components/navbar/NavBar.jsx
 
-import { use, useEffect, useState } from "react";
-import axios from "axios";
-
-import Branding from "../branding/Branding";
-import Hamburger from "./Hamburger.jsx";
-import LoginButton from "./LoginButton.jsx";
-import Notification from "./Notification.jsx";
+import { useEffect, useState, useContext } from "react";
 import { useAuthContext } from "../../context/AuthContext.jsx";
-import UserNav from "./UserNav.jsx";
+import { useNavigate } from "react-router-dom";
+import Branding from "../branding/Branding";
+import HamburgerButton from "./HamburgerButton.jsx";
+import Notification from "./Notification.jsx";
+import LoggedUser from "./LoggedUser.jsx";
+import WriteBlogButton from "./WriteBlogButton.jsx";
 
-const NavBar = ({ toggleSideBar }) => {
+const NavBar = ({ theme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [toggleLinks, setToggleLinks] = useState(false);
+  const [currentLocationPath, setCurrentLocationPath] = useState(
+    window.location.pathname
+  );
   const { user } = useAuthContext();
-
-  const handleBlur = () => {
-    setTimeout(() => {
-      setToggleLinks(false);
-    }, 140);
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
+    const handleLocationPathChange = () => {
+      setCurrentLocationPath(window.location.pathname);
+    };
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("popstate", handleLocationPathChange);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("popstate", handleLocationPathChange);
     };
   }, []);
 
   return (
     <nav
-      className={`navbar sticky flex items-center justify-between h-[65px] w-full bg-white border-b border-gray-200 transition-shadow duration-300 ${
+      className={`navbar flex items-center justify-between h-[100px] w-full border-b-[2px] px-40 ${
+        theme == "light"
+          ? "bg-white border-gray-100"
+          : "bg-darkmodeNavbarColor border-black/30"
+      } transition-shadow duration-300 ${
         isScrolled ? "shadow-sm shadow-gray-300" : "null"
       }`}
     >
-      <div className="flex items-center justify-center">
-        <div className={`ml-4 visible`}>
-          <Hamburger toggleSideBar={toggleSideBar} />
-        </div>
-        <div className="ml-5">
-          <Branding />
-        </div>
-      </div>
+      <Branding theme={theme} />
 
-      <div className="flex items-center justify-center">
-        <div className="mr-4">Market Status</div>
-        <div className="mr-4">Current Datetime</div>
-
-        {/* <p>{user ? "logged in" : "un logged in"}</p> */}
-
-        <div className="mr-3">
-          <Notification />
-        </div>
-
-        <div className="mr-7">
-          {/* <LoginButton /> */}
-          {!user ? (
-            <LoginButton />
-          ) : (
-            <>
-              <div
-                className="flex items-center justify-center relative"
-                onClick={() => setToggleLinks((prev) => !prev)}
-                onBlur={handleBlur}
-              >
-                <button className="w-12 h-12 flex items-center justify-center">
-                  <img
-                    src={user.profile_img}
-                    alt="profile image"
-                    className="w-[70%] border border-grey/90 object-cover rounded-full"
-                  />
-                </button>
-                {toggleLinks && <UserNav />}
-              </div>
-            </>
+      <div className="flex items-center justify-center gap-16">
+        <div className="relative">
+          <button
+            className={`home-btn text-xl font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all ${
+              currentLocationPath == "/" ? "text-orange-500 " : ""
+            }`}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Home
+          </button>
+          {currentLocationPath == "/" && (
+            <hr className="absolute left-0 right-0 bottom-[-5px] h-[4px] bg-orange-400" />
           )}
         </div>
+
+        <div className="relative">
+          <button
+            className={`home-btn text-xl font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all ${
+              currentLocationPath == "/blog" ? "text-orange-500 " : ""
+            }`}
+            onClick={() => {
+              navigate("/blog");
+            }}
+          >
+            Blog
+          </button>
+          {currentLocationPath == "/blog" && (
+            <hr className="absolute left-0 right-0 bottom-[-5px] h-[4px] bg-orange-400" />
+          )}
+        </div>
+
+        <div className="relative">
+          <button
+            className={`home-btn text-xl font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all ${
+              currentLocationPath == "/dashboard" ? "text-orange-500 " : ""
+            }`}
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+          >
+            Dashboard
+          </button>
+          {currentLocationPath == "/dashboard" && (
+            <hr className="absolute left-0 right-0 bottom-[-5px] h-[4px] bg-orange-400" />
+          )}
+        </div>
+
+        {!user ? (
+          <div>
+            <button
+              className={`home-btn text-xl font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all`}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </button>
+          </div>
+        ) : (
+          <LoggedUser theme={theme} />
+        )}
       </div>
     </nav>
   );

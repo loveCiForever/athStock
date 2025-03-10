@@ -1,22 +1,31 @@
-import RegisterForm from "../components/auth/signUpForm/SignUpForm";
+// SignUpPage.jsx
+
+import React, { useEffect } from "react";
+import SignUpForm from "../components/auth/SignUpForm.jsx";
 import LoginPicture from "../assets/picture/loginPicture.jpg";
 
-const RegisterPage = () => {
+const SignUpPage = () => {
+  useEffect(() => {
+    document.title = "Sign Up";
+  }, []);
+
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-gray-100 min-w-960">
-      <div className="flex items-center justify-center w-auto bg-white shadow-2xl rounded-3xl">
-        <img
-          src={LoginPicture}
-          alt="Login Picture"
-          className={`max-w-[480px] rounded-l-xl mr-10`}
-        />
+    <div className="flex items-center justify-center w-full min-h-screen bg-gray-100">
+      <div className="flex flex-row items-center bg-white shadow-xl rounded-2xl sm:w-[65%] overflow-hidden">
+        <div className="hidden lg:block w-full">
+          <img
+            src={LoginPicture}
+            alt="Sign Up"
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-        <RegisterForm />
-
-        <div className="ml-10"></div>
+        <div className="w-full py-8 px-10 sm:px-0 bg-red-200//">
+          <SignUpForm />
+        </div>
       </div>
     </div>
   );
 };
 
-export default RegisterPage;
+export default SignUpPage;
