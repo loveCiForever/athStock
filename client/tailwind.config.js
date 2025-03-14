@@ -11,6 +11,8 @@ export default {
         lightModeBackgroundColor: "#f2f4f7",
         lightModeNavbarColor: "#ffffff",
         lightModeButtonColor: "#e2e5e9",
+
+        lightModeBlogText: "#34425a",
       },
     },
   },

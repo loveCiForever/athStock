@@ -1,7 +1,7 @@
 // ./client/src/components/navbar/HamburgerButton.jsx
 
-import WhiteHamburger from "../../assets/icon/darkmode/hamburger.svg";
-import BlackHamburger from "../../assets/icon/lightmode/hamburger.svg";
+import WhiteHamburger from "../../assets/icon/white/hamburger.svg";
+import BlackHamburger from "../../assets/icon/black/hamburger.svg";
 
 const HamburgerButton = ({ toggleSideBar, theme }) => {
   return (

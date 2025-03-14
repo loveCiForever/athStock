@@ -37,7 +37,6 @@ const genUserName = async (email) => {
   }
 };
 
-
 /**
  * Hashes a password using bcrypt for security.
  *

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 import LoginPicture from "../assets/picture/loginPicture.jpg";
-import SignInForm from "../components/auth/SignInForm.jsx";
+import SignInForm from "../components/authForm/SignInForm.jsx";
 
 const SignInPage = () => {
   useEffect(() => {

@@ -3,7 +3,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useAuthContext } from "../../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
-import Branding from "../branding/Branding";
+import Branding from "../common/Branding.jsx";
 import HamburgerButton from "./HamburgerButton.jsx";
 import Notification from "./Notification.jsx";
 import LoggedUser from "./LoggedUser.jsx";
@@ -39,8 +39,8 @@ const NavBar = ({ theme }) => {
     <nav
       className={`navbar flex items-center justify-between h-[100px] w-full border-b-[2px] px-40 ${
         theme == "light"
-          ? "bg-white border-gray-100"
-          : "bg-darkmodeNavbarColor border-black/30"
+          ? "bg-white border-gray-100 text-black"
+          : "bg-darkmodeNavbarColor border-black/30 text-white"
       } transition-shadow duration-300 ${
         isScrolled ? "shadow-sm shadow-gray-300" : "null"
       }`}
@@ -48,6 +48,26 @@ const NavBar = ({ theme }) => {
       <Branding theme={theme} />
 
       <div className="flex items-center justify-center gap-16">
+        {currentLocationPath == "/blog" || currentLocationPath == "/editor" ? (
+          <div className="relative">
+            <button
+              className={`home-btn text-xl font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all ${
+                currentLocationPath == "/editor" ? "text-orange-500 " : ""
+              }`}
+              onClick={() => {
+                navigate("/editor");
+              }}
+            >
+              Write
+            </button>
+            {currentLocationPath == "/editor" && (
+              <hr className="absolute left-0 right-0 border-0 bottom-[-5px] h-[4px] bg-orange-400" />
+            )}
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="relative">
           <button
             className={`home-btn text-xl font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all ${
@@ -60,7 +80,7 @@ const NavBar = ({ theme }) => {
             Home
           </button>
           {currentLocationPath == "/" && (
-            <hr className="absolute left-0 right-0 bottom-[-5px] h-[4px] bg-orange-400" />
+            <hr className="absolute left-0 right-0 border-0 bottom-[-5px] h-[4px] bg-orange-400" />
           )}
         </div>
 
@@ -76,7 +96,7 @@ const NavBar = ({ theme }) => {
             Blog
           </button>
           {currentLocationPath == "/blog" && (
-            <hr className="absolute left-0 right-0 bottom-[-5px] h-[4px] bg-orange-400" />
+            <hr className="absolute left-0 right-0 border-0 bottom-[-5px] h-[4px] bg-orange-400" />
           )}
         </div>
 
@@ -92,7 +112,7 @@ const NavBar = ({ theme }) => {
             Dashboard
           </button>
           {currentLocationPath == "/dashboard" && (
-            <hr className="absolute left-0 right-0 bottom-[-5px] h-[4px] bg-orange-400" />
+            <hr className="absolute left-0 right-0 border-0 bottom-[-5px] h-[4px] bg-orange-400" />
           )}
         </div>
 

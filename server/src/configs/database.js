@@ -11,9 +11,9 @@ const ConnectDatabase = async () => {
       // useUnifiedTopology: true,
       // autoIndex: true,
     });
-    console.log(`[DATABASE] Successfully connected to MongoDB`);
+    console.log(`[DATABASE.js] Successfully connected to MongoDB`);
   } catch (error) {
-    console.log("[DATABASE] Unable to connect to MongoDB! ", error);
+    console.log("[DATABASE.js] Unable to connect to MongoDB! ", error);
   }
 };
 

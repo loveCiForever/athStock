@@ -5,14 +5,16 @@ import { toast } from "react-toastify";
 import { tools } from "./Tools.jsx";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { EditorContext } from "../../pages/EditorPage.jsx";
 import { UserContext } from "../../App.jsx";
-import Tag from "./Tags.jsx";
 import { useAuthContext } from "../../context/AuthContext.jsx";
-import { useNavigate } from "react-router-dom";
-
+import categories from "../common/Categories.jsx";
+import Tag from "./Tags.jsx";
+import WhiteCloseIcon from "../../assets/icon/white/close.svg";
 const BlogEditor = ({ theme }) => {
   const textRef = useRef();
+  const [selectedCategory, setSelectedCategory] = useState("");
   const { user, getAccessToken } = useAuthContext();
   const access_token = getAccessToken();
   const navigate = useNavigate();
@@ -22,16 +24,12 @@ const BlogEditor = ({ theme }) => {
   const tagLimit = 10;
   const {
     blog,
-    blog: { title, head, content, tags },
+    blog: { title, intro, content, tags },
     setBlog,
     textEditor,
     setTextEditor,
     setEditorState,
   } = useContext(EditorContext);
-
-  // useState(() => {
-  //   console.log("access token: ", accessToken);
-  // });
 
   const handleTitleChange = (e) => {
     let input = e.target;
@@ -39,7 +37,7 @@ const BlogEditor = ({ theme }) => {
     input.style.height = "auto";
     input.style.height = input.scrollHeight + "px";
 
-    setBlog({ ...blog, title: input.value });
+    setBlog({ ...blog, title: input.value.trim() });
   };
 
   const handleTitleKeyDown = (e) => {
@@ -48,22 +46,22 @@ const BlogEditor = ({ theme }) => {
     }
   };
 
-  const handleHeadChange = (e) => {
+  const handleIntroChange = (e) => {
     let input = e.target;
 
     input.style.height = "auto";
     input.style.height = input.scrollHeight + "px";
 
-    setBlog({ ...blog, head: input.value });
+    setBlog({ ...blog, intro: input.value.trim() });
   };
 
-  const handleHeadKeyDown = (e) => {
+  const handleIntroKeyDown = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleTag = (e) => {
     if (e.keyCode == 13 || e.keyCode == 188) {
       e.preventDefault();
 
@@ -86,15 +84,15 @@ const BlogEditor = ({ theme }) => {
       textEditor.clear();
     }
 
-    if (textRef.current) {
-      textRef.current.value = "";
-    }
+    setBlog({ ...blog, title: "", intro: "", content: {}, tag: [] });
+    setSelectedCategory("");
+  };
 
-    setBlog({ ...blog, title: "", head: "", content: {}, tag: [] });
+  const handleExit = () => {
+    navigate("/");
   };
 
   const handlePublish = () => {
-    // console.log(access_token);
     if (!title.length) {
       return toast.error("You must enter the title for your blog");
     }
@@ -106,9 +104,10 @@ const BlogEditor = ({ theme }) => {
           if (data.blocks.length) {
             const blogObj = {
               title,
-              head,
+              intro,
               content: data,
               tags,
+              category: selectedCategory,
             };
 
             console.log(blogObj);
@@ -131,7 +130,6 @@ const BlogEditor = ({ theme }) => {
                 );
                 toast.error("Failed to publish blog. Please try again.");
               });
-            // console.log(blogObj);
           } else {
             return toast.error("Write something in your blog to publish it");
           }
@@ -156,71 +154,105 @@ const BlogEditor = ({ theme }) => {
 
   return (
     <div
-      className={`w-[800px] h-auto py-6 px-16 my-10 z-30 border-[0.5px] rounded-xl shadow-xl ${
+      className={`w-[800px] h-auto mt-10 pb-10 z-30 border-[0.5px] rounded-xl shadow-xl ${
         theme === "light" ? " text-black" : "bg-black/30 text-white"
       }`}
     >
-      <nav className="flex w-full items-center justify-end">
+      <nav className="flex items-center justify-between py-6 border-b-[1px]">
+        <div className="flex-grow text-center">
+          <h1 className="text-2xl font-bold ml-12">
+            Write your own financial blog
+          </h1>
+        </div>
         <button
-          onClick={handleClearAll}
-          className={`rounded-full m-2 font-bold bg-grey relative active:scale-[.90] active:duration-75 transition-all ${
-            theme === "light" ? "hover:text-orange-500" : "hover:bg-black/20"
-          }`}
+          className="bg-black/40 rounded-full p-1 mr-6 hover:bg-black/60"
+          onClick={handleExit}
         >
-          Clear
+          <img src={WhiteCloseIcon} alt="" />
         </button>
       </nav>
 
-      <div className="w-full h-auto">
-        <textarea
-          ref={textRef}
-          onChange={handleTitleChange}
-          defaultValue={title}
-          placeholder="Blog Title"
-          onKeyDown={handleTitleKeyDown}
-          className="text-3xl font-semibold w-full h-10 outline-none resize-none pl-3 leading-tight placeholder:opacity-60 bg-transparent"
-        ></textarea>
+      <div className="w-full px-16 mt-10">
+        <div className="w-full">
+          <textarea
+            ref={textRef}
+            onChange={handleTitleChange}
+            value={title}
+            placeholder="Title (No more than 100 words)"
+            onKeyDown={handleTitleKeyDown}
+            className="text-3xl font-bold w-full h-10 outline-none resize-none pl-3 leading-tight placeholder:opacity-60 bg-transparent"
+          ></textarea>
 
-        <textarea
-          ref={textRef}
-          onChange={handleHeadChange}
-          defaultValue={head}
-          placeholder="Heading"
-          onKeyDown={handleHeadKeyDown}
-          className="text-xl font-bold w-full h-10 outline-none resize-none pl-3 mt-3 leading-tight placeholder:opacity-60 bg-transparent"
-        ></textarea>
+          <textarea
+            ref={textRef}
+            onChange={handleIntroChange}
+            value={intro}
+            placeholder="Introduction (No more than 500 words)"
+            onKeyDown={handleIntroKeyDown}
+            className="text-lg font-semibold w-full h-10 outline-none resize-none pl-3 mt-3 leading-normal placeholder:opacity-60 bg-transparent"
+          ></textarea>
 
-        <section className="w-full h-auto">
-          <div id="textEditor" className="h-auto font-gelasio mt-4"></div>
-        </section>
-      </div>
+          <section className="w-full h-auto">
+            <div id="textEditor" className="h-auto font-gelasio mt-3"></div>
+          </section>
+        </div>
 
-      <div className="mb-5 flex flex-col w-full border-[1px] rounded-xl p-2">
-        <input
-          type="text"
-          placeholder="Enter your blog's tag"
-          className="sticky p-2 w-[40%] rounded-md pl-3 focus:bg-white border-white outline-none"
-          onKeyDown={handleKeyDown}
-        />
-        <div className="w-full bg-red-000 ml-2">
-          {tags.map((tag, i) => {
-            return <Tag tag={tag} tagIndex={i} key={i} />;
-          })}
+        {/* <div className="mb-5 flex flex-col w-full border-[1px] rounded-xl p-2">
+          <input
+            type="text"
+            placeholder="Tags"
+            className="p-0 w-[40%] rounded-md pl-3 focus:bg-white border-white outline-none"
+            onKeyDown={handleTag}
+          />
+          <div className="w-full bg-red-000 ml-2">
+            {tags.map((tag, i) => {
+              return <Tag tag={tag} tagIndex={i} key={i} />;
+            })}
+          </div>
+        </div> */}
+
+        <div className="mb-5">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="p-2 pl-3 w-full rounded-md border bg-white outline-none"
+          >
+            <option value="">Select a category</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex items-center justify-center gap-4">
+          <button
+            className={`flex items-center justify-center w-1/4 active:scale-[.97] active:duration-75 transition-all shadow-xs rounded-lg py-2 ${
+              theme === "light"
+                ? "bg-black text-white hover:bg-orange-500"
+                : "bg-white text-black hover hover:bg-gray-300"
+            }`}
+            onClick={handleClearAll}
+          >
+            <p className="font-semibold text-sm lg:text-base tracking-wider">
+              Clear
+            </p>
+          </button>
+          <button
+            className={`flex items-center justify-center flex-1 active:scale-[.97] active:duration-75 transition-all shadow-xs rounded-lg py-2 ${
+              theme === "light"
+                ? "bg-black text-white hover:bg-green-500"
+                : "bg-white text-black hover hover:bg-gray-300"
+            }`}
+            onClick={handlePublish}
+          >
+            <p className="font-semibold text-sm lg:text-base tracking-wider">
+              Publish
+            </p>
+          </button>
         </div>
       </div>
-
-      <button
-        className={`flex items-center justify-center w-full active:scale-[.97] active:duration-75 transition-all shadow-xs rounded-xl py-2 ${
-          theme === "light"
-            ? "bg-black text-white hover:bg-orange-500"
-            : "bg-white text-black hover hover:bg-gray-300"
-        }`}
-        onClick={handlePublish}
-      >
-        <p className="font-semibold text-sm lg:text-base tracking-wider">
-          Publish
-        </p>
-      </button>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import {
   deleteSession,
   getSession,
   setSession,
-} from "../components/auth/session.jsx";
+} from "../components/common/session.jsx";
 import { getApps } from "firebase/app";
 
 const authContext = createContext();

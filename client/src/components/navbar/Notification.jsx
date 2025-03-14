@@ -1,7 +1,7 @@
 // .client/src/components/navbar/Notification.jsx
 
-import BlackNotification from "../../assets/icon/lightmode/notification.svg";
-import WhiteNotification from "../../assets/icon/darkmode/notification.svg";
+import BlackNotification from "../../assets/icon/black/notification.svg";
+import WhiteNotification from "../../assets/icon/white/notification.svg";
 
 const Notification = ({ theme }) => {
   return (

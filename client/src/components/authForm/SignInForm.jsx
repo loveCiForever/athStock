@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../context/AuthContext";
-import { authWithGoogle } from "./firebase";
+import { authWithGoogle } from "../common/firebase";
 
 const SignInForm = () => {
   const [email, setEmail] = useState("");
