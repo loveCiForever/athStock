@@ -1,12 +1,12 @@
 // ./client/src/components/auth/SignUpForm.jsx
 
-import googleLogo from "../../assets/logo/googleLogo.svg";
+import googleLogo from "../../../assets/logo/googleLogo.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../../context/AuthContext";
-import { authWithGoogle } from "../common/firebase";
+import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
+import { authWithGoogle } from "../../hooks-services/firebase.jsx";
 
 const SignUpForm = () => {
   const [fullName, setFullName] = useState("");
@@ -19,15 +19,21 @@ const SignUpForm = () => {
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
-  const isFullNameValid = fullName.trim() !== "";
-  const isEmailValid = email.trim() !== "" && email.includes("@");
-  const isPasswordValid = password.trim() !== "";
-
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if (!isFullNameValid || !isEmailValid || !isPasswordValid) {
-      toast.error("Please fill in all fields correctly");
+    if (!fullName) {
+      toast.error("Please fill in your full name");
+      return;
+    }
+
+    if (!email) {
+      toast.error("Please fill in your email address");
+      return;
+    }
+
+    if (!password) {
+      toast.error("Please fill in your password");
       return;
     }
 
@@ -39,16 +45,18 @@ const SignUpForm = () => {
         password,
       });
 
+      const user = result.data.user;
+      const access_token = result.data.user.access_token;
+
       toast.success("Registration successful!");
-      configUser(result.data.data.user);
+      configUser(user, access_token);
       navigate("/");
     } catch (error) {
       toast.error(
-        error.response.data.message
+        !error.response.data.message
           ? "Failed to sign up"
           : error.response.data.message
       );
-      console.error(error.response.data);
     } finally {
       setIsLoading(false);
     }
@@ -97,9 +105,9 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="w-full sm:max-w-sm mx-auto px-2 sm:px-10 bg-green-200//">
+    <div className="w-full sm:max-w-sm mx-auto px-2 sm:px-6">
       <h1 className="font-bold text-2xl sm:text-4xl">athStock</h1>
-      <h2 className="tracking-wide text-sm text-gray-500">
+      <h2 className="tracking-wide text-md text-gray-500">
         To continue, sign up for an account.
       </h2>
 
@@ -110,12 +118,8 @@ const SignUpForm = () => {
               type="text"
               placeholder="Full name"
               value={fullName}
-              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg 
-                border ${
-                  !fullName || isFullNameValid
-                    ? "border-gray-200"
-                    : "border-red-500"
-                }`}
+              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg outline-none 
+                border ${fullName ? "" : "border-red-500"}`}
               onChange={(e) => setFullName(e.target.value)}
               disabled={isLoading}
             />
@@ -126,10 +130,8 @@ const SignUpForm = () => {
               type="email"
               placeholder="Email"
               value={email}
-              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg 
-                border ${
-                  !email || isEmailValid ? "border-gray-200" : "border-red-500"
-                }`}
+              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg outline-none 
+                border ${email ? "" : "border-red-500"}`}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
             />
@@ -140,12 +142,8 @@ const SignUpForm = () => {
               type="password"
               placeholder="Password"
               value={password}
-              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg
-                border ${
-                  !password || isPasswordValid
-                    ? "border-gray-200"
-                    : "border-red-500"
-                }`}
+              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg outline-none 
+                border ${password ? "" : "border-red-500"}`}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
             />
@@ -155,7 +153,7 @@ const SignUpForm = () => {
             type="submit"
             disabled={isLoading}
             className={`py-3 rounded-xl bg-black text-sm text-white font-semibold tracking-wide
-              hover:bg-gray-800 active:scale-[.98] active:duration-75 transition-all
+              hover:bg-black/80 active:scale-[.98] active:duration-75 transition-all
               ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
           >
             {isLoading ? "Signing up..." : "Sign Up"}
@@ -164,7 +162,7 @@ const SignUpForm = () => {
 
         <div className="flex items-center my-6">
           <hr className="flex-grow border-gray-200" />
-          <span className="px-4 text-xs text-gray-500">Or sign up with</span>
+          <span className="px-4 text-sm text-gray-500">Or sign up with</span>
           <hr className="flex-grow border-gray-200" />
         </div>
 
@@ -181,7 +179,7 @@ const SignUpForm = () => {
         </button>
 
         <div className="flex items-center justify-center mt-6">
-          <p className="text-xs text-gray-600">Already have an account?</p>
+          <p className="text-sm text-gray-600">Already have an account?</p>
           <button
             onClick={() => navigate("/login")}
             disabled={isLoading}

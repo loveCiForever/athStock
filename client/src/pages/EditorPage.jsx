@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext.jsx";
-import BlogEditor from "../components/blog/BlogEditor.jsx";
-import NavBar from "../components/navbar/NavBar";
-import Loader from "../components/common/Loader.jsx";
+import { useAuthContext } from "../components/hooks-services/AuthContext.jsx";
+import BlogEditor from "../components/layout/blog/BlogEditor.jsx";
+import NavBar from "../components/layout/navbar/NavBar";
+import Loader from "../components/ui/LoaderAnimation.jsx";
 import SignInPage from "./SignInPage.jsx";
 
 const blogStructure = {

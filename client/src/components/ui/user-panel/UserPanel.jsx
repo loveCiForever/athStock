@@ -1,21 +1,19 @@
 // .client/src/components/navbar/UserNav.jsx
 
 import { Link, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext.jsx";
+import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
-import LogoutIcon from "../../assets/icon/logOutIcon.png";
-import DarkMode from "../../assets/icon/darkmode.svg";
-import LightMode from "../../assets/icon/lightmode.svg";
+import LogoutIcon from "../../../assets/icon/logOutIcon.png";
+import DarkMode from "../../../assets/icon/darkmode.svg";
+import LightMode from "../../../assets/icon/lightmode.svg";
 import { useEffect, useContext } from "react";
-import { ThemeContext, UserContext } from "../../App.jsx";
-import FormatFullName from "../common/FormatFullName.jsx";
-import { setSession } from "../common/session.jsx";
+import { ThemeContext, UserContext } from "../../../App.jsx";
+import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat.jsx";
+import { setSession } from "../../hooks-services/session.jsx";
 
 const UserNav = () => {
   const { user, signout } = useAuthContext();
-  const navigate = useNavigate();
-
   let { theme, setTheme } = useContext(ThemeContext);
 
   const changeTheme = () => {
@@ -52,7 +50,7 @@ const UserNav = () => {
           to={`/user/${user.userName}`}
         >
           <span className="text-md font-bold text-dark-grey mb-[5px]">
-            {FormatFullName(user.fullName)}
+            {UppercaseFirstLetterEachWord(user.fullName)}
           </span>
           <span className="text-md font-medium text-dark-grey">
             @{user.userName}

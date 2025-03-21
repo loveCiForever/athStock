@@ -6,12 +6,12 @@ import { tools } from "./Tools.jsx";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { EditorContext } from "../../pages/EditorPage.jsx";
-import { UserContext } from "../../App.jsx";
-import { useAuthContext } from "../../context/AuthContext.jsx";
-import categories from "../common/Categories.jsx";
+import { EditorContext } from "../../../pages/EditorPage.jsx";
+import { UserContext } from "../../../App.jsx";
+import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
+import categories from "../../data/Categories.jsx";
 import Tag from "./Tags.jsx";
-import WhiteCloseIcon from "../../assets/icon/white/close.svg";
+import WhiteCloseIcon from "../../../assets/icon/white/close.svg";
 const BlogEditor = ({ theme }) => {
   const textRef = useRef();
   const [selectedCategory, setSelectedCategory] = useState("");

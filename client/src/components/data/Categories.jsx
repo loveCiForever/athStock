@@ -9,6 +9,9 @@ let categories = [
   "Chứng khoán thế giới",
   "Chính sách",
   "Câu chuyện đầu tư",
+  "Tiêu dùng và đời sống",
+  "ETF và các quỹ",
+  "Trái phiếu doanh nghiệp"
 ];
 
 export default categories;

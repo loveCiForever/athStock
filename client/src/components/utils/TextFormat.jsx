@@ -1,4 +1,4 @@
-const FormatFullName = (fullName) => {
+const UppercaseFirstLetterEachWord = (fullName) => {
   if (!fullName) {
     return "User did not update Fullname";
   }
@@ -10,4 +10,7 @@ const FormatFullName = (fullName) => {
     .join(" ");
 };
 
-export default FormatFullName;
+const UppercaseFullString = (string) => {
+  return string.toUpperCase();
+};
+export { UppercaseFirstLetterEachWord, UppercaseFullString };
