@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EditorContext } from "../../pages/EditorPage.jsx";
+import { EditorContext } from "../../../pages/EditorPage.jsx";
 
 const Tag = ({ tag, tagIndex }) => {
   let {

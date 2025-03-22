@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { createContext, useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { getSession } from "./components/auth/session";
+import { getSession } from "./components/hooks-services/session.jsx";
 
 import HomePage from "./pages/HomePage";
 import SignInPage from "./pages/SignInPage";

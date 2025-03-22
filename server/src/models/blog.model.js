@@ -6,38 +6,38 @@ const blogSchema = mongoose.Schema(
   {
     blog_id: {
       type: String,
-      // required: true,
       unique: true,
     },
     title: {
       type: String,
-      // required: true,
+      maxLength: 100,
     },
-    head: {
+    intro: {
       type: String,
-      maxLength: 300,
+      maxLength: 500,
     },
     banner: {
       type: String,
     },
-    des: {
-      type: String,
-      maxLength: 200,
-    },
-
     content: {
       type: [],
     },
     tags: {
       type: [String],
     },
+    category: {
+      type: String,
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      // required: true,
       ref: "users",
     },
     activity: {
       total_likes: {
+        type: Number,
+        default: 0,
+      },
+      total_dislike: {
         type: Number,
         default: 0,
       },

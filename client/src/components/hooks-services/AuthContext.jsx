@@ -1,11 +1,7 @@
 // .client/src/context/AuthContext.jsx
 
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-  deleteSession,
-  getSession,
-  setSession,
-} from "../components/auth/session.jsx";
+import { deleteSession, getSession, setSession } from "./session.jsx";
 import { getApps } from "firebase/app";
 
 const authContext = createContext();
@@ -23,7 +19,6 @@ const AuthContext = ({ children }) => {
   }, []);
 
   const configUser = (user, access_token) => {
-    // console.log(access_token);
     setSession(user);
     setUser(user);
     if (access_token) {

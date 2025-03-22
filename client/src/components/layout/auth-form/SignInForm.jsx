@@ -1,12 +1,12 @@
 // ./client/src/components/auth/SignInForm.jsx
 
-import googleLogo from "../../assets/logo/googleLogo.svg";
+import googleLogo from "../../../assets/logo/googleLogo.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../../context/AuthContext";
-import { authWithGoogle } from "./firebase";
+import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
+import { authWithGoogle } from "../../hooks-services/firebase.jsx";
 
 const SignInForm = () => {
   const [email, setEmail] = useState("");
@@ -18,29 +18,16 @@ const SignInForm = () => {
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
-  const isEmailValid = email.trim() !== "" && email.includes("@");
-  const isPasswordValid = password.trim() !== "";
-
   const handleSignIn = async (e) => {
     e.preventDefault();
 
     if (!email) {
-      toast.error("Please enter your email address");
+      toast.error("Please fill in your email address");
       return;
     }
 
     if (!password) {
-      toast.error("Please enter your password");
-      return;
-    }
-
-    if (!isEmailValid) {
-      toast.error("Please enter a valid email");
-      return;
-    }
-
-    if (!isPasswordValid) {
-      toast.error("Please enter a valid password");
+      toast.error("Please fill in your password");
       return;
     }
 
@@ -52,18 +39,16 @@ const SignInForm = () => {
       });
       const user = result.data.user;
       const access_token = result.data.user.access_token;
-      // console.log(access_token);
-      toast.success("Sign in successful");
 
+      toast.success("Sign in successful");
       configUser(user, access_token);
       navigate("/");
     } catch (error) {
-      if (error.response?.data?.error?.message) {
-        toast.error(error.response.data.error.message);
-      } else {
-        toast.error("Failed to sign in");
-      }
-      console.error("Sign in error:");
+      toast.error(
+        !error.response.data.message
+          ? "Failed to sign up"
+          : error.response.data.message
+      );
     } finally {
       setIsLoading(false);
     }
@@ -125,10 +110,8 @@ const SignInForm = () => {
               type="email"
               placeholder="Email"
               value={email}
-              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg 
-                border ${
-                  !email || isEmailValid ? "border-gray-200" : "border-red-500"
-                }`}
+              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg outline-none
+                border ${email ? "" : "border-red-500"}`}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
             />
@@ -139,12 +122,8 @@ const SignInForm = () => {
               type="password"
               placeholder="Password"
               value={password}
-              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg
-                border ${
-                  !password || isPasswordValid
-                    ? "border-gray-200"
-                    : "border-red-500"
-                }`}
+              className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg outline-none
+                border ${password ? "" : "border-red-500"}`}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
             />

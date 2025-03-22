@@ -1,8 +1,8 @@
 // ./client/src/components/navbar/LoggedUser.jsx
 
-import UserNav from "./UserNav";
+import UserPanel from "./UserPanel.jsx";
 import { useState } from "react";
-import { useAuthContext } from "../../context/AuthContext";
+import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
 
 const LoggedUser = ({ theme }) => {
   const [toggleLinks, setToggleLinks] = useState(false);
@@ -20,7 +20,7 @@ const LoggedUser = ({ theme }) => {
           className="user-profile-img w-8 h-8 lg:w-10 lg:h-10 rounded-full"
         />
       </button>
-      {toggleLinks && <UserNav theme={theme} />}
+      {toggleLinks && <UserPanel theme={theme} />}
     </div>
   );
 };

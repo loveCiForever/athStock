@@ -1,8 +1,9 @@
 // SignUpPage.jsx
 
-import React, { useEffect } from "react";
-import SignUpForm from "../components/auth/SignUpForm.jsx";
+import React, { useState, useEffect } from "react";
+
 import LoginPicture from "../assets/picture/loginPicture.jpg";
+import SignInForm from "../components/layout/auth-form/SignInForm.jsx";
 
 const SignUpPage = () => {
   useEffect(() => {

@@ -7,7 +7,7 @@ import Joi from "joi";
  *
  * Validates the following fields:
  * - title: A required string representing the title of the blog post.
- * - headL A required string representing the header of the blog post.
+ * - intro A required string representing the introduction of the blog post.
  * - content: A required object representing the content of the blog post.
  * - blocks: A required array that must contain at least one item, representing the blocks of content in the blog post.
  *
@@ -15,7 +15,7 @@ import Joi from "joi";
  */
 const blogValidation = Joi.object({
   title: Joi.string().required(),
-  head: Joi.string().required(),
+  intro: Joi.string().required(),
   content: Joi.object().required(),
   // blocks: Joi.array().required().min(1),
 });

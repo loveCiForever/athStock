@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import NavBar from "../components/navbar/NavBar";
+import NavBar from "../components/layout/navbar/NavBar";
 
 const HomePage = ({ theme }) => {
   useEffect(() => {

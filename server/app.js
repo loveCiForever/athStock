@@ -31,5 +31,5 @@ app.get("/test", (req, res) => {
 
 app.listen(port, async () => {
   ConnectDatabase();
-  console.log(`[APP] Server is running on port ${port}`);
+  console.log(`[APP.js] Server is running on port ${port}`);
 });

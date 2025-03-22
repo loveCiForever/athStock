@@ -1,18 +1,19 @@
 // .client/src/components/navbar/UserNav.jsx
 
 import { Link, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext";
+import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
-import LogoutIcon from "../../assets/icon/logOutIcon.png";
-import DarkMode from "../../assets/icon/darkmode.svg";
-import LightMode from "../../assets/icon/lightmode.svg";
+import LogoutIcon from "../../../assets/icon/logOutIcon.png";
+import DarkMode from "../../../assets/icon/darkmode.svg";
+import LightMode from "../../../assets/icon/lightmode.svg";
 import { useEffect, useContext } from "react";
-import { ThemeContext, UserContext } from "../../App.jsx";
+import { ThemeContext, UserContext } from "../../../App.jsx";
+import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat.jsx";
+import { setSession } from "../../hooks-services/session.jsx";
+
 const UserNav = () => {
   const { user, signout } = useAuthContext();
-  const navigate = useNavigate();
-
   let { theme, setTheme } = useContext(ThemeContext);
 
   const changeTheme = () => {
@@ -23,11 +24,8 @@ const UserNav = () => {
     document.body.setAttribute("data-theme", newTheme);
 
     setSession("theme", newTheme);
+    console.log(theme);
   };
-
-  useEffect(() => {
-    // console.log(user);
-  });
 
   const signOutFunc = async () => {
     try {
@@ -40,27 +38,19 @@ const UserNav = () => {
     }
   };
 
-  const formatFullName = (fullName) => {
-    if (!fullName) {
-      return "User did not update Fullname";
-    }
-
-    return fullName
-      .toLowerCase()
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
   return (
     <div className="absolute right-0 z-50 mt-52">
-      <div className="flex flex-col items-start justify-center bg-white border-2 rounded-xl shadow-xl w-60 duration-200">
+      <div
+        className={`flex flex-col items-start justify-center bg-white border-2 rounded-xl shadow-xl w-60 duration-200 ${
+          theme == "light" ? "bg-white text-black" : "bg-black"
+        }`}
+      >
         <Link
           className="flex flex-col w-full text-left py-3 pl-8"
           to={`/user/${user.userName}`}
         >
           <span className="text-md font-bold text-dark-grey mb-[5px]">
-            {formatFullName(user.fullName)}
+            {UppercaseFirstLetterEachWord(user.fullName)}
           </span>
           <span className="text-md font-medium text-dark-grey">
             @{user.userName}

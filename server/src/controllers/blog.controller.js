@@ -13,8 +13,8 @@ const createBlog = async (req, res) => {
       return res.status(403).json({ error: "User  not found" });
     }
 
-    let { title, head, content, tags } = req.body;
-    const { error } = blogValidation.validate({ title, head, content });
+    let { title, intro, content, tags, category } = req.body;
+    const { error } = blogValidation.validate({ title, intro, content });
 
     if (error) {
       return res.formatter.badRequest({
@@ -30,14 +30,13 @@ const createBlog = async (req, res) => {
     console.log("blog id:", blogId);
     const newBlog = await BlogModel({
       blog_id: blogId,
-      head,
+      intro,
       title,
       content,
       tags,
+      category,
       author: currentUser,
     }).save();
-
-    // console.log("NEW BLOG: ", newBlog);
 
     await UserModel.findOneAndUpdate(
       { _id: currentUser.id },
@@ -52,12 +51,73 @@ const createBlog = async (req, res) => {
       message: "Blog published",
     });
   } catch (error) {
-    console.log("Error: on create blog ----> ", error);
-    return res.formatter.serverError({
-      statusCode: 500,
+    console.error("Error: create blog ----> ", error);
+    return res.status(500).json({
+      message: "Create blog error",
       error: error.message,
     });
   }
 };
 
-export { createBlog };
+const latestBlog = async (req, res) => {
+  try {
+    let { page } = req.body;
+    let maxLimit = 10;
+
+    BlogModel.find({ draft: false })
+      .populate(
+        "author",
+        "personal_info.profile_img personal_info.userName personal_info.fullName -_id"
+      )
+      .sort({ publishedAt: -1 })
+
+      .select("blog_id title intro category activity tags publishedAt -_id")
+      .skip((page - 1) * maxLimit)
+      .limit(maxLimit)
+      .then((blogs) => {
+        return res.status(200).json({ blogs });
+      })
+      .catch((err) => {
+        return res.status(500).json({ error: err.message });
+      });
+  } catch (error) {
+    console.error("Error: latest blog ---->", error);
+    return res.status(500).json({
+      message: "Latest blog error",
+      error: error.message,
+    });
+  }
+};
+
+const blogByCategory = async (req, res) => {
+  try {
+    let { page, category } = req.body;
+    let maxLimit = 10;
+
+    BlogModel.find({ draft: false })
+      .find({ category: category })
+      .populate(
+        "author",
+        "personal_info.profile_img personal_info.userName personal_info.fullName -_id"
+      )
+      .sort({ publishedAt: -1 })
+
+      .select("blog_id title intro category activity tags publishedAt -_id")
+      .skip((page - 1) * maxLimit)
+      .limit(maxLimit)
+      .then((blogs) => {
+        return res.status(200).json({ blogs });
+      })
+      .catch((err) => {
+        return res.status(500).json({ error: err.message });
+      });
+  } catch (error) {
+    console.error("Error: latest blog ---->", error);
+    return res.status(500).json({
+      message: "Latest blog error",
+      error: error.message,
+    });
+  }
+};
+
+export { createBlog, latestBlog, blogByCategory };
