@@ -15,8 +15,10 @@ import Table from "@editorjs/table";
 import Warning from "@editorjs/warning";
 import Paragraph from "@editorjs/paragraph";
 import Header from "@editorjs/header";
+import SimpleImage from "@editorjs/simple-image";
 
 export const tools = {
+  image: SimpleImage,
   paragraph: {
     class: Paragraph,
     inlineToolbar: true,
@@ -38,34 +40,7 @@ export const tools = {
       defaultLevel: 1,
     },
   },
-  // image: {
-  //   image: {
-  //     class: Image,
-  //     config: {
-  //       uploader: {
-  //         uploadByFile(file) {
-  //           const formData = new FormData();
-  //           formData.append("file", file);
-  //           formData.append("upload_preset", "blog-content");
 
-  //           return axios
-  //             .post(
-  //               "https://api.cloudinary.com/v1_1/dnezwnstu/image/upload",
-  //               formData
-  //             )
-  //             .then((response) => {
-  //               return {
-  //                 success: 1,
-  //                 file: {
-  //                   url: response.data.secure_url,
-  //                 },
-  //               };
-  //             });
-  //         },
-  //       },
-  //     },
-  //   },
-  // },
   raw: Raw,
   quote: Quote,
   marker: Marker,

@@ -11,7 +11,8 @@ let categories = [
   "Câu chuyện đầu tư",
   "Tiêu dùng và đời sống",
   "ETF và các quỹ",
-  "Trái phiếu doanh nghiệp"
+  "Trái phiếu doanh nghiệp",
+  "Tiền kỹ thuật số",
 ];
 
 export default categories;
