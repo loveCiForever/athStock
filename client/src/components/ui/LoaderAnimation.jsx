@@ -1,6 +1,7 @@
 // ./client/src/components/common/Loader.jsx
 
 const LoaderAnimation = () => {
+
   return (
     <div className="w-12 mx-auto my-8">
       <svg

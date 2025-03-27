@@ -11,7 +11,9 @@ import WhiteComment from "../../../assets/icon/white/comment.svg";
 import Banner from "../../../assets/picture/banner.jpg";
 import { UppercaseFullString } from "../../utils/TextFormat";
 import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat";
+
 import { getFullDay } from "../../utils/DateFormat";
+
 
 const BlogPost = ({ author, content, theme }) => {
   let {
@@ -20,6 +22,7 @@ const BlogPost = ({ author, content, theme }) => {
     title,
     intro,
     category,
+
     activity: { total_likes, total_dislikes, comments },
     blog_id: id,
     banner,
@@ -30,24 +33,32 @@ const BlogPost = ({ author, content, theme }) => {
     // console.log(id);
   });
 
+
+    activity: { total_likes },
+    blog_id: id,
+  } = content;
+  let { fullName, profile_img, userName } = author;
+
   return (
     <Link
       to={`/blog/${id}`}
       className="flex flex-row items-start border-b border-grey py-4 hover:bg-gray-50 hover:shadow-sm"
     >
+
       <div className="h-[250px] w-[500px]">
         <img src={banner} className="w-full h-full object-cover rounded-md" />
-      </div>
 
       <div className="flex flex-col items-center justify-between w-full h-[250px] ml-6">
         <div className="w-full">
           <div className="w-full flex gap-4 items-center justify-start">
+
             <h1 className="text-orange-500 font-bold bg-green-200//">
               {category
                 ? UppercaseFullString(category)
                 : "DID NOT SET CATEGORY"}
             </h1>
             <h2 className="text-md">{getFullDay(publishedAt)}</h2>
+
           </div>
 
           <h1 className="blog-title text-2xl font-semibold line-clamp-2 mt-2">
@@ -62,11 +73,14 @@ const BlogPost = ({ author, content, theme }) => {
           <div className="flex items-center justify-start gap-6">
             <div className="flex items-center justify-center ">
               <h1 className="text-xl font-semibold pt-1">{total_likes}</h1>
+
               <img src={BlackLike} alt="black icon like" className="ml-2 w-5" />
             </div>
 
             <div className="flex items-center justify-center ">
+
               <h1 className="text-xl font-semibold pt-1">{total_dislikes}</h1>
+
               <img
                 src={BlackDislike}
                 alt="black icon dislike"
@@ -75,7 +89,9 @@ const BlogPost = ({ author, content, theme }) => {
             </div>
 
             <div className="flex items-center justify-center">
+
               <h1 className="text-xl font-semibold pt-1">{comments}</h1>
+
               <img
                 src={BlackComment}
                 alt="black icon comment"

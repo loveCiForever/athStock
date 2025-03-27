@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -12,6 +13,9 @@ import DefaultBanner from "../assets/picture/blogBanner.png";
 import { useAuthContext } from "../components/hooks-services/AuthContext";
 
 export const BlogContext = createContext({});
+
+
+// ./client/src/pages/BlogPage.jsx
 
 const BlogPage = ({ theme }) => {
   let { blog_id } = useParams();
@@ -87,6 +91,49 @@ const BlogPage = ({ theme }) => {
   //   console.log(user);
   // }, [user]);
 
+  let [blogs, setBlog] = useState(null);
+  let [selectedCategory, setSelectedCategory] = useState("");
+  let [loading, setLoading] = useState(true);
+  const VITE_BASE_URL =
+    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
+
+  const fetchLatestBlog = async ({ page = 1 }) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post(
+        VITE_BASE_URL + "/api/blog/latest-blog",
+        { page }
+      );
+      setBlog(data.blogs);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchBlogByCategory = async ({
+    page = 1,
+    category = selectedCategory,
+  }) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post(VITE_BASE_URL + "/api/blog/category/", {
+        page,
+        category,
+      });
+      setBlog(data.blogs);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLatestBlog({ page: 1 });
+  }, []);
+
   return (
     <div
       className={`flex flex-col items-center min-w-full min-h-screen${
@@ -94,6 +141,7 @@ const BlogPage = ({ theme }) => {
       }`}
     >
       <NavBar theme={theme} />
+
 
       <div className="flex justify-center w-full px-40 my-10 gap-20">
         <div className="w-[50%] bg-red-300// h-full">
@@ -195,6 +243,38 @@ const BlogPage = ({ theme }) => {
                 <div>No profile image available</div>
               )} */}
             </div>
+      <div className="flex justify-between w-full px-40 my-10">
+        <div className="w-[65%] bg-red-300// h-full">
+          {loading || blogs == null ? (
+            <Loader />
+          ) : blogs && blogs.length > 0 ? (
+            blogs.map((blog) => (
+              <BlogPost
+                key={blog.blog_id}
+                content={blog}
+                author={blog.author.personal_info}
+                theme={theme}
+              />
+            ))
+          ) : (
+            <div>No blogs available</div>
+          )}
+        </div>
+
+        <div className="w-[30%] border-[1px] border-gray-300 rounded-xl h-fit">
+          <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-4">
+            Danh mục bài viết
+          </h1>
+          <div className="flex gap-3 w-full flex-wrap p-6">
+            {categories.map((category, index) => (
+              <button
+                key={category}
+                onClick={() => fetchBlogByCategory({ category })}
+                className="py-2 px-4 bg-black/80 text-white rounded-full hover:bg-black/50"
+              >
+                {category}
+              </button>
+            ))}
           </div>
         </div>
       </div>

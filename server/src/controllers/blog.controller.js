@@ -16,6 +16,7 @@ const createBlog = async (req, res) => {
     }
 
     let { title, intro, content, tags, category, banner } = req.body;
+
     const { error } = blogValidation.validate({ title, intro, content });
 
     if (error) {
@@ -36,12 +37,14 @@ const createBlog = async (req, res) => {
       content,
       tags,
       category,
+
       author: currentUserId,
       banner,
     }).save();
 
     const updatedUser = await UserModel.findOneAndUpdate(
       { _id: currentUserId },
+
       {
         $inc: { "account_info.total_posts": 1 },
         $push: { blogs: newBlog._id },
@@ -64,7 +67,9 @@ const createBlog = async (req, res) => {
   }
 };
 
+
 const fetchLatestBlog = async (req, res) => {
+
   try {
     let { page } = req.body;
     let maxLimit = 10;
@@ -79,6 +84,7 @@ const fetchLatestBlog = async (req, res) => {
       .select(
         "blog_id title intro category activity tags publishedAt -_id banner"
       )
+
       .skip((page - 1) * maxLimit)
       .limit(maxLimit)
       .then((blogs) => {
@@ -97,6 +103,7 @@ const fetchLatestBlog = async (req, res) => {
 };
 
 const fetchBlogByCategory = async (req, res) => {
+
   try {
     let { page, category } = req.body;
     let maxLimit = 10;
@@ -112,6 +119,7 @@ const fetchBlogByCategory = async (req, res) => {
       .select(
         "blog_id title intro category activity tags publishedAt -_id banner"
       )
+
       .skip((page - 1) * maxLimit)
       .limit(maxLimit)
       .then((blogs) => {
@@ -198,6 +206,7 @@ const dislikeByBlogId = async (req, res) => {
   }
 };
 
+
 export {
   createBlog,
   fetchLatestBlog,
@@ -206,3 +215,4 @@ export {
   likeByBlogId,
   dislikeByBlogId,
 };
+
