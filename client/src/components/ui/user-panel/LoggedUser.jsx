@@ -8,10 +8,6 @@ const LoggedUser = ({ theme }) => {
   const [toggleLinks, setToggleLinks] = useState(false);
   const { user } = useAuthContext();
 
-  // useEffect(() => {
-  //   console.log(user);
-  // });
-
   return (
     <div className="relative flex items-center justify-center">
       <button
