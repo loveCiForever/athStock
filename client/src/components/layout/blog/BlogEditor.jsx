@@ -2,20 +2,25 @@
 
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { toast } from "react-toastify";
-import { tools } from "./Tools.jsx";
+import { tools } from "./EditorTool.jsx";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EditorContext } from "../../../pages/EditorPage.jsx";
 import { UserContext } from "../../../App.jsx";
 import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
-import categories from "../../data/Categories.jsx";
+
+import categories from "./CategoriesList.jsx";
+
 import Tag from "./Tags.jsx";
 import WhiteCloseIcon from "../../../assets/icon/white/close.svg";
 const BlogEditor = ({ theme }) => {
   const textRef = useRef();
   const [selectedCategory, setSelectedCategory] = useState("");
   const { user, getAccessToken } = useAuthContext();
+
+  const [bannerUrl, setBannerUrl] = useState("");
+
   const access_token = getAccessToken();
   const navigate = useNavigate();
   const VITE_BASE_URL =
@@ -38,6 +43,11 @@ const BlogEditor = ({ theme }) => {
     input.style.height = input.scrollHeight + "px";
 
     setBlog({ ...blog, title: input.value.trim() });
+  };
+
+
+  const handleBannerUrl = (e) => {
+    setBannerUrl(e.target.value);
   };
 
   const handleTitleKeyDown = (e) => {
@@ -108,6 +118,8 @@ const BlogEditor = ({ theme }) => {
               content: data,
               tags,
               category: selectedCategory,
+              banner: bannerUrl,
+
             };
 
             console.log(blogObj);
@@ -160,9 +172,8 @@ const BlogEditor = ({ theme }) => {
     >
       <nav className="flex items-center justify-between py-6 border-b-[1px]">
         <div className="flex-grow text-center">
-          <h1 className="text-2xl font-bold ml-12">
-            Write your own financial blog
-          </h1>
+          <h1 className="text-2xl font-bold ml-12">Write your own blog</h1>
+
         </div>
         <button
           className="bg-black/40 rounded-full p-1 mr-6 hover:bg-black/60"
@@ -210,6 +221,17 @@ const BlogEditor = ({ theme }) => {
             })}
           </div>
         </div> */}
+
+
+        <input
+          type="text"
+          name="bannerlink"
+          id="bannerlink"
+          placeholder="Enter you banner's url"
+          value={bannerUrl}
+          onChange={handleBannerUrl}
+          className="p-2 pl-3 w-full rounded-md border bg-white outline-none mb-5"
+        />
 
         <div className="mb-5">
           <select

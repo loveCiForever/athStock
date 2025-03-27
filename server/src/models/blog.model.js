@@ -10,7 +10,8 @@ const blogSchema = mongoose.Schema(
     },
     title: {
       type: String,
-      maxLength: 100,
+      maxLength: 150,
+
     },
     intro: {
       type: String,
@@ -37,7 +38,9 @@ const blogSchema = mongoose.Schema(
         type: Number,
         default: 0,
       },
-      total_dislike: {
+
+      total_dislikes: {
+
         type: Number,
         default: 0,
       },

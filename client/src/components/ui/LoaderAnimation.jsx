@@ -1,6 +1,7 @@
 // ./client/src/components/common/Loader.jsx
 
-const Loader = () => {
+const LoaderAnimation = () => {
+
   return (
     <div className="w-12 mx-auto my-8">
       <svg
@@ -18,9 +19,8 @@ const Loader = () => {
           fill="currentFill"
         />
       </svg>
-      {/* <span className="sr-only">Loading...</span> */}
     </div>
   );
 };
 
-export default Loader;
+export default LoaderAnimation;

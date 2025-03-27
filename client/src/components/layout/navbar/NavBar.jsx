@@ -49,7 +49,7 @@ const NavBar = ({ theme }) => {
         {currentLocationPath == "/blog" || currentLocationPath == "/editor" ? (
           <PageButton
             currentLocationPath={currentLocationPath}
-            navigateTo={"/blog"}
+            navigateTo={"/editor"}
             name={"Write your own blog"}
             solid={true}
           />
