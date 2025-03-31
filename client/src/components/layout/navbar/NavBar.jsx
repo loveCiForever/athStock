@@ -6,13 +6,12 @@ import { useNavigate } from "react-router-dom";
 import LogoButton from "../../ui/button/LogoButton.jsx";
 import LoggedUser from "../../ui/user-panel/LoggedUser.jsx";
 import PageButton from "../../ui/button/PageButton.jsx";
+import { getBasePath } from "../../utils/PathSplitment.jsx";
 
 const NavBar = ({ theme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentLocationPath, setCurrentLocationPath] = useState(
-    window.location.pathname
-  );
-  const { user } = useAuthContext();
+  let [currentBasePath, setCurrentBasePath] = useState(null);
+  const { user, loading } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,18 +19,29 @@ const NavBar = ({ theme }) => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    const handleLocationPathChange = () => {
-      setCurrentLocationPath(window.location.pathname);
-    };
-
     window.addEventListener("scroll", handleScroll);
-    window.addEventListener("popstate", handleLocationPathChange);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("popstate", handleLocationPathChange);
     };
-  }, []);
+  });
+
+  const handleBasePathChange = () => {
+    setCurrentBasePath(getBasePath(window.location.pathname));
+  };
+
+  useEffect(() => {
+    handleBasePathChange();
+  }, [currentBasePath]);
+
+  // useEffect(() => {
+  //   console.log("USER:", user);
+  //   console.log("loading: ", loading);
+  // });
+
+  if (loading) {
+    return <div className="w-full h-screen bg-red-500">LOADING ...</div>;
+  }
 
   return (
     <nav
@@ -46,9 +56,9 @@ const NavBar = ({ theme }) => {
       <LogoButton theme={theme} navigateTo={"/"} />
 
       <div className="flex items-center justify-center gap-16">
-        {currentLocationPath == "/blog" || currentLocationPath == "/editor" ? (
+        {currentBasePath == "blog" || currentBasePath == "editor" ? (
           <PageButton
-            currentLocationPath={currentLocationPath}
+            currentBasePath={currentBasePath}
             navigateTo={"/editor"}
             name={"Write your own blog"}
             solid={true}
@@ -58,21 +68,21 @@ const NavBar = ({ theme }) => {
         )}
 
         <PageButton
-          currentLocationPath={currentLocationPath}
+          currentBasePath={currentBasePath}
           navigateTo={"/"}
           name={"Home"}
           solid={false}
         />
 
         <PageButton
-          currentLocationPath={currentLocationPath}
+          currentBasePath={currentBasePath}
           navigateTo={"/blog"}
           name={"Blog"}
           solid={false}
         />
 
         <PageButton
-          currentLocationPath={currentLocationPath}
+          currentBasePath={currentBasePath}
           navigateTo={"/dashboard"}
           name={"Dashboard"}
           solid={false}

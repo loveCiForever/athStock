@@ -2,21 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import NavBar from "../components/layout/navbar/NavBar";
 import { ThemeContext } from "../App";
 import { UserContext } from "../App";
-const HomePage = () => {
+import Market from "../components/layout/market/Market";
+
+const Dashboard = ({ theme }) => {
   useEffect(() => {
-    document.title = "Home Page";
+    document.title = "Dashboard";
   });
-
-  const { theme } = useContext(ThemeContext);
-  const { userAuth } = useContext(UserContext);
-
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
-
-  // useEffect(() => {
-  //   console.log(userAuth);
-  // });
 
   return (
     <div
@@ -25,8 +16,12 @@ const HomePage = () => {
       }`}
     >
       <NavBar theme={theme} />
+
+      <div className="flex items-center justify-center w-auto mt-5">
+        <Market />
+      </div>
     </div>
   );
 };
 
-export default HomePage;
+export default Dashboard;
