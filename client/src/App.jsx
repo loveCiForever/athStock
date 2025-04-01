@@ -13,8 +13,10 @@ import EditorPage from "./pages/EditorPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import BlogsPage from "./pages/BlogsPage.jsx";
 import BlogPage from "./pages/BlogPage.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 import "./index.css";
+import { useAuthContext } from "./components/hooks-services/AuthContext.jsx";
 
 export const ThemeContext = createContext({});
 export const UserContext = createContext({});
@@ -24,6 +26,7 @@ export const darkThemePreference = () =>
 
 const App = () => {
   const [userAuth, setUserAuth] = useState({});
+  const { user } = useAuthContext();
   const [theme, setTheme] = useState(() =>
     darkThemePreference() ? "dark" : "light"
   );
@@ -42,12 +45,18 @@ const App = () => {
     }
   }, []);
 
+  // useEffect(() => {
+  //   setUserAuth(user);
+  //   console.log(user);
+  //   console.log(userAuth);
+  // });
+
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <UserContext.Provider value={{ userAuth, setUserAuth }}>
+      <UserContext.Provider value={{ userAuth }}>
         <Router>
           <Routes>
-            <Route path="/" element={<HomePage theme={theme} />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<SignInPage theme={theme} />} />
             <Route path="/register" element={<SignUpPage theme={theme} />} />
 
@@ -56,6 +65,8 @@ const App = () => {
             <Route path="/editor" element={<EditorPage theme={theme} />} />
             <Route path="/blog" element={<BlogsPage theme={theme} />} />
             <Route path="/blog/:blog_id" element={<BlogPage theme={theme} />} />
+
+            <Route path="/dashboard" element={<Dashboard theme={theme} />} />
           </Routes>
         </Router>
       </UserContext.Provider>
