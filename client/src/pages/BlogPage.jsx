@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -12,17 +11,16 @@ import { UppercaseFirstLetterEachWord } from "../components/utils/TextFormat";
 import DefaultBanner from "../assets/picture/blogBanner.png";
 import { useAuthContext } from "../components/hooks-services/AuthContext";
 
+import UserPicture from "../assets/picture/userPicture.jpg";
+
 export const BlogContext = createContext({});
-
-
-// ./client/src/pages/BlogPage.jsx
 
 const BlogPage = ({ theme }) => {
   let { blog_id } = useParams();
   let [blog, setBlog] = useState(blogStructure);
   const [loading, setLoading] = useState(true);
-  // let [user, setUser] = useState(null);
-  // const { fullName, userName, profile_img } = useState(user);
+  const { user, userLoading } = useAuthContext();
+  // let { userName, fullName, profile_img } = user;
 
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
@@ -81,58 +79,12 @@ const BlogPage = ({ theme }) => {
     fetchBlogById({ blog_id: blog_id });
   }, [blog_id]);
 
-  // useEffect(() => {
-  //   if (blog.title || blog.intro || blog.banner || blog.content.length > 0) {
-  //     console.log(blog);
-  //   }
-  // }, [blog]);
-
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
-
-  let [blogs, setBlog] = useState(null);
-  let [selectedCategory, setSelectedCategory] = useState("");
-  let [loading, setLoading] = useState(true);
-  const VITE_BASE_URL =
-    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
-
-  const fetchLatestBlog = async ({ page = 1 }) => {
-    setLoading(true);
-    try {
-      const { data } = await axios.post(
-        VITE_BASE_URL + "/api/blog/latest-blog",
-        { page }
-      );
-      setBlog(data.blogs);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchBlogByCategory = async ({
-    page = 1,
-    category = selectedCategory,
-  }) => {
-    setLoading(true);
-    try {
-      const { data } = await axios.post(VITE_BASE_URL + "/api/blog/category/", {
-        page,
-        category,
-      });
-      setBlog(data.blogs);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchLatestBlog({ page: 1 });
-  }, []);
+    console.log("USER LOADING: ", loading);
+    if (!userLoading) {
+      console.log(user);
+    }
+  }, [userLoading]);
 
   return (
     <div
@@ -141,7 +93,6 @@ const BlogPage = ({ theme }) => {
       }`}
     >
       <NavBar theme={theme} />
-
 
       <div className="flex justify-center w-full px-40 my-10 gap-20">
         <div className="w-[50%] bg-red-300// h-full">
@@ -152,7 +103,7 @@ const BlogPage = ({ theme }) => {
             <h2 className=" text-black/60">{getFullDay(blog.publishedAt)}</h2>
             <h2 className="text-black/60 font-bold">
               {" "}
-              Tác giả:{" "}
+              Author:{" "}
               {UppercaseFirstLetterEachWord(blog.author.personal_info.fullName)}
             </h2>
           </div>
@@ -184,11 +135,11 @@ const BlogPage = ({ theme }) => {
             })}
         </div>
 
-        <div className="w-auto border-[1px]/ border-gray-300 h-fit">
-          <div className="flex items-center justify-between h-full gap-6/ w-full">
+        <div className="w-[30%] border-[1px]/ border-gray-300 h-fit">
+          <div className="flex items-center justify-center h-full gap-6/ w-full">
             <button
               onClick={() => likeByBlogId({ blog_id })}
-              className="flex items-center justify-center border-[1px] border-gray-400 px-8 py-2 h-auto rounded-l-lg hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all "
+              className="flex items-center justify-center border-[1px] border-gray-200 px-8 py-2 h-auto rounded-l-lg hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all "
             >
               <h1 className="text-xl font-semibold pt-1">
                 {blog.activity.total_likes}
@@ -198,7 +149,7 @@ const BlogPage = ({ theme }) => {
 
             <button
               onClick={() => dislikeByBlogId({ blog_id })}
-              className="flex items-center justify-center border-[1px] border-gray-400 px-8 py-2 h-auto hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all "
+              className="flex items-center justify-center border-[1px] border-gray-200 px-8 py-2 h-auto hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all "
             >
               <h1 className="text-xl font-semibold pt-1">
                 {blog.activity.total_dislikes}
@@ -210,7 +161,7 @@ const BlogPage = ({ theme }) => {
               />
             </button>
 
-            <div className="flex items-center justify-center border-[1px] border-gray-400 px-8 py-2 h-auto hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all ">
+            <div className="flex items-center justify-center border-[1px] border-gray-200 px-8 py-2 h-auto hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all ">
               <h1 className="text-xl font-semibold pt-1">10</h1>
               <img
                 src={BlackComment}
@@ -219,62 +170,54 @@ const BlogPage = ({ theme }) => {
               />
             </div>
 
-            <button className="flex items-center justify-center border-[1px] border-gray-400 px-8 py-2 h-auto rounded-r-lg hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all ">
+            <button className="flex items-center justify-center border-[1px] border-gray-200 px-8 py-2 h-auto rounded-r-lg hover:bg-orange-400 active:scale-[.95] active:duration-90 transition-all ">
               <h1 className="text-lg font-semibold pt-1">Report</h1>
             </button>
           </div>
 
-          <div className="mt-4 flex items-start justify-center gap-6 border-[1px] border-gray-400 h-[500px] w-full rounded-lg">
-            <div className="w-full flex flex-row p-4">
-              {/* {user && user.profile_img ? (
+          <div className="mt-4 flex items-start justify-center gap-6 border-[1px] border-gray-200 h-auto w-full rounded-lg pr-6">
+            <div>
+              <div className="flex items-start justify-start px-4 py-2">
                 <img
-                  src={user.profile_img}
+                  src={UserPicture}
                   alt="profile image"
-                  className="user-profile-img w-8 h-8 lg:w-8 lg:h-8 rounded-full"
+                  className="user-profile-img w-8 h-8 lg:w-12 lg:h-12 rounded-full"
                 />
-              ) : (
-                <div>No profile image available</div>
-              )} */}
-
-              {/* <img src={profile_img} alt="" className="w-8 h-8" /> */}
-              {/* {user && user.fullName ? (
-                <h1 className="">{user.fullName}</h1>
-              ) : (
-                <div>No profile image available</div>
-              )} */}
+                <div className="flex flex-col items-start justify-center ml-4 px-4 py-2 rounded-xl border-[1px] border-gray-300">
+                  <h1 className="text-md font-semibold">Nguyen Quang Huy</h1>
+                  <p className="w-fit">
+                    Cuộc gặp gỡ đánh dấu bước tiến quan trọng trong việc chuyển
+                    giao kinh nghiệm quốc tế và định hướng phát triển thị trường
+                    tài sản số tại Việt Nam.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start justify-start px-4 py-2">
+                <img
+                  src={UserPicture}
+                  alt="profile image"
+                  className="user-profile-img w-8 h-8 lg:w-12 lg:h-12 rounded-full"
+                />
+                <div className="flex flex-col items-start justify-center ml-4 px-4 py-2 rounded-xl border-[1px] border-gray-300">
+                  <h1 className="text-md font-semibold">Nguyen Quang Huy</h1>
+                  <p className="w-fit">
+                    Qua các cuộc trao đổi trong ngày, sự kiện lần này đã khẳng
+                    định vai trò của VanEck
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start justify-start px-4 py-2">
+                <img
+                  src={UserPicture}
+                  alt="profile image"
+                  className="user-profile-img w-8 h-8 lg:w-12 lg:h-12 rounded-full"
+                />
+                <div className="flex flex-col items-start justify-center ml-4 px-4 py-2 rounded-xl border-[1px] border-gray-300">
+                  <h1 className="text-md font-semibold">Nguyen Quang Huy</h1>
+                  <p className="w-fit">Việt Nam tham khảo</p>
+                </div>
+              </div>
             </div>
-      <div className="flex justify-between w-full px-40 my-10">
-        <div className="w-[65%] bg-red-300// h-full">
-          {loading || blogs == null ? (
-            <Loader />
-          ) : blogs && blogs.length > 0 ? (
-            blogs.map((blog) => (
-              <BlogPost
-                key={blog.blog_id}
-                content={blog}
-                author={blog.author.personal_info}
-                theme={theme}
-              />
-            ))
-          ) : (
-            <div>No blogs available</div>
-          )}
-        </div>
-
-        <div className="w-[30%] border-[1px] border-gray-300 rounded-xl h-fit">
-          <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-4">
-            Danh mục bài viết
-          </h1>
-          <div className="flex gap-3 w-full flex-wrap p-6">
-            {categories.map((category, index) => (
-              <button
-                key={category}
-                onClick={() => fetchBlogByCategory({ category })}
-                className="py-2 px-4 bg-black/80 text-white rounded-full hover:bg-black/50"
-              >
-                {category}
-              </button>
-            ))}
           </div>
         </div>
       </div>
