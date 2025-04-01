@@ -1,7 +1,6 @@
 // ./client/src/components/navbar/LoggedUser.jsx
 
 import UserPanel from "./UserPanel.jsx";
-
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
 
@@ -9,10 +8,7 @@ const LoggedUser = ({ theme }) => {
   const [toggleLinks, setToggleLinks] = useState(false);
   const { user } = useAuthContext();
 
-
-  // useEffect(() => {
-  //   console.log(user);
-  // });
+  // console.log(user);
 
   return (
     <div className="relative flex items-center justify-center">
