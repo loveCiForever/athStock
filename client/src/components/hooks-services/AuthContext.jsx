@@ -1,4 +1,4 @@
-// .client/src/context/AuthContext.jsx
+// ./client/src/components/hooks-services/AuthContext.jsx
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { deleteSession, getSession, setSession } from "./session.jsx";
@@ -10,12 +10,14 @@ export const useAuthContext = () => useContext(authContext);
 const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const data = getSession();
     if (data) {
       setUser(data);
     }
+    setLoading(false);
   }, []);
 
   const configUser = (user, access_token) => {
@@ -39,7 +41,7 @@ const AuthContext = ({ children }) => {
   };
 
   return (
-    <authContext.Provider value={{ user, configUser, signout, getAccessToken }}>
+    <authContext.Provider value={{ user, configUser, signout, getAccessToken, loading }}>
       {children}
     </authContext.Provider>
   );
