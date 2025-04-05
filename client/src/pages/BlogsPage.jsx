@@ -3,7 +3,7 @@
 import axios from "axios";
 import NavBar from "../components/layout/navbar/NavBar.jsx";
 import { useEffect, useState } from "react";
-import BlogPost from "../components/layout/blog/BlogPost.jsx";
+import BlogPost from "../components/ui/card/BlogCard.jsx";
 import categories from "../components/layout/blog/CategoriesList.jsx";
 
 const BlogsPage = ({ theme }) => {

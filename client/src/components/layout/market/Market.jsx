@@ -3,7 +3,7 @@ import axios from "axios";
 
 import CollapseAllIcon from "../../../assets/icon/collapseAllIcon.png";
 import ExpandAllIcon from "../../../assets/icon/expandAllIcon.png";
-import MarketCard from "./MarketCard";
+import MarketCard from "../../ui/card/MarketCard";
 
 // import MarketsGraph from "./MarketsGraph";
 
@@ -70,16 +70,14 @@ const Market = () => {
   };
 
   return (
-    <div className="flex flex-col w-[1000px] h-auto mt-[0px] bg-white">
+    <div className="flex flex-col w-[1200px] bg-red-200//">
       <div className="flex flex-col items-start">
         <button
-          className={`flex items-center justify-center uppercase text-gray-700 tracking-widest font-bold text-[12px] ${
-            isExpanded ? "px-0" : "px-10"
-          } `}
+          className={`flex items-center justify-center uppercase text-gray-800 tracking-widest font-bold text-[14px] `}
           onClick={handleExpandClick}
         >
           <img
-            className="h-4 w-4 mr-[4px] mb-[2px]"
+            className="h-5 w-5 mr-[6px]"
             src={isExpanded ? CollapseAllIcon : ExpandAllIcon}
             alt={isExpanded ? "Collapse All Icon" : "Expand All Icon"}
           />
@@ -87,7 +85,7 @@ const Market = () => {
         </button>
 
         {!isExpanded && (
-          <div className="flex flex-row items-center justify-between w-full px-10 mt-2">
+          <div className="flex flex-row items-center justify-between w-full mt-2">
             <MarketCard
               IndexName={"VNINDEX"}
               Change={marketData.vnindex.data[0].Change}

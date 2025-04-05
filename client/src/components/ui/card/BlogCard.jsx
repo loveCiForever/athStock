@@ -13,7 +13,7 @@ import { UppercaseFullString } from "../../utils/TextFormat";
 import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat";
 import { getFullDay } from "../../utils/DateFormat";
 
-const BlogPost = ({ author, content, theme }) => {
+const BlogCard = ({ author, content, theme }) => {
   let {
     publishedAt,
     tags,
@@ -93,4 +93,4 @@ const BlogPost = ({ author, content, theme }) => {
   );
 };
 
-export default BlogPost;
+export default BlogCard;
