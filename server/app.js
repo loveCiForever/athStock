@@ -11,6 +11,8 @@ import corsMiddleware from "./src/middlewares/cors.middleware.js";
 import helloworldRoute from "./src/routes/helloworld.route.js";
 import authRoute from "./src/routes/auth.route.js";
 import blogRoute from "./src/routes/blog.route.js";
+import industryRoute from "./src/routes/industry.route.js";
+
 import jwt from "jsonwebtoken";
 
 const app = express();
@@ -24,6 +26,7 @@ app.use(responseEnhancer());
 app.use("/api", helloworldRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/blog", blogRoute);
+app.use("/api/stock", industryRoute);
 
 app.get("/test", (req, res) => {
   res.send("Server is working!");
