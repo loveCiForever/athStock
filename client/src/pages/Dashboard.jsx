@@ -29,14 +29,14 @@ const Dashboard = ({ theme }) => {
             <MayBeYouCare />
           </div>
         </div>
-        <div className="w-[400px] border-[1px] border-gray-300 rounded-md h-fit">
+        {/* <div className="w-[400px] border-[1px] border-gray-300 rounded-md h-fit">
           <h1 className="text-center text-lg font-semibold border-b-[1px] border-gray-300 p-2">
             Danh mục
           </h1>
           <div className="flex gap-3 w-full flex-wrap p-6"></div>
-        </div>
+        </div> */}
       </div>
-      <Footer theme={theme} />
+      {/* <Footer theme={theme} /> */}
     </div>
   );
 };

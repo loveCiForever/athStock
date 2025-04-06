@@ -5,7 +5,7 @@ const Footer = ({ theme }) => {
   const navigate = useNavigate();
 
   return (
-    <footer className="flex py-20 mt-10 w-full px-40 bg-black/90 text-white">
+    <footer className="flex py-20 mt-10 w-full px-40 bg-black/90 text-white ">
       <div className="flex flex-col items-start justify-center">
         <LogoButton theme={!theme} navigateTo={"/"} size={"100px"} />
         <div className="mt-4 text-md text-white">
