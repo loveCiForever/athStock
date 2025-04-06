@@ -5,11 +5,8 @@ import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import LogoButton from "../../ui/button/LogoButton.jsx";
 import LoggedUser from "../../ui/user-panel/LoggedUser.jsx";
-<<<<<<< HEAD
-import PageButton from "../../ui/button/PageButton.jsx";
-=======
+
 import PageButton from "../../ui/button/NavButtonForHeader.jsx";
->>>>>>> web_dev
 import { getBasePath } from "../../utils/PathSplitment.jsx";
 
 const NavBar = ({ theme }) => {
@@ -57,11 +54,7 @@ const NavBar = ({ theme }) => {
         isScrolled ? "shadow-sm shadow-gray-300" : "null"
       }`}
     >
-<<<<<<< HEAD
-      <LogoButton theme={theme} navigateTo={"/"} />
-=======
       <LogoButton theme={theme} navigateTo={"/"} size={"120px"} />
->>>>>>> web_dev
 
       <div className="flex items-center justify-center gap-16">
         {currentBasePath == "blog" || currentBasePath == "editor" ? (
