@@ -3,9 +3,9 @@
 import axios from "axios";
 import NavBar from "../components/layout/navbar/NavBar.jsx";
 import { useEffect, useState } from "react";
-import BlogPost from "../components/ui/card/BlogCard.jsx";
+import BlogCard from "../components/ui/card/BlogCard.jsx";
 import categories from "../components/layout/blog/CategoriesList.jsx";
-
+import Footer from "../components/layout/footer/Footer.jsx";
 const BlogsPage = ({ theme }) => {
   let [blogs, setBlog] = useState(null);
   let [selectedCategory, setSelectedCategory] = useState(null);
@@ -27,7 +27,6 @@ const BlogsPage = ({ theme }) => {
         { page }
       );
       setBlog(data.blogs);
-      // console.log(data);
     } catch (error) {
       console.error(error);
       setLoading(true);
@@ -56,7 +55,6 @@ const BlogsPage = ({ theme }) => {
 
   useEffect(() => {
     fetchLatestBlog({ page: 1 });
-    // console.log(blogs);
   }, []);
 
   useEffect(() => {
@@ -76,7 +74,7 @@ const BlogsPage = ({ theme }) => {
             <div>No blogs available</div>
           ) : blogs && blogs.length > 0 ? (
             blogs.map((blog) => (
-              <BlogPost
+              <BlogCard
                 key={blog.blog_id}
                 content={blog}
                 author={blog.author.personal_info}
@@ -109,6 +107,8 @@ const BlogsPage = ({ theme }) => {
           </div>
         </div>
       </div>
+
+      <Footer theme={theme} />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { blogStructure } from "../components/layout/blog/BlogStructure";
 import { UppercaseFirstLetterEachWord } from "../components/utils/TextFormat";
 import DefaultBanner from "../assets/picture/blogBanner.png";
 import { useAuthContext } from "../components/hooks-services/AuthContext";
+import Footer from "../components/layout/footer/Footer";
 
 import UserPicture from "../assets/picture/userPicture.jpg";
 
