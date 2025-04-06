@@ -38,6 +38,7 @@ const NavBar = ({ theme }) => {
   // useEffect(() => {
   //   console.log("USER:", user);
   //   console.log("loading: ", loading);
+  //
   // });
 
   if (loading) {
