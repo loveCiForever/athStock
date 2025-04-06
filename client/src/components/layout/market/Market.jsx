@@ -3,9 +3,13 @@ import axios from "axios";
 
 import CollapseAllIcon from "../../../assets/icon/collapseAllIcon.png";
 import ExpandAllIcon from "../../../assets/icon/expandAllIcon.png";
+<<<<<<< HEAD
 import ArrowUp from "../../../assets/icon/upArrowIcon.png";
 import ArrowDown from "../../../assets/icon/downArrowIcon.png";
 import HorizontalIcon from "../../../assets/icon/horizontalIcon.png";
+=======
+import MarketCard from "../../ui/card/MarketCard";
+>>>>>>> web_dev
 
 // import MarketsGraph from "./MarketsGraph";
 
@@ -16,8 +20,13 @@ const Market = () => {
       data: [
         {
           IndexValue: 1200.5,
+<<<<<<< HEAD
           Change: 15.25,
           RatioChange: 1.28,
+=======
+          Change: +15.25,
+          RatioChange: +1.28,
+>>>>>>> web_dev
         },
       ],
     },
@@ -34,8 +43,13 @@ const Market = () => {
       data: [
         {
           IndexValue: 250.3,
+<<<<<<< HEAD
           Change: 2.1,
           RatioChange: 0.84,
+=======
+          Change: +2.1,
+          RatioChange: +0.84,
+>>>>>>> web_dev
         },
       ],
     },
@@ -63,14 +77,21 @@ const Market = () => {
   //   }
   // };?
 
+<<<<<<< HEAD
   useEffect(() => {
     console.log(marketData);
   });
+=======
+  // useEffect(() => {
+  //   console.log(marketData.vnindex.data[0].Change);
+  // });
+>>>>>>> web_dev
 
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
   };
 
+<<<<<<< HEAD
   const checkData = (data) => {
     return data && data.length > 0 ? true : false;
   };
@@ -152,6 +173,17 @@ const Market = () => {
         >
           <img
             className="h-4 w-4 mr-[4px] mb-[2px]"
+=======
+  return (
+    <div className="flex flex-col w-[1200px] bg-red-200//">
+      <div className="flex flex-col items-start">
+        <button
+          className={`flex items-center justify-center uppercase text-gray-800 tracking-widest font-bold text-[14px] `}
+          onClick={handleExpandClick}
+        >
+          <img
+            className="h-5 w-5 mr-[6px]"
+>>>>>>> web_dev
             src={isExpanded ? CollapseAllIcon : ExpandAllIcon}
             alt={isExpanded ? "Collapse All Icon" : "Expand All Icon"}
           />
@@ -159,6 +191,7 @@ const Market = () => {
         </button>
 
         {!isExpanded && (
+<<<<<<< HEAD
           <div className="flex flex-row items-center justify-between w-full px-10 mt-2">
             <div className="flex bg-white border border-gray-200 rounded-lg p-2 w-[23%] ">
               <div
@@ -299,6 +332,37 @@ const Market = () => {
                 <div className="tracking-wider">{marketData.hnx30.change}</div>
               </div>
             </div>
+=======
+          <div className="flex flex-row items-center justify-between w-full mt-2">
+            <MarketCard
+              IndexName={"VNINDEX"}
+              Change={marketData.vnindex.data[0].Change}
+              IndexValue={marketData.vnindex.data[0].IndexValue}
+              RatioChange={marketData.vnindex.data[0].RatioChange}
+              isExpanded={isExpanded}
+            />
+            <MarketCard
+              IndexName={"VN30"}
+              Change={marketData.vn30.data[0].Change}
+              IndexValue={marketData.vn30.data[0].IndexValue}
+              RatioChange={marketData.vn30.data[0].RatioChange}
+              isExpanded={isExpanded}
+            />
+            <MarketCard
+              IndexName={"HNXINDEX"}
+              Change={marketData.hnxindex.data[0].Change}
+              IndexValue={marketData.hnxindex.data[0].IndexValue}
+              RatioChange={marketData.hnxindex.data[0].RatioChange}
+              isExpanded={isExpanded}
+            />
+            <MarketCard
+              IndexName={"HNX30"}
+              Change={marketData.hnx30.data[0].Change}
+              IndexValue={marketData.hnx30.data[0].IndexValue}
+              RatioChange={marketData.hnx30.data[0].RatioChange}
+              isExpanded={isExpanded}
+            />
+>>>>>>> web_dev
           </div>
         )}
 
@@ -317,6 +381,7 @@ const Market = () => {
                 {/* <MarketsGraph /> */}
               </div>
             </div>
+<<<<<<< HEAD
             <div className="flex flex-col w-[40%] h-full ml-6 items-center justify-center  font-semibold text-[15px]">
               <div className="flex items-center justify-between w-full my-3 text-gray-600 rounded-md hover:bg-gray-100">
                 <div className="w-[6px] h-[20px] rounded-l-sm rounded-r-sm bg-red-500"></div>
@@ -449,6 +514,38 @@ const Market = () => {
                   </div>
                 </div>
               </div>
+=======
+
+            <div className="flex flex-col w-[40%] h-full ml-6 items-center justify-center  font-semibold text-[15px]">
+              <MarketCard
+                IndexName={"VNINDEX"}
+                Change={marketData.vnindex.data[0].Change}
+                IndexValue={marketData.vnindex.data[0].IndexValue}
+                RatioChange={marketData.vnindex.data[0].RatioChange}
+                isExpanded={isExpanded}
+              />
+              <MarketCard
+                IndexName={"VN30"}
+                Change={marketData.vn30.data[0].Change}
+                IndexValue={marketData.vn30.data[0].IndexValue}
+                RatioChange={marketData.vn30.data[0].RatioChange}
+                isExpanded={isExpanded}
+              />
+              <MarketCard
+                IndexName={"HNXINDEX"}
+                Change={marketData.hnxindex.data[0].Change}
+                IndexValue={marketData.hnxindex.data[0].IndexValue}
+                RatioChange={marketData.hnxindex.data[0].RatioChange}
+                isExpanded={isExpanded}
+              />
+              <MarketCard
+                IndexName={"HNX30"}
+                Change={marketData.hnx30.data[0].Change}
+                IndexValue={marketData.hnx30.data[0].IndexValue}
+                RatioChange={marketData.hnx30.data[0].RatioChange}
+                isExpanded={isExpanded}
+              />
+>>>>>>> web_dev
             </div>
           </div>
         )}
