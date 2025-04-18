@@ -11,7 +11,7 @@ import { useEffect, useContext } from "react";
 import { ThemeContext, UserContext } from "../../../App.jsx";
 import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat.jsx";
 import { setSession } from "../../hooks-services/session.jsx";
-
+import { SignOutFunction } from "./SignOutFunction.jsx";
 const UserNav = () => {
   const { user, signout } = useAuthContext();
   let { theme, setTheme } = useContext(ThemeContext);
@@ -25,17 +25,6 @@ const UserNav = () => {
 
     setSession("theme", newTheme);
     console.log(theme);
-  };
-
-  const signOutFunc = async () => {
-    try {
-      await axios.post("http://localhost:8000/api/auth/signout");
-      toast.success("Sign out successful");
-      signout();
-    } catch (error) {
-      console.log();
-      toast.error("Error signing out");
-    }
   };
 
   return (
