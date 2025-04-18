@@ -9,11 +9,11 @@ const PageButton = ({ currentBasePath, navigateTo, name, solid }) => {
   return (
     <div className="relative">
       <button
-        className={`page-button text-lg font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all ${
+        className={`page-button text-md lg:text-lg font-bold hover:text-orange-500 active:scale-[.90] active:duration-90 transition-all  ${
           currentBasePath == getBasePath(navigateTo) ? "text-orange-500 " : ""
         } ${
           solid == true
-            ? "py-2 px-6 bg-black/80 rounded-xl  text-white font-medium text-sm tracking-wider hover:text-white hover:bg-black/50"
+            ? "py-1.5 px-4 bg-black/80 rounded-xl text-white text-[13px] lg:text-[15px] tracking-wider hover:text-white hover:bg-black/50"
             : ""
         }`}
         onClick={() => {

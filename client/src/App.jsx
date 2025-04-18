@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { createContext, useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { getSession } from "./components/hooks-services/session.jsx";
+import "./index.css";
 
+import { getSession } from "./components/hooks-services/session.jsx";
+import ScreenSizePanel from "./components/utils/ScreenSizePanel.jsx";
 import HomePage from "./pages/HomePage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -15,9 +17,6 @@ import BlogsPage from "./pages/BlogsPage.jsx";
 import BlogPage from "./pages/BlogPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 
-import "./index.css";
-import { useAuthContext } from "./components/hooks-services/AuthContext.jsx";
-
 export const ThemeContext = createContext({});
 export const UserContext = createContext({});
 
@@ -26,7 +25,6 @@ export const darkThemePreference = () =>
 
 const App = () => {
   const [userAuth, setUserAuth] = useState({});
-  const { user } = useAuthContext();
   const [theme, setTheme] = useState(() =>
     darkThemePreference() ? "dark" : "light"
   );
@@ -45,15 +43,10 @@ const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   setUserAuth(user);
-  //   console.log(user);
-  //   console.log(userAuth);
-  // });
-
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <UserContext.Provider value={{ userAuth }}>
+        <ScreenSizePanel position={"bottom-left"} />
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />

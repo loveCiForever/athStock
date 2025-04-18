@@ -5,58 +5,61 @@ const Footer = ({ theme }) => {
   const navigate = useNavigate();
 
   return (
-    <footer className="flex py-20 mt-10 w-full px-40 bg-black/90 text-white ">
-      <div className="flex flex-col items-start justify-center">
-        <LogoButton theme={!theme} navigateTo={"/"} size={"100px"} />
-        <div className="mt-4 text-md text-white">
+    <footer className="flex flex-col xl:flex-row py-20 mt-10 w-full bg-black/90 text-white px-6 sm:px-10 md:px-14 xl:px-40">
+      <div className="flex flex-col w-full xl:w-[30%] items-start justify-center bg-red-100/20//">
+        <LogoButton
+          theme={!theme}
+          navigateTo={"/"}
+          size={`${window.innerWidth > 1200 ? "200px" : "110px"}`}
+        />
+        <div className="mt-4 text-md xl:text-md text-white">
           <h1 className="tracking-wider">
-            This is a student scientific research project <br />
-            carried out by a group of 2nd year students <br />
-            with the guidance of Dr. Trinh Hung Cuong <br />
-            and sponsored by Ton Duc Thang University.
+            This is a student scientific research project carried out by a group
+            of 2nd year students with the guidance of Dr. Trinh Hung Cuong and
+            sponsored by Ton Duc Thang University.
           </h1>
         </div>
       </div>
 
-      <div className="flex gap-40  ml-32">
-        <div className="flex flex-col">
-          <h1 className="tracking-wide text-2xl font-bold">Company</h1>
-          <div className="flex flex-col mt-2 gap-1 items-start">
-            <button className="hover:text-orange-500">About us</button>
-            <button className="hover:text-orange-500">Contact</button>
-            <button className="hover:text-orange-500">Jobs</button>
-            <button className="hover:text-orange-500">Press kit</button>
+      <div className="flex flex-col lg:flex-row w-full xl:w-[70%] xl:ml-12 mt-10 xl:mt-0 items-start justify-center">
+        <div className="flex w-full xl:w-[70%] items-center gap-16 lg:gap-6 xl:gap-0 bg-red-100// lg:justify-start xl:justify-between">
+          <div className="flex flex-col w-[50%]">
+            <h1 className="tracking-wide text-lg lg:text-xl font-bold">
+              Introduction
+            </h1>
+            <div className="flex flex-col mt-2 gap-1 items-start">
+              <button className="hover:text-orange-500">About us</button>
+              <button className="hover:text-orange-500">Contact</button>
+              <button className="hover:text-orange-500">Privacy policy</button>
+            </div>
+          </div>
+          <div className="flex flex-col w-[50%]">
+            <h1 className="tracking-wide text-lg lg:text-xl font-bold ">
+              Support
+            </h1>
+            <div className="flex flex-col mt-2 gap-1 items-start">
+              <button className="hover:text-orange-500">FAQ</button>
+              <button className="hover:text-orange-500">Help</button>
+              <button className="hover:text-orange-500">Terms of use</button>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col ">
-          <h1 className="tracking-wide text-2xl font-bold">Services</h1>
-          <div className="flex flex-col mt-2 gap-1 items-start">
-            <button className="hover:text-orange-500">Branding</button>
-            <button className="hover:text-orange-500">Design</button>
-            <button className="hover:text-orange-500">Marketing</button>
-            <button className="hover:text-orange-500">Advertisement</button>
-          </div>
-        </div>
-        <div className="flex flex-col ">
-          <h1 className="tracking-wide text-2xl font-bold ">Legal</h1>
-          <div className="flex flex-col mt-2 gap-1 items-start">
-            <button className="hover:text-orange-500">Terms of use</button>
-            <button className="hover:text-orange-500">Privacy policy</button>
-            <button className="hover:text-orange-500">Cookie policy</button>
-          </div>
-        </div>
-        <div>
-          <h1 className="tracking-wide text-2xl font-bold">More information</h1>
+
+        <div className="flex flex-col w-full xl:w-[40%] mt-10 lg:mt-0 bg-red-200// ">
+          <h1 className="tracking-wide text-lg lg:text-xl font-bold">
+            Send us a message
+          </h1>
+          <textarea
+            type="text"
+            id="message"
+            className="bg-transparent border-[1px] h-20 mt-4 pl-4 py-2 rounded-md border-gray-100"
+            placeholder="Send message"
+          />
+          <button className="w-full bg-orange-500 hover:bg-orange-300 p-1 mt-2 rounded-md text-white font-bold text-lg">
+            Send
+          </button>
         </div>
       </div>
-
-      {/* <div>
-        <input
-          type="text"
-          className="bg-transparent border-[1px] rounded-md border-gray-300"
-          placeholder="Send message"
-        />
-      </div> */}
     </footer>
   );
 };

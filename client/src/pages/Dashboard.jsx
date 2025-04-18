@@ -7,6 +7,7 @@ import Market from "../components/layout/market/Market";
 import StockCard from "../components/ui/card/StockCard";
 import MayBeYouCare from "../components/layout/may-be-you-care/MayBeYouCare.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
+
 const Dashboard = ({ theme }) => {
   useEffect(() => {
     document.title = "Dashboard";

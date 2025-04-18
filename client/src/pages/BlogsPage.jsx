@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import BlogCard from "../components/ui/card/BlogCard.jsx";
 import categories from "../components/layout/blog/CategoriesList.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
+
 const BlogsPage = ({ theme }) => {
   let [blogs, setBlog] = useState(null);
   let [selectedCategory, setSelectedCategory] = useState(null);
@@ -63,13 +64,13 @@ const BlogsPage = ({ theme }) => {
 
   return (
     <div
-      className={`flex flex-col items-center min-w-full min-h-screen ${
+      className={`flex flex-col items-center min-w-[770px]// min-h-screen ${
         theme == "light" ? "bg-white" : "bg-darkModeBackgroundColor"
       }`}
     >
       <NavBar theme={theme} />
-      <div className="flex justify-between w-full px-40 my-10">
-        <div className="w-[65%] bg-red-300// h-full">
+      <div className="flex justify-between w-full px-6 sm:px-10 md:px-14 xl:px-40 my-10">
+        <div className="w-full xl:w-[65%] bg-red-300// h-full">
           {loading || blogs == null ? (
             <div>No blogs available</div>
           ) : blogs && blogs.length > 0 ? (
@@ -86,28 +87,33 @@ const BlogsPage = ({ theme }) => {
           )}
         </div>
 
-        <div className="w-[30%] border-[1px] border-gray-300 rounded-xl h-fit">
-          <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-4">
-            Danh mục bài viết
-          </h1>
-          <div className="flex gap-3 w-full flex-wrap p-6">
-            {categories.map((category, index) => (
-              <button
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-                className={`py-2 px-5 bg-black/80 text-white font-semibold border-none rounded-full hover:bg-black/50 ${
-                  selectedCategory === category
-                    ? "bg-orange-500/100 hover:bg-orange-500/100 "
-                    : ""
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+        {window.innerWidth > 1463 ? (
+          <div className="w-[30%] border-[1px] border-gray-300 rounded-xl h-fit hidden xl:block">
+            <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-4">
+              Danh mục bài viết
+            </h1>
+            <div className="flex gap-3 w-full flex-wrap p-6">
+              {categories.map((category, index) => (
+                <button
+                  key={category}
+                  onClick={() => handleCategoryClick(category)}
+                  className={`py-2 px-5 bg-black/80 text-white font-semibold border-none rounded-full hover:bg-black/50 ${
+                    selectedCategory === category
+                      ? "bg-orange-500/100 hover:bg-orange-500/100 "
+                      : ""
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
       </div>
       <Footer theme={theme} />
+      {/* <ScreenSizePanel position={"bottom-left"} /> */}
     </div>
   );
 };

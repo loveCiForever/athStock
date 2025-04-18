@@ -9,7 +9,7 @@ const LogoButton = ({ theme, navigateTo, size }) => {
 
   return (
     <button
-      className="athstock-logo flex items-center justify-center active:scale-[.95] active:duration-75 transition-all"
+      className={`athstock-logo flex items-center justify-center active:scale-[.95] active:duration-75 transition-all`}
       onClick={() => {
         navigate(navigateTo);
       }}
@@ -17,7 +17,7 @@ const LogoButton = ({ theme, navigateTo, size }) => {
       <img
         src={theme == "light" ? BlackAthStockLogo : WhiteAthStockLogo}
         alt="Logo"
-        className={`w-[160px] lg:w-[${size}] `}
+        className={`w-[${size}]`}
       />
     </button>
   );
