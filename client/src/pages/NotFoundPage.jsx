@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import HomeIcon from "../assets/icon/homeIcon.png";
+import HomeIcon from "../assets/icons/homeIcon.png";
 
 const NotFoundPage = () => {
   const navigate = useNavigate();

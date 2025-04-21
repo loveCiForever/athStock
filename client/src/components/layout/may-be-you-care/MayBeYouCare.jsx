@@ -1,5 +1,5 @@
 import StockCard from "../../ui/card/StockCard";
-import InfoIcon from "../../../assets/icon/infoIcon.png";
+import InfoIcon from "../../../assets/icons/infoIcon.png";
 import { useEffect, useState } from "react";
 
 const MayBeYouCare = () => {

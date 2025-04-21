@@ -1,6 +1,6 @@
-import ArrowUp from "../../../assets/icon/upArrowIcon.png";
-import ArrowDown from "../../../assets/icon/downArrowIcon.png";
-import HorizontalIcon from "../../../assets/icon/horizontalIcon.png";
+import ArrowUp from "../../../assets/icons/upArrowIcon.png";
+import ArrowDown from "../../../assets/icons/downArrowIcon.png";
+import HorizontalIcon from "../../../assets/icons/horizontalIcon.png";
 
 const MarketCard = ({
   IndexName,

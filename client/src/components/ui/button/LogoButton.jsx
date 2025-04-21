@@ -1,10 +1,10 @@
 // ./client/src/components/branding/Branding.jsx
 
-import BlackAthStockLogo from "../../../assets/logo/black-athStockLogo.png";
-import WhiteAthStockLogo from "../../../assets/logo/white-athStockLogo.png";
+import BlackAthStockLogo from "../../../assets/logos/black-athStockLogo.png";
+import WhiteAthStockLogo from "../../../assets/logos/white-athStockLogo.png";
 import { useNavigate } from "react-router-dom";
 
-const LogoButton = ({ theme, navigateTo, size }) => {
+const LogoButton = ({ theme, navigateTo, forHeader }) => {
   const navigate = useNavigate();
 
   return (
@@ -14,11 +14,22 @@ const LogoButton = ({ theme, navigateTo, size }) => {
         navigate(navigateTo);
       }}
     >
-      <img
-        src={theme == "light" ? BlackAthStockLogo : WhiteAthStockLogo}
-        alt="Logo"
-        className={`w-[${size}]`}
-      />
+      {/* <img
+          src={theme == "light" ? BlackAthStockLogo : WhiteAthStockLogo}
+          alt="Logo"
+          className={`w-[${size}]`}
+        /> */}
+      <div className="flex flex-col">
+        <h1
+          className={`flex ${
+            forHeader ? "text-3xl" : "text-5xl"
+          }  font-extrabold`}
+        >
+          {/* ath <h1 className="text-orange-500">Stock</h1> */}
+          athStock.
+        </h1>
+        {/* <h2>Trading with Ai</h2> */}
+      </div>
     </button>
   );
 };

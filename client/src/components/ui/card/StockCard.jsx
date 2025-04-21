@@ -1,5 +1,5 @@
-import UpArrow from "../../../assets/icon/upArrowIcon.png";
-import DownArrow from "../../../assets/icon/downArrowIcon.png";
+import UpArrow from "../../../assets/icons/upArrowIcon.png";
+import DownArrow from "../../../assets/icons/downArrowIcon.png";
 
 const StockCard = ({
   symbol,

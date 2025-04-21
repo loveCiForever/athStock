@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
+import { useAuthContext } from "../../hooks/AuthContext.jsx";
 
 export const SignOutFunction = async () => {
   const { user, signout } = useAuthContext();

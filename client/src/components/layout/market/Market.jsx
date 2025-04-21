@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import CollapseAllIcon from "../../../assets/icon/collapseAllIcon.png";
-import ExpandAllIcon from "../../../assets/icon/expandAllIcon.png";
+import CollapseAllIcon from "../../../assets/icons/collapseAllIcon.png";
+import ExpandAllIcon from "../../../assets/icons/expandAllIcon.png";
 
 import MarketCard from "../../ui/card/MarketCard";
 

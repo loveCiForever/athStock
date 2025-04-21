@@ -11,6 +11,17 @@ const BlogsPage = ({ theme }) => {
   let [blogs, setBlog] = useState(null);
   let [selectedCategory, setSelectedCategory] = useState(null);
   let [loading, setLoading] = useState(true);
+  let [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
@@ -69,7 +80,7 @@ const BlogsPage = ({ theme }) => {
       }`}
     >
       <NavBar theme={theme} />
-      <div className="flex justify-between w-full px-6 sm:px-10 md:px-14 xl:px-40 my-10">
+      <div className="flex justify-between w-full px-6 mt-36 sm:px-10 md:px-14 xl:px-40 my-10">
         <div className="w-full xl:w-[65%] bg-red-300// h-full">
           {loading || blogs == null ? (
             <div>No blogs available</div>
@@ -87,7 +98,7 @@ const BlogsPage = ({ theme }) => {
           )}
         </div>
 
-        {window.innerWidth > 1463 ? (
+        {innerWidth > 1280 ? (
           <div className="w-[30%] border-[1px] border-gray-300 rounded-xl h-fit hidden xl:block">
             <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-4">
               Danh mục bài viết
@@ -97,7 +108,7 @@ const BlogsPage = ({ theme }) => {
                 <button
                   key={category}
                   onClick={() => handleCategoryClick(category)}
-                  className={`py-2 px-5 bg-black/80 text-white font-semibold border-none rounded-full hover:bg-black/50 ${
+                  className={`py-2 px-5 bg-black/80 text-white font-semibold border-none rounded-full hover:bg-black/50 text-sm ${
                     selectedCategory === category
                       ? "bg-orange-500/100 hover:bg-orange-500/100 "
                       : ""

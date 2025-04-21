@@ -2,17 +2,17 @@ import { useParams } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import NavBar from "../components/layout/navbar/NavBar";
-import BlackLike from "../assets/icon/black/like.svg";
-import BlackDislike from "../assets/icon/black/dislike.svg";
-import BlackComment from "../assets/icon/black/comment.svg";
+import BlackLike from "../assets/icons/black/like.svg";
+import BlackDislike from "../assets/icons/black/dislike.svg";
+import BlackComment from "../assets/icons/black/comment.svg";
 import { getFullDay } from "../components/utils/DateFormat";
 import { blogStructure } from "../components/layout/blog/BlogStructure";
 import { UppercaseFirstLetterEachWord } from "../components/utils/TextFormat";
-import DefaultBanner from "../assets/picture/blogBanner.png";
-import { useAuthContext } from "../components/hooks-services/AuthContext";
+import DefaultBanner from "../assets/images/blogBanner.png";
+import { useAuthContext } from "../components/hooks/AuthContext.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
 
-import UserPicture from "../assets/picture/userPicture.jpg";
+import UserPicture from "../assets/images/userPicture.jpg";
 
 export const BlogContext = createContext({});
 

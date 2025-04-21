@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import BlackLike from "../../../assets/icon/black/like.svg";
-import BlackDislike from "../../../assets/icon/black/dislike.svg";
-import WhiteLike from "../../../assets/icon/white/like.svg";
-import WhiteDislike from "../../../assets/icon/white/dislike.svg";
-import BlackComment from "../../../assets/icon/black/comment.svg";
-import WhiteComment from "../../../assets/icon/white/comment.svg";
-import Banner from "../../../assets/picture/banner.jpg";
+import BlackLike from "../../../assets/icons/black/like.svg";
+import BlackDislike from "../../../assets/icons/black/dislike.svg";
+import WhiteLike from "../../../assets/icons/white/like.svg";
+import WhiteDislike from "../../../assets/icons/white/dislike.svg";
+import BlackComment from "../../../assets/icons/black/comment.svg";
+import WhiteComment from "../../../assets/icons/white/comment.svg";
+import Banner from "../../../assets/images/banner.jpg";
 import { UppercaseFullString } from "../../utils/TextFormat";
 import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat";
 import { getFullDay } from "../../utils/DateFormat";
@@ -33,13 +33,13 @@ const BlogCard = ({ author, content, theme }) => {
   return (
     <Link
       to={`/blog/${id}`}
-      className="flex flex-row items-start border-b border-grey py-4 hover:bg-gray-50 hover:shadow-sm min-w-[770px]"
+      className="flex flex-col lg:flex-row items-start border-b border-grey py-4 hover:bg-gray-50 hover:shadow-sm min-w-[770px]// bg-red-100// mt-4"
     >
-      <div className="h-[200px] w-[400px] xl:h-[250px] xl:w-[500px]">
+      <div className="w-full lg:h-[200px] lg:w-[400px] xl:h-[250px] xl:w-[500px]">
         <img src={banner} className="w-full h-full object-cover rounded-md" />
       </div>
 
-      <div className="flex flex-col items-center justify-between w-full h-[200px] xl:h-[250px] ml-6">
+      <div className="flex flex-col items-center justify-between  h-auto xl:h-[250px] ml-0 lg:ml-6 mt-2 lg:mt-0">
         <div className="w-full">
           <div className="w-full flex gap-4 items-center justify-start">
             <h1 className="text-orange-500 text-sm xl:text-lg font-extrabold tracking-wide bg-green-200//">
@@ -58,7 +58,7 @@ const BlogCard = ({ author, content, theme }) => {
           </p>
         </div>
 
-        <div className="flex items-center justify-between w-full ">
+        <div className="flex items-center justify-between w-full mt-2 lg:mt-0 ">
           <div className="flex items-center justify-start gap-6">
             <div className="flex items-center justify-center ">
               <h1 className="text-md xl:text-lg font-semibold pt-1">

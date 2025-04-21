@@ -1,19 +1,19 @@
 // ./client/src/components/navbar/NavBar.jsx
 
 import { useEffect, useState, useContext, use } from "react";
-import { useAuthContext } from "../../hooks-services/AuthContext.jsx";
+import { useAuthContext } from "../../hooks/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import LogoButton from "../../ui/button/LogoButton.jsx";
 import LoggedUser from "../../ui/user-panel/LoggedUser.jsx";
 
 import PageButton from "../../ui/button/NavButtonForHeader.jsx";
 import { getBasePath } from "../../utils/PathSplitment.jsx";
-import HamburgerIcon from "../../../assets/icon/hamburger.svg";
+import HamburgerIcon from "../../../assets/icons/hamburger.svg";
 import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat.jsx";
 import { Link } from "react-router-dom";
-import LogoutIcon from "../../../assets/icon/logOutIcon.png";
-import DarkMode from "../../../assets/icon/darkmode.svg";
-import LightMode from "../../../assets/icon/lightmode.svg";
+import LogoutIcon from "../../../assets/icons/logOutIcon.png";
+import DarkMode from "../../../assets/icons/darkmode.svg";
+import LightMode from "../../../assets/icons/lightmode.svg";
 
 const NavBar = ({ theme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,17 +53,13 @@ const NavBar = ({ theme }) => {
     handleBasePathChange();
   }, [currentBasePath]);
 
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
-
   if (loading) {
     return <div className="w-full h-screen bg-red-500">LOADING ...</div>;
   }
 
   return (
     <nav
-      className={`navbar flex w-full items-center justify-between h-[80px] xl:h-[100px] border-b-[2px] px-6 sm:px-10 md:px-14 xl:px-40 ${
+      className={`navbar flex fixed w-full items-center justify-between h-[80px] xl:h-[100px] border-b-[2px] px-6 sm:px-10 md:px-14 xl:px-40 ${
         theme == "light"
           ? "bg-white border-gray-100 text-black"
           : "bg-darkmodeNavbarColor border-black/30 text-white"
@@ -74,7 +70,8 @@ const NavBar = ({ theme }) => {
       <LogoButton
         theme={theme}
         navigateTo={"/"}
-        size={`${innerWidth > 1200 ? "150px" : "110px"}`}
+        forHeader={true}
+        forFooter={false}
       />
 
       <div className="w-full ">
@@ -140,7 +137,7 @@ const NavBar = ({ theme }) => {
               alt="hamburger icon"
               className={`w-[40px] p-2 box-border z-20 bg-white ${
                 !toggleMenuDropdown
-                  ? "hover:bg-gray-200 rounded-full"
+                  ? "hover:bg-gray-200 rounded-xl"
                   : "rounded-t-full border-[1px] border-b-0"
               } `}
               onClick={() => {

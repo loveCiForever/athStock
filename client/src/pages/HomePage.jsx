@@ -13,7 +13,7 @@ const HomePage = () => {
 
   return (
     <div
-      className={`flex flex-col items-center min-w-full min-h-screen ${
+      className={`flex flex-col items-center min-h-screen ${
         theme == "light" ? "bg-white" : "bg-darkModeBackgroundColor"
       }`}
     >
