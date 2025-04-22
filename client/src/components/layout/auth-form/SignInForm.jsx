@@ -1,12 +1,11 @@
-// ./client/src/components/auth/SignInForm.jsx
-
-import googleLogo from "../../../assets/logos/googleLogo.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../../hooks/AuthContext.jsx";
-import { authWithGoogle } from "../../hooks/firebase.jsx";
+
+import googleLogo from "../../../assets/logos/googleLogo.svg";
+import { useAuthContext } from "../../../hooks/AuthContext.jsx";
+import { authWithGoogle } from "../../../services/firebase-config.jsx";
 
 const SignInForm = () => {
   const [email, setEmail] = useState("");

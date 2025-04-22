@@ -9,9 +9,9 @@ import WhiteDislike from "../../../assets/icons/white/dislike.svg";
 import BlackComment from "../../../assets/icons/black/comment.svg";
 import WhiteComment from "../../../assets/icons/white/comment.svg";
 import Banner from "../../../assets/images/banner.jpg";
-import { UppercaseFullString } from "../../utils/TextFormat";
-import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat";
-import { getFullDay } from "../../utils/DateFormat";
+import { UppercaseFullString } from "../../../utils/formatText.jsx";
+import { UppercaseFirstLetterEachWord } from "../../../utils/formatText.jsx";
+import { getFullDay } from "../../../utils/formatDate";
 
 const BlogCard = ({ author, content, theme }) => {
   let {

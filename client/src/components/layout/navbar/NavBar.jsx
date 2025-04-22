@@ -1,15 +1,15 @@
 // ./client/src/components/navbar/NavBar.jsx
 
 import { useEffect, useState, useContext, use } from "react";
-import { useAuthContext } from "../../hooks/AuthContext.jsx";
+import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
-import LogoButton from "../../ui/button/LogoButton.jsx";
-import LoggedUser from "../../ui/user-panel/LoggedUser.jsx";
+import LogoButton from "../../ui/buttons/LogoButton.jsx";
+import LoggedUser from "../user-panel/UserImage.jsx";
 
-import PageButton from "../../ui/button/NavButtonForHeader.jsx";
-import { getBasePath } from "../../utils/PathSplitment.jsx";
+import PageButton from "../../ui/buttons/NavButtonForHeader.jsx";
+import { getBasePath } from "../../../utils/splitPath.jsx";
 import HamburgerIcon from "../../../assets/icons/hamburger.svg";
-import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat.jsx";
+import { UppercaseFirstLetterEachWord } from "../../../utils/formatText.jsx";
 import { Link } from "react-router-dom";
 import LogoutIcon from "../../../assets/icons/logOutIcon.png";
 import DarkMode from "../../../assets/icons/darkmode.svg";

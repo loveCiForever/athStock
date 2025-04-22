@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import LogoButton from "../../ui/button/LogoButton";
+import LogoButton from "../../ui/buttons/LogoButton";
 
 const Footer = ({ theme }) => {
   const navigate = useNavigate();

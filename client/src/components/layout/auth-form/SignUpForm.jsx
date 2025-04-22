@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../../hooks/AuthContext.jsx";
-import { authWithGoogle } from "../../hooks/firebase.jsx";
+import { useAuthContext } from "../../../hooks/AuthContext.jsx";
+import { authWithGoogle } from "../../../services/firebase-config.jsx";
 
 const SignUpForm = () => {
   const [fullName, setFullName] = useState("");

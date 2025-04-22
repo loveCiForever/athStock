@@ -6,7 +6,7 @@ import { createContext, useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
-import { getSession } from "./components/hooks/session.jsx";
+import { getSession } from "./services/useSession.jsx";
 import ScreenSizePanel from "./components/ui/ScreenSizePanel.jsx";
 import HomePage from "./pages/HomePage";
 import SignInPage from "./pages/SignInPage";

@@ -5,11 +5,11 @@ import NavBar from "../components/layout/navbar/NavBar";
 import BlackLike from "../assets/icons/black/like.svg";
 import BlackDislike from "../assets/icons/black/dislike.svg";
 import BlackComment from "../assets/icons/black/comment.svg";
-import { getFullDay } from "../components/utils/DateFormat";
+import { getFullDay } from "../utils/formatDate.jsx";
 import { blogStructure } from "../components/layout/blog/BlogStructure";
-import { UppercaseFirstLetterEachWord } from "../components/utils/TextFormat";
+import { UppercaseFirstLetterEachWord } from "../utils/formatText.jsx";
 import DefaultBanner from "../assets/images/blogBanner.png";
-import { useAuthContext } from "../components/hooks/AuthContext.jsx";
+import { useAuthContext } from "../hooks/AuthContext.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
 
 import UserPicture from "../assets/images/userPicture.jpg";

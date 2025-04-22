@@ -1,4 +1,4 @@
-import StockCard from "../../ui/card/StockCard";
+import StockCard from "../../ui/cards/StockCard";
 import InfoIcon from "../../../assets/icons/infoIcon.png";
 import { useEffect, useState } from "react";
 

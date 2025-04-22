@@ -4,7 +4,7 @@ import { ThemeContext } from "../App";
 import { UserContext } from "../App";
 import Market from "../components/layout/market/Market";
 
-import StockCard from "../components/ui/card/StockCard";
+import StockCard from "../components/ui/cards/StockCard.jsx";
 import MayBeYouCare from "../components/layout/may-be-you-care/MayBeYouCare.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
 

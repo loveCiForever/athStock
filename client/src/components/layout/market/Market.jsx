@@ -4,7 +4,7 @@ import axios from "axios";
 import CollapseAllIcon from "../../../assets/icons/collapseAllIcon.png";
 import ExpandAllIcon from "../../../assets/icons/expandAllIcon.png";
 
-import MarketCard from "../../ui/card/MarketCard";
+import MarketCard from "../../ui/cards/MarketCard";
 
 // import MarketsGraph from "./MarketsGraph";
 

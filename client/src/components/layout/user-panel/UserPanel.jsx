@@ -1,7 +1,7 @@
 // .client/src/components/navbar/UserNav.jsx
 
 import { Link, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../../hooks/AuthContext.jsx";
+import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
 import LogoutIcon from "../../../assets/icons/logOutIcon.png";
@@ -9,9 +9,8 @@ import DarkMode from "../../../assets/icons/darkmode.svg";
 import LightMode from "../../../assets/icons/lightmode.svg";
 import { useEffect, useContext } from "react";
 import { ThemeContext, UserContext } from "../../../App.jsx";
-import { UppercaseFirstLetterEachWord } from "../../utils/TextFormat.jsx";
-import { setSession } from "../../hooks/session.jsx";
-import { SignOutFunction } from "./SignOutFunction.jsx";
+import { UppercaseFirstLetterEachWord } from "../../../utils/formatText.jsx";
+import { setSession } from "../../../services/useSession.jsx";
 
 const UserNav = () => {
   const { user, signout } = useAuthContext();
@@ -26,6 +25,17 @@ const UserNav = () => {
 
     setSession("theme", newTheme);
     console.log(theme);
+  };
+
+  const signOut = async () => {
+    try {
+      await axios.post("http://localhost:8000/api/auth/signout");
+      toast.success("Sign out successful");
+      signout();
+    } catch (error) {
+      console.log();
+      toast.error("Error signing out");
+    }
   };
 
   return (
@@ -68,7 +78,7 @@ const UserNav = () => {
         <div className="w-full">
           <button
             className="flex gap-2 link pl-8 py-2 w-full items-center hover:bg-gray-200"
-            onClick={SignOutFunction}
+            onClick={signOut}
           >
             <img
               src={LogoutIcon}

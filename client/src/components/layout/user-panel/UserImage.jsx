@@ -2,7 +2,7 @@
 
 import UserPanel from "./UserPanel.jsx";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "../../hooks/AuthContext.jsx";
+import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 
 const LoggedUser = ({ theme }) => {
   const [toggleLinks, setToggleLinks] = useState(false);

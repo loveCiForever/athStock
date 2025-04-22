@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { getBasePath } from "../../utils/PathSplitment";
+import { getBasePath } from "../../../utils/splitPath";
 const PageButton = ({ currentBasePath, navigateTo, name, solid }) => {
   const navigate = useNavigate();
 

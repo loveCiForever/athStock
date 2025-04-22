@@ -3,8 +3,8 @@
 import axios from "axios";
 import NavBar from "../components/layout/navbar/NavBar.jsx";
 import { useEffect, useState } from "react";
-import BlogCard from "../components/ui/card/BlogCard.jsx";
-import categories from "../components/layout/blog/CategoriesList.jsx";
+import BlogCard from "../components/ui/cards/BlogCard.jsx";
+import categories from "../utils/CategoriesList.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
 
 const BlogsPage = ({ theme }) => {

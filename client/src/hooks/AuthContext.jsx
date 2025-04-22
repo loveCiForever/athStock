@@ -1,8 +1,12 @@
 // ./client/src/components/hooks-services/AuthContext.jsx
 
+import React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
-import { deleteSession, getSession, setSession } from "./session.jsx";
-import { getApps } from "firebase/app";
+import {
+  deleteSession,
+  getSession,
+  setSession,
+} from "../services/useSession.jsx";
 
 const authContext = createContext();
 export const useAuthContext = () => useContext(authContext);
@@ -41,7 +45,9 @@ const AuthContext = ({ children }) => {
   };
 
   return (
-    <authContext.Provider value={{ user, configUser, signout, getAccessToken, loading }}>
+    <authContext.Provider
+      value={{ user, configUser, signout, getAccessToken, loading }}
+    >
       {children}
     </authContext.Provider>
   );
