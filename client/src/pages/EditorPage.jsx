@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/AuthContext.jsx";
 import BlogEditor from "../components/layout/blog/BlogEditor.jsx";
 import NavBar from "../components/layout/navbar/NavBar";
-import Loader from "../components/ui/LoaderAnimation.jsx";
+import Loader from "../components/ui/animations/LoaderAnimation.jsx";
 import SignInPage from "./SignInPage.jsx";
 
 const blogStructure = {

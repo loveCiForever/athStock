@@ -39,7 +39,7 @@ const BlogCard = ({ author, content, theme }) => {
         <img src={banner} className="w-full h-full object-cover rounded-md" />
       </div>
 
-      <div className="flex flex-col items-center justify-between  h-auto xl:h-[250px] ml-0 lg:ml-6 mt-2 lg:mt-0">
+      <div className="flex flex-col items-center justify-between  h-auto xl:h-[250px] ml-0 lg:ml-6 mt-4 lg:mt-0">
         <div className="w-full">
           <div className="w-full flex gap-4 items-center justify-start">
             <h1 className="text-orange-500 text-sm xl:text-lg font-extrabold tracking-wide bg-green-200//">
@@ -59,12 +59,16 @@ const BlogCard = ({ author, content, theme }) => {
         </div>
 
         <div className="flex items-center justify-between w-full mt-2 lg:mt-0 ">
-          <div className="flex items-center justify-start gap-6">
+          <div className="flex items-center justify-start gap-4 lg:gap-6">
             <div className="flex items-center justify-center ">
               <h1 className="text-md xl:text-lg font-semibold pt-1">
                 {total_likes}
               </h1>
-              <img src={BlackLike} alt="black icon like" className="ml-2 w-5" />
+              <img
+                src={BlackLike}
+                alt="black icon like"
+                className="ml-2 w-4 lg:w-5"
+              />
             </div>
 
             <div className="flex items-center justify-center ">
@@ -74,20 +78,20 @@ const BlogCard = ({ author, content, theme }) => {
               <img
                 src={BlackDislike}
                 alt="black icon dislike"
-                className="ml-2 w-5"
+                className="ml-2 w-4 lg:w-5"
               />
             </div>
 
-            <div className="flex items-center justify-center">
+            {/* <div className="flex items-center justify-center">
               <h1 className="text-md xl:text-lg font-semibold pt-1">
-                {comments}
+                10 {comments}
               </h1>
               <img
                 src={BlackComment}
                 alt="black icon comment"
-                className="ml-2 w-5"
+                className="ml-2 w-4 lg:w-5"
               />
-            </div>
+            </div> */}
           </div>
 
           <h2 className="text-sm xl:text-base font-semibold">

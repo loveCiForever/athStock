@@ -22,7 +22,7 @@ const LogoButton = ({ theme, navigateTo, forHeader }) => {
       <div className="flex flex-col">
         <h1
           className={`flex ${
-            forHeader ? "text-3xl" : "text-5xl"
+            forHeader ? "text-xl lg:text-3xl" : "text-3xl lg:text-5xl"
           }  font-extrabold`}
         >
           {/* ath <h1 className="text-orange-500">Stock</h1> */}

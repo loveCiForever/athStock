@@ -80,7 +80,7 @@ const BlogsPage = ({ theme }) => {
       }`}
     >
       <NavBar theme={theme} />
-      <div className="flex justify-between w-full px-6 mt-36 sm:px-10 md:px-14 xl:px-40 my-10">
+      <div className="flex justify-between w-full px-6 mt-20 lg:mt-36 sm:px-10 md:px-14 xl:px-40 my-10">
         <div className="w-full xl:w-[65%] bg-red-300// h-full">
           {loading || blogs == null ? (
             <div>No blogs available</div>

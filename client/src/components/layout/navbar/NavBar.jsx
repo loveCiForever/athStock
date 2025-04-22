@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import LogoutIcon from "../../../assets/icons/logOutIcon.png";
 import DarkMode from "../../../assets/icons/darkmode.svg";
 import LightMode from "../../../assets/icons/lightmode.svg";
+import { useRef } from "react";
 
 const NavBar = ({ theme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,6 +23,23 @@ const NavBar = ({ theme }) => {
   const navigate = useNavigate();
   const [toggleMenuDropdown, setToggleMenuDropdown] = useState(false);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const contentRef = useRef(null);
+
+  // const handleClickOutside = async (event) => {
+  //   // if (toggleMenuDropdown) {
+  //   console.log(toggleMenuDropdown);
+  //   if (contentRef.current && !contentRef.current.contains(event.target)) {
+  //     setToggleMenuDropdown((prev) => !prev);
+  //   }
+  //   // }
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,6 +71,9 @@ const NavBar = ({ theme }) => {
     handleBasePathChange();
   }, [currentBasePath]);
 
+  // useEffect(() => {
+  //   console.log(toggleMenuDropdown);
+  // });
   if (loading) {
     return <div className="w-full h-screen bg-red-500">LOADING ...</div>;
   }
@@ -140,12 +161,20 @@ const NavBar = ({ theme }) => {
                   ? "hover:bg-gray-200 rounded-xl"
                   : "rounded-t-full border-[1px] border-b-0"
               } `}
-              onClick={() => {
+              onClick={(event) => {
+                // if (!toggleMenuDropdown) {
+                // event.stopPropagation();
                 setToggleMenuDropdown((prev) => !prev);
+                // }
+
+                // console.log(toggleMenuDropdown);
               }}
             />
             {toggleMenuDropdown && (
-              <div className="absolute w-[220px] right-0 top-[38px] bg-white border-[1px] rounded-b-xl rounded-l-xl py-4 shadow-2xl z-0">
+              <div
+                className="absolute w-[220px] right-0 top-[38px] bg-white border-[1px] rounded-b-xl rounded-l-xl py-4 shadow-2xl z-0 bg-red-100//"
+                ref={contentRef}
+              >
                 <div className="user-panel px-6">
                   <Link
                     className="flex flex-col w-full text-left"
