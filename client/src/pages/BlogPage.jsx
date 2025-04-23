@@ -13,7 +13,8 @@ import { useAuthContext } from "../hooks/AuthContext.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
 
 import UserPicture from "../assets/images/userPicture.jpg";
-
+import UpVote from "../assets/icons/UpVoteIcon.svg";
+import DownVote from "../assets/icons/DownVoteIcon.svg";
 export const BlogContext = createContext({});
 
 const BlogPage = ({ theme }) => {
@@ -89,18 +90,18 @@ const BlogPage = ({ theme }) => {
 
   return (
     <div
-      className={`flex flex-col items-center min-w-full min-h-screen${
+      className={`flex flex-col items-center min-w-[770px]// min-h-screen ${
         theme == "light" ? "bg-white" : "bg-darkModeBackgroundColor"
       }`}
     >
       <NavBar theme={theme} />
 
-      <div className="flex justify-center w-full px-40 my-10 gap-20">
-        <div className="w-[50%] bg-red-300// h-full">
-          <h1 className="text-5xl font-extrabold tracking-tight">
+      <div className="flex flex-col justify-center w-full px-6 mt-8 md:mt-28 md:px-14 lg:px-40 my-10 gap-20// mb-24 md:mb-10">
+        <div className="w-full bg-red-300// h-full mt-0 xl:mt-10 ">
+          <h1 className="text-xl md:text-2xl xl:text-4xl font-extrabold tracking-tight">
             {blog.title}
           </h1>
-          <div className="w-full flex justify-between items-center mt-6">
+          <div className="w-full flex justify-between items-center mt-3 xl:mt-5 text-sm md:text-base xl:text-lg">
             <h2 className=" text-black/60">{getFullDay(blog.publishedAt)}</h2>
             <h2 className="text-black/60 font-bold">
               {" "}
@@ -109,7 +110,9 @@ const BlogPage = ({ theme }) => {
             </h2>
           </div>
 
-          <h2 className="mt-4 text-xl font-bold tracking-wide">{blog.intro}</h2>
+          <h2 className="mt-3 text-base xl:text-lg font-bold tracking-wide">
+            {blog.intro}
+          </h2>
 
           <div className="mt-4 mb-6 flex items-center justify-center w-full">
             <img
@@ -127,7 +130,7 @@ const BlogPage = ({ theme }) => {
                     <p
                       key={block.id}
                       dangerouslySetInnerHTML={{ __html: block.data.text }}
-                      className="mt-2 text-lg tracking-wide"
+                      className="mt-2 text-base xl:text-lg tracking-wide"
                     />
                   );
                 default:
@@ -136,7 +139,7 @@ const BlogPage = ({ theme }) => {
             })}
         </div>
 
-        <div className="w-[30%] border-[1px]/ border-gray-300 h-fit">
+        {/* <div className="w-[30%] border-[1px]/ border-gray-300 h-fit">
           <div className="flex items-center justify-center h-full gap-6/ w-full">
             <button
               onClick={() => likeByBlogId({ blog_id })}
@@ -170,7 +173,7 @@ const BlogPage = ({ theme }) => {
                 className="ml-2 w-5"
               />
             </div>
-
+            
             <button className="flex items-center justify-center border-[1px] border-gray-200 px-8 py-2 h-auto rounded-r-lg hover:bg-orange-400 active:scale-[.95] active:duration-90 transition-all ">
               <h1 className="text-lg font-semibold pt-1">Report</h1>
             </button>
@@ -220,9 +223,31 @@ const BlogPage = ({ theme }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
-      <Footer theme={theme} />
+      <div className="react-bar w-full flex bg-gray-100 border-t-[1px]// border-gray-100 shadow-lg fixed md:static bottom-0 left-0 px-6 md:px-14 lg:px-40">
+        <button
+          onClick={() => likeByBlogId({ blog_id })}
+          className="flex items-center justify-center border-[1px]// border-gray-200 px-3 py-2 h-auto rounded-l-lg hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all "
+        >
+          <h1 className="text-xl font-semibold pt-1">
+            {blog.activity.total_likes}
+          </h1>
+          <img src={UpVote} alt="black icon like" className="ml-0 w-7" />
+        </button>
+
+        <button
+          onClick={() => dislikeByBlogId({ blog_id })}
+          className="flex items-center justify-center border-[1px]// border-gray-200 px-3 py-2 h-auto hover:bg-gray-200 active:scale-[.95] active:duration-90 transition-all "
+        >
+          <h1 className="text-xl font-semibold pt-1">
+            {blog.activity.total_dislikes}
+          </h1>
+          <img src={DownVote} alt="black icon like" className="ml-0 w-7" />
+        </button>
+      </div>
+
+      {/* <Footer theme={theme} /> */}
     </div>
   );
 };

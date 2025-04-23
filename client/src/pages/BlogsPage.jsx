@@ -80,7 +80,7 @@ const BlogsPage = ({ theme }) => {
       }`}
     >
       <NavBar theme={theme} />
-      <div className="flex flex-col xl:flex-row justify-between w-full px-6 mt-00  xl:mt-32 sm:px-10 md:px-14 xl:px-40 my-4 md:my-10">
+      <div className="flex flex-col xl:flex-row justify-between w-full px-6 mt-0  xl:mt-32 sm:px-10 md:px-14 xl:px-40 my-4 md:my-10 bg-red-200//">
         {innerWidth > 1280 ? (
           <div className="absolute top-32 right-40 w-[25%] border-[1px] border-gray-300 rounded-xl h-fit hidden xl:block">
             <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-3">
@@ -103,8 +103,8 @@ const BlogsPage = ({ theme }) => {
             </div>
           </div>
         ) : (
-          <div className="w-full border-[1px]// border-gray-300// rounded-xl h-fit mt-12 md:mt-14 lg:mt-16 overflow-x-auto no-scrollbar bg-red-200//">
-            <div className="flex flex-row gap-3 w-full p-3 bg-red-200//">
+          <div className="w-full border-[1px]// border-gray-300// rounded-xl h-fit mt-3 md:mt-14 lg:mt-16 overflow-x-auto no-scrollbar bg-red-200//">
+            <div className="flex flex-row gap-3 w-full py-3 bg-red-200//">
               {categories.map((category, index) => (
                 <button
                   key={category}
