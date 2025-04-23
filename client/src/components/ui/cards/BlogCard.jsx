@@ -50,10 +50,10 @@ const BlogCard = ({ author, content, theme }) => {
             <h2 className="text-sm xl:text-lg">{getFullDay(publishedAt)}</h2>
           </div>
 
-          <h1 className="blog-title text-xl xl:text-2xl font-semibold line-clamp-2 mt-2">
+          <h1 className="blog-title text-md md:text-xl xl:text-2xl font-semibold line-clamp-2 mt-2">
             {title}
           </h1>
-          <p className="blog-head text-md line-clamp-3 mt-2 xl:mt-4 bg-green-200//">
+          <p className="blog-head text-sm md:text-md line-clamp-3 mt-2 xl:mt-4 bg-green-200//">
             {intro}
           </p>
         </div>
@@ -61,7 +61,7 @@ const BlogCard = ({ author, content, theme }) => {
         <div className="flex items-center justify-between w-full mt-2 lg:mt-0 ">
           <div className="flex items-center justify-start gap-4 lg:gap-6">
             <div className="flex items-center justify-center ">
-              <h1 className="text-md xl:text-lg font-semibold pt-1">
+              <h1 className="text-md md:text-md xl:text-lg font-semibold pt-1">
                 {total_likes}
               </h1>
               <img
@@ -94,7 +94,7 @@ const BlogCard = ({ author, content, theme }) => {
             </div> */}
           </div>
 
-          <h2 className="text-sm xl:text-base font-semibold">
+          <h2 className="text-sm md:text-md xl:text-base font-semibold">
             Tác giả: {UppercaseFirstLetterEachWord(fullName)}
           </h2>
         </div>

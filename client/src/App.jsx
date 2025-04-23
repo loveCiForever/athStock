@@ -46,7 +46,7 @@ const App = () => {
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <UserContext.Provider value={{ userAuth }}>
-        {/* <ScreenSizePanel position={"bottom-left"} /> */}
+        <ScreenSizePanel position={"bottom-left"} />
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
