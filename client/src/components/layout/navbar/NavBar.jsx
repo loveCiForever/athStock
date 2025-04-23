@@ -80,7 +80,7 @@ const NavBar = ({ theme }) => {
 
   return (
     <nav
-      className={`navbar flex fixed w-full items-center justify-between h-[80px] xl:h-[100px] border-b-[2px] px-6 sm:px-10 md:px-14 xl:px-40 ${
+      className={`navbar flex fixed w-full items-center justify-between h-[60px] md:h-[80px] xl:h-[100px] border-b-[2px] px-6 sm:px-10 md:px-14 xl:px-40 ${
         theme == "light"
           ? "bg-white border-gray-100 text-black"
           : "bg-darkmodeNavbarColor border-black/30 text-white"

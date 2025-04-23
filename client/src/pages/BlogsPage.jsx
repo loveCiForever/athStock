@@ -80,27 +80,10 @@ const BlogsPage = ({ theme }) => {
       }`}
     >
       <NavBar theme={theme} />
-      <div className="flex justify-between w-full px-6 mt-20 lg:mt-36 sm:px-10 md:px-14 xl:px-40 my-10">
-        <div className="w-full xl:w-[65%] bg-red-300// h-full">
-          {loading || blogs == null ? (
-            <div>No blogs available</div>
-          ) : blogs && blogs.length > 0 ? (
-            blogs.map((blog) => (
-              <BlogCard
-                key={blog.blog_id}
-                content={blog}
-                author={blog.author.personal_info}
-                theme={theme}
-              />
-            ))
-          ) : (
-            <div>No blogs available</div>
-          )}
-        </div>
-
+      <div className="flex flex-col xl:flex-row justify-between w-full px-6 mt-00  xl:mt-32 sm:px-10 md:px-14 xl:px-40 my-4 md:my-10">
         {innerWidth > 1280 ? (
-          <div className="w-[30%] border-[1px] border-gray-300 rounded-xl h-fit hidden xl:block">
-            <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-4">
+          <div className="absolute top-32 right-40 w-[25%] border-[1px] border-gray-300 rounded-xl h-fit hidden xl:block">
+            <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-3">
               Danh mục bài viết
             </h1>
             <div className="flex gap-3 w-full flex-wrap p-6">
@@ -120,8 +103,47 @@ const BlogsPage = ({ theme }) => {
             </div>
           </div>
         ) : (
-          ""
+          <div className="w-full border-[1px]// border-gray-300// rounded-xl h-fit mt-12 md:mt-14 lg:mt-16 overflow-x-auto no-scrollbar bg-red-200//">
+            <div className="flex flex-row gap-3 w-full p-3 bg-red-200//">
+              {categories.map((category, index) => (
+                <button
+                  key={category}
+                  onClick={() => handleCategoryClick(category)}
+                  className={`py-2 px-5 flex-shrink-0 bg-black/80 text-white font-semibold border-none rounded-full hover:bg-black/50 text-sm ${
+                    selectedCategory === category
+                      ? "bg-orange-500/100 hover:bg-orange-500/100 "
+                      : ""
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
         )}
+        <div className="w-full xl:w-[65%] bg-red-300// h-full xl:min-w-[600px]">
+          {loading || blogs == null ? (
+            <div className="flex flex-col w-full h-screen text-black">
+              <div className="w-full mt-10 pt-20 text-center  h-full bg-red-100//">
+                <h1 className="text-3xl font-bold">No blogs available</h1>
+                <button className=" mt-4 px-4 py-2 rounded-lg bg-gray-200">
+                  Submit Error
+                </button>
+              </div>
+            </div>
+          ) : blogs && blogs.length > 0 ? (
+            blogs.map((blog) => (
+              <BlogCard
+                key={blog.blog_id}
+                content={blog}
+                author={blog.author.personal_info}
+                theme={theme}
+              />
+            ))
+          ) : (
+            <div>No blogs available</div>
+          )}
+        </div>
       </div>
       <Footer theme={theme} />
       {/* <ScreenSizePanel position={"bottom-left"} /> */}
