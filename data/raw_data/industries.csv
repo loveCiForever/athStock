@@ -1,0 +1,156 @@
+,icb_name,en_icb_name,icb_code,level
+0,Sản xuất Dầu khí,Oil & Gas Producers,0530,3
+1,"Thiết bị, Dịch vụ và Phân phối Dầu khí","Oil Equipment, Services & Distribution",0570,3
+2,Hóa chất,Chemicals,1350,3
+3,Lâm nghiệp và Giấy,Forestry & Paper,1730,3
+4,Kim loại,Industrial Metals & Mining,1750,3
+5,Khai khoáng,Mining,1770,3
+6,Xây dựng và Vật liệu,Construction & Materials,2350,3
+7,Hàng công nghiệp,General Industrials,2720,3
+8,Điện tử & Thiết bị điện,Electronic & Electrical Equipment,2730,3
+9,Công nghiệp nặng,Industrial Engineering,2750,3
+10,Vận tải,Industrial Transportation,2770,3
+11,Tư vấn & Hỗ trợ Kinh doanh,Support Services,2790,3
+12,Ô tô và phụ tùng,Automobiles & Parts,3350,3
+13,Bia và đồ uống,Beverages,3530,3
+14,Sản xuất thực phẩm,Food Producers,3570,3
+15,Hàng gia dụng,Household Goods & Home Construction,3720,3
+16,Hàng hóa giải trí,Leisure Goods,3740,3
+17,Hàng cá nhân,Personal Goods,3760,3
+18,Thuốc lá,Tobacco,3780,3
+19,Thiết bị và Dịch vụ Y tế,Health Care Equipment & Services,4530,3
+20,Dược phẩm,Pharmaceuticals & Biotechnology,4570,3
+21,Phân phối thực phẩm & dược phẩm,Food & Drug Retailers,5330,3
+22,Bán lẻ,General Retailers,5370,3
+23,Truyền thông,Media,5550,3
+24,Du lịch & Giải trí,Travel & Leisure,5750,3
+25,Viễn thông cố định,Fixed Line Telecommunications,6530,3
+26,Viễn thông di động,Mobile Telecommunications,6570,3
+27,Sản xuất & Phân phối Điện,Electricity,7530,3
+28,Nước & Khí đốt,"Gas, Water & Multi-utilities",7570,3
+29,Ngân hàng,Banks,8350,3
+30,Bảo hiểm phi nhân thọ,Nonlife Insurance,8530,3
+31,Bảo hiểm nhân thọ,Life Insurance,8570,3
+32,Bất động sản,Real Estate Investment & Services,8630,3
+33,Dịch vụ tài chính,Financial Services,8770,3
+34,Quỹ đầu tư,Equity Investment Instruments,8980,3
+35,Phần mềm & Dịch vụ Máy tính,Software & Computer Services,9530,3
+36,Thiết bị và Phần cứng,Technology Hardware & Equipment,9570,3
+37,Dầu khí,Oil & Gas,0001,1
+38,Dầu khí,Oil & Gas,0500,2
+39,Hóa chất,Chemicals,1300,2
+40,Tài nguyên Cơ bản,Basic Resources,1700,2
+41,Xây dựng và Vật liệu,Construction & Materials,2300,2
+42,Hàng & Dịch vụ Công nghiệp,Industrial Goods & Services,2700,2
+43,Ô tô và phụ tùng,Automobiles & Parts,3300,2
+44,Thực phẩm và đồ uống,Food & Beverage,3500,2
+45,Hàng cá nhân & Gia dụng,Personal & Household Goods,3700,2
+46,Y tế,Health Care,4500,2
+47,Bán lẻ,Retail,5300,2
+48,Truyền thông,Media,5500,2
+49,Du lịch và Giải trí,Travel & Leisure,5700,2
+50,Viễn thông,Telecommunications,6500,2
+51,"Điện, nước & xăng dầu khí đốt",Utilities,7500,2
+52,Ngân hàng,Banks,8300,2
+53,Bảo hiểm,Insurance,8500,2
+54,Bất động sản,Real Estate,8600,2
+55,Dịch vụ tài chính,Financial Services,8700,2
+56,Công nghệ Thông tin,Technology,9500,2
+57,Sản xuất và Khai thác dầu khí,Exploration & Production,0533,4
+58,Thiết bị và Dịch vụ Dầu khí,Oil Equipment & Services,0573,4
+59,"Nhựa, cao su & sợi",Commodity Chemicals,1353,4
+60,"Sản phẩm hóa dầu, Nông dược & Hóa chất khác",Specialty Chemicals,1357,4
+61,Lâm sản và Chế biến gỗ,Forestry,1733,4
+62,Sản xuất giấy,Paper,1737,4
+63,Nhôm,Aluminum,1753,4
+64,Kim Loại màu,Nonferrous Metals,1755,4
+65,Thép và sản phẩm thép,Steel,1757,4
+66,Khai thác Than,Coal,1771,4
+67,Khai khoáng,General Mining,1775,4
+68,Khai thác vàng,Gold Mining,1777,4
+69,Vật liệu xây dựng & Nội thất,Building Materials & Fixtures,2353,4
+70,Xây dựng,Heavy Construction,2357,4
+71,Containers & Đóng gói,Containers & Packaging,2723,4
+72,Công nghiệp phức hợp,Diversified Industrials,2727,4
+73,Hàng điện & điện tử,Electrical Components & Equipment,2733,4
+74,Thiết bị điện,Electronic Equipment,2737,4
+75,Xe tải & Đóng tàu,Commercial Vehicles & Trucks,2753,4
+76,Máy công nghiệp,Industrial Machinery,2757,4
+77,Chuyển phát nhanh,Delivery Services,2771,4
+78,Vận tải Thủy,Marine Transportation,2773,4
+79,Đường sắt,Railroads,2775,4
+80,"Kho bãi, hậu cần và bảo dưỡng",Transportation Services,2777,4
+81,Dịch vụ vận tải,Trucking,2779,4
+82,Tư vấn & Hỗ trợ KD,Business Support Services,2791,4
+83,Đào tạo & Việc làm,Business Training & Employment Agencies,2793,4
+84,Quản lý Tài chính,Financial Administration,2795,4
+85,Nhà cung cấp thiết bị,Industrial Suppliers,2797,4
+86,Chất thải & Môi trường,Waste & Disposal Services,2799,4
+87,Sản xuất ô tô,Automobiles,3353,4
+88,Phụ tùng ô tô,Auto Parts,3355,4
+89,Lốp xe,Tires,3357,4
+90,Sản xuất bia,Brewers,3533,4
+91,Vang & Rượu mạnh,Distillers & Vintners,3535,4
+92,Đồ uống & giải khát,Soft Drinks,3537,4
+93,Nuôi trồng nông & hải sản,Farming & Fishing,3573,4
+94,Thực phẩm,Food Products,3577,4
+95,Đồ gia dụng lâu bền,Durable Household Products,3722,4
+96,Đồ gia dụng một lần,Nondurable Household Products,3724,4
+97,Thiết bị gia dụng,Furnishings,3726,4
+98,Điện tử tiêu dùng,Consumer Electronics,3743,4
+99,Đồ chơi,Toys,3747,4
+100,Hàng May mặc,Clothing & Accessories,3763,4
+101,Giầy dép,Footwear,3765,4
+102,Hàng cá nhân,Personal Products,3767,4
+103,Thuốc lá,Tobacco,3785,4
+104,Chăm sóc y tế,Health Care Providers,4533,4
+105,Thiết bị y tế,Medical Equipment,4535,4
+106,Dụng cụ y tế,Medical Supplies,4537,4
+107,Công nghệ sinh học,Biotechnology,4573,4
+108,Dược phẩm,Pharmaceuticals,4577,4
+109,Phân phối dược phẩm,Drug Retailers,5333,4
+110,Phân phối thực phẩm,Food Retailers & Wholesalers,5337,4
+111,Bán lẻ phức hợp,Broadline Retailers,5373,4
+112,Dịch vụ tiêu dùng chuyên ngành,Specialized Consumer Services,5377,4
+113,Phân phối hàng chuyên dụng,Specialty Retailers,5379,4
+114,Giải trí & Truyền thông,Broadcasting & Entertainment,5553,4
+115,Dịch vụ truyền thông,Media Agencies,5555,4
+116,"Sách, ấn bản & sản phẩm văn hóa",Publishing,5557,4
+117,Hàng không,Airlines,5751,4
+118,Khách sạn,Hotels,5753,4
+119,Dịch vụ giải trí,Recreational Services,5755,4
+120,Nhà hàng và quán bar,Restaurants & Bars,5757,4
+121,Vận tải hành khách & Du lịch,Travel & Tourism,5759,4
+122,Viễn thông cố định,Fixed Line Telecommunications,6535,4
+123,Viễn thông di động,Mobile Telecommunications,6575,4
+124,Sản xuất & Phân phối Điện,Conventional Electricity,7535,4
+125,Phân phối xăng dầu & khí đốt,Gas Distribution,7573,4
+126,Tiện ích khác,Multiutilities,7575,4
+127,Nước,Water,7577,4
+128,Ngân hàng,Banks,8355,4
+129,Bảo hiểm phi nhân thọ,Property & Casualty Insurance,8536,4
+130,Tái bảo hiểm,Reinsurance,8538,4
+131,Bảo hiểm nhân thọ,Life Insurance,8575,4
+132,Bất động sản,Real Estate Holding & Development,8633,4
+133,"Tư Vấn, Định giá, Môi giới Bất động sản",Real Estate Services,8637,4
+134,Quản lý tài sản,Asset Managers,8771,4
+135,Tài chính cá nhân,Consumer Finance,8773,4
+136,Tài chính đặc biệt,Specialty Finance,8775,4
+137,Môi giới chứng khoán,Investment Services,8777,4
+138,Quỹ đầu tư,Equity Investment Instruments,8985,4
+139,Dịch vụ Máy tính,Computer Services,9533,4
+140,Internet,Internet,9535,4
+141,Phần mềm,Software,9537,4
+142,Phần cứng,Computer Hardware,9572,4
+143,Thiết bị văn phòng,Electronic Office Equipment,9574,4
+144,Thiết bị viễn thông,Telecommunications Equipment,9578,4
+145,Nguyên vật liệu,Basic Materials,1000,1
+146,Công nghiệp,Industrials,2000,1
+147,Hàng Tiêu dùng,Consumer Goods,3000,1
+148,Dược phẩm và Y tế,Health Care,4000,1
+149,Dịch vụ Tiêu dùng,Consumer Services,5000,1
+150,Viễn thông,Telecommunications,6000,1
+151,Tiện ích Cộng đồng,Utilities,7000,1
+152,Tài chính,Financials,8000,1
+153,Ngân hàng,Banks,8301,1
+154,Công nghệ Thông tin,Technology,9000,1
