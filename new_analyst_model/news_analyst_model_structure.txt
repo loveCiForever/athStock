@@ -1,0 +1,36 @@
+**General Note on Model Structure**
+
+The **News Analysis Model** processes Vietnamese news articles to identify stock tickers mentioned and predict their potential price impact. The structure is modular and flows through several stages:
+
+1. **Input Handling**
+   - Accepts a news article URL.
+   - Scrapes and extracts the article's textual content.
+
+2. **Preprocessing**
+   - Cleans the extracted text (e.g., removes HTML tags, special characters).
+   - Tokenizes and standardizes text for Vietnamese language processing.
+
+3. **Stock Ticker Detection**
+   - Scans the cleaned text for mentions of stock codes.
+   - Matches against a list of valid stock tickers from HOSE, HNX, or UPCOM.
+
+4. **Sentiment and Impact Analysis**
+   - Applies a pretrained deep learning model (e.g., PhoBERT) to analyze sentiment.
+   - Maps sentiment to stock movement categories (e.g., "increase strongly", "decrease slightly", "neutral").
+
+5. **Output Generation**
+   - For each detected stock ticker, generates a natural language prediction.
+   - Example output: "News likely causes VCB to increase strongly."
+   - Supports multiple stock codes per article.
+
+6. **Model Enhancements (Optional/Future Work)**
+   - Use of Named Entity Recognition (NER) for better context detection.
+   - Fine-tuning on domain-specific financial data for improved accuracy.
+
+**Simple Flow Diagram:**
+
+[Input URL] -> [Scrape Article Text] -> [Preprocessing] -> [Detect Stock Tickers] -> [Sentiment/Impact Prediction] -> [Generate Output]
+
+---
+
+This modular structure allows easy upgrades and improvements for higher accuracy and broader stock market insights.
