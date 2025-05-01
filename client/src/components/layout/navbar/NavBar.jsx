@@ -172,15 +172,15 @@ const NavBar = ({ theme }) => {
             />
             {toggleMenuDropdown && (
               <div
-                className="absolute w-[220px] right-0 top-[38px] bg-white border-[1px] rounded-b-xl rounded-l-xl py-4 shadow-2xl z-0 bg-red-100//"
+                className="absolute w-[220px] right-00 top-[38px] bg-white border-[1px] rounded-b-xl rounded-l-xl py-4 shadow-2xl z-0 bg-red-100//"
                 ref={contentRef}
               >
-                <div className="user-panel px-6">
+                <div className="px-6 user-panel">
                   <Link
                     className="flex flex-col w-full text-left"
                     to={`/user/${user.userName}`}
                   >
-                    <span className="text-md font-bold text-dark-grey">
+                    <span className="font-bold text-md text-dark-grey">
                       {UppercaseFirstLetterEachWord(user.fullName)}
                     </span>
                     <span className="text-sm font-medium text-dark-grey">
@@ -194,15 +194,15 @@ const NavBar = ({ theme }) => {
 
                 <div className="w-full h-[1.3px] mt-3 mb-1 bg-gray-300"></div>
 
-                <div className="flex flex-col w-full items-start justify-center gap-2 text-md xl:text-lg">
+                <div className="flex flex-col items-start justify-center w-full gap-2 text-md xl:text-lg">
                   <button
-                    className="hover:bg-gray-200 w-full h-full px-6 py-1 text-start "
+                    className="w-full h-full px-6 py-1 hover:bg-gray-200 text-start "
                     onClick={() => navigate("/dashboard")}
                   >
                     Dashboard
                   </button>
                   <button
-                    className="hover:bg-gray-200 w-full h-full px-6 py-1 text-start "
+                    className="w-full h-full px-6 py-1 hover:bg-gray-200 text-start "
                     onClick={() => navigate("/blog")}
                   >
                     Blog
@@ -211,15 +211,15 @@ const NavBar = ({ theme }) => {
 
                 <div className="w-full h-[1.2px] mt-1 mb-1 bg-gray-300"></div>
 
-                <div className="flex flex-col w-full items-start justify-center gap-2 text-md xl:text-lg">
+                <div className="flex flex-col items-start justify-center w-full gap-2 text-md xl:text-lg">
                   <button
-                    className="hover:bg-gray-200 w-full h-full px-6 py-1 text-start "
+                    className="w-full h-full px-6 py-1 hover:bg-gray-200 text-start "
                     onClick={null}
                   >
                     Switch to {theme == "light" ? "Dark Mode" : "Light Mode"}
                   </button>
                   <button
-                    className="hover:bg-gray-200 w-full h-full px-6 py-1 text-start "
+                    className="w-full h-full px-6 py-1 hover:bg-gray-200 text-start "
                     onClick={null}
                   >
                     Sign Out
