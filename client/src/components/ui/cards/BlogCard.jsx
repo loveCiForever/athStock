@@ -26,11 +26,7 @@ const BlogCard = ({ author, content, theme }) => {
     blog_id: id,
     banner,
   } = content;
-  let { fullName, profile_img, userName } = author;
-
-  useState(() => {
-    // console.log(id);
-  });
+  let { full_name, profile_img, user_name } = author;
 
   return (
     <Link
@@ -88,7 +84,8 @@ const BlogCard = ({ author, content, theme }) => {
           </div>
 
           <h2 className="text-sm md:text-base xl:text-base font-semibold">
-            Tác giả: {UppercaseFirstLetterEachWord(fullName)}
+            Tác giả:{" "}
+            {author ? UppercaseFirstLetterEachWord(full_name) : "Khuyết danh"}
           </h2>
         </div>
       </div>

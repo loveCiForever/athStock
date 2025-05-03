@@ -28,10 +28,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/blog", blogRoute);
 app.use("/api/stock", industryRoute);
 
-app.get("/test", (req, res) => {
-  res.send("Server is working!");
-});
-
 app.listen(port, async () => {
   ConnectDatabase();
   console.log(`[APP.js] Server is running on port ${port}`);

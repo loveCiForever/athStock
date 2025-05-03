@@ -110,11 +110,15 @@ const BlogPage = ({ theme }) => {
   }, [blog_id]);
 
   useEffect(() => {
-    fetchVoteStatus();
+    // fetchVoteStatus();
   });
 
   useEffect(() => {
     document.title = blog.category + " - " + blog.title;
+  });
+
+  useEffect(() => {
+    console.log(blog);
   });
   return (
     <div
@@ -127,7 +131,7 @@ const BlogPage = ({ theme }) => {
       <NavBar theme={theme} />
 
       <div className="body flex flex-col flex-1 w-full md:mt-[80px] xl:mt-[100px]">
-        <div className="flex flex-col items-start justify-start flex-1 w-full px-6 mt-10 xl:flex-row sm:px-10 md:px-14 xl:px-40">
+        <div className="flex flex-col items-start justify-start flex-1 w-full px-6 mt-5 xl:flex-row sm:px-10 md:px-14 xl:px-40">
           {/* —— MAIN CONTENT —— */}
           <div className="w-full xl:w-[65%] xl:mb-20">
             <h1 className="text-xl font-extrabold tracking-wide md:text-2xl xl:text-3xl">
@@ -139,9 +143,11 @@ const BlogPage = ({ theme }) => {
                 {new Date(blog.publishedAt).toLocaleDateString()}
               </h2>
               <h2 className="font-bold text-black/80">
-                {UppercaseFirstLetterEachWord(
-                  blog.author.personal_info.fullName
-                )}
+                {blog.author
+                  ? UppercaseFirstLetterEachWord(
+                      blog.author.personal_info.full_name
+                    )
+                  : "Khuyết danh"}
               </h2>
             </div>
 

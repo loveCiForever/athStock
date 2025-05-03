@@ -2,7 +2,8 @@
 
 import mongoose from "mongoose";
 import "dotenv/config";
-const DATABASE_CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING;
+const DATABASE_CONNECTION_STRING =
+  process.env.REMOTE_DATABASE_CONNECTION_STRING;
 
 const ConnectDatabase = async () => {
   try {
@@ -11,9 +12,9 @@ const ConnectDatabase = async () => {
       // useUnifiedTopology: true,
       // autoIndex: true,
     });
-    console.log(`[DATABASE.js] Successfully connected to MongoDB`);
+    console.log(`[DATABASE.js] Successfully connected to MongoDB \n`);
   } catch (error) {
-    console.log("[DATABASE.js] Unable to connect to MongoDB! ", error);
+    console.log("[DATABASE.js] Unable to connect to MongoDB! \n", error);
   }
 };
 

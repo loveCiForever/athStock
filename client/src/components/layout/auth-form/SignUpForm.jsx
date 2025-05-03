@@ -39,23 +39,23 @@ const SignUpForm = () => {
 
     setIsLoading(true);
     try {
-      const result = await axios.post(`${VITE_BASE_URL}/api/auth/signup`, {
-        fullName,
+      const response = await axios.post(`${VITE_BASE_URL}/api/auth/signup`, {
+        full_name: fullName,
         email,
         password,
       });
 
-      const user = result.data.user;
-      const access_token = result.data.user.access_token;
+      const user = response.data.data.user;
+      const access_token = response.data.data.user.access_token;
 
       toast.success("Registration successful!");
       configUser(user, access_token);
       navigate("/");
     } catch (error) {
       toast.error(
-        !error.response.data.message
+        !error.response.data.error
           ? "Failed to sign up"
-          : error.response.data.message
+          : error.response.data.error
       );
     } finally {
       setIsLoading(false);

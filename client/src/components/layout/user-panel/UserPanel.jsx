@@ -28,6 +28,7 @@ const UserNav = () => {
   };
 
   const signOut = async () => {
+    console.log("SIGN OUT");
     try {
       await axios.post("http://localhost:8000/api/auth/signout");
       toast.success("Sign out successful");
@@ -47,13 +48,13 @@ const UserNav = () => {
       >
         <Link
           className="flex flex-col w-full text-left py-3 pl-8"
-          to={`/user/${user.userName}`}
+          to={`/user/${user.user_name}`}
         >
           <span className="text-md font-bold text-dark-grey mb-[5px]">
-            {UppercaseFirstLetterEachWord(user.fullName)}
+            {UppercaseFirstLetterEachWord(user.full_name)}
           </span>
           <span className="text-md font-medium text-dark-grey">
-            @{user.userName}
+            @{user.user_name}
           </span>
         </Link>
 

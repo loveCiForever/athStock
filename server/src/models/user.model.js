@@ -33,7 +33,7 @@ let profile_imgs_collections_list = [
 const userSchema = new mongoose.Schema(
   {
     personal_info: {
-      fullName: {
+      full_name: {
         type: String,
         lowercase: true,
         required: true,
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
         require: true,
       },
 
-      userName: {
+      user_name: {
         type: String,
         minlength: [5, "Username's length must be more than 5 characters"],
         unique: true,
@@ -131,6 +131,15 @@ const userSchema = new mongoose.Schema(
       type: [Schema.Types.ObjectId],
       ref: "blogs",
       default: [],
+    },
+    isSignedIn: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    activities: {
+      like: [{ type: mongoose.Schema.Types.ObjectId, ref: "blogs" }],
+      dislike: [{ type: mongoose.Schema.Types.ObjectId, ref: "blogs" }],
     },
   },
   {

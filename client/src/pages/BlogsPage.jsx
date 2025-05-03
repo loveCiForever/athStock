@@ -14,16 +14,6 @@ const BlogsPage = ({ theme }) => {
   let [selectedCategory, setSelectedCategory] = useState(null);
   let [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setInnerWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
@@ -39,7 +29,8 @@ const BlogsPage = ({ theme }) => {
         VITE_BASE_URL + "/api/blog/latest-blog",
         { page }
       );
-      setBlog(data.blogs);
+      setBlog(data.data);
+      console.log(data.data);
     } catch (error) {
       console.error(error);
       setLoading(true);
@@ -58,6 +49,7 @@ const BlogsPage = ({ theme }) => {
         page,
         category,
       });
+      // console.log(data);
       setBlog(data.blogs);
     } catch (error) {
       console.log(error);
@@ -85,11 +77,13 @@ const BlogsPage = ({ theme }) => {
 
       <div className="body flex flex-col flex-1 w-full md:mt-[80px] xl:mt-[100px]">
         <div className="flex flex-col items-center justify-start flex-1 w-full px-6 sm:px-10 md:px-14 xl:px-40">
-          <CategorySlider
-            categories={categories}
-            selectedCategory={selectedCategory}
-            handleCategoryClick={handleCategoryClick}
-          />
+          {blogs && (
+            <CategorySlider
+              categories={categories}
+              selectedCategory={selectedCategory}
+              handleCategoryClick={handleCategoryClick}
+            />
+          )}
 
           <div className="flex flex-col flex-1 w-full blog-cards">
             {blogs && blogs.length > 0 ? (
@@ -97,12 +91,12 @@ const BlogsPage = ({ theme }) => {
                 <BlogCard
                   key={blog.blog_id}
                   content={blog}
-                  author={blog.author.personal_info}
+                  author={blog.author ? blog.author.personal_info : ""}
                   theme={theme}
                 />
               ))
             ) : (
-              <div className="flex items-center justify-center flex-1 blogs-null">
+              <div className="flex items-center justify-center flex-1 blogs-null md:px-32">
                 <div className="flex flex-col items-center justify-center w-full text-base font-normal tracking-widest text-center md:text-xl lg:text-2xl">
                   <img
                     src={ErrorImage}

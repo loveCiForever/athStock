@@ -5,7 +5,6 @@ let categories = [
   "Nhân vật",
   "Cổ phiếu",
   "Ý kiến chuyên gia",
-  "Hoạt động kinh doanh",
   "Chứng khoán thế giới",
   "Chính sách",
   "Câu chuyện đầu tư",

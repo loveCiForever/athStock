@@ -13,39 +13,47 @@ import {
   oauthValidation,
 } from "../services/auth.service.js";
 
+import { verifyJWT } from "../middlewares/verify-jwt.middleware.js";
+
 import Users from "../models/user.model.js";
 import "dotenv/config";
 
 const signup = async (req, res) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { full_name, email, password, navigateToHome } = req.body;
 
     /*
      * Read the general structure of error response at athStock/server/src/services/auth.service.js
      */
     const { error } = signUpValidation.validate({
-      fullName,
+      full_name,
       email,
       password,
     });
 
+    // console.log("[SIGN UP] ", error);
+
     if (error) {
-      if (error.details[0].path[0] == "fullName") {
+      if (error.details[0].path[0] == "full_name") {
         return res.status(400).json({
+          success: false,
           message: "Invalid name",
-          error: "The fullname's length must be at least 5 characters long",
+          error: error.details[0].message,
         });
       } else if (error.details[0].path[0] == "password") {
         return res.status(400).json({
+          success: false,
           message: "Invalid password",
           error: error.details[0].message,
         });
       } else if (error.details[0].path[0] == "email") {
         return res.status(400).json({
+          success: false,
           message: "Invalid email",
-          error: "The email must follow the example format: abcde@example.com",
+          error: error.details[0].message,
         });
       }
+      return;
     }
 
     const isEmailNotUnique = await Users.exists({
@@ -54,43 +62,50 @@ const signup = async (req, res) => {
 
     if (isEmailNotUnique) {
       return res.status(400).json({
-        message: "Email is already taken",
+        success: false,
+        message: "User registration failed",
+        error: "Email is already taken",
       });
     }
 
-    const [hashedPassword, userName] = await Promise.all([
+    const [hashedPassword, user_name] = await Promise.all([
       hashPassword(password),
       genUserName(email),
     ]);
 
     const user = await Users({
       personal_info: {
-        fullName,
-        userName,
+        full_name,
+        user_name,
         email,
         password: hashedPassword,
       },
+      isSignedIn: navigateToHome,
     }).save();
 
     const access_token = genCookieToken(user._id, res);
-    console.log(`[AUTH.CONTROLLER] access_token: ${access_token}`);
-
     const userToSend = {
-      fullName: user.personal_info.fullName,
-      userName: user.personal_info.userName,
+      full_name: user.personal_info.full_name,
+      user_name: user.personal_info.user_name,
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
+      isSignedIn: navigateToHome,
       access_token,
     };
 
+    // console.log("[SIGN UP] ", userToSend);
+
     res.status(202).json({
-      message: "Registration successfully",
-      user: userToSend,
+      success: true,
+      message: "User has successfully registered",
+      data: { user: userToSend },
     });
   } catch (error) {
+    // console.log("[SIGN UP] ", error);
     res.status(500).json({
-      message: "Internal server error",
-      error: error.message,
+      success: false,
+      message: "Hehehe you are getting some trouble with your backend code",
+      error: error,
     });
   }
 };
@@ -103,17 +118,20 @@ const signin = async (req, res) => {
      * Read the general structure of error response at ./server/src/services/auth.service.js
      */
     const { error } = signInValidation.validate({ email, password });
+    // console.log(`[SIGN IN] signInValidation: ${error ? error : "ok"}`);
 
     if (error) {
       if (error.details[0].path[0] == "password") {
         return res.status(400).json({
+          success: false,
           message: "Invalid password",
           error: error.details[0].message,
         });
       } else if (error.details[0].path[0] == "email") {
         return res.status(400).json({
+          success: false,
           message: "Invalid email",
-          error: "The email must follow the example format: abcde@example.com",
+          error: error.details[0].message,
         });
       }
     }
@@ -121,7 +139,20 @@ const signin = async (req, res) => {
     const user = await Users.findOne({ "personal_info.email": email });
     if (!user) {
       return res.status(404).json({
-        message: "Email not found",
+        success: false,
+        message: "User sign in failed",
+        error: "Email is not found",
+      });
+    }
+    // console.log(
+    //   `[SIGN IN] ${user.personal_info.user_name} isSignedIn: ${user.isSignedIn} `
+    // );
+
+    if (user.isSignedIn) {
+      return res.status(409).json({
+        success: false,
+        message: "User sign in failed",
+        error: "You account is signed in at another place",
       });
     }
 
@@ -132,52 +163,104 @@ const signin = async (req, res) => {
 
     if (!isPasswordMatch) {
       return res.status(403).json({
-        message: "Incorrect password",
+        success: false,
+        message: "User sign in failed",
+        error: "Password is not correct",
       });
     }
 
     const access_token = genCookieToken(user._id, res);
-    console.log(`[AUTH.CONTROLLER] access_token: ${access_token}`);
-
     const userToSend = {
-      fullName: user.personal_info.fullName,
-      userName: user.personal_info.userName,
+      full_name: user.personal_info.full_name,
+      user_name: user.personal_info.user_name,
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
       access_token,
+      isSignedIn,
     };
 
+    user.isSignedIn = true;
+    await user.save();
+
     res.status(200).json({
-      message: "Sign in successful",
-      user: userToSend,
+      success: true,
+      message: "User has successfully sign in",
+      data: { user: userToSend },
     });
   } catch (error) {
     res.status(500).json({
-      message: error.message,
+      success: false,
+      message: "Hehehe you are getting some trouble with your backend code",
+      error: error,
     });
   }
 };
 
 const signout = async (req, res) => {
+  const { email } = req.body;
+
   try {
     res.clearCookie("blogToken");
 
+    const user = await Users.findOne({ "personal_info.email": email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User sign out failed",
+        error: "Email is not found",
+      });
+    }
+
+    user.isSignedIn = false;
+    await user.save();
+
     res.status(200).json({
+      success: true,
       message: "Sign out successfully",
+      data: null,
     });
   } catch (error) {
     res.status(500).json({
-      message: "Internal server error",
-      error: error.message,
+      success: false,
+      message: "Hehehe you are getting some trouble with your backend code",
+      error: error,
+    });
+  }
+};
+
+const getUserInfo = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await Users.findOne({ "personal_info.email": email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Get user information failed",
+        error: "Email is not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Get user information successfully",
+      data: { user: user },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Hehehe you are getting some trouble with your backend code",
+      error: error,
     });
   }
 };
 
 const oauth = async (req, res) => {
   try {
-    const { fullName, email, profile_img } = req.body;
+    const { full_name, email, profile_img } = req.body;
     const { error } = oauthValidation.validate({
-      fullName,
+      full_name,
       email,
       profile_img,
     });
@@ -190,18 +273,18 @@ const oauth = async (req, res) => {
 
     const isUserExists = await Users.findOne({ "personal_info.email": email });
     if (!isUserExists) {
-      const userName = await genUserName(email);
+      const user_name = await genUserName(email);
       const user = await Users({
         personal_info: {
-          fullName,
+          full_name,
           email,
           profile_img: profile_img,
-          userName,
+          user_name,
         },
         google_auth: true,
       }).save();
       const userToSend = {
-        userName: user.personal_info.userName,
+        user_name: user.personal_info.user_name,
         email: user.personal_info.email,
         profile_img: user.personal_info.profile_img,
       };
@@ -210,7 +293,7 @@ const oauth = async (req, res) => {
       return res.status(201).json(userToSend);
     } else if (isUserExists) {
       const userToSend = {
-        userName: isUserExists.personal_info.userName,
+        user_name: isUserExists.personal_info.user_name,
         email: isUserExists.personal_info.email,
         profile_img: isUserExists.personal_info.profile_img,
       };
@@ -227,4 +310,4 @@ const oauth = async (req, res) => {
   }
 };
 
-export { signup, signin, signout, oauth };
+export { signup, signin, signout, oauth, getUserInfo };

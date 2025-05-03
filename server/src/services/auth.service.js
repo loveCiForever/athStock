@@ -56,7 +56,7 @@ import {
  * @type {Joi.ObjectSchema}
  */
 const signUpValidation = Joi.object({
-  fullName: Joi.string().required().min(5),
+  full_name: Joi.string().required().min(5),
   email: Joi.string().pattern(emailRegex).required(),
   password: Joi.string().pattern(passwordRegex).required().messages({
     "string.pattern.base":

@@ -20,19 +20,19 @@ import "dotenv/config";
 const genUserName = async (email) => {
   // Split email to get the username
   try {
-    let username = email.split("@")[0];
-    const isUsernameNotUnique = await UserModel.findOne({
-      personal_info: username,
+    let user_name = email.split("@")[0];
+    const isUserNameNotUnique = await UserModel.findOne({
+      personal_info: user_name,
     });
 
     // If username is not unique, append a random string
-    if (isUsernameNotUnique) {
-      username = username + "-" + nanoid().substring(0, 4);
+    if (isUserNameNotUnique) {
+      user_name = user_name + "-" + nanoid().substring(0, 4);
     }
 
-    return username;
+    return user_name;
   } catch (error) {
-    console.log("GEN USERNAME: ", error);
+    console.log("[GEN USERNAME] ", error);
     throw error; // Rethrow the error for handling upstream
   }
 };

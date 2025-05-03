@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model.js";
 
 export async function requireAuth(req, res, next) {
+  // console.log(`[requireAuth] req: ${}`);
   const auth = req.headers.authorization?.split(" ");
   if (auth?.[0] !== "Bearer" || !auth[1]) {
     return res.status(401).json({ message: "Missing token" });

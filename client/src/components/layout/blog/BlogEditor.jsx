@@ -114,7 +114,7 @@ const BlogEditor = ({ theme }) => {
               banner: bannerUrl,
             };
 
-            console.log(blogObj);
+            // console.log(blogObj);
 
             axios
               .post(`${VITE_BASE_URL}/api/blog/create-blog`, blogObj, {
@@ -155,8 +155,6 @@ const BlogEditor = ({ theme }) => {
       );
     }
   }, []);
-
-  
 
   return (
     <div

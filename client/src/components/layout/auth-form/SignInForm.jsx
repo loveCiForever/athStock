@@ -32,21 +32,22 @@ const SignInForm = () => {
 
     setIsLoading(true);
     try {
-      const result = await axios.post(`${VITE_BASE_URL}/api/auth/signin`, {
+      const response = await axios.post(`${VITE_BASE_URL}/api/auth/signin`, {
         email,
         password,
       });
-      const user = result.data.user;
-      const access_token = result.data.user.access_token;
+
+      const user = response.data.data.user;
+      const access_token = response.data.data.user.access_token;
 
       toast.success("Sign in successful");
       configUser(user, access_token);
       navigate("/");
     } catch (error) {
       toast.error(
-        !error.response.data.message
+        !error.response.data.error
           ? "Failed to sign up"
-          : error.response.data.message
+          : error.response.data.error
       );
     } finally {
       setIsLoading(false);
@@ -110,7 +111,7 @@ const SignInForm = () => {
               placeholder="Email"
               value={email}
               className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg outline-none
-                border ${email ? "" : "border-red-500"}`}
+                border ${email ? "border-green-400//" : "border-red-500//"}`}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
             />
@@ -122,7 +123,7 @@ const SignInForm = () => {
               placeholder="Password"
               value={password}
               className={`w-full tracking-wide bg-gray-100 py-3 px-4 text-sm rounded-lg outline-none
-                border ${password ? "" : "border-red-500"}`}
+                border ${password ? "" : "border-red-500//"}`}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
             />
