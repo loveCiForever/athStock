@@ -156,18 +156,20 @@ const BlogEditor = ({ theme }) => {
     }
   }, []);
 
+  
+
   return (
     <div
-      className={`w-[800px] h-auto mt-10 pb-10 z-30 border-[0.5px] rounded-xl shadow-xl ${
+      className={`w-[800px] h-auto mt-24 pb-10 z-30 border-[0.5px] rounded-xl shadow-xl ${
         theme === "light" ? " text-black" : "bg-black/30 text-white"
       }`}
     >
       <nav className="flex items-center justify-between py-6 border-b-[1px]">
         <div className="flex-grow text-center">
-          <h1 className="text-2xl font-bold ml-12">Write your own blog</h1>
+          <h1 className="ml-12 text-2xl font-bold">Write your own blog</h1>
         </div>
         <button
-          className="bg-black/40 rounded-full p-1 mr-6 hover:bg-black/60"
+          className="p-1 mr-6 rounded-full bg-black/40 hover:bg-black/60"
           onClick={handleExit}
         >
           <img src={WhiteCloseIcon} alt="" />
@@ -182,7 +184,7 @@ const BlogEditor = ({ theme }) => {
             value={title}
             placeholder="Title (No more than 100 words)"
             onKeyDown={handleTitleKeyDown}
-            className="text-3xl font-bold w-full h-10 outline-none resize-none pl-3 leading-tight placeholder:opacity-60 bg-transparent"
+            className="w-full h-10 pl-3 text-3xl font-bold leading-tight bg-transparent outline-none resize-none placeholder:opacity-60"
           ></textarea>
 
           <textarea
@@ -191,11 +193,11 @@ const BlogEditor = ({ theme }) => {
             value={intro}
             placeholder="Introduction (No more than 500 words)"
             onKeyDown={handleIntroKeyDown}
-            className="text-lg font-semibold w-full h-10 outline-none resize-none pl-3 mt-3 leading-normal placeholder:opacity-60 bg-transparent"
+            className="w-full h-10 pl-3 mt-3 text-lg font-semibold leading-normal bg-transparent outline-none resize-none placeholder:opacity-60"
           ></textarea>
 
           <section className="w-full h-auto">
-            <div id="textEditor" className="h-auto font-gelasio mt-3"></div>
+            <div id="textEditor" className="h-auto mt-3 font-gelasio"></div>
           </section>
         </div>
 
@@ -206,7 +208,7 @@ const BlogEditor = ({ theme }) => {
             className="p-0 w-[40%] rounded-md pl-3 focus:bg-white border-white outline-none"
             onKeyDown={handleTag}
           />
-          <div className="w-full bg-red-000 ml-2">
+          <div className="w-full ml-2 bg-red-000">
             {tags.map((tag, i) => {
               return <Tag tag={tag} tagIndex={i} key={i} />;
             })}
@@ -220,13 +222,13 @@ const BlogEditor = ({ theme }) => {
           placeholder="Enter you banner's url"
           value={bannerUrl}
           onChange={handleBannerUrl}
-          className="p-2 pl-3 w-full rounded-md border bg-white outline-none mb-5"
+          className="w-full p-2 pl-3 mb-5 bg-white border rounded-md outline-none"
         />
         <div className="mb-5">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="p-2 pl-3 w-full rounded-md border bg-white outline-none"
+            className="w-full p-2 pl-3 bg-white border rounded-md outline-none"
           >
             <option value="">Select a category</option>
             {categories.map((category, index) => (
@@ -246,7 +248,7 @@ const BlogEditor = ({ theme }) => {
             }`}
             onClick={handleClearAll}
           >
-            <p className="font-semibold text-sm lg:text-base tracking-wider">
+            <p className="text-sm font-semibold tracking-wider lg:text-base">
               Clear
             </p>
           </button>
@@ -258,7 +260,7 @@ const BlogEditor = ({ theme }) => {
             }`}
             onClick={handlePublish}
           >
-            <p className="font-semibold text-sm lg:text-base tracking-wider">
+            <p className="text-sm font-semibold tracking-wider lg:text-base">
               Publish
             </p>
           </button>

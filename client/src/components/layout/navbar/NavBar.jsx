@@ -1,50 +1,32 @@
-// ./client/src/components/navbar/NavBar.jsx
+// athStock/client/src/components/navbar/NavBar.jsx
 
-import { useEffect, useState, useContext, use } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../hooks/AuthContext.jsx";
-import { useNavigate } from "react-router-dom";
+
 import LogoButton from "../../ui/buttons/LogoButton.jsx";
+import PageButton from "../../ui/buttons/NavButtonForHeader.jsx";
 import LoggedUser from "../user-panel/UserImage.jsx";
 
-import PageButton from "../../ui/buttons/NavButtonForHeader.jsx";
-import { getBasePath } from "../../../utils/splitPath.jsx";
 import HamburgerIcon from "../../../assets/icons/hamburger.svg";
+
 import { UppercaseFirstLetterEachWord } from "../../../utils/formatText.jsx";
-import { Link } from "react-router-dom";
-import LogoutIcon from "../../../assets/icons/logOutIcon.png";
-import DarkMode from "../../../assets/icons/darkmode.svg";
-import LightMode from "../../../assets/icons/lightmode.svg";
-import { useRef } from "react";
+import { getBasePath } from "../../../utils/splitPath.jsx";
 
-const NavBar = ({ theme }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  let [currentBasePath, setCurrentBasePath] = useState(null);
+function NavBar({ theme }) {
   const { user, loading } = useAuthContext();
-  const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false);
   const [toggleMenuDropdown, setToggleMenuDropdown] = useState(false);
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const contentRef = useRef(null);
-
-  // const handleClickOutside = async (event) => {
-  //   // if (toggleMenuDropdown) {
-  //   console.log(toggleMenuDropdown);
-  //   if (contentRef.current && !contentRef.current.contains(event.target)) {
-  //     setToggleMenuDropdown((prev) => !prev);
-  //   }
-  //   // }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+  const navigate = useNavigate();
+  const [innerWidth, setInnerWidth] = useState(1920);
+  let [currentBasePath, setCurrentBasePath] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
       setInnerWidth(window.innerWidth);
     };
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -71,19 +53,16 @@ const NavBar = ({ theme }) => {
     handleBasePathChange();
   }, [currentBasePath]);
 
-  // useEffect(() => {
-  //   console.log(toggleMenuDropdown);
-  // });
   if (loading) {
     return <div className="w-full h-screen bg-red-500">LOADING ...</div>;
   }
 
   return (
     <nav
-      className={`navbar flex md:fixed w-full items-center justify-between h-[60px] md:h-[80px] xl:h-[100px] border-b-[2px] px-6 sm:px-10 md:px-14 xl:px-40 ${
+      className={`navbar flex md:fixed w-full items-center justify-between h-[60px] md:h-[80px] xl:h-[100px] px-6 sm:px-10 md:px-14 xl:px-40 z-50 ${
         theme == "light"
-          ? "bg-white border-gray-100 text-black"
-          : "bg-darkmodeNavbarColor border-black/30 text-white"
+          ? "bg-white text-black"
+          : "bg-black/80 border-black/30 text-white"
       } transition-shadow duration-300 ${
         isScrolled ? "shadow-sm shadow-gray-300" : "null"
       }`}
@@ -162,12 +141,7 @@ const NavBar = ({ theme }) => {
                   : "rounded-t-full border-[1px] border-b-0"
               } `}
               onClick={(event) => {
-                // if (!toggleMenuDropdown) {
-                // event.stopPropagation();
                 setToggleMenuDropdown((prev) => !prev);
-                // }
-
-                // console.log(toggleMenuDropdown);
               }}
             />
             {toggleMenuDropdown && (
@@ -232,6 +206,6 @@ const NavBar = ({ theme }) => {
       </div>
     </nav>
   );
-};
+}
 
 export default NavBar;

@@ -13,6 +13,9 @@ let categories = [
   "ETF và các quỹ",
   "Trái phiếu doanh nghiệp",
   "Tiền kỹ thuật số",
+  "Hoạt động kinh doanh",
+  "Niêm yết",
+  "Doanh nhân và khởi nghiệp",
 ];
 
 export default categories;

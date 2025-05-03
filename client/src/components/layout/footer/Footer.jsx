@@ -1,63 +1,73 @@
-import { useNavigate } from "react-router-dom";
-import LogoButton from "../../ui/buttons/LogoButton";
+import { useEffect, useState } from "react";
+import logo from "../../../assets/logos/black-athStockLogo.png";
 
-const Footer = ({ theme }) => {
-  const navigate = useNavigate();
-
+const Footer = () => {
   return (
-    <footer className="flex flex-col xl:flex-row py-20 mt-10 w-full bg-black/90 text-white px-6 sm:px-10 md:px-14 xl:px-40">
-      <div className="flex flex-col w-full xl:w-[30%] items-start justify-center bg-red-100/20//">
-        <LogoButton
-          theme={!theme}
-          navigateTo={"/"}
-          size={`${window.innerWidth > 1200 ? "200px" : "110px"}`}
-        />
-        <div className="mt-4 text-sm md:text-md xl:text-md text-white">
-          <h1 className="tracking-wider">
-            This is a student scientific research project carried out by a group
-            of 2nd year students with the guidance of Dr. Trinh Hung Cuong and
-            sponsored by Ton Duc Thang University.
-          </h1>
-        </div>
-      </div>
-
-      <div className="flex flex-col lg:flex-row w-full xl:w-[70%] xl:ml-12 mt-10 xl:mt-0 items-start justify-center">
-        <div className="flex w-full xl:w-[70%] items-center gap-16 lg:gap-6 xl:gap-0 bg-red-100// lg:justify-start xl:justify-between">
-          <div className="flex flex-col w-[50%]">
-            <h1 className="tracking-wide text-md lg:text-xl font-bold">
-              Introduction
+    <footer className="w-full bg-white shadow-sm text-sm md:text-base lg:text-lg text-black px-6 sm:px-10 md:px-14 xl:px-40 py-10 lg:py-10 border-t-[1px] border-gray-200">
+      <div className="w-full md:py-8">
+        <div className="items-center w-full">
+          <div className="flex flex-col items-start w-full mb-8 xl:mb-0">
+            <h1 className={`flex text-3xl lg:text-4xl font-extrabold`}>
+              athStock.
             </h1>
-            <div className="flex flex-col mt-2 gap-1 items-start text-sm lg:text-md">
-              <button className="hover:text-orange-500">About us</button>
-              <button className="hover:text-orange-500">Contact</button>
-              <button className="hover:text-orange-500">Privacy policy</button>
-            </div>
-          </div>
-          <div className="flex flex-col w-[50%]">
-            <h1 className="tracking-wide text-md lg:text-xl font-bold ">
-              Support
-            </h1>
-            <div className="flex flex-col mt-2 gap-1 items-start text-sm lg:text-md">
-              <button className="hover:text-orange-500">FAQ</button>
-              <button className="hover:text-orange-500">Help</button>
-              <button className="hover:text-orange-500">Terms of use</button>
-            </div>
-          </div>
-        </div>
 
-        <div className="flex flex-col w-full xl:w-[40%] mt-10 lg:mt-0 bg-red-200// ">
-          <h1 className="tracking-wide text-md lg:text-xl font-bold">
-            Send us a message
-          </h1>
-          <textarea
-            type="text"
-            id="message"
-            className="bg-transparent border-[1px] h-20 mt-4 pl-4 py-2 rounded-md text-sm lg:text-md border-gray-400 outline-none"
-            placeholder="Send message"
-          />
-          <button className="w-full bg-orange-500 hover:bg-orange-300 p-1 mt-2 rounded-md text-white font-bold text-md xl:text-lg">
-            Send
-          </button>
+            <ul className="flex flex-col gap-1 pl-3 mt-4 text-sm font-normal tracking-wider list-disc list-inside md:text-base">
+              <li>
+                This is website is used to demonstrate our machine learning
+                model predicts stock prices.
+              </li>
+
+              <li>
+                Also create a community for who have interest in stocks,
+                security by provide blogging feature.
+              </li>
+              <li>
+                Developed with{" "}
+                <a
+                  href="https://www.mongodb.com/resources/languages/mern-stack"
+                  className="font-bold hover:text-blue-500"
+                >
+                  MERN
+                </a>{" "}
+                (MongoDB, ExpressJS, ReactJS, NodeJS) stack.
+              </li>
+              <li>
+                The open source can be found at{" "}
+                <a
+                  href="https://github.com/loveCiForever/athStock"
+                  className="font-bold hover:underline"
+                >
+                  athStock
+                </a>
+                .
+              </li>
+            </ul>
+          </div>
+
+          <ul
+            className={`flex flex-wrap items-center font-medium justify-between sm:gap-10 p-4 xl:px-10 bg-gray-100 rounded-lg mt-10`}
+          >
+            <li>
+              <a href="#" className="hover:underline me-4 md:me-6">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline me-4 md:me-6">
+                Licensing
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">
+                Contact
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">
+                Privacy Policy
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>

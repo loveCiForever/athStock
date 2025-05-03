@@ -21,7 +21,7 @@ const signup = async (req, res) => {
     const { fullName, email, password } = req.body;
 
     /*
-     * Read the general structure of error response at ./server/src/services/auth.service.js
+     * Read the general structure of error response at athStock/server/src/services/auth.service.js
      */
     const { error } = signUpValidation.validate({
       fullName,

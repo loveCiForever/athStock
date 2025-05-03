@@ -53,6 +53,8 @@ const blogSchema = mongoose.Schema(
         type: Number,
         default: 0,
       },
+      likesBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+      dislikesBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     },
     comments: {
       type: [Schema.Types.ObjectId],

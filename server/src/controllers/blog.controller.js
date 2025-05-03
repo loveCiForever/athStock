@@ -160,41 +160,82 @@ const fetchBlogById = async (req, res) => {
 
 const likeByBlogId = async (req, res) => {
   try {
-    let { blog_id } = req.body;
+    const userId = req.user._id;
+    const { blog_id } = req.body;
 
-    const updatedBlog = await BlogModel.findOneAndUpdate(
-      { blog_id },
-      { $inc: { "activity.total_likes": 1 } },
-      { new: true }
-    );
+    const blog = await BlogModel.findOne({ blog_id });
+    if (!blog) return res.status(404).json({ message: "Not found" });
 
-    return res.status(200).json({ blog: updatedBlog });
+    // Already liked?
+    if (blog.activity.likesBy.includes(userId)) {
+      return res.status(400).json({ message: "Already upvoted" });
+    }
+    // If they’d previously disliked, remove that
+    const wasDislike = blog.activity.dislikesBy.indexOf(userId);
+    if (wasDislike !== -1) {
+      blog.activity.dislikesBy.splice(wasDislike, 1);
+      blog.activity.total_dislikes--;
+    }
+
+    blog.activity.likesBy.push(userId);
+    blog.activity.total_likes++;
+
+    await blog.save();
+    res.json({ blog });
   } catch (error) {
-    console.error("Error: latest blog ---->", error);
-    return res.status(500).json({
-      message: "Latest blog error",
-      error: error.message,
-    });
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+const getVoteStatus = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { blog_id } = req.params;
+
+    const blog = await BlogModel.findOne(
+      { blog_id },
+      "activity.likesBy activity.dislikesBy"
+    );
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    const liked = blog.activity.likesBy.includes(userId);
+    const disliked = blog.activity.dislikesBy.includes(userId);
+
+    return res.json({ liked, disliked });
+  } catch (err) {
+    console.error("Error fetching vote status:", err);
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
 const dislikeByBlogId = async (req, res) => {
   try {
-    let { blog_id } = req.body;
+    const userId = req.user._id;
+    const { blog_id } = req.body;
 
-    const updatedBlog = await BlogModel.findOneAndUpdate(
-      { blog_id },
-      { $inc: { "activity.total_dislikes": 1 } },
-      { new: true }
-    );
+    const blog = await BlogModel.findOne({ blog_id });
+    if (!blog) return res.status(404).json({ message: "Not found" });
 
-    return res.status(200).json({ blog: updatedBlog });
+    if (blog.activity.dislikesBy.includes(userId)) {
+      return res.status(400).json({ message: "Already downvoted" });
+    }
+    const wasLike = blog.activity.likesBy.indexOf(userId);
+    if (wasLike !== -1) {
+      blog.activity.likesBy.splice(wasLike, 1);
+      blog.activity.total_likes--;
+    }
+
+    blog.activity.dislikesBy.push(userId);
+    blog.activity.total_dislikes++;
+
+    await blog.save();
+    res.json({ blog });
   } catch (error) {
-    console.error("Error: latest blog ---->", error);
-    return res.status(500).json({
-      message: "Latest blog error",
-      error: error.message,
-    });
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -205,4 +246,5 @@ export {
   fetchBlogById,
   likeByBlogId,
   dislikeByBlogId,
+  getVoteStatus,
 };

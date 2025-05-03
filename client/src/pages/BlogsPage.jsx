@@ -1,4 +1,4 @@
-// ./client/src/pages/BlogPage.jsx
+// athStock/client/src/pages/BlogPage.jsx
 
 import axios from "axios";
 import NavBar from "../components/layout/navbar/NavBar.jsx";
@@ -6,12 +6,13 @@ import { useEffect, useState } from "react";
 import BlogCard from "../components/ui/cards/BlogCard.jsx";
 import categories from "../utils/CategoriesList.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
+import ErrorImage from "../assets/images/error404.png";
+import CategorySlider from "../components/layout/category/CategorySlider.jsx";
 
 const BlogsPage = ({ theme }) => {
   let [blogs, setBlog] = useState(null);
   let [selectedCategory, setSelectedCategory] = useState(null);
   let [loading, setLoading] = useState(true);
-  let [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,78 +76,55 @@ const BlogsPage = ({ theme }) => {
 
   return (
     <div
-      className={`flex flex-col items-center min-w-[770px]// min-h-screen ${
-        theme == "light" ? "bg-white" : "bg-darkModeBackgroundColor"
-      }`}
+      className={`blogs-page 
+          flex flex-col items-center min-h-screen w-full 
+          ${theme == "light" ? "bg-white" : "bg-black/90"}
+        `}
     >
       <NavBar theme={theme} />
-      <div className="flex flex-col xl:flex-row justify-between w-full px-6 mt-0  xl:mt-32 sm:px-10 md:px-14 xl:px-40 my-4 md:my-10 bg-red-200//">
-        {innerWidth > 1280 ? (
-          <div className="absolute top-32 right-40 w-[25%] border-[1px] border-gray-300 rounded-xl h-fit hidden xl:block">
-            <h1 className="text-center text-xl font-semibold border-b-[1px] border-gray-300 p-3">
-              Danh mục bài viết
-            </h1>
-            <div className="flex gap-3 w-full flex-wrap p-6">
-              {categories.map((category, index) => (
-                <button
-                  key={category}
-                  onClick={() => handleCategoryClick(category)}
-                  className={`py-2 px-5 bg-black/80 text-white font-semibold border-none rounded-full hover:bg-black/50 text-sm ${
-                    selectedCategory === category
-                      ? "bg-orange-500/100 hover:bg-orange-500/100 "
-                      : ""
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="w-full border-[1px]// border-gray-300// rounded-xl h-fit mt-3 md:mt-14 lg:mt-16 overflow-x-auto no-scrollbar bg-red-200//">
-            <div className="flex flex-row gap-3 w-full py-3 bg-red-200//">
-              {categories.map((category, index) => (
-                <button
-                  key={category}
-                  onClick={() => handleCategoryClick(category)}
-                  className={`py-2 px-5 flex-shrink-0 bg-black/80 text-white font-semibold border-none rounded-full hover:bg-black/50 text-sm ${
-                    selectedCategory === category
-                      ? "bg-orange-500/100 hover:bg-orange-500/100 "
-                      : ""
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        <div className="w-full xl:w-[65%] bg-red-300// h-full xl:min-w-[600px]">
-          {loading || blogs == null ? (
-            <div className="flex flex-col w-full h-screen text-black">
-              <div className="w-full mt-10 pt-20 text-center  h-full bg-red-100//">
-                <h1 className="text-3xl font-bold">No blogs available</h1>
-                <button className=" mt-4 px-4 py-2 rounded-lg bg-gray-200">
-                  Submit Error
-                </button>
+
+      <div className="body flex flex-col flex-1 w-full md:mt-[80px] xl:mt-[100px]">
+        <div className="flex flex-col items-center justify-start flex-1 w-full px-6 sm:px-10 md:px-14 xl:px-40">
+          <CategorySlider
+            categories={categories}
+            selectedCategory={selectedCategory}
+            handleCategoryClick={handleCategoryClick}
+          />
+
+          <div className="flex flex-col flex-1 w-full blog-cards">
+            {blogs && blogs.length > 0 ? (
+              blogs.map((blog) => (
+                <BlogCard
+                  key={blog.blog_id}
+                  content={blog}
+                  author={blog.author.personal_info}
+                  theme={theme}
+                />
+              ))
+            ) : (
+              <div className="flex items-center justify-center flex-1 blogs-null">
+                <div className="flex flex-col items-center justify-center w-full text-base font-normal tracking-widest text-center md:text-xl lg:text-2xl">
+                  <img
+                    src={ErrorImage}
+                    alt="error image"
+                    className="w-1/3 lg:w-1/4"
+                  />
+                  <h1 className="">No blog available, reload the website</h1>
+                  <h1 className="mt-4">
+                    If you believe this is a server error, report to our team
+                    through this{" "}
+                    <a href="#" className="font-bold hover:text-blue-500">
+                      Bug Submission Form
+                    </a>
+                  </h1>
+                </div>
               </div>
-            </div>
-          ) : blogs && blogs.length > 0 ? (
-            blogs.map((blog) => (
-              <BlogCard
-                key={blog.blog_id}
-                content={blog}
-                author={blog.author.personal_info}
-                theme={theme}
-              />
-            ))
-          ) : (
-            <div>No blogs available</div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-      <Footer theme={theme} />
-      {/* <ScreenSizePanel position={"bottom-left"} /> */}
+
+      <div className="w-full mt-20">{blogs && <Footer />}</div>
     </div>
   );
 };

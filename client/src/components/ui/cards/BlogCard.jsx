@@ -35,7 +35,7 @@ const BlogCard = ({ author, content, theme }) => {
   return (
     <Link
       to={`/blog/${id}`}
-      className="flex flex-col lg:flex-row items-start w-full border-b border-grey py-2 md:py-4 hover:bg-gray-50 hover:shadow-sm bg-red-100// mt-0 md:mt-4"
+      className="flex flex-col lg:flex-row items-start w-full border-b border-grey py-2 md:py-8 hover:bg-gray-50 hover:shadow-sm"
     >
       <div className="w-full lg:w-[500px] lg:h-[200px] xl:w-[500px] xl:h-[250px]">
         <img src={banner} className="w-full h-full object-cover rounded-md" />
