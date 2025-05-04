@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CircleChevronDown, CircleChevronUp } from "lucide-react";
+import { CircleChevronDown, CircleChevronUp, CircleX } from "lucide-react";
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,31 +18,27 @@ const BlogPage = ({ theme }) => {
   const { user, userLoading } = useAuthContext();
   const [blogPoint, setBlogPoint] = useState();
   const authHeaders = user
-    ? {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxYzIzZDBhMTIxNDEwNDdkM2Q2NyIsImlhdCI6MTc0NjM0NTAyMywiZXhwIjoxNzQ4OTM3MDIzfQ.9Ye4wenOi1DYVka4WtcMx7vAtHIP7BUZuOQfTnlx8zs`,
-        },
-      }
+    ? { headers: { Authorization: `Bearer ${user.access_token}` } }
     : {};
-  const [voteStatus, setVoteStatus] = useState({
-    liked: false,
-    disliked: false,
-  });
+  // const [voteStatus, setVoteStatus] = useState({
+  //   liked: false,
+  //   disliked: false,
+  // });
 
-  const fetchVoteStatus = async () => {
-    if (!user) return;
-    try {
-      const res = await axios.get(
-        `${VITE_BASE_URL}/api/blog/vote-status/${blog_id}`,
-        authHeaders
-      );
-      console.log(res);
+  // const fetchVoteStatus = async () => {
+  //   if (!user) return;
+  //   try {
+  //     const res = await axios.get(
+  //       `${VITE_BASE_URL}/api/blog/vote-status/${blog_id}`,
+  //       authHeaders
+  //     );
+  //     console.log(res);
 
-      setVoteStatus(res.data);
-    } catch (err) {
-      console.error("Could not get vote status", err);
-    }
-  };
+  //     setVoteStatus(res.data);
+  //   } catch (err) {
+  //     console.error("Could not get vote status", err);
+  //   }
+  // };
 
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
@@ -66,10 +62,11 @@ const BlogPage = ({ theme }) => {
   };
 
   const likeByBlogId = async ({ blog_id }) => {
+    setVoteStatus("like");
     setLoading(true);
     try {
       // 1. send the upvote
-      console.log(authHeaders);
+      // console.log(authHeaders);
       const { data } = await axios.post(
         VITE_BASE_URL + "/api/blog/like-blog-by-id",
         { blog_id },
@@ -77,7 +74,7 @@ const BlogPage = ({ theme }) => {
       );
       // 2. re-fetch
       fetchBlogById({ blog_id });
-      fetchVoteStatus();
+      // fetchVoteStatus();
 
       // 3. recalculate the point
       setBlogPoint(blog.activity.total_likes - blog.activity.total_dislikes);
@@ -90,6 +87,7 @@ const BlogPage = ({ theme }) => {
   };
 
   const dislikeByBlogId = async ({ blog_id }) => {
+    setVoteStatus("dislike");
     setLoading(true);
     try {
       const { data } = await axios.post(
@@ -99,9 +97,53 @@ const BlogPage = ({ theme }) => {
       );
 
       fetchBlogById({ blog_id });
-      fetchVoteStatus();
+      // fetchVoteStatus();
 
       setBlogPoint(blog.activity.total_likes - blog.activity.total_dislikes);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const [voteStatus, setVoteStatus] = useState("");
+  const fetchVoteStatusByBlogIdUserID = async ({ blog_id }) => {
+    // console.log("auth header", authHeaders);
+    setLoading(true);
+    try {
+      const { data } = await axios.post(
+        VITE_BASE_URL + "/api/blog/vote-status",
+        { blog_id },
+        authHeaders
+      );
+      // console.log(data);
+      if (data.data.hasDisliked) {
+        setVoteStatus("dislike");
+      } else if (data.data.hasLiked) {
+        setVoteStatus("like");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const unVoteByBlogId = async ({ blog_id, voteStatus }) => {
+    setLoading(true);
+
+    try {
+      const { data } = await axios.post(
+        VITE_BASE_URL + "/api/blog/unvote",
+        { blog_id, unvote: voteStatus },
+        authHeaders
+      );
+
+      setVoteStatus("");
+      fetchBlogById({ blog_id });
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.message);
@@ -115,16 +157,19 @@ const BlogPage = ({ theme }) => {
   }, [blog_id]);
 
   useEffect(() => {
-    // fetchVoteStatus();
-  });
+    if (!user) return;
+    fetchVoteStatusByBlogIdUserID({ blog_id });
+  }, [user, blog_id]);
 
   useEffect(() => {
     document.title = blog.category + " - " + blog.title;
   });
 
   // useEffect(() => {
-  //   console.log(blog);
-  // });
+  //   if (!voteStatus) return;
+  //   console.log("voteStatus updated:", voteStatus);
+  // }, [voteStatus]);
+
   return (
     <div
       className={`
@@ -190,23 +235,56 @@ const BlogPage = ({ theme }) => {
               z-10 gap-2
             `}
           >
-            <div className="flex flex-col items-center justify-center gap-4 p-4 bg-gray-100 rounded-lg">
+            <div className="flex flex-col items-center justify-center gap-4 pr-2 bg-white rounded-lg">
+              <div className="flex flex-col items-center rounded-lg justify-center gap-4 p-4 bg-gray-100">
+                {" "}
+                <button
+                  onClick={() => {
+                    likeByBlogId({ blog_id: blog.blog_id });
+                  }}
+                  className={`rounded-full hover:bg-gray-300 ${
+                    voteStatus === "like" ? "" : ""
+                  }`}
+                >
+                  {voteStatus === "like" ? (
+                    <CircleChevronUp size={35} strokeWidth={2} color="green" />
+                  ) : (
+                    <CircleChevronUp size={35} strokeWidth={1} />
+                  )}
+                </button>
+                <h1 className="pt-1 text-2xl font-normal">{blogPoint}</h1>
+                <button
+                  onClick={() => {
+                    dislikeByBlogId({ blog_id: blog.blog_id });
+                  }}
+                  className={`rounded-full hover:bg-gray-300 ${
+                    voteStatus === "dislike" ? "" : ""
+                  }`}
+                >
+                  {voteStatus === "dislike" ? (
+                    <CircleChevronDown
+                      size={35}
+                      strokeWidth={2}
+                      color="orange"
+                    />
+                  ) : (
+                    <CircleChevronDown size={35} strokeWidth={1} />
+                  )}
+                </button>
+              </div>
+
               <button
-                onClick={() => likeByBlogId({ blog_id: blog.blog_id })}
-                className={`rounded-full hover:bg-gray-300 ${
-                  voteStatus.liked ? "bg-red-300" : ""
+                onClick={() => {
+                  unVoteByBlogId({
+                    blog_id: blog.blog_id,
+                    voteStatus: voteStatus,
+                  });
+                }}
+                className={`p-4 rounded-lg bg-gray-100 hover:bg-gray-300 ${
+                  voteStatus === "dislike" ? "" : ""
                 }`}
               >
-                <CircleChevronUp size={35} strokeWidth={1} />
-              </button>
-
-              <h1 className="pt-1 text-2xl font-normal">{blogPoint}</h1>
-
-              <button
-                onClick={() => dislikeByBlogId({ blog_id: blog.blog_id })}
-                className="rounded-full hover:bg-gray-300"
-              >
-                <CircleChevronDown size={35} strokeWidth={1} />
+                <CircleX size={35} strokeWidth={2} color="red" />
               </button>
             </div>
 
@@ -223,7 +301,3 @@ const BlogPage = ({ theme }) => {
 };
 
 export default BlogPage;
-
-/**
-  Bug: User can like unlimited ---> add is-like-by-user (verify by jwt)
- */

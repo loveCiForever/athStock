@@ -43,6 +43,7 @@ const SignUpForm = () => {
         full_name: fullName,
         email,
         password,
+        navigateToHome: true,
       });
 
       const user = response.data.data.user;

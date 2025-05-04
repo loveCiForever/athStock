@@ -196,12 +196,13 @@ const signin = async (req, res) => {
 };
 
 const signout = async (req, res) => {
-  const { email } = req.body;
+  const user_id = req.user;
+  console.log(user_id);
 
   try {
     res.clearCookie("blogToken");
 
-    const user = await Users.findOne({ "personal_info.email": email });
+    const user = await Users.findById(user_id);
 
     if (!user) {
       return res.status(404).json({
@@ -228,6 +229,7 @@ const signout = async (req, res) => {
       data: null,
     });
   } catch (error) {
+    console.log("Sign out error: ", error);
     res.status(500).json({
       success: false,
       message: "Hehehe you are getting some trouble with your backend code",
@@ -237,9 +239,9 @@ const signout = async (req, res) => {
 };
 
 const getUserInfo = async (req, res) => {
-  const { email } = req.body;
+  const user_id = req.user;
   try {
-    const user = await Users.findOne({ "personal_info.email": email });
+    const user = await Users.findById(user_id);
 
     if (!user) {
       return res.status(404).json({

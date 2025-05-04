@@ -15,7 +15,9 @@ import { setSession } from "../../../services/useSession.jsx";
 const UserNav = () => {
   const { user, signout } = useAuthContext();
   let { theme, setTheme } = useContext(ThemeContext);
-
+  const authHeaders = user
+    ? { headers: { Authorization: `Bearer ${user.access_token}` } }
+    : {};
   const changeTheme = () => {
     let newTheme = theme == "light" ? "dark" : "light";
 
@@ -28,24 +30,25 @@ const UserNav = () => {
   };
 
   const signOut = async () => {
-    console.log("SIGN OUT");
+    // console.log("SIGN OUT");
     try {
-      await axios.post("http://localhost:8000/api/auth/signout", {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
+      console.log(authHeaders);
+      await axios.post(
+        "http://localhost:8000/api/auth/signout",
+        {},
+        authHeaders
+      );
       toast.success("Sign out successful");
       signout();
     } catch (error) {
-      console.log();
       toast.error("Error signing out");
+      console.log(error);
     }
   };
 
-  useEffect(() => {
-    console.log(user);
-  });
+  // useEffect(() => {
+  //   console.log(user);
+  // });
 
   return (
     <div className="absolute right-0 z-50 mt-52">

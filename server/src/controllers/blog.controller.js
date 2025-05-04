@@ -224,7 +224,7 @@ const likeByBlogId = async (req, res) => {
     const userId = req.user; // either ObjectId or string
     const { blog_id } = req.body; // your slug/identifier
 
-    // console.log(userId);
+    // console.log(`[LIKEBYBLOGID] userid: ${userId}`);
 
     // 2) Load the blog
     const blog = await BlogModel.findOne({ blog_id });
@@ -291,7 +291,7 @@ const likeByBlogId = async (req, res) => {
 
 const unVote = async (req, res) => {
   const userId = req.user;
-  const { blog_id, unvote } = req.body;
+  const { blog_id } = req.body;
 
   // console.log(`[UNVOTE] userid: ${userId}, blogid: ${blog_id}`);
 
@@ -322,6 +322,12 @@ const unVote = async (req, res) => {
       blog.activity.dislikesBy.pull(userObjId);
       blog.activity.total_dislikes--;
       user.activities.dislike.pull(blogObjId);
+    }
+
+    if (blog.activity.likesBy.some((id) => id.equals(userObjId))) {
+      blog.activity.likesBy.pull(userObjId);
+      blog.activity.total_likes--;
+      user.activities.like.pull(blogObjId);
     }
 
     await user.save();

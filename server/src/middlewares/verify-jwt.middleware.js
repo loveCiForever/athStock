@@ -5,6 +5,8 @@ import "dotenv/config";
 
 const verifyJWT = (req, res, next) => {
   const authHeader = req.headers["authorization"];
+  // console.log(`[verify jwt] authHeader: ${authHeader}`);
+
   if (!authHeader) {
     return res.status(401).json({
       success: false,

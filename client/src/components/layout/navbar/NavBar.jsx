@@ -22,7 +22,9 @@ function NavBar({ theme }) {
   const navigate = useNavigate();
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   let [currentBasePath, setCurrentBasePath] = useState(null);
-
+  const authHeaders = user
+    ? { headers: { Authorization: `Bearer ${user.access_token}` } }
+    : {};
   useEffect(() => {
     const handleResize = () => {
       setInnerWidth(window.innerWidth);
@@ -52,25 +54,27 @@ function NavBar({ theme }) {
     setCurrentBasePath(getBasePath(window.location.pathname));
   };
 
+  // const email = user.email;
   const signOut = async () => {
-    console.log("SIGN OUT");
+    // console.log("SIGN OUT");
     try {
-      await axios.post("http://localhost:8000/api/auth/signout");
+      console.log(authHeaders);
+      await axios.post(
+        "http://localhost:8000/api/auth/signout",
+        {},
+        authHeaders
+      );
       toast.success("Sign out successful");
       signout();
     } catch (error) {
-      console.log();
       toast.error("Error signing out");
+      console.log(error);
     }
   };
 
   useEffect(() => {
     handleBasePathChange();
   }, [currentBasePath]);
-
-  // useEffect(() => {
-  //   console.log(user);
-  // });
 
   if (loading) {
     return <div className="w-full h-screen bg-red-500">LOADING ...</div>;
