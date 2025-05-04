@@ -18,7 +18,11 @@ const BlogPage = ({ theme }) => {
   const { user, userLoading } = useAuthContext();
   const [blogPoint, setBlogPoint] = useState();
   const authHeaders = user
-    ? { headers: { Authorization: `Bearer ${user.access_token}` } }
+    ? {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxYzIzZDBhMTIxNDEwNDdkM2Q2NyIsImlhdCI6MTc0NjM0NTAyMywiZXhwIjoxNzQ4OTM3MDIzfQ.9Ye4wenOi1DYVka4WtcMx7vAtHIP7BUZuOQfTnlx8zs`,
+        },
+      }
     : {};
   const [voteStatus, setVoteStatus] = useState({
     liked: false,
@@ -65,6 +69,7 @@ const BlogPage = ({ theme }) => {
     setLoading(true);
     try {
       // 1. send the upvote
+      console.log(authHeaders);
       const { data } = await axios.post(
         VITE_BASE_URL + "/api/blog/like-blog-by-id",
         { blog_id },
@@ -117,9 +122,9 @@ const BlogPage = ({ theme }) => {
     document.title = blog.category + " - " + blog.title;
   });
 
-  useEffect(() => {
-    console.log(blog);
-  });
+  // useEffect(() => {
+  //   console.log(blog);
+  // });
   return (
     <div
       className={`

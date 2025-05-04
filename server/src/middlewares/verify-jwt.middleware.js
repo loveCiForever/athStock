@@ -4,27 +4,31 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 const verifyJWT = (req, res, next) => {
-  const Header = req.headers["authorization"];
-  const user_id = Header && Header.split(" ")[1];
-
-  // console.log("Authorization Header:", Header);
-  // console.log("User id:", user_id);
-
-  if (user_id == null) {
-    return res.status(401).json({ error: "No user id" });
+  const authHeader = req.headers["authorization"];
+  if (!authHeader) {
+    return res.status(401).json({
+      success: false,
+      message: "verifyJWT error",
+      error: "No token provided",
+    });
   }
 
-  jwt.verify(user_id, process.env.SECRET_ACCESS_KEY, (err, user) => {
+  const token = authHeader.split(" ")[1];
+
+  // console.log("[VERIFY JWT] Token: ", token);
+  jwt.verify(token, process.env.SECRET_ACCESS_KEY, (err, decodedPayload) => {
     if (err) {
-      console.error("JWT error: ", err);
+      console.error("JWT error:", err);
       return res.status(403).json({
         success: false,
         message: "verifyJWT error",
-        error: "Access token is invalid",
+        error: "Invalid token",
       });
     }
 
-    req.user = user.id;
+    // console.log("[VERIFY JWT] Decoded payload:", decodedPayload);
+
+    req.user = decodedPayload.id;
     next();
   });
 };

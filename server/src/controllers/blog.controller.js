@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 const createBlog = async (req, res) => {
   try {
     const currentUserId = req.user;
-    console.log(currentUserId);
+    console.log(`[CREATE BLOG] userID: ${currentUserId}`);
 
     if (!currentUserId) {
       return res.status(403).json({ error: "User  not found" });
@@ -40,7 +40,7 @@ const createBlog = async (req, res) => {
       banner,
     }).save();
 
-    const updatedUser = await UserModel.findOneAndUpdate(
+    await UserModel.findOneAndUpdate(
       { _id: currentUserId },
       {
         $inc: { "account_info.total_posts": 1 },
@@ -159,126 +159,252 @@ const fetchBlogById = async (req, res) => {
   } catch (error) {
     console.error("Error: latest blog ---->", error);
     return res.status(500).json({
+      success: false,
       message: "Latest blog error",
       error: error.message,
     });
   }
 };
 
-const likeByBlogId = async (req, res) => {
-  const session = await mongoose.startSession();
+const getVoteStatusByBlogIdUserId = async (req, res) => {
+  const { blog_id } = req.body; // your string id
+  const user_id = req.user; // JWT middleware gave you this
+
   try {
-    await session.withTransaction(async () => {
-      const userId = req.user._id;
-      const { blog_id } = req.body;
-
-      // Load the blog, user document *in the transaction*
-      const [blog, user] = await Promise.all([
-        BlogModel.findOne({ blog_id }).session(session),
-        UserModel.findById(userId).session(session),
-      ]);
-
-      if (!blog) {
-        return res.status(404).json({
-          success: false,
-          message: "Blog not found",
-          error: "Look at message :D",
-        });
-      }
-
-      // Already liked?
-      if (blog.activity.likesBy.includes(userId)) {
-        return res.status(400).json({
-          success: false,
-          message: "Already upvoted",
-          error: "Look at message :D",
-        });
-      }
-
-      // If previously disliked, remove that
-      if (blog.activity.dislikesBy.includes(userId)) {
-        blog.activity.dislikesBy.pull(userId);
-        blog.activity.total_dislikes--;
-      }
-
-      if (user.activities.dislike.includes(blog._id)) {
-        user.activities.dislike.pull(blog._id);
-      }
-
-      // Add the like
-      blog.activity.likesBy.push(userId);
-      blog.activity.total_likes++;
-
-      user.activities.like.push(blog._id);
-
-      // Save *inside* the transaction
-      await blog.save({ session });
-      res.json({ success: true, message: "Upvote successfully", data: blog });
-    });
-  } catch (err) {
-    console.error("[likeByBlogId] transaction error:", err);
-    if (!res.headersSent) {
-      res.status(500).json({
+    const blog = await BlogModel.findOne({ blog_id });
+    if (!blog) {
+      return res.status(404).json({
         success: false,
-        message: "Server error",
-        error: "Hehehe you are getting some trouble with your backend code",
+        message: "Get vote status failed",
+        error: "Blog id not found",
       });
     }
-  } finally {
-    session.endSession();
+
+    const blogObjId = blog._id;
+
+    const user = await UserModel.findById(user_id).select(
+      "activities.like activities.dislike"
+    );
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Get vote status failed",
+        error: "User not found",
+      });
+    }
+
+    const hasLiked = user.activities.like.some((id) => id.equals(blogObjId));
+    const hasDisliked = user.activities.dislike.some((id) =>
+      id.equals(blogObjId)
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Get vote status successfully",
+      data: {
+        user_id,
+        blog_id: blog.blog_id,
+        hasLiked,
+        hasDisliked,
+      },
+    });
+  } catch (error) {
+    console.error("[getVoteStatus] Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching vote status",
+      error: error.message,
+    });
   }
 };
 
-export default likeByBlogId;
-
-const getVoteStatus = async (req, res) => {
+const likeByBlogId = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const { blog_id } = req.params;
+    // 1) Pull IDs
+    const userId = req.user; // either ObjectId or string
+    const { blog_id } = req.body; // your slug/identifier
 
-    const blog = await BlogModel.findOne(
-      { blog_id },
-      "activity.likesBy activity.dislikesBy"
-    );
+    // console.log(userId);
+
+    // 2) Load the blog
+    const blog = await BlogModel.findOne({ blog_id });
     if (!blog) {
-      return res.status(404).json({ message: "Blog not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+        error: "Look at message :D",
+      });
     }
 
-    const liked = blog.activity.likesBy.includes(userId);
-    const disliked = blog.activity.dislikesBy.includes(userId);
+    // 3) Load the user
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+        error: "Look at message :D",
+      });
+    }
 
-    return res.json({ liked, disliked });
+    // 4) Check if already liked
+    if (blog.activity.likesBy.some((id) => id.equals(user._id))) {
+      return res.status(400).json({
+        success: false,
+        message: "Already upvoted",
+        error: "Look at message :D",
+      });
+    }
+
+    const blogObjId = blog._id;
+    const userObjId = user._id;
+
+    // 5) Remove a previous dislike, if any
+    if (blog.activity.dislikesBy.some((id) => id.equals(userObjId))) {
+      blog.activity.dislikesBy.pull(userObjId);
+      blog.activity.total_dislikes--;
+      user.activities.dislike.pull(blogObjId);
+    }
+
+    // 6) Add the like
+    blog.activity.likesBy.push(userObjId);
+    blog.activity.total_likes++;
+    user.activities.like.push(blogObjId);
+
+    // 7) Persist changes
+    await blog.save();
+    await user.save();
+
+    return res.json({
+      success: true,
+      message: "Upvote successfully",
+      data: { blog, user },
+    });
   } catch (err) {
-    console.error("Error fetching vote status:", err);
-    return res.status(500).json({ message: "Server error" });
+    console.error("[likeByBlogId] error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: err.message,
+    });
+  }
+};
+
+const unVote = async (req, res) => {
+  const userId = req.user;
+  const { blog_id, unvote } = req.body;
+
+  // console.log(`[UNVOTE] userid: ${userId}, blogid: ${blog_id}`);
+
+  try {
+    const blog = await BlogModel.findOne({ blog_id });
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+        error: "Look at message :D",
+      });
+    }
+
+    // 3) Load the user
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+        error: "Look at message :D",
+      });
+    }
+
+    const blogObjId = blog._id;
+    const userObjId = user._id;
+
+    if (blog.activity.dislikesBy.some((id) => id.equals(userObjId))) {
+      blog.activity.dislikesBy.pull(userObjId);
+      blog.activity.total_dislikes--;
+      user.activities.dislike.pull(blogObjId);
+    }
+
+    await user.save();
+    await blog.save();
+
+    return res.json({
+      success: true,
+      message: "Unvote successfully",
+      data: { blog, user },
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "hehehe unvote failed", error: error });
   }
 };
 
 const dislikeByBlogId = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user; // string or ObjectId
     const { blog_id } = req.body;
 
+    // 1) Load blog
     const blog = await BlogModel.findOne({ blog_id });
-    if (!blog) return res.status(404).json({ message: "Not found" });
-
-    if (blog.activity.dislikesBy.includes(userId)) {
-      return res.status(400).json({ message: "Already downvoted" });
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+        error: "Look at message :D",
+      });
     }
-    const wasLike = blog.activity.likesBy.indexOf(userId);
-    if (wasLike !== -1) {
-      blog.activity.likesBy.splice(wasLike, 1);
+
+    // 2) Load user
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+        error: "Look at message :D",
+      });
+    }
+
+    // 3) Abort if already down-voted
+    if (blog.activity.dislikesBy.some((id) => id.equals(user._id))) {
+      return res.status(400).json({
+        success: false,
+        message: "Already downvoted",
+        error: "Look at message :D",
+      });
+    }
+
+    const blogObjId = blog._id;
+    const userObjId = user._id;
+
+    // 4) Remove existing like, if any
+    if (blog.activity.likesBy.some((id) => id.equals(userObjId))) {
+      blog.activity.likesBy.pull(userObjId);
       blog.activity.total_likes--;
+      user.activities.like.pull(blogObjId);
     }
 
-    blog.activity.dislikesBy.push(userId);
+    // 5) Add the dislike
+    blog.activity.dislikesBy.push(userObjId);
     blog.activity.total_dislikes++;
+    user.activities.dislike.push(blogObjId);
 
+    // 6) Persist changes one after the other
     await blog.save();
-    res.json({ blog });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
+    await user.save();
+
+    // 7) Return result
+    return res.json({
+      success: true,
+      message: "Downvote successfully",
+      data: { blog, user },
+    });
+  } catch (err) {
+    console.error("[dislikeByBlogId] error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: err.message,
+    });
   }
 };
 
@@ -289,5 +415,6 @@ export {
   fetchBlogById,
   likeByBlogId,
   dislikeByBlogId,
-  getVoteStatus,
+  getVoteStatusByBlogIdUserId,
+  unVote,
 };

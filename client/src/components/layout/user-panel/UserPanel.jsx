@@ -30,7 +30,11 @@ const UserNav = () => {
   const signOut = async () => {
     console.log("SIGN OUT");
     try {
-      await axios.post("http://localhost:8000/api/auth/signout");
+      await axios.post("http://localhost:8000/api/auth/signout", {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
       toast.success("Sign out successful");
       signout();
     } catch (error) {
@@ -38,6 +42,10 @@ const UserNav = () => {
       toast.error("Error signing out");
     }
   };
+
+  useEffect(() => {
+    console.log(user);
+  });
 
   return (
     <div className="absolute right-0 z-50 mt-52">

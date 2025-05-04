@@ -37,6 +37,8 @@ const SignInForm = () => {
         password,
       });
 
+      // console.log(response);
+
       const user = response.data.data.user;
       const access_token = response.data.data.user.access_token;
 

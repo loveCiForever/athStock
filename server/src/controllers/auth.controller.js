@@ -115,7 +115,7 @@ const signin = async (req, res) => {
     const { email, password } = req.body;
 
     /*
-     * Read the general structure of error response at ./server/src/services/auth.service.js
+     * Read the general structure of error response at athStock/server/src/services/auth.service.js
      */
     const { error } = signInValidation.validate({ email, password });
     // console.log(`[SIGN IN] signInValidation: ${error ? error : "ok"}`);
@@ -144,9 +144,8 @@ const signin = async (req, res) => {
         error: "Email is not found",
       });
     }
-    // console.log(
-    //   `[SIGN IN] ${user.personal_info.user_name} isSignedIn: ${user.isSignedIn} `
-    // );
+
+    // console.log(`[SIGN IN] ${user} isSignedIn: ${user.isSignedIn} `);
 
     if (user.isSignedIn) {
       return res.status(409).json({
@@ -169,18 +168,18 @@ const signin = async (req, res) => {
       });
     }
 
+    user.isSignedIn = true;
+    await user.save();
+
     const access_token = genCookieToken(user._id, res);
     const userToSend = {
       full_name: user.personal_info.full_name,
       user_name: user.personal_info.user_name,
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
+      isSignedIn: user.isSignedIn,
       access_token,
-      isSignedIn,
     };
-
-    user.isSignedIn = true;
-    await user.save();
 
     res.status(200).json({
       success: true,
@@ -191,7 +190,7 @@ const signin = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Hehehe you are getting some trouble with your backend code",
-      error: error,
+      error: error.stack,
     });
   }
 };
@@ -209,6 +208,14 @@ const signout = async (req, res) => {
         success: false,
         message: "User sign out failed",
         error: "Email is not found",
+      });
+    }
+
+    if (!user.isSignedIn) {
+      return res.status(404).json({
+        success: false,
+        message: "User sign out failed",
+        error: "User has not sign in yet",
       });
     }
 
