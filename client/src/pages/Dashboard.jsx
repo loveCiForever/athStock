@@ -15,28 +15,24 @@ const Dashboard = ({ theme }) => {
 
   return (
     <div
-      className={`flex flex-col items-center min-w-full min-h-screen ${
-        theme == "light" ? "bg-white" : "bg-darkModeBackgroundColor"
-      }`}
+      className={`blogs-page 
+          flex flex-col items-center min-h-screen w-full 
+          ${theme == "light" ? "bg-white" : "bg-black/90"}
+        `}
     >
       <NavBar theme={theme} />
-      <div className="flex items-center justify-center mt-5 bg-red-200//">
-        <Market />
-      </div>
 
-      <div className="flex w-[1200px] bg-red-200// mt-10 gap-6">
-        <div className="flex-col w-[800px]">
-          <div className="flex items-start justify-start bg-red">
-            <MayBeYouCare />
+      <div className="body flex flex-col flex-1 w-full md:mt-[80px] xl:mt-[100px]">
+        <div className="flex flex-col items-center justify-start flex-1 w-full">
+          <div className="flex items-center justify-center w-full px-6 sm:px-10 md:px-14 xl:px-40">
+            <Market />
+          </div>
+          <div className="flex items-center justify-center w-full mt-10 px-6 sm:px-10 md:px-14 xl:px-40 bg-green-100">
+            {/* <MayBeYouCare /> */}
           </div>
         </div>
-        {/* <div className="w-[400px] border-[1px] border-gray-300 rounded-md h-fit">
-          <h1 className="text-center text-lg font-semibold border-b-[1px] border-gray-300 p-2">
-            Danh mục
-          </h1>
-          <div className="flex gap-3 w-full flex-wrap p-6"></div>
-        </div> */}
       </div>
+
       {/* <Footer theme={theme} /> */}
     </div>
   );

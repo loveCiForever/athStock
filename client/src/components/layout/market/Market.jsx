@@ -1,170 +1,120 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-
 import CollapseAllIcon from "../../../assets/icons/collapseAllIcon.png";
 import ExpandAllIcon from "../../../assets/icons/expandAllIcon.png";
-
 import MarketCard from "../../ui/cards/MarketCard";
-
-// import MarketsGraph from "./MarketsGraph";
+import vnindex_data from "../../../../../data/index/vnindex/vnindex.json";
+import hnxindex_data from "../../../../../data/index/hnxindex/hnxindex.json";
+import hnx30 from "../../../../../data/index/hnx30/hnx30.json";
+import vn30 from "../../../../../data/index/vn30/vn30.json";
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  Brush,
+  Bar,
+} from "recharts";
 
 const Market = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [marketData, setMarketData] = useState({
-    vnindex: {
-      data: [
-        {
-          IndexValue: 1200.5,
+  const data = useMemo(() => vnindex_data, [vnindex_data]);
+  const monthTicks = useMemo(() => {
+    if (data.length === 0) return [];
 
-          Change: +15.25,
-          RatioChange: +1.28,
-        },
-      ],
-    },
-    vn30: {
-      data: [
-        {
-          IndexValue: 1100.75,
-          Change: -5.5,
-          RatioChange: -0.5,
-        },
-      ],
-    },
-    hnxindex: {
-      data: [
-        {
-          IndexValue: 250.3,
+    const ticks = [];
+    let lastMonth = null;
 
-          Change: +2.1,
-          RatioChange: +0.84,
-        },
-      ],
-    },
-    hnx30: {
-      data: [
-        {
-          IndexValue: 220.0,
-          Change: -1.0,
-          RatioChange: -0.45,
-        },
-      ],
-    },
+    data.forEach((d) => {
+      const dt = new Date(d.time);
+      const m = dt.getMonth();
+
+      if (dt.getDate() === 1 && m !== lastMonth) {
+        ticks.push(d.time);
+        lastMonth = m;
+      }
+    });
+
+    const lastTime = data[data.length - 1].time;
+    if (ticks[ticks.length - 1] !== lastTime) {
+      ticks.push(lastTime);
+    }
+
+    return ticks;
+  }, [data]);
+
+  const monthFmt = new Intl.DateTimeFormat("en", {
+    month: "short",
+    year: "numeric",
   });
 
-  // const fetchDailyMarketIndices = async () => {
-  //   try {
-  //     const response = await axios
-  //       .get
-  //       // "http://127.0.0.1:5000/api/market_daily_index"
-  //       ();
-  //     setMarketData(response.data);
-  //     // console.log("Market Data:", response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching market data:", error);
-  //   }
-  // };?
-
+  const [isExpanded, setIsExpanded] = useState(false);
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className="flex flex-col w-[1200px] bg-red-200//">
-      <div className="flex flex-col items-start">
-        <button
-          className={`flex items-center justify-center uppercase text-gray-800 tracking-widest font-bold text-[14px] `}
-          onClick={handleExpandClick}
+    <div className="w-full bg-white rounded-xl">
+      <ResponsiveContainer width="100%" height={400}>
+        <ComposedChart
+          data={data}
+          margin={{ top: 0, right: 20, bottom: 0, left: 20 }}
         >
-          <img
-            className="h-5 w-5 mr-[6px]"
-            src={isExpanded ? CollapseAllIcon : ExpandAllIcon}
-            alt={isExpanded ? "Collapse All Icon" : "Expand All Icon"}
+          <CartesianGrid strokeDasharray="2 3" />
+          <XAxis
+            dataKey="time"
+            type="number"
+            scale="time"
+            domain={[data[0].time, data[data.length - 1].time]}
+            ticks={monthTicks}
+            tickFormatter={(ts) => monthFmt.format(new Date(ts))}
+            axisLine={false}
+            tickLine={false}
+            padding={{ left: 0, right: 0 }}
           />
-          Visualize
-        </button>
+          <YAxis
+            yAxisId="price"
+            orientation="left"
+            domain={["dataMin - 10", "dataMax + 10"]}
+            tickFormatter={(value) => `${value}`}
+          />
+          <YAxis
+            yAxisId="vol"
+            orientation="right"
+            domain={[0, "dataMax"]}
+            tickFormatter={(value) => `${(value / 1e9).toFixed(1)}B`}
+          />
+          <Tooltip
+            labelFormatter={(ts) => new Date(ts).toLocaleDateString()}
+            formatter={(val, name) => [
+              val,
+              name.charAt(0).toUpperCase() + name.slice(1),
+            ]}
+          />
+          <Legend verticalAlign="top" height={36} />
+          <Line
+            yAxisId="price"
+            type="monotone"
+            dataKey="close"
+            name="Close"
+            stroke="#23a723"
+            dot={false}
+            strokeWidth={2}
+          />
 
-        {!isExpanded && (
-          <div className="flex flex-row items-center justify-between w-full mt-2">
-            <MarketCard
-              IndexName={"VNINDEX"}
-              Change={marketData.vnindex.data[0].Change}
-              IndexValue={marketData.vnindex.data[0].IndexValue}
-              RatioChange={marketData.vnindex.data[0].RatioChange}
-              isExpanded={isExpanded}
-            />
-            <MarketCard
-              IndexName={"VN30"}
-              Change={marketData.vn30.data[0].Change}
-              IndexValue={marketData.vn30.data[0].IndexValue}
-              RatioChange={marketData.vn30.data[0].RatioChange}
-              isExpanded={isExpanded}
-            />
-            <MarketCard
-              IndexName={"HNXINDEX"}
-              Change={marketData.hnxindex.data[0].Change}
-              IndexValue={marketData.hnxindex.data[0].IndexValue}
-              RatioChange={marketData.hnxindex.data[0].RatioChange}
-              isExpanded={isExpanded}
-            />
-            <MarketCard
-              IndexName={"HNX30"}
-              Change={marketData.hnx30.data[0].Change}
-              IndexValue={marketData.hnx30.data[0].IndexValue}
-              RatioChange={marketData.hnx30.data[0].RatioChange}
-              isExpanded={isExpanded}
-            />
-          </div>
-        )}
-
-        {isExpanded && (
-          <div className="flex w-full h-[400px] border border-gray-100 rounded-xl shadow-md items-center justify-between my-[10px] px-6 py-4">
-            <div className="flex flex-col w-[60%] h-full">
-              <div className="flex items-center justify-between font-semibold text-gray-500 text-[15px]">
-                <button className="px-5 hover:bg-gray-100">1 Day</button>
-                <button className="px-5 hover:bg-gray-100">1 Week </button>
-                <button className="px-5 hover:bg-gray-100">1 Month</button>
-                <button className="px-5 hover:bg-gray-100">1 Year</button>
-                <button className="px-5 hover:bg-gray-100">5 Year</button>
-              </div>
-
-              <div className="flex items-center justify-center w-full h-full">
-                {/* <MarketsGraph /> */}
-              </div>
-            </div>
-
-            <div className="flex flex-col w-[40%] h-full ml-6 items-center justify-center  font-semibold text-[15px]">
-              <MarketCard
-                IndexName={"VNINDEX"}
-                Change={marketData.vnindex.data[0].Change}
-                IndexValue={marketData.vnindex.data[0].IndexValue}
-                RatioChange={marketData.vnindex.data[0].RatioChange}
-                isExpanded={isExpanded}
-              />
-              <MarketCard
-                IndexName={"VN30"}
-                Change={marketData.vn30.data[0].Change}
-                IndexValue={marketData.vn30.data[0].IndexValue}
-                RatioChange={marketData.vn30.data[0].RatioChange}
-                isExpanded={isExpanded}
-              />
-              <MarketCard
-                IndexName={"HNXINDEX"}
-                Change={marketData.hnxindex.data[0].Change}
-                IndexValue={marketData.hnxindex.data[0].IndexValue}
-                RatioChange={marketData.hnxindex.data[0].RatioChange}
-                isExpanded={isExpanded}
-              />
-              <MarketCard
-                IndexName={"HNX30"}
-                Change={marketData.hnx30.data[0].Change}
-                IndexValue={marketData.hnx30.data[0].IndexValue}
-                RatioChange={marketData.hnx30.data[0].RatioChange}
-                isExpanded={isExpanded}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+          <Bar
+            yAxisId="vol"
+            dataKey="volume"
+            name="Volume"
+            barSize={20}
+            fill="#3B82F6"
+            opacity={0.6}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
     </div>
   );
 };
