@@ -15,8 +15,8 @@ def get_index(index_symbol="vnindex", source="VCI", start_date="2020-01-01", end
 if __name__ == "__main__":
     get_index(index_symbol="vnindex", source="VCI", start_date="2020-01-01", end_date="2025-05-05", interval="1D")
     
-    # get_index(index_symbol="hnxindex", source="VCI", start_date="2024-01-01", end_date="2025-05-05", interval="1D")
+    get_index(index_symbol="hnxindex", source="VCI", start_date="2020-01-01", end_date="2025-05-05", interval="1D")
     
-    # get_index(index_symbol="vn30", source="VCI", start_date="2024-01-01", end_date="2025-05-05", interval="1D")
+    get_index(index_symbol="vn30", source="VCI", start_date="2020-01-01", end_date="2025-05-05", interval="1D")
     
-    # get_index(index_symbol="hnx30", source="VCI", start_date="2024-01-01", end_date="2025-05-05", interval="1D")
+    get_index(index_symbol="hnx30", source="VCI", start_date="2020-01-01", end_date="2025-05-05", interval="1D")

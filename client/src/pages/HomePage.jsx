@@ -14,7 +14,7 @@ const HomePage = () => {
   return (
     <div
       className={`flex flex-col items-center min-h-screen ${
-        theme == "light" ? "bg-white" : "bg-darkModeBackgroundColor"
+        theme == "light" ? "bg-white" : "bg-black/90"
       }`}
     >
       <NavBar theme={theme} />

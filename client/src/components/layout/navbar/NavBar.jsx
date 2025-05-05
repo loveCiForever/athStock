@@ -80,12 +80,14 @@ function NavBar({ theme }) {
     return <div className="w-full h-screen bg-red-500">LOADING ...</div>;
   }
 
+  // useEffect(() => {
+  //   console.log(theme);
+  // }, [theme]);
+
   return (
     <nav
-      className={`navbar flex md:fixed w-full items-center justify-between h-[60px] md:h-[80px] xl:h-[100px] px-6 sm:px-10 md:px-14 xl:px-40 z-50 bg-gray-300 md:bg-white ${
-        theme == "light"
-          ? "bg-white text-black"
-          : "bg-black/80 border-black/30 text-white"
+      className={`navbar flex md:fixed w-full items-center justify-between h-[60px] md:h-[80px] xl:h-[100px] px-6 sm:px-10 md:px-14 xl:px-40 z-50 bg-gray-300 ${
+        theme == "light" ? "bg-white text-black" : "bg-black/10 text-white"
       } transition-shadow duration-300 ${
         isScrolled ? "shadow-sm shadow-gray-300" : "null"
       }`}

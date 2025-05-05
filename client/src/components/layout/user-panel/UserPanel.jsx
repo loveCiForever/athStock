@@ -26,7 +26,7 @@ const UserNav = () => {
     document.body.setAttribute("data-theme", newTheme);
 
     setSession("theme", newTheme);
-    console.log(theme);
+    console.log(newTheme);
   };
 
   const signOut = async () => {

@@ -85,7 +85,22 @@ const MarketCard = ({
         </div>
       ) : (
         <div className="flex items-center justify-between w-full my-3 text-gray-600 rounded-md hover:bg-gray-100 text-[17px]">
-          <div className="w-[6px] h-[20px] rounded-l-sm rounded-r-sm bg-red-500"></div>
+          {IndexName === "VNINDEX" && (
+            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-green-500"></div>
+          )}
+
+          {IndexName === "HNXINDEX" && (
+            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-red-500"></div>
+          )}
+
+          {IndexName === "VN30" && (
+            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-blue-500"></div>
+          )}
+
+          {IndexName === "HNX30" && (
+            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-yellow-500"></div>
+          )}
+
           <span className="flex ml-2 w-[25%] ">{IndexName}</span>
           <span className="flex items-center justify-end w-[25%]">
             {IndexValue}
