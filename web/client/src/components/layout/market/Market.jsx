@@ -1,8 +1,8 @@
 import React, { use, useEffect, useMemo, useState } from "react";
-import vnindex_data from "../../../../../data/index/vnindex/vnindex.json";
-import hnxindex_data from "../../../../../data/index/hnxindex/hnxindex.json";
-import vn30_data from "../../../../../data/index/vn30/vn30.json";
-import hnx30_data from "../../../../../data/index/hnx30/hnx30.json";
+import vnindex_data from "../../../../../../data/index/vnindex/vnindex.json";
+import hnxindex_data from "../../../../../../data/index/hnxindex/hnxindex.json";
+import vn30_data from "../../../../../../data/index/vn30/vn30.json";
+import hnx30_data from "../../../../../../data/index/hnx30/hnx30.json";
 
 import CollapseAllIcon from "../../../assets/icons/collapseAllIcon.png";
 import ExpandAllIcon from "../../../assets/icons/expandAllIcon.png";
