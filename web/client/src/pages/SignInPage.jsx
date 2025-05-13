@@ -8,7 +8,7 @@ import SignInForm from "../components/layout/auth-form/SignInForm.jsx";
 const SignInPage = () => {
   useEffect(() => {
     document.title = "Sign In";
-}, []);
+  }, []);
 
   return (
     <div className="flex items-center justify-center w-full min-h-screen bg-gray-100">

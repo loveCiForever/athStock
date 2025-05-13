@@ -16,8 +16,7 @@ const SignUpForm = () => {
   const { configUser } = useAuthContext();
   const navigate = useNavigate();
 
-  const VITE_BASE_URL =
-    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
+  const VITE_BASE_URL = import.meta.env.VITE_REMOTE_API_SERVER;
 
   const handleSignUp = async (e) => {
     e.preventDefault();

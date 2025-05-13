@@ -1,6 +1,6 @@
-// ./client/src/components/common/Loader.jsx
+// athStock/web/client/src/components/ui/animations/Loader.jsx
 
-const LoaderAnimation = () => {
+const Loader = () => {
   return (
     <div className="w-12 mx-auto my-8">
       <svg
@@ -22,4 +22,4 @@ const LoaderAnimation = () => {
   );
 };
 
-export default LoaderAnimation;
+export default Loader;

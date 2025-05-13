@@ -78,7 +78,7 @@ const MarketCard = ({
           >
             <div className="font-semibold">
               {RatioChange}
-              {checkData(RatioChange) ? "%" : ""}
+              {checkData(RatioChange) ? "" : ""}
             </div>
             <div>{Change} pt</div>
           </div>
@@ -124,7 +124,7 @@ const MarketCard = ({
                 className=" w-5 mr-[3px]"
               />
               <span className={`${getTextColor(Change)}`}>
-                {RatioChange} {checkData(Change) ? "%" : ""}
+                {RatioChange} {checkData(Change) ? "" : ""}
               </span>
             </div>
           </div>

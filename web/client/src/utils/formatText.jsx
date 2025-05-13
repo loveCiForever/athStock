@@ -13,4 +13,8 @@ const UppercaseFirstLetterEachWord = (fullName) => {
 const UppercaseFullString = (string) => {
   return string.toUpperCase();
 };
-export { UppercaseFirstLetterEachWord, UppercaseFullString };
+
+const TruncateText = (text, maxLength) =>
+  text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
+export { UppercaseFirstLetterEachWord, UppercaseFullString, TruncateText };
