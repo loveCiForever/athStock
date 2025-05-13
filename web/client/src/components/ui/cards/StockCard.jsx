@@ -1,12 +1,13 @@
 import UpArrow from "../../../assets/icons/upArrowIcon.png";
 import DownArrow from "../../../assets/icons/downArrowIcon.png";
-
+import { TruncateText, UppercaseFullString } from "../../../utils/formatText";
 const StockCard = ({
   symbol,
   companyName,
-  openPrice,
+  change,
   currentPrice,
-  changePercentage,
+  ratioChange,
+  onClick,
 }) => {
   const getBgColor = (data) => {
     if (data) {
@@ -32,30 +33,37 @@ const StockCard = ({
     return "text-gray-700";
   };
   return (
-    <button className="flex items-center justify-between w-[800px] text-md h-6 py-6 hover:bg-gray-100 border-t border-gray-200">
-      <span className="text-center w-[70px] py-1 text-sm font-semibold tracking-widest text-white bg-blue-400 rounded-md">
-        {symbol}
+    <button
+      className="flex items-center justify-between w-[800px] text-md py-2 hover:bg-gray-100 border-t border-gray-200"
+      onClick={onClick}
+    >
+      <span className="text-center w-[70px] py-1 text-sm font-semibold tracking-widest text-white bg-blue-500 rounded-md">
+        {UppercaseFullString(symbol)}
       </span>
       <h1 className="flex items-center w-[350px] text-[15px] h-auto justify-start font-semibold tracking-wider text-gray-600 bg-red-200//">
-        {companyName}
+        {TruncateText(companyName, 35)}
       </h1>
-      <div className="flex items-center justify-end w-[90px] h-auto font-semibold bg-green-200// ">
-        {openPrice} $
-      </div>
       <div className="flex items-center justify-end w-[90px] h-auto font-semibold bg-red-200// ">
-        {currentPrice} $
+        {currentPrice}
       </div>
       <div
-        className={`flex w-[110px] h-6 px-2 py-1 rounded-md font-semibold tracking-wider items-center justify-between ${getBgColor(
-          changePercentage
-        )} ${getTextColor(changePercentage)}`}
+        className={`flex items-center justify-end w-[90px] h-auto font-semibold bg-green-200// ${getTextColor(
+          change
+        )} `}
+      >
+        {change}
+      </div>
+      <div
+        className={`flex w-[110px] px-2 py-1 rounded-md font-semibold tracking-wider items-center justify-between ${getBgColor(
+          ratioChange
+        )} ${getTextColor(ratioChange)}`}
       >
         <img
-          src={changePercentage > 0 ? UpArrow : DownArrow}
+          src={ratioChange > 0 ? UpArrow : DownArrow}
           alt={"uparrow"}
           className="w-4 h-4 mr-1 opacity-100"
         />
-        {changePercentage} %
+        {ratioChange} %
       </div>
     </button>
   );

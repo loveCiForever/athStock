@@ -22,6 +22,9 @@ function NavBar({ theme }) {
   const navigate = useNavigate();
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   let [currentBasePath, setCurrentBasePath] = useState(null);
+
+  const VITE_BASE_URL = import.meta.env.VITE_REMOTE_API_SERVER;
+
   const authHeaders = user
     ? { headers: { Authorization: `Bearer ${user.access_token}` } }
     : {};
@@ -29,8 +32,6 @@ function NavBar({ theme }) {
     const handleResize = () => {
       setInnerWidth(window.innerWidth);
     };
-
-    // console.log(innerWidth);
 
     window.addEventListener("resize", handleResize);
     return () => {
@@ -59,11 +60,7 @@ function NavBar({ theme }) {
     // console.log("SIGN OUT");
     try {
       console.log(authHeaders);
-      await axios.post(
-        "http://localhost:8000/api/auth/signout",
-        {},
-        authHeaders
-      );
+      await axios.post(`${VITE_BASE_URL}/api/auth/signout`, {}, authHeaders);
       toast.success("Sign out successful");
       signout();
     } catch (error) {

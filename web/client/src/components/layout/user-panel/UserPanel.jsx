@@ -18,6 +18,8 @@ const UserNav = () => {
   const authHeaders = user
     ? { headers: { Authorization: `Bearer ${user.access_token}` } }
     : {};
+
+  const VITE_BASE_URL = import.meta.env.VITE_REMOTE_API_SERVER;
   const changeTheme = () => {
     let newTheme = theme == "light" ? "dark" : "light";
 
@@ -32,12 +34,8 @@ const UserNav = () => {
   const signOut = async () => {
     // console.log("SIGN OUT");
     try {
-      console.log(authHeaders);
-      await axios.post(
-        "http://localhost:8000/api/auth/signout",
-        {},
-        authHeaders
-      );
+      // console.log(authHeaders);
+      await axios.post(`${VITE_BASE_URL}/api/auth/signout`, {}, authHeaders);
       toast.success("Sign out successful");
       signout();
     } catch (error) {

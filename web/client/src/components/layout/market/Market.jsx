@@ -1,4 +1,5 @@
 import React, { use, useEffect, useMemo, useState } from "react";
+
 import vnindex_data from "../../../../../../data/index/vnindex/vnindex.json";
 import hnxindex_data from "../../../../../../data/index/hnxindex/hnxindex.json";
 import vn30_data from "../../../../../../data/index/vn30/vn30.json";
@@ -7,6 +8,7 @@ import hnx30_data from "../../../../../../data/index/hnx30/hnx30.json";
 import CollapseAllIcon from "../../../assets/icons/collapseAllIcon.png";
 import ExpandAllIcon from "../../../assets/icons/expandAllIcon.png";
 import MarketCard from "../../ui/cards/MarketCard";
+
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -18,149 +20,126 @@ import {
   Legend,
   Brush,
 } from "recharts";
+import axios from "axios";
 
 const Market = () => {
-  // cutoff timestamp for “two years ago”
-  const twoYearsAgo = useMemo(() => {
-    const now = new Date();
-    now.setFullYear(now.getFullYear() - 2);
-    return now.getTime();
-  }, []);
-
-  // lookup maps for each index’s close price
-  const vnIndexMap = useMemo(
-    () => Object.fromEntries(vnindex_data.map((d) => [d.time, d.close])),
-    []
-  );
-  const hnxIndexMap = useMemo(
-    () => Object.fromEntries(hnxindex_data.map((d) => [d.time, d.close])),
-    []
-  );
-  const vn30Map = useMemo(
-    () => Object.fromEntries(vn30_data.map((d) => [d.time, d.close])),
-    []
-  );
-  const hnx30Map = useMemo(
-    () => Object.fromEntries(hnx30_data.map((d) => [d.time, d.close])),
-    []
-  );
-
-  // Union all timestamps and sort ascending
-  const allTimes = useMemo(() => {
-    const set = new Set([
-      ...vnindex_data.map((d) => d.time),
-      ...hnxindex_data.map((d) => d.time),
-      ...vn30_data.map((d) => d.time),
-      ...hnx30_data.map((d) => d.time),
-    ]);
-    return Array.from(set).sort((a, b) => a - b);
-  }, []);
-
-  // Merge into one array, then filter to last 2 years
-  const dataLast2Years = useMemo(() => {
-    return allTimes
-      .filter((ts) => ts >= twoYearsAgo)
-      .map((ts) => ({
-        time: ts,
-        vnindex: vnIndexMap[ts] ?? null,
-        hnxindex: hnxIndexMap[ts] ?? null,
-        vn30: vn30Map[ts] ?? null,
-        hnx30: hnx30Map[ts] ?? null,
-      }));
-  }, [allTimes, twoYearsAgo, vnIndexMap, hnxIndexMap, vn30Map, hnx30Map]);
-
-  // Generate ticks at the start of each month + last point
-  const monthTicks = useMemo(() => {
-    let lastM = null;
-    const ticks = [];
-    dataLast2Years.forEach((d) => {
-      const dt = new Date(d.time);
-      if (dt.getDate() === 1 && dt.getMonth() !== lastM) {
-        ticks.push(d.time);
-        lastM = dt.getMonth();
-      }
-    });
-    const last = dataLast2Years[dataLast2Years.length - 1]?.time;
-    if (last && ticks[ticks.length - 1] !== last) {
-      ticks.push(last);
-    }
-    return ticks;
-  }, [dataLast2Years]);
-
-  // Formatter for “MMM YYYY”
-  const monthFmt = new Intl.DateTimeFormat("en", {
-    month: "short",
-    year: "numeric",
-  });
-
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const currentVnIndex = {
-    indexValue: dataLast2Years[dataLast2Years.length - 1].vnindex,
-    change: (
-      (dataLast2Years[dataLast2Years.length - 1].vnindex -
-        dataLast2Years[dataLast2Years.length - 2].vnindex) *
-      1
-    ).toFixed(2),
-    ratioChange: (
-      ((dataLast2Years[dataLast2Years.length - 1].vnindex -
-        dataLast2Years[dataLast2Years.length - 2].vnindex) /
-        dataLast2Years[dataLast2Years.length - 1].vnindex) *
-      100
-    ).toFixed(2),
-  };
-  const currentHnxIndex = {
-    indexValue: dataLast2Years[dataLast2Years.length - 1].hnxindex,
-    change: (
-      (dataLast2Years[dataLast2Years.length - 1].hnxindex -
-        dataLast2Years[dataLast2Years.length - 2].hnxindex) *
-      1
-    ).toFixed(2),
-    ratioChange: (
-      ((dataLast2Years[dataLast2Years.length - 1].hnxindex -
-        dataLast2Years[dataLast2Years.length - 2].hnxindex) /
-        dataLast2Years[dataLast2Years.length - 1].hnxindex) *
-      100
-    ).toFixed(2),
-  };
-  const currentVn30 = {
-    indexValue: dataLast2Years[dataLast2Years.length - 1].vn30,
-    change: (
-      (dataLast2Years[dataLast2Years.length - 1].vn30 -
-        dataLast2Years[dataLast2Years.length - 2].vn30) *
-      1
-    ).toFixed(2),
-    ratioChange: (
-      ((dataLast2Years[dataLast2Years.length - 1].vn30 -
-        dataLast2Years[dataLast2Years.length - 2].vn30) /
-        dataLast2Years[dataLast2Years.length - 1].vn30) *
-      100
-    ).toFixed(2),
-  };
-  const currentHnx30 = {
-    indexValue: dataLast2Years[dataLast2Years.length - 1].hnx30,
-    change: (
-      (dataLast2Years[dataLast2Years.length - 1].hnx30 -
-        dataLast2Years[dataLast2Years.length - 2].hnx30) *
-      1
-    ).toFixed(2),
-    ratioChange: (
-      ((dataLast2Years[dataLast2Years.length - 1].hnx30 -
-        dataLast2Years[dataLast2Years.length - 2].hnx30) /
-        dataLast2Years[dataLast2Years.length - 1].hnx30) *
-      100
-    ).toFixed(2),
-  };
+  const [vnindexData, setVnindexData] = useState(vnindex_data);
+  const [hnxindexData, setHnxindexData] = useState(hnxindex_data);
+  const [vn30Data, setVn30Data] = useState(vn30_data);
+  const [hnx30Data, setHnx30Data] = useState(hnx30_data);
+
   // useEffect(() => {
-  //   console.log(dataLast2Years[dataLast2Years.length - 1]);
-  //   console.log(currentVnIndex);
-  //   console.log(currentHnx30);
-  //   console.log(currentHnxIndex);
-  //   console.log(currentVn30);
-  // }, [dataLast2Years]);
+  //   console.log(vnindexData);
+  // }, [vnindexData]);
+
+  // useEffect(() => {
+  //   console.log(hnxindexData);
+  // }, [hnxindexData]);
+
+  // useEffect(() => {
+  //   console.log(vn30Data);
+  // }, [vn30Data]);
+
+  // useEffect(() => {
+  //   console.log(hnx30Data);
+  // }, [hnx30Data]);
+
+  const getLatestIndexData = (indexData) => {
+    if (!indexData) return null;
+
+    const dates = Object.keys(indexData.data.data);
+    if (dates.length === 0) return null;
+
+    const latestDate = dates.sort().pop();
+    const latestData = indexData.data.data[latestDate];
+
+    const open = parseFloat(latestData.open);
+    const close = parseFloat(latestData.close);
+
+    return {
+      change: (close - open).toFixed(2),
+      indexValue: close.toFixed(2),
+      ratioChange: (((close - open) / open) * 100).toFixed(2) + "%",
+    };
+  };
+
+  const currentVnIndex = getLatestIndexData(vnindexData) || {
+    change: 0,
+    indexValue: 0,
+    ratioChange: "0%",
+  };
+  const currentHnxIndex = getLatestIndexData(hnxindexData) || {
+    change: 0,
+    indexValue: 0,
+    ratioChange: "0%",
+  };
+  const currentVn30 = getLatestIndexData(vn30Data) || {
+    change: 0,
+    indexValue: 0,
+    ratioChange: "0%",
+  };
+  const currentHnx30 = getLatestIndexData(hnx30Data) || {
+    change: 0,
+    indexValue: 0,
+    ratioChange: "0%",
+  };
+
+  const buildChartData = () => {
+    if (!vnindexData || !hnxindexData || !vn30Data || !hnx30Data) return [];
+
+    const vnDates = Object.keys(vnindexData.data.data);
+    const hnxDates = Object.keys(hnxindexData.data.data);
+    const vn30Dates = Object.keys(vn30Data.data.data);
+    const hnx30Dates = Object.keys(hnx30Data.data.data);
+
+    // Intersection of dates to avoid missing data.
+    const commonDates = vnDates
+      .filter(
+        (date) =>
+          hnxDates.includes(date) &&
+          vn30Dates.includes(date) &&
+          hnx30Dates.includes(date)
+      )
+      .sort(); // earliest to latest
+
+    // Keep only last 2 years of data.
+    const twoYearsAgo = new Date();
+    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+
+    const chartData = commonDates
+      .filter((date) => new Date(date) >= twoYearsAgo)
+      .map((date) => ({
+        time: new Date(date).getTime(),
+        vnindex: parseFloat(vnindexData.data.data[date].close),
+        hnxindex: parseFloat(hnxindexData.data.data[date].close),
+        vn30: parseFloat(vn30Data.data.data[date].close),
+        hnx30: parseFloat(hnx30Data.data.data[date].close),
+      }));
+
+    return chartData;
+  };
+
+  const dataLast2Years = useMemo(
+    () => buildChartData(),
+    [vnindexData, hnxindexData, vn30Data, hnx30Data]
+  );
+
+  const monthFmt = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+  });
+
+  // Pick a tick for each 3 months or so:
+  const monthTicks = dataLast2Years.length
+    ? dataLast2Years
+        .map((d) => d.time)
+        .filter((_, idx) => idx % Math.ceil(dataLast2Years.length / 8) === 0)
+    : [];
 
   return (
     <div className="flex flex-col w-[1300px] bg-red-200// ">
@@ -233,7 +212,7 @@ const Market = () => {
                   tickFormatter={(ts) => monthFmt.format(new Date(ts))}
                   axisLine={false}
                   tickLine={false}
-                  padding={{ top: 0, right: 0, bottom: 0, left: 10 }}
+                  padding={{ top: 0, right: 0, bottom: 0, left: 40 }}
                   margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                 />
 
@@ -316,7 +295,6 @@ const Market = () => {
           </div>
         </div>
       )}
-      {/*  */}
     </div>
   );
 };

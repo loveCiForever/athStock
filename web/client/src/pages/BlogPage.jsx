@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import DefaultBanner from "../assets/images/blogBanner.png";
 import { blogStructure } from "../components/layout/blog/BlogStructure";
 import Footer from "../components/layout/footer/Footer.jsx";
-import NavBar from "../components/layout/navbar/NavBar";
+import NavBar from "../components/layout/nav-bar/NavBar.jsx";
 import { useAuthContext } from "../hooks/AuthContext.jsx";
 import { UppercaseFirstLetterEachWord } from "../utils/formatText.jsx";
 export const BlogContext = createContext({});
@@ -40,8 +40,7 @@ const BlogPage = ({ theme }) => {
   //   }
   // };
 
-  const VITE_BASE_URL =
-    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
+  const VITE_BASE_URL = import.meta.env.VITE_REMOTE_API_SERVER;
 
   const fetchBlogById = async ({ blog_id }) => {
     setLoading(true);

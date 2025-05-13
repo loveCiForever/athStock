@@ -17,12 +17,11 @@ const BlogEditor = ({ theme }) => {
   const [bannerUrl, setBannerUrl] = useState("");
   const access_token = getAccessToken();
   const navigate = useNavigate();
-  const VITE_BASE_URL =
-    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
+  const VITE_BASE_URL = import.meta.env.VITE_REMOTE_API_SERVER;
 
   const tagLimit = 10;
   const {
-    blog,
+  blog,
     blog: { title, intro, content, tags },
     setBlog,
     textEditor,
