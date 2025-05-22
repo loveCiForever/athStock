@@ -193,6 +193,14 @@ const login = async (req, res) => {
       });
     }
 
+    if (!user.is_verified) {
+      return res.status(404).json({
+        success: false,
+        message: "User log in failed",
+        error: "User has not verified yet. Check mail (spam)",
+      });
+    }
+
     if (user.is_logged_in) {
       return res.status(409).json({
         success: false,
@@ -209,7 +217,7 @@ const login = async (req, res) => {
     if (!isPasswordMatch) {
       return res.status(403).json({
         success: false,
-        message: "User sign in failed",
+        message: "User login in failed",
         error: "Password is not correct",
       });
     }
