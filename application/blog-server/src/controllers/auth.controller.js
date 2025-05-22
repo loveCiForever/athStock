@@ -7,6 +7,7 @@ import {
 } from "../utils/helper.util.js";
 
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 import {
   loginValidation,
   registerValidation,
@@ -15,16 +16,11 @@ import {
 import { genVerificationToken, genCookieToken } from "../utils/token.util.js";
 import transporter from "../utils/mail.util.js";
 import Users from "../models/user.model.js";
-import "dotenv/config";
 import userModel from "../models/user.model.js";
 
 const register = async (req, res) => {
   try {
-    // console.log("[REGISTER API]");
-
     const { full_name, email, password, navigateToHome } = req.body;
-    // console.log("BODY REQUEST:", JSON.stringify(req.body, null, 2));
-
     const { error } = registerValidation.validate({
       full_name,
       email,
@@ -250,7 +246,6 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   const user_id = req.user;
-  console.log(user_id);
 
   try {
     res.clearCookie("blogToken");
@@ -281,7 +276,6 @@ const logout = async (req, res) => {
       message: "Log out successfully",
     });
   } catch (error) {
-    // console.log("Log out error: ", error);
     res.status(500).json({
       success: false,
       message: "Hehehe you are getting some trouble with your backend code",
@@ -343,31 +337,5 @@ const verifyAccount = async (req, res) => {
   }
 };
 
-const getUserInfo = async (req, res) => {
-  const user_id = req.user;
-  try {
-    const user = await Users.findById(user_id);
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "Get user information failed",
-        error: "Email is not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Get user information successfully",
-      data: { user: user },
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Hehehe you are getting some trouble with your backend code",
-      error: error,
-    });
-  }
-};
-
-export { register, login, logout, getUserInfo, verifyAccount };
+export { register, login, logout, verifyAccount };
