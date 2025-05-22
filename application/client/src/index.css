@@ -36,6 +36,7 @@
   --bg-navbar: var(--bg-navbar-dark);
 }
 
+
 .home-page, .blog-page, .stocks-page, .profile-page, .user-panel, .footer {
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -50,4 +51,5 @@
 .example, .no-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+
 }
