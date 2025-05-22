@@ -10,6 +10,7 @@ import corsMiddleware from "./src/middlewares/cors.middleware.js";
 
 import authRoute from "./src/routes/auth.route.js";
 import blogRoute from "./src/routes/blog.route.js";
+import userRoute from "./src/routes/user.route.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -26,6 +27,7 @@ app.use(responseEnhancer());
 
 app.use("/api/auth", authRoute);
 app.use("/api/blog", blogRoute);
+app.use("/api/user", userRoute);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));

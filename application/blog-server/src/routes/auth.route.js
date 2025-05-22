@@ -5,7 +5,6 @@ import {
   login,
   logout,
   register,
-  getUserInfo,
   verifyAccount,
 } from "../controllers/auth.controller.js";
 
@@ -16,6 +15,5 @@ router.post("/register", register);
 router.post("/login", login);
 router.get("/verify-email", verifyAccount);
 router.get("/logout", verifyJWT, logout);
-router.post("/get-user-info", verifyJWT, getUserInfo);
 
 export default router;
