@@ -9,11 +9,13 @@ This project uses a fine-tuned [PhoBERT](https://huggingface.co/vinai/phobert-ba
 
 ```
 news_analysis_model/
+data
+└── NewsData.csv                 #Data
 │
 ├── data_preprocessing.py     # Extract and clean Vietnamese news from URLs
 ├── model.py                  # Load and run inference with the fine-tuned PhoBERT model
 ├── predict.py                # Use model to predict trends from input URLs
-├── finetune_phobert.py       # Script to fine-tune PhoBERT using labeled data
+├── phobert.py       # Script to fine-tune PhoBERT using labeled data
 ├── utils.py                  # Helper functions
 ├── NewsData.csv              # Your dataset (URL, label, impact, text, etc.)
 └── README.md                 # This file
