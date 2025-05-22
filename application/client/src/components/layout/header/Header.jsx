@@ -50,7 +50,7 @@ const Header = () => {
           currentBasePath={currentBasePath}
         />
         <NavPageButton
-          navigateTo={"/blogs"}
+          navigateTo={"/blog"}
           name={"Blog"}
           currentBasePath={currentBasePath}
         />

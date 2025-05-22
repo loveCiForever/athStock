@@ -36,7 +36,18 @@
   --bg-navbar: var(--bg-navbar-dark);
 }
 
-.home-page, .blogs-page, .stocks-page, .profile-page, .user-panel {
+.home-page, .blog-page, .stocks-page, .profile-page, .user-panel, .footer {
   background-color: var(--bg-primary);
   color: var(--text-primary);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example, .no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
