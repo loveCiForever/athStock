@@ -1,0 +1,23 @@
+# 🧠 Machine Learning & Transformers
+torch
+transformers
+
+# 📊 Data Handling
+pandas
+scikit-learn
+joblib
+
+#🌐 Web Scraping (for prediction from URLs)
+beautifulsoup4
+requests
+
+#🧠 NLP & Vietnamese Language Processing
+underthesea
+
+#📈 Financial Data
+vnstock
+#🔍 Text Similarity & Fuzzy Matching
+fuzzywuzzy[speedup]
+
+#📊 Scientific Computing
+numpy
