@@ -9,6 +9,7 @@ This project uses a fine-tuned [PhoBERT](https://huggingface.co/vinai/phobert-ba
 
 ```
 news_analysis_model/
+│
 data
 └── NewsData.csv                 #Data
 │
