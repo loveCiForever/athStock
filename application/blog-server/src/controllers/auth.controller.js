@@ -232,13 +232,12 @@ const login = async (req, res) => {
       email: user.personal_info.email,
       profile_img: user.personal_info.profile_img,
       is_logged_in: user.is_logged_in,
-      access_token,
     };
 
     res.status(200).json({
       success: true,
       message: "User has successfully login in",
-      data: { user: userToSend },
+      data: { user: userToSend, access_token },
     });
   } catch (error) {
     res.status(500).json({
