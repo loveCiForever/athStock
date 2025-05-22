@@ -7,7 +7,7 @@ import numpy as np
 import joblib
 
 # Load dataset
-df = pd.read_csv("NewsData.csv", names=["link", "stock", "label", "impact"])
+df = pd.read_csv("data/NewsData.csv", names=["link", "stock", "label", "impact"])
 df = df.dropna(subset=["label"])
 texts = df["text"].tolist()  # You must have a 'text' column with tokenized Vietnamese
 labels = df["label"].tolist()
