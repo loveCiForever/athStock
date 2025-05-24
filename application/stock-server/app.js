@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import axios from "axios";
 import client from "ssi-fcdata";
 
+import corsMiddleware from "./src/middelwares/cors.middleware.js";
 import { initializeStreaming } from "./src/services/initStreaming.service.js";
 import index from "./src/routes/index.route.js";
 import ohlc from "./src/routes/ohlc.route.js";
@@ -16,6 +17,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(corsMiddleware);
 
 app.use("/ssi", index);
 app.use("/ssi", ohlc);

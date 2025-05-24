@@ -7,7 +7,7 @@ import {
 import { getFullDay } from "../../../utils/formatDate";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
-const BlogCard = ({ author, content }) => {
+const BlogCard = ({ author, content, viewMode }) => {
   let {
     publishedAt,
     tags,
@@ -23,13 +23,15 @@ const BlogCard = ({ author, content }) => {
   return (
     <Link
       to={`/blog/${id}`}
-      className={`flex flex-col lg:flex-row items-start w-full border-b border-gray-300 py-2 md:py-8 ${
+      className={`flex flex-col lg:flex-row items-start w-full border-b border-gray-300 py-0 md:py-8 ${
         theme === "dark-theme" ? "hover:bg-black/10" : "hover:bg-gray-200"
       }`}
     >
-      <div className="w-full lg:w-[500px] lg:h-[200px] xl:w-[500px] xl:h-[250px]">
-        <img src={banner} className="w-full h-full object-cover rounded-md" />
-      </div>
+      {viewMode === "list" && (
+        <div className="w-full lg:w-[500px] lg:h-[200px] xl:w-[500px] xl:h-[250px]">
+          <img src={banner} className="w-full h-full object-cover rounded-md" />
+        </div>
+      )}
 
       <div className="flex flex-col items-stretch// justify-between w-full ml-0 lg:ml-6 mt-4 lg:mt-0 bg-green-200// lg:h-[200px] xl:h-[250px]">
         <div className="w-full">

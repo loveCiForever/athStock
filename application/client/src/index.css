@@ -1,4 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
+
 
 :root {
   --primary-blue: rgb(0, 0, 255);
@@ -10,7 +13,7 @@
   --text-secondary-light: rgb(70, 70, 70);
   --text-secondary-dark: rgb(160, 160, 160);
 
-  --bg-primary-light: rgb(245, 245, 245);
+  --bg-primary-light: rgb(255, 255, 255);
   --bg-primary-dark: #242424;
 
   --bg-secondary-light: rgb(212, 212, 212);
@@ -36,7 +39,7 @@
   --bg-navbar: var(--bg-navbar-dark);
 }
 
-.home-page, .blog-page, .stocks-page, .profile-page, .user-panel, .footer {
+.home-page, .blog-page, .stocks-page, .profile-page, .blog-editor-page,  .user-panel, .footer {
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }

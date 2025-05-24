@@ -1,0 +1,134 @@
+{
+    "success": true,
+    "message": "Fetch index component of VN30 successful",
+    "data": [
+        {
+            "IndexCode": "VN30",
+            "IndexName": "VN30",
+            "Exchange": "HOSE",
+            "TotalSymbolNo": "30",
+            "IndexComponent": [
+                {
+                    "Isin": "ACB",
+                    "StockSymbol": "ACB"
+                },
+                {
+                    "Isin": "BCM",
+                    "StockSymbol": "BCM"
+                },
+                {
+                    "Isin": "BID",
+                    "StockSymbol": "BID"
+                },
+                {
+                    "Isin": "BVH",
+                    "StockSymbol": "BVH"
+                },
+                {
+                    "Isin": "CTG",
+                    "StockSymbol": "CTG"
+                },
+                {
+                    "Isin": "FPT",
+                    "StockSymbol": "FPT"
+                },
+                {
+                    "Isin": "GAS",
+                    "StockSymbol": "GAS"
+                },
+                {
+                    "Isin": "GVR",
+                    "StockSymbol": "GVR"
+                },
+                {
+                    "Isin": "HDB",
+                    "StockSymbol": "HDB"
+                },
+                {
+                    "Isin": "HPG",
+                    "StockSymbol": "HPG"
+                },
+                {
+                    "Isin": "LPB",
+                    "StockSymbol": "LPB"
+                },
+                {
+                    "Isin": "MBB",
+                    "StockSymbol": "MBB"
+                },
+                {
+                    "Isin": "MSN",
+                    "StockSymbol": "MSN"
+                },
+                {
+                    "Isin": "MWG",
+                    "StockSymbol": "MWG"
+                },
+                {
+                    "Isin": "PLX",
+                    "StockSymbol": "PLX"
+                },
+                {
+                    "Isin": "SAB",
+                    "StockSymbol": "SAB"
+                },
+                {
+                    "Isin": "SHB",
+                    "StockSymbol": "SHB"
+                },
+                {
+                    "Isin": "SSB",
+                    "StockSymbol": "SSB"
+                },
+                {
+                    "Isin": "SSI",
+                    "StockSymbol": "SSI"
+                },
+                {
+                    "Isin": "STB",
+                    "StockSymbol": "STB"
+                },
+                {
+                    "Isin": "TCB",
+                    "StockSymbol": "TCB"
+                },
+                {
+                    "Isin": "TPB",
+                    "StockSymbol": "TPB"
+                },
+                {
+                    "Isin": "VCB",
+                    "StockSymbol": "VCB"
+                },
+                {
+                    "Isin": "VHM",
+                    "StockSymbol": "VHM"
+                },
+                {
+                    "Isin": "VIB",
+                    "StockSymbol": "VIB"
+                },
+                {
+                    "Isin": "VIC",
+                    "StockSymbol": "VIC"
+                },
+                {
+                    "Isin": "VJC",
+                    "StockSymbol": "VJC"
+                },
+                {
+                    "Isin": "VNM",
+                    "StockSymbol": "VNM"
+                },
+                {
+                    "Isin": "VPB",
+                    "StockSymbol": "VPB"
+                },
+                {
+                    "Isin": "VRE",
+                    "StockSymbol": "VRE"
+                }
+            ]
+        }
+    ]
+}

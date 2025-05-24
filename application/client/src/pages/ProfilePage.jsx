@@ -117,7 +117,7 @@ const ProfilePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             className={`md:col-span-1 py-6  rounded-lg ${
-              theme === "dark-theme" ? "bg-zinc-900/50" : "bg-white"
+              theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
             }  `}
           >
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 py-6">
@@ -425,12 +425,12 @@ const ProfilePage = () => {
             <div>
               <div
                 className={`justify-center md:justify-start gap-6  grid grid-cols-5 p-0 rounded-lg  ${
-                  theme === "dark-theme" ? "bg-zinc-900/50//" : "bg-white//"
+                  theme === "dark-theme" ? "bg-zinc-900/50//" : ""
                 }`}
               >
                 <div
-                  className={`text-center px-4 py-3 bg-white rounded-md ${
-                    theme === "dark-theme" && "bg-zinc-900/50 "
+                  className={`text-center px-4 py-3 bg-white/ rounded-md ${
+                    theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
                   } `}
                 >
                   <p className="text-2xl font-bold">
@@ -441,8 +441,8 @@ const ProfilePage = () => {
                   </p>
                 </div>
                 <div
-                  className={`text-center px-4 py-3 bg-white rounded-md ${
-                    theme === "dark-theme" && "bg-zinc-900/50 "
+                  className={`text-center px-4 py-3 bg-white/ rounded-md ${
+                    theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
                   } `}
                 >
                   <p className="text-2xl font-bold">
@@ -453,8 +453,8 @@ const ProfilePage = () => {
                   </p>
                 </div>
                 <div
-                  className={`text-center px-4 py-3 bg-white rounded-md ${
-                    theme === "dark-theme" && "bg-zinc-900/50 "
+                  className={`text-center px-4 py-3 bg-white/ rounded-md ${
+                    theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
                   } `}
                 >
                   <p className="text-2xl font-bold">
@@ -465,8 +465,8 @@ const ProfilePage = () => {
                   </p>
                 </div>
                 <div
-                  className={`text-center px-4 py-3 bg-white rounded-md ${
-                    theme === "dark-theme" && "bg-zinc-900/50 "
+                  className={`text-center px-4 py-3 bg-white/ rounded-md ${
+                    theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
                   } `}
                 >
                   <p className="text-2xl font-bold">
@@ -477,8 +477,8 @@ const ProfilePage = () => {
                   </p>
                 </div>
                 <div
-                  className={`text-center px-4 py-3 bg-white rounded-md ${
-                    theme === "dark-theme" && "bg-zinc-900/50 "
+                  className={`text-center px-4 py-3 bg-white/ rounded-md ${
+                    theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
                   } `}
                 >
                   <p className="text-2xl font-bold">
@@ -493,7 +493,7 @@ const ProfilePage = () => {
             <div className="mt-6 ">
               <div
                 className={`bg-bg-secondary rounded-lg p-10 ${
-                  theme === "dark-theme" ? "bg-zinc-900/50" : "bg-white"
+                  theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
                 }`}
               >
                 <h2 className="text-xl font-bold mb-4">Recent Posts</h2>
@@ -525,9 +525,9 @@ const ProfilePage = () => {
                 ) : (
                   <div className="text-center py-0 border-gray-200">
                     <p className="text-gray-500 dark:text-gray-400">
-                      No posts yet.
+                      You had not publish any blog
                     </p>
-                    <button className="mt-4 px-4 text-black font-bold rounded-md  transition-colors hover:underline">
+                    <button className="mt-4 px-4 text-black py-2 bg-orange-100/ font-bold rounded-md  transition-colors hover:underline">
                       Create Your First Post
                     </button>
                   </div>
