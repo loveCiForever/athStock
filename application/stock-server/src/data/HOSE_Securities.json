@@ -1,0 +1,3685 @@
+{
+    "success": true,
+    "message": "Fetch company list of VN100 successful",
+    "data": [
+        {
+            "Market": "HOSE",
+            "Symbol": "AAA",
+            "StockName": "CTCP NHUA AN PHAT XANH",
+            "StockEnName": "An Phat Bioplastics Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "AAM",
+            "StockName": "CTCP THUY SAN MEKONG",
+            "StockEnName": "Mekong Fisheries Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "AAT",
+            "StockName": "CTCP TD TIEN SON TH",
+            "StockEnName": "Tien Son Thanh Hoa Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ABR",
+            "StockName": "CTCP DT NHAN HIEU VIET",
+            "StockEnName": "Viet Brand Invest Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ABS",
+            "StockName": "CTCP DV NN BINH THUAN",
+            "StockEnName": "BinhThuan Agriculture Services Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ABT",
+            "StockName": "CTCP XNK THUY SAN BEN TRE",
+            "StockEnName": "Bentre Aquaproduct Import And Export Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ACB",
+            "StockName": "NGAN HANG TMCP A CHAU",
+            "StockEnName": "Asia Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ACC",
+            "StockName": "CTCP DT&XD BINH DUONG ACC",
+            "StockEnName": "ACC Binh Duong Investment and Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ACG",
+            "StockName": "CTCP GO AN CUONG",
+            "StockEnName": "An Cuong Wood - Working Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ACL",
+            "StockName": "CTCP XNK T.SAN CL-AG",
+            "StockEnName": "CuuLong Fish Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ADG",
+            "StockName": "CTCP CLEVER GROUP",
+            "StockEnName": "Clever Group Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ADP",
+            "StockName": "CTCP SON A DONG",
+            "StockEnName": "A Dong Paint Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ADS",
+            "StockName": "CTCP DAMSAN",
+            "StockEnName": "Damsan Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "AGG",
+            "StockName": "CTCP DTPT BDS AN GIA",
+            "StockEnName": "An Gia Real Estate Investment And Development Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "AGM",
+            "StockName": "CTCP XNK AN GIANG",
+            "StockEnName": "AnGiang Import Export Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "AGR",
+            "StockName": "CTCP CHUNG KHOAN ARGIBANK",
+            "StockEnName": "AgriBank Securities Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ANV",
+            "StockName": "CTCP NAM VIET (NAVICO)",
+            "StockEnName": "Nam Viet Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "APG",
+            "StockName": "CTCP CHUNG KHOAN APG",
+            "StockEnName": "APG Securities Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "APH",
+            "StockName": "CTCP TD AN PHAT HOLDINGS",
+            "StockEnName": "An Phat Holdings Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ASG",
+            "StockName": "CTCP TAP DOAN ASG",
+            "StockEnName": "ASG Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ASM",
+            "StockName": "CTCP TAP DOAN SAO MAI",
+            "StockEnName": "Sao Mai Group Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ASP",
+            "StockName": "CTCP TD DAU KHI ANPHA",
+            "StockEnName": "An Pha Petrol Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "AST",
+            "StockName": "CTCP DV HANG KHONG TASECO",
+            "StockEnName": "Taseco Air Services Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BAF",
+            "StockName": "CTCP NONG NGHIEP BAF VN",
+            "StockEnName": "BAF Vietnam Agriculture Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BBC",
+            "StockName": "CTCP BIBICA",
+            "StockEnName": "Bibica Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BCE",
+            "StockName": "CTCP XD & GT BINH DUONG",
+            "StockEnName": "Binh Duong Construction And Civil Engineering Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BCG",
+            "StockName": "CTCP BAMBOO CAPITAL",
+            "StockEnName": "Bamboo Capital Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BCM",
+            "StockName": "TCT DT VA PT CN - CTCP",
+            "StockEnName": "Investment and Industrial Development Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BFC",
+            "StockName": "CTCP PHAN BON BINH DIEN",
+            "StockEnName": "Binh Dien Fertilizer Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BHN",
+            "StockName": "TCTCP BIA RUOU NGK HA NOI",
+            "StockEnName": "Hanoi Beer Alcohol and Beverage Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BIC",
+            "StockName": "TCTCP BAO HIEM NHDTPTVN",
+            "StockEnName": "BIDV Insurance Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BID",
+            "StockName": "NH TMCP DT&PT VIET NAM",
+            "StockEnName": "Joint Stock Commercial Bank for Investment and Development of Vietnam"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BKG",
+            "StockName": "CTCP DAU TU BKG VIET NAM",
+            "StockEnName": "BKG Vietnam Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BMC",
+            "StockName": "CTCP KHOANG SAN BINH DINH",
+            "StockEnName": "Binh Dinh Minerals Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BMI",
+            "StockName": "TCT CP BAO MINH",
+            "StockEnName": "BaoMinh Insurance Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BMP",
+            "StockName": "CTCP NHUA BINH MINH",
+            "StockEnName": "Binh Minh Plastics Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BRC",
+            "StockName": "CTCP CAO SU BEN THANH",
+            "StockEnName": "Ben Thanh Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BSI",
+            "StockName": "CTCP CK BIDV",
+            "StockEnName": "BIDV Joint Stock Securities Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BSR",
+            "StockName": "CTCP LOC HOA DAU BINH SON",
+            "StockEnName": "Binh Son Refining and Petrochemical Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BTP",
+            "StockName": "CTCP NHIET DIEN BA RIA",
+            "StockEnName": "Ba Ria Thermal Power Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BTT",
+            "StockName": "CTCP TMDV BEN THANH",
+            "StockEnName": "Ben Thanh Trading and Service Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BVH",
+            "StockName": "TAP DOAN BAO VIET",
+            "StockEnName": "Bao Viet Holdings"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "BWE",
+            "StockName": "CTCP NUOC-MT BINH DUONG",
+            "StockEnName": "Binh Duong Water - Environment Corporation - Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "C32",
+            "StockName": "CTCP CIC39",
+            "StockEnName": "CIC39 Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "C47",
+            "StockName": "CTCP XAY DUNG 47",
+            "StockEnName": "Construction Joint Stock Company 47"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2404",
+            "StockName": "CQ CACB2404",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2405",
+            "StockName": "CQ CACB2405",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2501",
+            "StockName": "CQ CACB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2502",
+            "StockName": "CQ CACB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2503",
+            "StockName": "CQ CACB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2504",
+            "StockName": "CQ CACB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2505",
+            "StockName": "CQ CACB2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CACB2506",
+            "StockName": "CQ CACB2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CCC",
+            "StockName": "CTCP XAY DUNG CDC",
+            "StockEnName": "CDC Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CCI",
+            "StockName": "CT DTPTCN TM CU CHI",
+            "StockEnName": "Cuchi Commercial and Industrial Developing Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CCL",
+            "StockName": "CTCP DT&PT DT DK CUU LONG",
+            "StockEnName": "Cuu Long Petro Urban Development And Investment Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CDC",
+            "StockName": "CT CP CHUONG DUONG",
+            "StockEnName": "Chuong Duong Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2402",
+            "StockName": "CQ CFPT2402",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2404",
+            "StockName": "CQ CFPT2404",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2405",
+            "StockName": "CQ CFPT2405",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2407",
+            "StockName": "CQ CFPT2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2501",
+            "StockName": "CQ CFPT2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2502",
+            "StockName": "CQ CFPT2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2503",
+            "StockName": "CQ CFPT2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2504",
+            "StockName": "CQ CFPT2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2505",
+            "StockName": "CQ CFPT2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2506",
+            "StockName": "CQ CFPT2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2507",
+            "StockName": "CQ CFPT2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2508",
+            "StockName": "CQ CFPT2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2509",
+            "StockName": "CQ CFPT2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CFPT2510",
+            "StockName": "CQ CFPT2510",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHDB2501",
+            "StockName": "CQ CHDB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHDB2502",
+            "StockName": "CQ CHDB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHDB2503",
+            "StockName": "CQ CHDB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHDB2504",
+            "StockName": "CQ CHDB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHDB2505",
+            "StockName": "CQ CHDB2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHP",
+            "StockName": "CTCP THUY DIEN MIEN TRUNG",
+            "StockEnName": "Central Hydropower Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2402",
+            "StockName": "CQ CHPG2402",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2406",
+            "StockName": "CQ CHPG2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2408",
+            "StockName": "CQ CHPG2408",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2409",
+            "StockName": "CQ CHPG2409",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2410",
+            "StockName": "CQ CHPG2410",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2412",
+            "StockName": "CQ CHPG2412",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2501",
+            "StockName": "CQ CHPG2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2502",
+            "StockName": "CQ CHPG2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2503",
+            "StockName": "CQ CHPG2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2504",
+            "StockName": "CQ CHPG2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2505",
+            "StockName": "CQ CHPG2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2506",
+            "StockName": "CQ CHPG2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2507",
+            "StockName": "CQ CHPG2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2508",
+            "StockName": "CQ CHPG2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2509",
+            "StockName": "CQ CHPG2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2510",
+            "StockName": "CQ CHPG2510",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2511",
+            "StockName": "CQ CHPG2511",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2512",
+            "StockName": "CQ CHPG2512",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2513",
+            "StockName": "CQ CHPG2513",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2514",
+            "StockName": "CQ CHPG2514",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2515",
+            "StockName": "CQ CHPG2515",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CHPG2516",
+            "StockName": "CQ CHPG2516",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CIG",
+            "StockName": "CTCP COMA18",
+            "StockEnName": "COMA 18 Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CII",
+            "StockName": "CTCP DT HT KY THUAT TPHCM",
+            "StockEnName": "Ho Chi Minh City Infrastructure Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CKG",
+            "StockName": "CTCP TD TVDTXD KIEN GIANG",
+            "StockEnName": "Kien Giang Construction Investment Consultancy Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CLC",
+            "StockName": "CTCP CAT LOI",
+            "StockEnName": "Cat Loi Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CLL",
+            "StockName": "CTCP CANG CAT LAI",
+            "StockEnName": "Cat Lai Port Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CLW",
+            "StockName": "CTCP CAP NUOC CHO LON",
+            "StockEnName": "ChoLon Water Supply Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2402",
+            "StockName": "CQ CMBB2402",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2405",
+            "StockName": "CQ CMBB2405",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2407",
+            "StockName": "CQ CMBB2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2409",
+            "StockName": "CQ CMBB2409",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2501",
+            "StockName": "CQ CMBB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2502",
+            "StockName": "CQ CMBB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2503",
+            "StockName": "CQ CMBB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2504",
+            "StockName": "CQ CMBB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2505",
+            "StockName": "CQ CMBB2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2506",
+            "StockName": "CQ CMBB2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2507",
+            "StockName": "CQ CMBB2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMBB2508",
+            "StockName": "CQ CMBB2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMG",
+            "StockName": "CTCP TD CONG NGHE CMC",
+            "StockEnName": "CMC Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2404",
+            "StockName": "CQ CMSN2404",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2406",
+            "StockName": "CQ CMSN2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2408",
+            "StockName": "CQ CMSN2408",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2501",
+            "StockName": "CQ CMSN2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2502",
+            "StockName": "CQ CMSN2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2503",
+            "StockName": "CQ CMSN2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2504",
+            "StockName": "CQ CMSN2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2505",
+            "StockName": "CQ CMSN2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2506",
+            "StockName": "CQ CMSN2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2507",
+            "StockName": "CQ CMSN2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2508",
+            "StockName": "CQ CMSN2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2509",
+            "StockName": "CQ CMSN2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMSN2510",
+            "StockName": "CQ CMSN2510",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMV",
+            "StockName": "CTCP THUONG NGHIEP CA MAU",
+            "StockEnName": "Ca Mau Trading Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2401",
+            "StockName": "CQ CMWG2401",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2406",
+            "StockName": "CQ CMWG2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2407",
+            "StockName": "CQ CMWG2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2408",
+            "StockName": "CQ CMWG2408",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2410",
+            "StockName": "CQ CMWG2410",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2501",
+            "StockName": "CQ CMWG2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2502",
+            "StockName": "CQ CMWG2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2503",
+            "StockName": "CQ CMWG2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2504",
+            "StockName": "CQ CMWG2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2505",
+            "StockName": "CQ CMWG2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2506",
+            "StockName": "CQ CMWG2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2507",
+            "StockName": "CQ CMWG2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMWG2508",
+            "StockName": "CQ CMWG2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CMX",
+            "StockName": "CTCP CAMIMEX GROUP",
+            "StockEnName": "CAMIMEX Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CNG",
+            "StockName": "CTCP CNG VIET NAM",
+            "StockEnName": "Clean Natural Gas Vietnam Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "COM",
+            "StockName": "CTCP VAT TU XANG DAU",
+            "StockEnName": "Materials - Petroleum Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CRC",
+            "StockName": "CTCP CREATE CAPITAL VN",
+            "StockEnName": "Create Capital Viet Nam Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CRE",
+            "StockName": "CTCP BDS THE KY",
+            "StockEnName": "Century Land Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSHB2401",
+            "StockName": "CQ CSHB2401",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSHB2403",
+            "StockName": "CQ CSHB2403",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSHB2501",
+            "StockName": "CQ CSHB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSHB2502",
+            "StockName": "CQ CSHB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSHB2503",
+            "StockName": "CQ CSHB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSHB2504",
+            "StockName": "CQ CSHB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSHB2505",
+            "StockName": "CQ CSHB2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSM",
+            "StockName": "CTCP CN CAO SU MIEN NAM",
+            "StockEnName": "The Southern Rubber Industry Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSSB2501",
+            "StockName": "CQ CSSB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSSB2502",
+            "StockName": "CQ CSSB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSSB2503",
+            "StockName": "CQ CSSB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSSB2504",
+            "StockName": "CQ CSSB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2402",
+            "StockName": "CQ CSTB2402",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2409",
+            "StockName": "CQ CSTB2409",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2410",
+            "StockName": "CQ CSTB2410",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2411",
+            "StockName": "CQ CSTB2411",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2413",
+            "StockName": "CQ CSTB2413",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2501",
+            "StockName": "CQ CSTB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2502",
+            "StockName": "CQ CSTB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2503",
+            "StockName": "CQ CSTB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2504",
+            "StockName": "CQ CSTB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2505",
+            "StockName": "CQ CSTB2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2506",
+            "StockName": "CQ CSTB2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2507",
+            "StockName": "CQ CSTB2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2508",
+            "StockName": "CQ CSTB2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2509",
+            "StockName": "CQ CSTB2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2510",
+            "StockName": "CQ CSTB2510",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2511",
+            "StockName": "CQ CSTB2511",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSTB2512",
+            "StockName": "CQ CSTB2512",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CSV",
+            "StockName": "CTCP HOA CHAT CB MIEN NAM",
+            "StockEnName": "South Basic Chemicals Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2403",
+            "StockName": "CQ CTCB2403",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2404",
+            "StockName": "CQ CTCB2404",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2406",
+            "StockName": "CQ CTCB2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2501",
+            "StockName": "CQ CTCB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2502",
+            "StockName": "CQ CTCB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2503",
+            "StockName": "CQ CTCB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2504",
+            "StockName": "CQ CTCB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2505",
+            "StockName": "CQ CTCB2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTCB2506",
+            "StockName": "CQ CTCB2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTD",
+            "StockName": "CTCP XAY DUNG COTECCONS",
+            "StockEnName": "Coteccons Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTF",
+            "StockName": "CTCP CITY AUTO",
+            "StockEnName": "City Auto Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTG",
+            "StockName": "NH TMCP CONG THUONG VN",
+            "StockEnName": "Vietnam Joint Stock Commercial Bank For Industry and Trade"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTI",
+            "StockName": "CTCPDTPT CUONGTHUAN IDICO",
+            "StockEnName": "Cuong Thuan IDICO Development Investment Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTPB2403",
+            "StockName": "CQ CTPB2403",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTPB2405",
+            "StockName": "CQ CTPB2405",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTPB2501",
+            "StockName": "CQ CTPB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTR",
+            "StockName": "TCTCP CONG TRINH VIETTEL",
+            "StockEnName": "Viettel Construction Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CTS",
+            "StockName": "CTCP CK NH CONG THUONG VN",
+            "StockEnName": "Vietnam Bank For Industry And Trade Securities Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2406",
+            "StockName": "CQ CVHM2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2408",
+            "StockName": "CQ CVHM2408",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2409",
+            "StockName": "CQ CVHM2409",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2411",
+            "StockName": "CQ CVHM2411",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2501",
+            "StockName": "CQ CVHM2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2502",
+            "StockName": "CQ CVHM2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2503",
+            "StockName": "CQ CVHM2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2504",
+            "StockName": "CQ CVHM2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2505",
+            "StockName": "CQ CVHM2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2506",
+            "StockName": "CQ CVHM2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2507",
+            "StockName": "CQ CVHM2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2508",
+            "StockName": "CQ CVHM2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVHM2509",
+            "StockName": "CQ CVHM2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIB2402",
+            "StockName": "CQ CVIB2402",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIB2406",
+            "StockName": "CQ CVIB2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIB2407",
+            "StockName": "CQ CVIB2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIB2408",
+            "StockName": "CQ CVIB2408",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIB2501",
+            "StockName": "CQ CVIB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIB2502",
+            "StockName": "CQ CVIB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIB2503",
+            "StockName": "CQ CVIB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2405",
+            "StockName": "CQ CVIC2405",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2407",
+            "StockName": "CQ CVIC2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2501",
+            "StockName": "CQ CVIC2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2502",
+            "StockName": "CQ CVIC2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2503",
+            "StockName": "CQ CVIC2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2504",
+            "StockName": "CQ CVIC2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2505",
+            "StockName": "CQ CVIC2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2506",
+            "StockName": "CQ CVIC2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2507",
+            "StockName": "CQ CVIC2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVIC2508",
+            "StockName": "CQ CVIC2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVJC2501",
+            "StockName": "CQ CVJC2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVJC2502",
+            "StockName": "CQ CVJC2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVJC2503",
+            "StockName": "CQ CVJC2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2401",
+            "StockName": "CQ CVNM2401",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2406",
+            "StockName": "CQ CVNM2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2407",
+            "StockName": "CQ CVNM2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2501",
+            "StockName": "CQ CVNM2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2502",
+            "StockName": "CQ CVNM2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2503",
+            "StockName": "CQ CVNM2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2504",
+            "StockName": "CQ CVNM2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2505",
+            "StockName": "CQ CVNM2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2506",
+            "StockName": "CQ CVNM2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2507",
+            "StockName": "CQ CVNM2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2508",
+            "StockName": "CQ CVNM2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVNM2509",
+            "StockName": "CQ CVNM2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2401",
+            "StockName": "CQ CVPB2401",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2407",
+            "StockName": "CQ CVPB2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2409",
+            "StockName": "CQ CVPB2409",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2410",
+            "StockName": "CQ CVPB2410",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2412",
+            "StockName": "CQ CVPB2412",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2501",
+            "StockName": "CQ CVPB2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2502",
+            "StockName": "CQ CVPB2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2503",
+            "StockName": "CQ CVPB2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2504",
+            "StockName": "CQ CVPB2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2505",
+            "StockName": "CQ CVPB2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2506",
+            "StockName": "CQ CVPB2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2507",
+            "StockName": "CQ CVPB2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2508",
+            "StockName": "CQ CVPB2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2509",
+            "StockName": "CQ CVPB2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVPB2510",
+            "StockName": "CQ CVPB2510",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2406",
+            "StockName": "CQ CVRE2406",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2407",
+            "StockName": "CQ CVRE2407",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2408",
+            "StockName": "CQ CVRE2408",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2410",
+            "StockName": "CQ CVRE2410",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2501",
+            "StockName": "CQ CVRE2501",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2502",
+            "StockName": "CQ CVRE2502",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2503",
+            "StockName": "CQ CVRE2503",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2504",
+            "StockName": "CQ CVRE2504",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2505",
+            "StockName": "CQ CVRE2505",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2506",
+            "StockName": "CQ CVRE2506",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2507",
+            "StockName": "CQ CVRE2507",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2508",
+            "StockName": "CQ CVRE2508",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2509",
+            "StockName": "CQ CVRE2509",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVRE2510",
+            "StockName": "CQ CVRE2510",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "CVT",
+            "StockName": "CTCP CMC",
+            "StockEnName": "CMC Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "D2D",
+            "StockName": "CTCP PT DO THI CN SO 2",
+            "StockEnName": "Industrial Urban Development Joint - Stock Company No.2"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DAH",
+            "StockName": "CTCP TD KHACH SAN DONG A",
+            "StockEnName": "Dong A Hotel Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DAT",
+            "StockName": "CTCP DTDL&PT THUY SAN",
+            "StockEnName": "Travel Investment and Seafood Development Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DBC",
+            "StockName": "CTCP TD DABACO VIET NAM",
+            "StockEnName": "DABACO Group"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DBD",
+            "StockName": "CTCP DUOC-TTBYTE BINHDINH",
+            "StockEnName": "Binh Dinh Pharmaceutical and Medical Equipment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DBT",
+            "StockName": "CTCP DUOC PHAM BEN TRE",
+            "StockEnName": "Ben Tre Pharmaceutical Joint-Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DC4",
+            "StockName": "CTCP XD DIC HOLDINGS",
+            "StockEnName": "DIC Holdings Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DCL",
+            "StockName": "CTY CP DUOC PHAM CUU LONG",
+            "StockEnName": "Cuu Long Pharmaceutical Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DCM",
+            "StockName": "CTCP PHAN BON DK CA MAU",
+            "StockEnName": "PetroVietnam Ca Mau Fertilizer Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DGC",
+            "StockName": "CTCPTD HOA CHAT DUC GIANG",
+            "StockEnName": "Ducgiang Chemicals Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DGW",
+            "StockName": "CTCP THE GIOI SO",
+            "StockEnName": "Digiworld Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DHA",
+            "StockName": "CTY CP HOA AN",
+            "StockEnName": "Hoa An Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DHC",
+            "StockName": "CTCP DONG HAI BEN TRE",
+            "StockEnName": "Dong Hai Joint Stock Company of Ben Tre"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DHG",
+            "StockName": "CTCP DUOC HAU GIANG",
+            "StockEnName": "DHG Pharmaceutical Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DHM",
+            "StockName": "CTCP TM&KT KS DUONG HIEU",
+            "StockEnName": "Duong Hieu Trading and Mining Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DIG",
+            "StockName": "TCT CP DT PT XAY DUNG",
+            "StockEnName": "Development Investment Construction Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DLG",
+            "StockName": "CTCP TD DUC LONG GIA LAI",
+            "StockEnName": "Duc Long Gia Lai Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DMC",
+            "StockName": "CTCP XNK Y TE DOMESCO",
+            "StockEnName": "Domesco Medical Import - Export Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DPG",
+            "StockName": "CTCP TAP DOAN DAT PHUONG",
+            "StockEnName": "Dat Phuong Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DPM",
+            "StockName": "TCT PB&HC DAU KHI-CTCP",
+            "StockEnName": "Petrovietnam Fertilizer and Chemicals Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DPR",
+            "StockName": "CTCP CAO SU DONG PHU",
+            "StockEnName": "Dong Phu Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DQC",
+            "StockName": "CTCP BONG DEN DIEN QUANG",
+            "StockEnName": "Dien Quang Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DRC",
+            "StockName": "CTCP CAO SU DA NANG",
+            "StockEnName": "DaNang Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DRH",
+            "StockName": "CTCP DRH HOLDINGS",
+            "StockEnName": "DRH Holdings JSC"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DRL",
+            "StockName": "CTCP THUY DIEN-DIEN LUC 3",
+            "StockEnName": "Hydro Power Joint Stock Company - Power No.3"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DSC",
+            "StockName": "CTCP CHUNG KHOAN DSC",
+            "StockEnName": "DSC Securities Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DSE",
+            "StockName": "CTCP CHUNG KHOAN DNSE",
+            "StockEnName": "DNSE Securities Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DSN",
+            "StockName": "CTCP CVN DAM SEN",
+            "StockEnName": "Dam Sen Water Park Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DTA",
+            "StockName": "CTCP DE TAM",
+            "StockEnName": "De Tam Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DTL",
+            "StockName": "CTCP DAI THIEN LOC",
+            "StockEnName": "Dai Thien Loc Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DTT",
+            "StockName": "CTCP KY NGHE DO THANH",
+            "StockEnName": "Do Thanh Technology Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DVP",
+            "StockName": "CTCP DT&PT CANG DINH VU",
+            "StockEnName": "Dinh Vu Port Investment & Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DXG",
+            "StockName": "CTCP TAP DOAN DAT XANH",
+            "StockEnName": "Dat Xanh Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DXS",
+            "StockName": "CTCP DICH VU BDS DAT XANH",
+            "StockEnName": "Dat Xanh Real Estate Services Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "DXV",
+            "StockName": "CTCP VICEM VLXD DA NANG",
+            "StockEnName": "Danang Building Material VICEM Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "E1VFVN30",
+            "StockName": "QUY ETF DCVFMVN30",
+            "StockEnName": "VFMVN30 ETF Fund"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "EIB",
+            "StockName": "NH TMCP XNK VIET NAM",
+            "StockEnName": "Vietnam Export Import Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ELC",
+            "StockName": "CTCP CN-VT ELCOM",
+            "StockEnName": "ELCOM Technology Communications Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "EVE",
+            "StockName": "CTCP EVERPIA",
+            "StockEnName": "Everpia Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "EVF",
+            "StockName": "CT TAI CHINH CP DIEN LUC",
+            "StockEnName": "EVN Finance Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "EVG",
+            "StockName": "CTCP TAP DOAN EVERLAND",
+            "StockEnName": "Everland Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FCM",
+            "StockName": "CTCP KHOANG SAN FECON",
+            "StockEnName": "FECON Mining Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FCN",
+            "StockName": "CTCP FECON",
+            "StockEnName": "FECON Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FDC",
+            "StockName": "CTCP NT&PTDT TPHCM",
+            "StockEnName": "Foreign Trade Development And Investment Corporation of Ho Chi Minh City"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FIR",
+            "StockName": "CTCP DIA OC FIRST REAL",
+            "StockEnName": "First Real Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FIT",
+            "StockName": "CTCP TAP DOAN F.I.T",
+            "StockEnName": "F.I.T Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FMC",
+            "StockName": "CTCP THUC PHAM SAO TA",
+            "StockEnName": "Sao Ta Foods Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FPT",
+            "StockName": "CTCP FPT",
+            "StockEnName": "FPT Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FRT",
+            "StockName": "CTCP BAN LE KTS FPT",
+            "StockEnName": "FPT Digital Retail Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FTS",
+            "StockName": "CTCP CHUNG KHOAN FPT",
+            "StockEnName": "FPT Securities Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUCTVGF3",
+            "StockName": "QUY DAU TU TANG TRUONG TH",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUCTVGF4",
+            "StockName": "QUY DAU TU TANG TRUONG TH",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUCTVGF5",
+            "StockName": "QUY DAU TU TANG TRUONG TH",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUCVREIT",
+            "StockName": "QUY DT BDS TECHCOM VN",
+            "StockEnName": "Techcom Vietnam REIT Fund"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEABVND",
+            "StockName": "QUY ETF ABFVN DIAMOND",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEBFVND",
+            "StockName": "QUY ETF BVFVN DIAMOND",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEDCMID",
+            "StockName": "QUY ETF DCVFMVNMIDCAP",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEFCV50",
+            "StockName": "QUY ETF FPT CAPITAL VNX50",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEIP100",
+            "StockName": "QUY ETF IPAAM VN100",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEKIV30",
+            "StockName": "QUY ETF KIM GROWTH VN30",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEKIVFS",
+            "StockName": "QUY ETF KIM GROWTH VNFINS",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEKIVND",
+            "StockName": "QUY ETF KIM GROWTH VN DIA",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEMAV30",
+            "StockName": "QUY ETF MAFM VN30",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEMAVND",
+            "StockName": "QUY ETF MAFM VNDIAMOND",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUESSV30",
+            "StockName": "QUY ETF SSIAM VN30",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUESSV50",
+            "StockName": "QUY ETF SSIAM VNX50",
+            "StockEnName": "SSIAM VNX50 ETF"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUESSVFL",
+            "StockName": "QUY ETF SSIAM VNFIN LEAD",
+            "StockEnName": "QUY ETF SSIAM VNFIN LEAD"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUETCC50",
+            "StockName": "QUY ETF TECHCOM CAPITAL V",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEVFVND",
+            "StockName": "QUY ETF DCVFMVN DIAMOND",
+            "StockEnName": "QUY ETF VFMVN DIAMOND"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "FUEVN100",
+            "StockName": "QUY ETF VINACAPITAL VN100",
+            "StockEnName": null
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GAS",
+            "StockName": "TCT KHI VIET NAM - CTCP",
+            "StockEnName": "PetroVietnam Gas Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GDT",
+            "StockName": "CTCP CHE BIEN GO DUCTHANH",
+            "StockEnName": "Duc Thanh Wood Processing Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GEE",
+            "StockName": "CTCP DIEN LUC GELEX",
+            "StockEnName": "GELEX Electricity Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GEG",
+            "StockName": "CTCP DIEN GIA LAI",
+            "StockEnName": "Gia Lai Electricity Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GEX",
+            "StockName": "CTCP TAP DOAN GELEX",
+            "StockEnName": "Gelex Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GIL",
+            "StockName": "CTCP SXKD&XNK BINH THANH",
+            "StockEnName": "Binh Thanh Import Export Production and Trade Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GMD",
+            "StockName": "CTCP GEMADEPT",
+            "StockEnName": "Gemadept Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GMH",
+            "StockName": "CTCP MINH HUNG QUANG TRI",
+            "StockEnName": "Quang Tri Minh Hung Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GSP",
+            "StockName": "CTCP VT SP KHI QUOC TE",
+            "StockEnName": "International Gas Product Shipping Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GTA",
+            "StockName": "CTCP CHE BIEN GO THUAN AN",
+            "StockEnName": "Thuan An Wood Processing Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "GVR",
+            "StockName": "TD CN CAO SU VN -  CTCP",
+            "StockEnName": "Viet Nam Rubber Group - Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HAG",
+            "StockName": "CTCP HOANG ANH GIA LAI",
+            "StockEnName": "Hoang Anh Gia Lai Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HAH",
+            "StockName": "CTCP VT VA XEP DO HAI AN",
+            "StockEnName": "Hai An Transport and Stevedoring Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HAP",
+            "StockName": "CTCP TAP DOAN HAPACO",
+            "StockEnName": "Hapaco Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HAR",
+            "StockName": "CTCP DTTMBDS AD THAO DIEN",
+            "StockEnName": "An Duong Thao Dien Real Estate Trade Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HAS",
+            "StockName": "CTCP HACISCO",
+            "StockEnName": "Hacisco Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HAX",
+            "StockName": "CTCP DICH VU OTO HANGXANH",
+            "StockEnName": "Hang Xanh Motors Service Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HCD",
+            "StockName": "CTCP DTSX & TM HCD",
+            "StockEnName": "HCD Investment Producing And Trading Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HCM",
+            "StockName": "CTY CPCK TP HO CHI MINH",
+            "StockEnName": "Ho Chi Minh City Securities Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HDB",
+            "StockName": "NHTM CP PHAT TRIEN TPHCM",
+            "StockEnName": "Ho Chi Minh City Development Joint Stock Commercial Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HDC",
+            "StockName": "CTCP PT NHA BA RIA-V.TAU",
+            "StockEnName": "Ba Ria - Vung Tau House Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HDG",
+            "StockName": "CTCP TAP DOAN HA DO",
+            "StockEnName": "Ha Do Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HHP",
+            "StockName": "CTCP GIAY HOANG HA HP",
+            "StockEnName": "HHP Global Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HHS",
+            "StockName": "CTCP DT-DV HOANG HUY",
+            "StockEnName": "Hoang Huy Investment Services Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HHV",
+            "StockName": "CTCP DAU TU HA TANG GIAO",
+            "StockEnName": "Deo Ca Traffic Infrastructure Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HID",
+            "StockName": "CTCP HALCOM VIET NAM",
+            "StockEnName": "Halcom Vietnam Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HII",
+            "StockName": "CTCP AN TIEN INDUSTRIES",
+            "StockEnName": "An Tien Industries Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HMC",
+            "StockName": "CTCP KK TPHCM-VNSTEEL",
+            "StockEnName": "VNSTEEL - Ho Chi Minh City Metal Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HNA",
+            "StockName": "CTCP THUY DIEN HUA NA",
+            "StockEnName": "Hua Na Hydropower Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HPG",
+            "StockName": "CTCP TAP DOAN HOA PHAT",
+            "StockEnName": "Hoa Phat Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HPX",
+            "StockName": "CTCP DAU TU HAI PHAT",
+            "StockEnName": "Hai Phat Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HQC",
+            "StockName": "CTCP TVTMDV DO HOANG QUAN",
+            "StockEnName": "Hoang Quan Consulting Trading Service Real Estate Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HRC",
+            "StockName": "CTCP CAO SU HOA BINH",
+            "StockEnName": "Hoa Binh Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HSG",
+            "StockName": "CTY CP TAP DOAN HOA SEN",
+            "StockEnName": "Hoa Sen Group"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HSL",
+            "StockName": "CTCP DT PT TP HONG HA",
+            "StockEnName": "Hong Ha Food Investment Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HT1",
+            "StockName": "CTCP XM VICEM HA TIEN",
+            "StockEnName": "VICEM Ha Tien Cement Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HTG",
+            "StockName": "TONG CTCP DET MAY HOA THO",
+            "StockEnName": "Hoa Tho Textile - Garment Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HTI",
+            "StockName": "CTCP DTPT HA TANG IDICO",
+            "StockEnName": "IDICO Infrastructure Development Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HTL",
+            "StockName": "CTCP KT & OTO TRUONG LONG",
+            "StockEnName": "Truong Long Engineering and Auto Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HTN",
+            "StockName": "CTCP HUNG THINH INCONS",
+            "StockEnName": "Hung Thinh Incons Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HTV",
+            "StockName": "CTCP LOGISTICS VICEM",
+            "StockEnName": "Logistics Vicem Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HU1",
+            "StockName": "CTCP DT & XAY DUNG HUD1",
+            "StockEnName": "HUD1 Investment And Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HUB",
+            "StockName": "CTCP XAY LAP TTHUE",
+            "StockEnName": "Thua Thien Hue Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HVH",
+            "StockName": "CTCP DT & CONG NGHE HVC",
+            "StockEnName": "HVC Investment And Technology Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HVN",
+            "StockName": "TCT HANG KHONG VN-CTCP",
+            "StockEnName": "Vietnam Airlines Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "HVX",
+            "StockName": "CTCP XM VICEM HAI VAN",
+            "StockEnName": "Vicem Hai Van Cement Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ICT",
+            "StockName": "CTCP VT - TH BUU DIEN",
+            "StockEnName": "Joint Stock Company for Telecoms and Informatics"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "IDI",
+            "StockName": "CTCP DT&PT DQG I.D.I",
+            "StockEnName": "I.D.I International Development and Investment Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "IJC",
+            "StockName": "CTCP PT HA TANG KY THUAT",
+            "StockEnName": "Becamex Infrastructure Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ILB",
+            "StockName": "CTCP ICD TAN CANG - LB",
+            "StockEnName": "ICD Tan Cang - Long Binh Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "IMP",
+            "StockName": "CTCP DUOC PHAM IMEXPHARM",
+            "StockEnName": "Imexpharm Pharmaceutical Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ITC",
+            "StockName": "CTCP DT KINH DOANH NHA",
+            "StockEnName": "Investment and Trading of Real Estate Joint stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ITD",
+            "StockName": "CTCP CONG NGHE TIEN PHONG",
+            "StockEnName": "Innovative Technology Development Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "JVC",
+            "StockName": "CTCP TB Y TE VIET NHAT",
+            "StockEnName": "Japan Vietnam Medical Investment and Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KBC",
+            "StockName": "TCT PT DT KINH BAC-CTCP",
+            "StockEnName": "Kinh Bac City Development Holding Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KDC",
+            "StockName": "CTCP TAP DOAN KIDO",
+            "StockEnName": "KIDO Group Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KDH",
+            "StockName": "CTCP DT&KD NHA KHANG DIEN",
+            "StockEnName": "Khang Dien House Trading and Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KHG",
+            "StockName": "CTCP TD KHAI HOAN LAND",
+            "StockEnName": "Khai Hoan Land Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KHP",
+            "StockName": "CTCP DIEN LUC KHANH HOA",
+            "StockEnName": "Khanh Hoa Power Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KMR",
+            "StockName": "CTY CO PHAN MIRAE",
+            "StockEnName": "MIRAE Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KOS",
+            "StockName": "CTCP KOSY",
+            "StockEnName": "KOSY Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KPF",
+            "StockName": "CTCP DT TAI SAN KOJI",
+            "StockEnName": "KOJI Asset Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "KSB",
+            "StockName": "CTCP KS & XD BINH DUONG",
+            "StockEnName": "Binh Duong Mineral And Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "L10",
+            "StockName": "CT CP LILAMA 10",
+            "StockEnName": "Lilama 10 Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LAF",
+            "StockName": "CTCP CB HANG XK LONG AN",
+            "StockEnName": "Long An Food Processing Export Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LBM",
+            "StockName": "CTCP VAT LIEU XD LAM DONG",
+            "StockEnName": "Lam Dong Minerals And Building Materials Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LCG",
+            "StockName": "CTCP LIZEN",
+            "StockEnName": "Lizen Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LDG",
+            "StockName": "CTCP DAU TU LDG",
+            "StockEnName": "LDG Investment Joint stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LGC",
+            "StockName": "CTCP DAU TU CAU DUONG CII",
+            "StockEnName": "CII Bridges and Roads Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LGL",
+            "StockName": "CTCP DTPT DT LONG GIANG",
+            "StockEnName": "Long Giang Investment and Urban Development Joint-stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LHG",
+            "StockName": "CTCP LONG HAU",
+            "StockEnName": "Long Hau Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LIX",
+            "StockName": "CTCP BOT GIAT LIX",
+            "StockEnName": "Lix Detergent Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LM8",
+            "StockName": "CTCP LILAMA 18",
+            "StockEnName": "Lilama 18 Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LPB",
+            "StockName": "NHTMCP BUU DIEN LIEN VIET",
+            "StockEnName": "Fortune Vietnam Joint Stock Commercial Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "LSS",
+            "StockName": "CTCP MIA DUONG LAM SON",
+            "StockEnName": "Lam Son Suger Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MBB",
+            "StockName": "NGAN HANG TMCP QUAN DOI",
+            "StockEnName": "Military Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MCM",
+            "StockName": "CTCP GIONG BO SUA MOC CHA",
+            "StockEnName": "Moc Chau Dairy Cattle Breeding Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MCP",
+            "StockName": "CTCP IN & BAO BI MY CHAU",
+            "StockEnName": "My Chau Printing And Packaging Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MDG",
+            "StockName": "CTCP MIEN DONG",
+            "StockEnName": "Mien Dong Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MHC",
+            "StockName": "CTCP MHC",
+            "StockEnName": "MHC Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MIG",
+            "StockName": "TCT CP BAO HIEM QUAN DOI",
+            "StockEnName": "Military Insurance Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MSB",
+            "StockName": "NH TMCP HANG HAI VIET NAM",
+            "StockEnName": "Vietnam Maritime Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MSH",
+            "StockName": "CTCP MAY SONG HONG",
+            "StockEnName": "Song Hong Garment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MSN",
+            "StockName": "CTCP TAP DOAN MA SAN",
+            "StockEnName": "Masan Group Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "MWG",
+            "StockName": "CTCP DT THE GIOI DI DONG",
+            "StockEnName": "Mobile World Investment Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NAB",
+            "StockName": "NH TMCP NAM A",
+            "StockEnName": "Nam A Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NAF",
+            "StockName": "CTCP NAFOODS GROUP",
+            "StockEnName": "Nafoods Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NAV",
+            "StockName": "CTCP NAM VIET (NAVIFICO)",
+            "StockEnName": "Nam Viet Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NBB",
+            "StockName": "CTCP DAU TU NAM BAY BAY",
+            "StockEnName": "577 Investment Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NCT",
+            "StockName": "CTCP DV HANG HOA NOI BAI",
+            "StockEnName": "Noibai Cargo Terminal Services Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NHA",
+            "StockName": "TCT DTPT N&DT NAM HA NOI",
+            "StockEnName": "Ha Noi South Housing and Urban Development Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NHH",
+            "StockName": "CTCP NHUA HA NOI",
+            "StockEnName": "HaNoi Plastics Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NHT",
+            "StockName": "CTCP SX & TM NAM HOA",
+            "StockEnName": "Nam Hoa Trading & Production Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NKG",
+            "StockName": "CTY CP THEP NAM KIM",
+            "StockEnName": "Nam Kim Steel Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NLG",
+            "StockName": "CTCP DAU TU NAM LONG",
+            "StockEnName": "Nam Long Investment Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NNC",
+            "StockName": "CTCP DA NUI NHO",
+            "StockEnName": "Nui Nho Stone Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NO1",
+            "StockName": "CTCP TAP DOAN 911",
+            "StockEnName": "911 Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NSC",
+            "StockName": "CTCP TD GIONG CT VN",
+            "StockEnName": "Vietnam National Seed Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NT2",
+            "StockName": "CTCP DLDK NHON TRACH 2",
+            "StockEnName": "PetroVietnam Power Nhon Trach 2 Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NTL",
+            "StockName": "CTCP PT DO THI TU LIEM",
+            "StockEnName": "Tu Liem Urban Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NVL",
+            "StockName": "CTCP TD DT DIA OC NO VA",
+            "StockEnName": "No Va Land Investment Group Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "NVT",
+            "StockName": "CTCP BDS DL NINH VAN BAY",
+            "StockEnName": "Ninh Van Bay Travel Real Estate Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "OCB",
+            "StockName": "NH TMCP PHUONG DONG",
+            "StockEnName": "Orient Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "OGC",
+            "StockName": "CTCP TAP DOAN DAI DUONG",
+            "StockEnName": "Ocean Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "OPC",
+            "StockName": "CTY CP DUOC PHAM OPC",
+            "StockEnName": "OPC Pharmaceutial Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ORS",
+            "StockName": "CTCP CK TIEN PHONG",
+            "StockEnName": "Tien Phong Securities Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PAC",
+            "StockName": "CTCP PIN AC QUY MIEN NAM",
+            "StockEnName": "Dry Cell and Storage Battery JointStock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PAN",
+            "StockName": "CTCP TAP DOAN PAN",
+            "StockEnName": "The PAN Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PC1",
+            "StockName": "CTCP TAP DOAN PC1",
+            "StockEnName": "PC1 Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PDN",
+            "StockName": "CTCP CANG DONG NAI",
+            "StockEnName": "Dong Nai Port Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PDR",
+            "StockName": "CTCP PT BDS PHAT DAT",
+            "StockEnName": "Phat Dat Real Estate Development Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PET",
+            "StockName": "TONG CTCP DV TONG HOP DK",
+            "StockEnName": "Petrovietnam General Services Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PGC",
+            "StockName": "TCT GAS PETROLIMEX-CTCP",
+            "StockEnName": "Petrolimex Gas Corporation - Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PGD",
+            "StockName": "CTCP PP KTA DAU KHI VN",
+            "StockEnName": "Petro Viet Nam Low Pressure Gas Distribution Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PGI",
+            "StockName": "TCTCP BAO HIEM PETROLIMEX",
+            "StockEnName": "Petrolimex Insurance Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PGV",
+            "StockName": "TCT PHAT DIEN 3-CTCP",
+            "StockEnName": "Power Generation Joint Stock Corporation 3"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PHC",
+            "StockName": "CTCP XD PHUC HUNG HOLDING",
+            "StockEnName": "Phuc Hung Holdings Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PHR",
+            "StockName": "CTCP CAO SU PHUOC HOA",
+            "StockEnName": "Phuoc Hoa Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PIT",
+            "StockName": "CTCP XNK PETROLIMEX",
+            "StockEnName": "Petrolimex International Trading Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PJT",
+            "StockName": "CTCP VTXD DT PETROLIMEX",
+            "StockEnName": "Petrolimex Joint Stock Tanker Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PLP",
+            "StockName": "CTCP SX & CN NHUA PHA LE",
+            "StockEnName": "Pha Le Plastics Manufacturing and Technology Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PLX",
+            "StockName": "TAP DOAN XANG DAU VN",
+            "StockEnName": "Vietnam National Petroleum Group"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PMG",
+            "StockName": "CTCP DTSX PETRO MIENTRUNG",
+            "StockEnName": "Petro Center Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PNC",
+            "StockName": "CTCP VAN HOA PHUONG NAM",
+            "StockEnName": "Phuong Nam Cultural Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PNJ",
+            "StockName": "CTCP VB DQ PHU NHUAN",
+            "StockEnName": "Phu Nhuan Jewelry Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "POW",
+            "StockName": "TCT DIEN LUC DAU KHI VN",
+            "StockEnName": "PetroVietnam Power Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PPC",
+            "StockName": "CTCP NHIET DIEN PHA LAI",
+            "StockEnName": "Pha Lai Thermal Power Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PSH",
+            "StockName": "CTCP TMDT DK NAM SONG HAU",
+            "StockEnName": "Nam Song Hau Trading Investing Petroleum Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PTB",
+            "StockName": "CTCP PHU TAI",
+            "StockEnName": "Phu Tai Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PTC",
+            "StockName": "CTCP DAU TU ICAPITAL",
+            "StockEnName": "ICAPITAL Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PTL",
+            "StockName": "CTCP VICTORY CAPITAL",
+            "StockEnName": "Victory Capital Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PVD",
+            "StockName": "CTCP KHOAN VA DV DAU KHI",
+            "StockEnName": "PetroVietNam Driling & Well Services Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PVP",
+            "StockName": "CTCP VAN TAI DAU KHI TBD",
+            "StockEnName": "Pacific Petroleum Transportation Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "PVT",
+            "StockName": "TCT CP VAN TAI DAU KHI",
+            "StockEnName": "PetroVietNam Transportation Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "QCG",
+            "StockName": "CTCP QUOC CUONG GIA LAI",
+            "StockEnName": "Quoc Cuong Gia Lai Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "QNP",
+            "StockName": "CTCP CANG QUY NHON",
+            "StockEnName": "Quy Nhon Port Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "RAL",
+            "StockName": "CTCP B.DEN PH.NUOC R.DONG",
+            "StockEnName": "Rang Dong Light Sources and Vacuum Flask Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "REE",
+            "StockName": "CTY CP CO DIEN LANH",
+            "StockEnName": "Refrigeration Electrical Engineering Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "RYG",
+            "StockName": "CTCP SX VA DT HOANG GIA",
+            "StockEnName": "Royal Manufacture And Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "S4A",
+            "StockName": "CTCP THUY DIEN SE SAN 4A",
+            "StockEnName": "SeSan 4A HydroElectric Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SAB",
+            "StockName": "TONG CTCP BIA-RUOU-NGK SG",
+            "StockEnName": "Saigon Beer - Alcohol - Beverage Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SAM",
+            "StockName": "CTCP SAM HOLDINGS",
+            "StockEnName": "SAM Holdings Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SAV",
+            "StockName": "CTCP HT KT&XNK SAVIMEX",
+            "StockEnName": "Savimex Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SBA",
+            "StockName": "CTCP SONG BA",
+            "StockEnName": "Song Ba Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SBG",
+            "StockName": "CTCP TD CO KHI CNC SIBA",
+            "StockEnName": "Siba High-tech Mechanical Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SBT",
+            "StockName": "CTCP THANH THANH CONG-BH",
+            "StockEnName": "Thanh Thanh Cong - Bien Hoa Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SBV",
+            "StockName": "CTCP SIAM BROTHERS VN",
+            "StockEnName": "Siam Brothers Vietnam Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SC5",
+            "StockName": "CTCP XAY DUNG SO 5",
+            "StockEnName": "Construction Joint Stock Company No 5"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SCR",
+            "StockName": "CTCP DIA OC SG THUONG TIN",
+            "StockEnName": "Sai Gon Thuong Tin Real Estate Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SCS",
+            "StockName": "CTCP DV HANG HOA SAI GON",
+            "StockEnName": "Saigon Cargo Service Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SFC",
+            "StockName": "CTCP NHIEN LIEU SAI GON",
+            "StockEnName": "Saigon Fuel Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SFG",
+            "StockName": "CTCP PHAN BON MIEN NAM",
+            "StockEnName": "The Southern Fertilizer Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SFI",
+            "StockName": "CTCP DAI LY VAN TAI SAFI",
+            "StockEnName": "Sea And Air Freight International"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SGN",
+            "StockName": "CTCP PV MAT DAT SAI GON",
+            "StockEnName": "Saigon Ground Services Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SGR",
+            "StockName": "CTCP DIA OC SAI GON",
+            "StockEnName": "Saigon Real Estate Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SGT",
+            "StockName": "CTCP CN VIEN THONG SAIGON",
+            "StockEnName": "Saigon Telecommunication And Technologies Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SHA",
+            "StockName": "CTCP SON HA SAI GON",
+            "StockEnName": "Son Ha Sai Gon Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SHB",
+            "StockName": "NH TMCP SAI GON-HA NOI",
+            "StockEnName": "Saigon-Hanoi Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SHI",
+            "StockName": "CTCP QUOC TE SON HA",
+            "StockEnName": "Sonha International Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SHP",
+            "StockName": "CTCP THUY DIEN MIEN NAM",
+            "StockEnName": "Southern Hydropower Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SIP",
+            "StockName": "CTCP DAU TU SAI GON VRG",
+            "StockEnName": "Saigon VRG Investment Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SJD",
+            "StockName": "CTCP THUY DIEN CAN DON",
+            "StockEnName": "Can Don Hydropower Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SJS",
+            "StockName": "CTCP DTPT DT&KCN SONG DA",
+            "StockEnName": "SJ Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SKG",
+            "StockName": "CTCP TCT SUPERDONG-KG",
+            "StockEnName": "Superdong - Kien Giang Fast Ferry Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SMA",
+            "StockName": "CTCP TB-PT SAI GON",
+            "StockEnName": "Saigon Machinery Spare Parts Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SMB",
+            "StockName": "CTCP BIA SG - MT",
+            "StockEnName": "Sai Gon - Mien Trung Beer Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SMC",
+            "StockName": "CTCP DAU TU THUONGMAI SMC",
+            "StockEnName": "SMC Trading Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SPM",
+            "StockName": "CTCP S.P.M",
+            "StockEnName": "S.P.M Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SRC",
+            "StockName": "CTCP CAO SU SAO VANG",
+            "StockEnName": "Sao Vang Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SRF",
+            "StockName": "CTCP SEAREFICO",
+            "StockEnName": "Searefico Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SSB",
+            "StockName": "NH TMCP DONG NAM A",
+            "StockEnName": "Southeast Asia Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SSC",
+            "StockName": "CTCP GIONG CT MIEN NAM",
+            "StockEnName": "Southern Seed Joint-stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SSI",
+            "StockName": "CTCP CHUNG KHOAN SSI",
+            "StockEnName": "SSI Securities Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "ST8",
+            "StockName": "CT CP SIEU THANH",
+            "StockEnName": "ST8 Holdings Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "STB",
+            "StockName": "NH TMCP SG THUONG TIN",
+            "StockEnName": "SaiGon Thuong Tin Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "STG",
+            "StockName": "CTCP KHO VAN MIEN NAM",
+            "StockEnName": "South Logistics Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "STK",
+            "StockName": "CTCP SOI THE KY",
+            "StockEnName": "Century Synthetic Fiber Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SVC",
+            "StockName": "CTCP DV TONG HOP SAI SON",
+            "StockEnName": "SaiGon General Service Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SVD",
+            "StockName": "CTCP DT&TM VU DANG",
+            "StockEnName": "Vu Dang Investment & Trading Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SVI",
+            "StockName": "CTCP BAO BI BIEN HOA",
+            "StockEnName": "Bien Hoa Packaging Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SVT",
+            "StockName": "17CTCP CN SG VIEN DONG",
+            "StockEnName": "Sai Gon Vien Dong Technology Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SZC",
+            "StockName": "CTCP SONADEZI CHAU DUC",
+            "StockEnName": "Sonadezi Chau Duc Shareholding Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "SZL",
+            "StockName": "CTCP SONADEZI LONG THANH",
+            "StockEnName": "Sonadezi Long Thanh Shareholding Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TBC",
+            "StockName": "CTCP THUY DIEN THAC BA",
+            "StockEnName": "Thac Ba Hydropower Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCB",
+            "StockName": "NH TMCP KY THUONG VN",
+            "StockEnName": "Vietnam Technological And Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCD",
+            "StockName": "CTCP DTPT CN & VAN TAI",
+            "StockEnName": "Transport and Industry Development Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCH",
+            "StockName": "CTCP DTDV TC HOANG HUY",
+            "StockEnName": "Hoang Huy Investment Financial Services Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCI",
+            "StockName": "CTCP CK THANH CONG",
+            "StockEnName": "ThanhCong Securities Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCL",
+            "StockName": "CTCP DLGNVT XEPDO TANCANG",
+            "StockEnName": "Tan Cang Logistics and Stevedoring Join Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCM",
+            "StockName": "CTCP DM DT TM THANH CONG",
+            "StockEnName": "Thanh Cong Textile Garment Investment Trading Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCO",
+            "StockName": "CTCP VT DPT DUYEN HAI",
+            "StockEnName": "TCO Holdings Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCR",
+            "StockName": "CTCP CN GOM SU TAICERA",
+            "StockEnName": "Taicera Enterprise Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TCT",
+            "StockName": "CTCP CT NUI BA TAY NINH",
+            "StockEnName": "Tay Ninh Cable Car Tour Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TDC",
+            "StockName": "CTCP KD&PT BINH DUONG",
+            "StockEnName": "Binhduong Trade And Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TDG",
+            "StockName": "CTCP DAU TU TDG GLOBAL",
+            "StockEnName": "TDG Global Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TDH",
+            "StockName": "CTCP PT NHA THU DUC",
+            "StockEnName": "Thu Duc Housing Development Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TDM",
+            "StockName": "CTCP NUOC THU DAU MOT",
+            "StockEnName": "Thu Dau Mot Water Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TDP",
+            "StockName": "CONG TY CO PHAN THUAN DUC",
+            "StockEnName": "Thuan Duc Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TDW",
+            "StockName": "CTCP CAP NUOC THU DUC",
+            "StockEnName": "Thu Duc Water Supply Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TEG",
+            "StockName": "CTCP NL&BDS TRUONG THANH",
+            "StockEnName": "Truong Thanh Energy and Real Estate Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "THG",
+            "StockName": "CTCP DT & XD TIEN GIANG",
+            "StockEnName": "Tien Giang Investment and Construction Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TIP",
+            "StockName": "CTCP PT KCN TIN NGHIA",
+            "StockEnName": "Tin Nghia Industrial Park Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TIX",
+            "StockName": "CTCP SXKD XNKDVDT TANBINH",
+            "StockEnName": "Tan Binh Import - Export Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TLD",
+            "StockName": "CTCP DTXD&PTDT THANG LONG",
+            "StockEnName": "Thang Long Urban Development and Construction Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TLG",
+            "StockName": "CTCP TAP DOAN THIEN LONG",
+            "StockEnName": "Thien Long Group Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TLH",
+            "StockName": "CTCP TD THEP TIEN LEN",
+            "StockEnName": "Tienlen Steel Corporation Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TMP",
+            "StockName": "CTCP THUY DIEN THAC MO",
+            "StockEnName": "Thac Mo Hydropower Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TMS",
+            "StockName": "CTCP TRANSIMEX",
+            "StockEnName": "Transimex Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TMT",
+            "StockName": "CTCP O TO TMT",
+            "StockEnName": "TMT Motors Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TN1",
+            "StockName": "CTCP TMDV TNS HOLDINGS",
+            "StockEnName": "Rox Key Holdings Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TNC",
+            "StockName": "CTCP CAO SU THONG NHAT",
+            "StockEnName": "Thong Nhat Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TNH",
+            "StockName": "CTCP BVQT THAI NGUYEN",
+            "StockEnName": "TNH Hospital Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TNI",
+            "StockName": "CTCP TAP DOAN THANH NAM",
+            "StockEnName": "Thanh Nam Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TNT",
+            "StockName": "CTCP TAP DOAN TNT",
+            "StockEnName": "TNT Group Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TPB",
+            "StockName": "NGAN HANG TMCP TIEN PHONG",
+            "StockEnName": "Tien Phong Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TPC",
+            "StockName": "CTCP NHUA TAN DAI HUNG",
+            "StockEnName": "Tan Dai Hung Plastic Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TRA",
+            "StockName": "CONG TY CP TRAPHACO",
+            "StockEnName": "Traphaco Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TRC",
+            "StockName": "CTCP CAO SU TAY NINH",
+            "StockEnName": "Tay Ninh Rubber Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TSC",
+            "StockName": "CTCP VT KT NN CAN THO",
+            "StockEnName": "Techno - Agricultural Supplying Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TTA",
+            "StockName": "CTCP DTXD&PT TRUONG THANH",
+            "StockEnName": "Truong Thanh Development and Construction Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TTE",
+            "StockName": "CTCP DT NL TRUONG THINH",
+            "StockEnName": "Truong Thinh Energy Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TTF",
+            "StockName": "CTCP TDKN GO TRUONG THANH",
+            "StockEnName": "Truong Thanh Furniture Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TV2",
+            "StockName": "CTCP TV XD DIEN 2",
+            "StockEnName": "Power Engineering Consulting Joint Stock Company 2"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TVB",
+            "StockName": "CTCP CHUNG KHOAN TRI VIET",
+            "StockEnName": "Tri Viet Securities Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TVS",
+            "StockName": "CTCP CK THIEN VIET",
+            "StockEnName": "Thien Viet Securities Joint-Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TVT",
+            "StockName": "TCT VIET THANG-CTCP",
+            "StockEnName": "Viet Thang Corporation - JSC"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "TYA",
+            "StockName": "CTCP DAY&CAP DIEN TAYA VN",
+            "StockEnName": "Taya (VIET NAM) Electric Wire and Cable Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "UIC",
+            "StockName": "CTCP DTPT NHA&DT IDICO",
+            "StockEnName": "Idico Urban and House Development Joint stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VAF",
+            "StockName": "CTCP PHAN LAN NC VAN DIEN",
+            "StockEnName": "Van Dien Fused Magnesium Phosphate Fertilizer Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VCA",
+            "StockName": "CTCP THEP VICASA-VNSTEEL",
+            "StockEnName": "VNSTEEL - VICASA Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VCB",
+            "StockName": "NH TMCP NGOAI THUONG VN",
+            "StockEnName": "Joint Stock Commercial Bank For Foreign Trade Of Vietnam"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VCF",
+            "StockName": "CTCP VINACAFE BIEN HOA",
+            "StockEnName": "VinaCafé Bien Hoa Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VCG",
+            "StockName": "TONG CTCP XNK VA XD VN",
+            "StockEnName": "Vietnam Construction And Import - Export Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VCI",
+            "StockName": "CTCP CHUNG KHOAN VIETCAP",
+            "StockEnName": "Vietcap Securities Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VDP",
+            "StockName": "CTCP DUOC PHAM TU VIDIPHA",
+            "StockEnName": "VIDIPHA Central Pharmaceutical Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VDS",
+            "StockName": "CTCP CK RONG VIET",
+            "StockEnName": "Viet Dragon Securities Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VFG",
+            "StockName": "CTCP KHU TRUNG VIET NAM",
+            "StockEnName": "Vietnam Fumigation Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VGC",
+            "StockName": "TCT VIGLACERA - CTCP",
+            "StockEnName": "Viglacera Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VHC",
+            "StockName": "CTCP VINH HOAN",
+            "StockEnName": "Vinh Hoan Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VHM",
+            "StockName": "CTCP VINHOMES",
+            "StockEnName": "Vinhomes Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VIB",
+            "StockName": "NGAN HANG TMCP QUOC TE VN",
+            "StockEnName": "Viet Nam International Commercial Joint Stock Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VIC",
+            "StockName": "TAP DOAN VINGROUP-CTCP",
+            "StockEnName": "VinGroup Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VID",
+            "StockName": "CTCP DT PT TM VIEN DONG",
+            "StockEnName": "Vien Dong Investment Development Trading Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VIP",
+            "StockName": "CTCP V.TAI X.DAU VIPCO",
+            "StockEnName": "Vietnam Petroleum Transport Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VIX",
+            "StockName": "CTCP CHUNG KHOAN VIX",
+            "StockEnName": "VIX Securities Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VJC",
+            "StockName": "CTCP HANG KHONG VIETJET",
+            "StockEnName": "VietJet Aviation Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VMD",
+            "StockName": "CTCP Y DP VIMEDIMEX",
+            "StockEnName": "Vimedimex Medi - Pharma Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VND",
+            "StockName": "CTCP CHUNG KHOAN VNDIRECT",
+            "StockEnName": "VNDIRECT Securities Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VNE",
+            "StockName": "TONG CTCP XD DIEN VN",
+            "StockEnName": "Vietnam Electricity Construction Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VNG",
+            "StockName": "CTCP DL THANH THANH CONG",
+            "StockEnName": "Thanh Thanh Cong Tourism Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VNL",
+            "StockName": "CTCP LOGISTICS VINALINK",
+            "StockEnName": "Vinalink Logistics Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VNM",
+            "StockName": "CTCP SUA VIET NAM",
+            "StockEnName": "Vietnam Dairy Products Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VNS",
+            "StockName": "CTY CP ANH DUONG VIET NAM",
+            "StockEnName": "Vietnam Sun Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VOS",
+            "StockName": "CTCP VAN TAI BIEN VN",
+            "StockEnName": "Vietnam Ocean Shipping Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VPB",
+            "StockName": "NHTM CP VN THINH VUONG",
+            "StockEnName": "Vietnam Prosperity Joint Stock Commercial Bank"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VPD",
+            "StockName": "CTCP PT DIEN LUC VIET NAM",
+            "StockEnName": "Vietnam Power Development Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VPG",
+            "StockName": "CTCP DT TM XNK VIET PHAT",
+            "StockEnName": "Viet Phat Import Export Trading Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VPH",
+            "StockName": "CTCP VAN PHAT HUNG",
+            "StockEnName": "Van Phat Hung Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VPI",
+            "StockName": "CTCP DT VAN PHU - INVEST",
+            "StockEnName": "Van Phu - Invest Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VPS",
+            "StockName": "CTCP THUOC SAT TRUNG VN",
+            "StockEnName": "Vietnam Pesticide Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VRC",
+            "StockName": "CTCP BDS VA DT VRC",
+            "StockEnName": "VRC Real Estate and Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VRE",
+            "StockName": "CTCP VINCOM RETAIL",
+            "StockEnName": "Vincom Retail Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VSC",
+            "StockName": "CTCP CONTAINER VIET NAM",
+            "StockEnName": "Viet Nam Container Shipping Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VSH",
+            "StockName": "CTCP THUY DIEN VS-SH",
+            "StockEnName": "Vinh Son - Song Hinh Hydropower Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VSI",
+            "StockName": "CTCP DT&XD CAP THOAT NUOC",
+            "StockEnName": "Water Supply Sewerage Construction and Investment Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VTB",
+            "StockName": "CTCP VIETTRONICS TAN BINH",
+            "StockEnName": "Viettronics Tan Binh Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VTO",
+            "StockName": "CTCP VT XANG DAU VITACO",
+            "StockEnName": "Vietnam Tanker Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "VTP",
+            "StockName": "TCTCP BUU CHINH VIETTEL",
+            "StockEnName": "Viettel Post Joint Stock Corporation"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "YBM",
+            "StockName": "CTCP KHOANGSAN CN YEN BAI",
+            "StockEnName": "Yen Bai Industry Mineral Joint Stock Company"
+        },
+        {
+            "Market": "HOSE",
+            "Symbol": "YEG",
+            "StockName": "CTCP TAP DOAN YEAH1",
+            "StockEnName": "Yeah1 Group Corporation"
+        }
+    ],
+    "total_records": 613
+}

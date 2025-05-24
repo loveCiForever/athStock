@@ -1,0 +1,414 @@
+{
+    "success": true,
+    "message": "Fetch index component of VN100 successful",
+    "data": [
+        {
+            "IndexCode": "VN100",
+            "IndexName": "VN100",
+            "Exchange": "HOSE",
+            "TotalSymbolNo": "100",
+            "IndexComponent": [
+                {
+                    "Isin": "AAA",
+                    "StockSymbol": "AAA"
+                },
+                {
+                    "Isin": "ACB",
+                    "StockSymbol": "ACB"
+                },
+                {
+                    "Isin": "ANV",
+                    "StockSymbol": "ANV"
+                },
+                {
+                    "Isin": "BCG",
+                    "StockSymbol": "BCG"
+                },
+                {
+                    "Isin": "BCM",
+                    "StockSymbol": "BCM"
+                },
+                {
+                    "Isin": "BID",
+                    "StockSymbol": "BID"
+                },
+                {
+                    "Isin": "BMP",
+                    "StockSymbol": "BMP"
+                },
+                {
+                    "Isin": "BSI",
+                    "StockSymbol": "BSI"
+                },
+                {
+                    "Isin": "BVH",
+                    "StockSymbol": "BVH"
+                },
+                {
+                    "Isin": "BWE",
+                    "StockSymbol": "BWE"
+                },
+                {
+                    "Isin": "CII",
+                    "StockSymbol": "CII"
+                },
+                {
+                    "Isin": "CMG",
+                    "StockSymbol": "CMG"
+                },
+                {
+                    "Isin": "CTD",
+                    "StockSymbol": "CTD"
+                },
+                {
+                    "Isin": "CTG",
+                    "StockSymbol": "CTG"
+                },
+                {
+                    "Isin": "CTR",
+                    "StockSymbol": "CTR"
+                },
+                {
+                    "Isin": "CTS",
+                    "StockSymbol": "CTS"
+                },
+                {
+                    "Isin": "DBC",
+                    "StockSymbol": "DBC"
+                },
+                {
+                    "Isin": "DCM",
+                    "StockSymbol": "DCM"
+                },
+                {
+                    "Isin": "DGC",
+                    "StockSymbol": "DGC"
+                },
+                {
+                    "Isin": "DGW",
+                    "StockSymbol": "DGW"
+                },
+                {
+                    "Isin": "DIG",
+                    "StockSymbol": "DIG"
+                },
+                {
+                    "Isin": "DPM",
+                    "StockSymbol": "DPM"
+                },
+                {
+                    "Isin": "DSE",
+                    "StockSymbol": "DSE"
+                },
+                {
+                    "Isin": "DXG",
+                    "StockSymbol": "DXG"
+                },
+                {
+                    "Isin": "DXS",
+                    "StockSymbol": "DXS"
+                },
+                {
+                    "Isin": "EIB",
+                    "StockSymbol": "EIB"
+                },
+                {
+                    "Isin": "EVF",
+                    "StockSymbol": "EVF"
+                },
+                {
+                    "Isin": "FPT",
+                    "StockSymbol": "FPT"
+                },
+                {
+                    "Isin": "FRT",
+                    "StockSymbol": "FRT"
+                },
+                {
+                    "Isin": "FTS",
+                    "StockSymbol": "FTS"
+                },
+                {
+                    "Isin": "GAS",
+                    "StockSymbol": "GAS"
+                },
+                {
+                    "Isin": "GEX",
+                    "StockSymbol": "GEX"
+                },
+                {
+                    "Isin": "GMD",
+                    "StockSymbol": "GMD"
+                },
+                {
+                    "Isin": "GVR",
+                    "StockSymbol": "GVR"
+                },
+                {
+                    "Isin": "HAG",
+                    "StockSymbol": "HAG"
+                },
+                {
+                    "Isin": "HCM",
+                    "StockSymbol": "HCM"
+                },
+                {
+                    "Isin": "HDB",
+                    "StockSymbol": "HDB"
+                },
+                {
+                    "Isin": "HDC",
+                    "StockSymbol": "HDC"
+                },
+                {
+                    "Isin": "HDG",
+                    "StockSymbol": "HDG"
+                },
+                {
+                    "Isin": "HHV",
+                    "StockSymbol": "HHV"
+                },
+                {
+                    "Isin": "HPG",
+                    "StockSymbol": "HPG"
+                },
+                {
+                    "Isin": "HSG",
+                    "StockSymbol": "HSG"
+                },
+                {
+                    "Isin": "HT1",
+                    "StockSymbol": "HT1"
+                },
+                {
+                    "Isin": "IMP",
+                    "StockSymbol": "IMP"
+                },
+                {
+                    "Isin": "KBC",
+                    "StockSymbol": "KBC"
+                },
+                {
+                    "Isin": "KDC",
+                    "StockSymbol": "KDC"
+                },
+                {
+                    "Isin": "KDH",
+                    "StockSymbol": "KDH"
+                },
+                {
+                    "Isin": "KOS",
+                    "StockSymbol": "KOS"
+                },
+                {
+                    "Isin": "LPB",
+                    "StockSymbol": "LPB"
+                },
+                {
+                    "Isin": "MBB",
+                    "StockSymbol": "MBB"
+                },
+                {
+                    "Isin": "MSB",
+                    "StockSymbol": "MSB"
+                },
+                {
+                    "Isin": "MSN",
+                    "StockSymbol": "MSN"
+                },
+                {
+                    "Isin": "MWG",
+                    "StockSymbol": "MWG"
+                },
+                {
+                    "Isin": "NAB",
+                    "StockSymbol": "NAB"
+                },
+                {
+                    "Isin": "NKG",
+                    "StockSymbol": "NKG"
+                },
+                {
+                    "Isin": "NLG",
+                    "StockSymbol": "NLG"
+                },
+                {
+                    "Isin": "NT2",
+                    "StockSymbol": "NT2"
+                },
+                {
+                    "Isin": "OCB",
+                    "StockSymbol": "OCB"
+                },
+                {
+                    "Isin": "PAN",
+                    "StockSymbol": "PAN"
+                },
+                {
+                    "Isin": "PC1",
+                    "StockSymbol": "PC1"
+                },
+                {
+                    "Isin": "PDR",
+                    "StockSymbol": "PDR"
+                },
+                {
+                    "Isin": "PHR",
+                    "StockSymbol": "PHR"
+                },
+                {
+                    "Isin": "PLX",
+                    "StockSymbol": "PLX"
+                },
+                {
+                    "Isin": "PNJ",
+                    "StockSymbol": "PNJ"
+                },
+                {
+                    "Isin": "POW",
+                    "StockSymbol": "POW"
+                },
+                {
+                    "Isin": "PPC",
+                    "StockSymbol": "PPC"
+                },
+                {
+                    "Isin": "PTB",
+                    "StockSymbol": "PTB"
+                },
+                {
+                    "Isin": "PVD",
+                    "StockSymbol": "PVD"
+                },
+                {
+                    "Isin": "PVT",
+                    "StockSymbol": "PVT"
+                },
+                {
+                    "Isin": "REE",
+                    "StockSymbol": "REE"
+                },
+                {
+                    "Isin": "SAB",
+                    "StockSymbol": "SAB"
+                },
+                {
+                    "Isin": "SBT",
+                    "StockSymbol": "SBT"
+                },
+                {
+                    "Isin": "SCS",
+                    "StockSymbol": "SCS"
+                },
+                {
+                    "Isin": "SHB",
+                    "StockSymbol": "SHB"
+                },
+                {
+                    "Isin": "SIP",
+                    "StockSymbol": "SIP"
+                },
+                {
+                    "Isin": "SJS",
+                    "StockSymbol": "SJS"
+                },
+                {
+                    "Isin": "SSB",
+                    "StockSymbol": "SSB"
+                },
+                {
+                    "Isin": "SSI",
+                    "StockSymbol": "SSI"
+                },
+                {
+                    "Isin": "STB",
+                    "StockSymbol": "STB"
+                },
+                {
+                    "Isin": "SZC",
+                    "StockSymbol": "SZC"
+                },
+                {
+                    "Isin": "TCB",
+                    "StockSymbol": "TCB"
+                },
+                {
+                    "Isin": "TCH",
+                    "StockSymbol": "TCH"
+                },
+                {
+                    "Isin": "TLG",
+                    "StockSymbol": "TLG"
+                },
+                {
+                    "Isin": "TPB",
+                    "StockSymbol": "TPB"
+                },
+                {
+                    "Isin": "VCB",
+                    "StockSymbol": "VCB"
+                },
+                {
+                    "Isin": "VCG",
+                    "StockSymbol": "VCG"
+                },
+                {
+                    "Isin": "VCI",
+                    "StockSymbol": "VCI"
+                },
+                {
+                    "Isin": "VGC",
+                    "StockSymbol": "VGC"
+                },
+                {
+                    "Isin": "VHC",
+                    "StockSymbol": "VHC"
+                },
+                {
+                    "Isin": "VHM",
+                    "StockSymbol": "VHM"
+                },
+                {
+                    "Isin": "VIB",
+                    "StockSymbol": "VIB"
+                },
+                {
+                    "Isin": "VIC",
+                    "StockSymbol": "VIC"
+                },
+                {
+                    "Isin": "VIX",
+                    "StockSymbol": "VIX"
+                },
+                {
+                    "Isin": "VJC",
+                    "StockSymbol": "VJC"
+                },
+                {
+                    "Isin": "VND",
+                    "StockSymbol": "VND"
+                },
+                {
+                    "Isin": "VNM",
+                    "StockSymbol": "VNM"
+                },
+                {
+                    "Isin": "VPB",
+                    "StockSymbol": "VPB"
+                },
+                {
+                    "Isin": "VPI",
+                    "StockSymbol": "VPI"
+                },
+                {
+                    "Isin": "VRE",
+                    "StockSymbol": "VRE"
+                },
+                {
+                    "Isin": "VTP",
+                    "StockSymbol": "VTP"
+                }
+            ]
+        }
+    ]
+}

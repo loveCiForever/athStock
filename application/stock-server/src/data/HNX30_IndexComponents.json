@@ -1,0 +1,134 @@
+{
+    "success": true,
+    "message": "Fetch index component of HNX30 successful (from cache)",
+    "data": [
+        {
+            "IndexCode": "HNX30",
+            "IndexName": "HNX30",
+            "Exchange": "HNX",
+            "TotalSymbolNo": "30",
+            "IndexComponent": [
+                {
+                    "Isin": "BVS",
+                    "StockSymbol": "BVS"
+                },
+                {
+                    "Isin": "CAP",
+                    "StockSymbol": "CAP"
+                },
+                {
+                    "Isin": "CEO",
+                    "StockSymbol": "CEO"
+                },
+                {
+                    "Isin": "DHT",
+                    "StockSymbol": "DHT"
+                },
+                {
+                    "Isin": "DTD",
+                    "StockSymbol": "DTD"
+                },
+                {
+                    "Isin": "DVM",
+                    "StockSymbol": "DVM"
+                },
+                {
+                    "Isin": "DXP",
+                    "StockSymbol": "DXP"
+                },
+                {
+                    "Isin": "HUT",
+                    "StockSymbol": "HUT"
+                },
+                {
+                    "Isin": "IDC",
+                    "StockSymbol": "IDC"
+                },
+                {
+                    "Isin": "IDV",
+                    "StockSymbol": "IDV"
+                },
+                {
+                    "Isin": "L14",
+                    "StockSymbol": "L14"
+                },
+                {
+                    "Isin": "L18",
+                    "StockSymbol": "L18"
+                },
+                {
+                    "Isin": "LAS",
+                    "StockSymbol": "LAS"
+                },
+                {
+                    "Isin": "LHC",
+                    "StockSymbol": "LHC"
+                },
+                {
+                    "Isin": "MBS",
+                    "StockSymbol": "MBS"
+                },
+                {
+                    "Isin": "NTP",
+                    "StockSymbol": "NTP"
+                },
+                {
+                    "Isin": "PLC",
+                    "StockSymbol": "PLC"
+                },
+                {
+                    "Isin": "PSD",
+                    "StockSymbol": "PSD"
+                },
+                {
+                    "Isin": "PVB",
+                    "StockSymbol": "PVB"
+                },
+                {
+                    "Isin": "PVC",
+                    "StockSymbol": "PVC"
+                },
+                {
+                    "Isin": "PVI",
+                    "StockSymbol": "PVI"
+                },
+                {
+                    "Isin": "PVS",
+                    "StockSymbol": "PVS"
+                },
+                {
+                    "Isin": "SHS",
+                    "StockSymbol": "SHS"
+                },
+                {
+                    "Isin": "SLS",
+                    "StockSymbol": "SLS"
+                },
+                {
+                    "Isin": "TMB",
+                    "StockSymbol": "TMB"
+                },
+                {
+                    "Isin": "TNG",
+                    "StockSymbol": "TNG"
+                },
+                {
+                    "Isin": "TVD",
+                    "StockSymbol": "TVD"
+                },
+                {
+                    "Isin": "VC3",
+                    "StockSymbol": "VC3"
+                },
+                {
+                    "Isin": "VCS",
+                    "StockSymbol": "VCS"
+                },
+                {
+                    "Isin": "VGP",
+                    "StockSymbol": "VGP"
+                }
+            ]
+        }
+    ]
+}

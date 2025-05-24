@@ -35,4 +35,5 @@ router.post("/DailyStockPrice", (req, res) => {
     });
 });
 
+
 export default router;

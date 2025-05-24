@@ -1,22 +1,22 @@
-// athStock/client/src/pages/BlogPage.jsx
-
 import axios from "axios";
 import Header from "../components/layout/header/Header.jsx";
 import { useEffect, useState, useContext } from "react";
 import BlogCard from "../components/ui/card/BlogCard.jsx";
 import categories from "../utils/CategoryList.jsx";
 import Footer from "../components/layout/footer/Footer.jsx";
-import ErrorImage from "../assets/images/error404.png";
 import CategorySlider from "../components/layout/slider/CategorySlider.jsx";
 import { ThemeContext } from "../hooks/useTheme.jsx";
-
+import NewBlog from "../components/ui/button/NewBlog.jsx";
+import { List, LayoutGrid } from "lucide-react";
 const BlogPage = () => {
-  let [blogs, setBlog] = useState(null);
-  let [selectedCategory, setSelectedCategory] = useState(null);
-  let [loading, setLoading] = useState(true);
+  const [blogs, setBlog] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // 1. State cho view mode
+  const [viewMode, setViewMode] = useState("list"); // 'list' | 'grid'
 
   const { theme } = useContext(ThemeContext);
-
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
@@ -32,34 +32,31 @@ const BlogPage = () => {
         "http://localhost:8000/api/blog/latest-blog",
         { page }
       );
-      console.log(data);
       setBlog(data.data);
     } catch (error) {
       console.error(error);
-      setLoading(true);
     } finally {
       setLoading(false);
     }
   };
 
-  // const fetchBlogByCategory = async ({
-  //   page = 1,
-  //   category = selectedCategory,
-  // }) => {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await axios.post(VITE_BASE_URL + "/api/blog/category/", {
-  //       page,
-  //       category,
-  //     });
-  //     // console.log(data);
-  //     setBlog(data.blogs);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const fetchBlogByCategory = async ({
+    page = 1,
+    category = selectedCategory,
+  }) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post(
+        `http://localhost:8000/api/blog/category`,
+        { page, category }
+      );
+      setBlog(data.blogs);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchLatestBlog({ page: 1 });
@@ -67,7 +64,7 @@ const BlogPage = () => {
 
   useEffect(() => {
     document.title = "Blog Page";
-  });
+  }, []);
 
   return (
     <div
@@ -75,26 +72,67 @@ const BlogPage = () => {
     >
       <Header />
 
-      <div className="body flex flex-col flex-1 w-full mt-4">
-        <div className="flex flex-col items-center justify-start flex-1 w-full px-6 sm:px-10 md:px-14 xl:px-40">
-          <CategorySlider
-            categories={categories}
-            selectedCategory={selectedCategory}
-            handleCategoryClick={handleCategoryClick}
-          />
-          <div className="flex flex-col flex-1 mt-4 w-full blog-cards">
-            {blogs && blogs.length > 0
-              ? blogs.map((blog) => (
-                  <BlogCard
-                    key={blog.blog_id}
-                    content={blog}
-                    author={blog.author ? blog.author.personal_info : ""}
-                    theme={theme}
-                  />
-                ))
-              : ""}
-          </div>
+      <div className="body flex flex-col flex-1 w-full mt-4 px-6 sm:px-10 md:px-14 xl:px-40">
+        <CategorySlider
+          categories={categories}
+          selectedCategory={selectedCategory}
+          handleCategoryClick={handleCategoryClick}
+        />
+
+        <div className="mt-4">
+          {viewMode === "list" ? (
+            <button
+              onClick={() => {
+                setViewMode("grid");
+              }}
+            >
+              <LayoutGrid />
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setViewMode("list");
+              }}
+            >
+              <List />
+            </button>
+          )}
         </div>
+
+        <div
+          className={` mt-0 w-full
+            ${
+              viewMode === "list"
+                ? "flex flex-col items-center space-y-0"
+                : "grid grid-cols-1 lg:grid-cols-2 gap-6"
+            }
+          `}
+        >
+          {loading ? (
+            <div className="mt-10 text-2xl font-bold">Loading...</div>
+          ) : blogs === null ? (
+            <div className="mt-10 text-2xl font-bold">
+              Network error. No blog available
+            </div>
+          ) : blogs.length > 0 ? (
+            blogs.map((blog) => (
+              <BlogCard
+                key={blog.blog_id}
+                content={blog}
+                author={blog.author ? blog.author.personal_info : ""}
+                viewMode={viewMode}
+              />
+            ))
+          ) : (
+            <div className="mt-10 text-2xl font-bold">
+              No blog for this category
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="fixed right-4 bottom-4">
+        <NewBlog onClick={null} />
       </div>
 
       <div className="w-full mt-20">{blogs && <Footer />}</div>

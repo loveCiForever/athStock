@@ -25,12 +25,12 @@ export default function CategorySlider({
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full px-5">
       {/* Left arrow */}
       <button
         onClick={scrollPrev}
         className={`
-          absolute -left-10 top-1/2 transform -translate-y-1/2 z-10
+          absolute -left-5 top-1/2 transform -translate-y-1/2 z-10
           p-2 rounded-full
           border-gray-300 border-2  active:scale-[.90] active:duration-90 transition-all
           ${theme === "dark-theme" ? "" : "hover:bg-gray-300"}
@@ -72,7 +72,7 @@ export default function CategorySlider({
       <button
         onClick={scrollNext}
         className={`
-          absolute -right-10 top-1/2 transform -translate-y-1/2 z-10
+          absolute -right-5 top-1/2 transform -translate-y-1/2 z-10
           p-2 rounded-full
           border-gray-300 border-2  active:scale-[.90] active:duration-90 transition-all 
           ${theme === "dark-theme" ? "" : "hover:bg-gray-300"}
