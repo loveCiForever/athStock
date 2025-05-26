@@ -263,7 +263,9 @@ const Stock = ({ indexId }) => {
                 {formatPriceWithSpaces(ohlc.Value)}
               </div>
 
-              <div className="text-purple-600 font-semibold">1 000 000</div>
+              <div className="text-purple-600 font-semibold">
+                {parseFloat(ohlc.Close) - 1000}
+              </div>
             </div>
           );
         })}
