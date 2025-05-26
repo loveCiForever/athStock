@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import axios from "axios";
 
 import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
 
+import { ThemeContext } from "../../../hooks/useTheme";
 import MarketCard from "../../ui/card/MarketCard";
 
 import {
@@ -15,42 +16,57 @@ import {
   Tooltip,
   Legend,
   Brush,
+  ReferenceLine,
+  Bar,
 } from "recharts";
 
-const Market = ({ onSelectIndex }) => {
-  const monthFmt = new Intl.DateTimeFormat("en-US", { month: "short" });
+const StockMarket = ({ onSelectIndex }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
   };
+  const [now, setNow] = useState(new Date());
 
-  const [vnindexData, setvnindexData] = useState([
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+  const { theme } = useContext(ThemeContext);
+
+  const [vnindexData, setVnindexData] = useState([
     {
       IndexValue: 0,
       Change: 0,
       RatioChange: 0,
+      TotalVol: 0,
     },
   ]);
 
-  const [vn30Data, setvn30Data] = useState([
+  const [vn30Data, setVn30Data] = useState([
     {
       IndexValue: 0,
       Change: 0,
       RatioChange: 0,
+      TotalVol: 0,
     },
   ]);
-  const [hnxindexData, sethnxindexData] = useState([
+  const [hnxindexData, setHnxindexData] = useState([
     {
       IndexValue: 0,
       Change: 0,
       RatioChange: 0,
+      TotalVol: 0,
     },
   ]);
-  const [hnx30Data, sethnx30Data] = useState([
+  const [hnx30Data, setHnx30Data] = useState([
     {
       IndexValue: 0,
       Change: 0,
       RatioChange: 0,
+      TotalVol: 0,
     },
   ]);
 
@@ -92,14 +108,14 @@ const Market = ({ onSelectIndex }) => {
             payload
           );
 
-          // console.log(res);
+          console.log(res);
 
           if (res.data.status !== 429 && res.data.data?.[0]) {
             const item = res.data.data;
-            if (idx === "VNINDEX") setvnindexData(item);
-            else if (idx === "VN30") setvn30Data(item);
-            else if (idx === "HNXINDEX") sethnxindexData(item);
-            else if (idx === "HNX30") sethnx30Data(item);
+            if (idx === "VNINDEX") setVnindexData(item);
+            else if (idx === "VN30") setVn30Data(item);
+            else if (idx === "HNXINDEX") setHnxindexData(item);
+            else if (idx === "HNX30") setHnx30Data(item);
           }
         } catch (err) {
           console.error(`Error fetching ${idx}:`, err);
@@ -115,10 +131,10 @@ const Market = ({ onSelectIndex }) => {
   const chartData = useMemo(() => {
     const data = vnindexData.map((item, idx) => ({
       TradingDate: item.TradingDate,
-      vnindex: parseFloat(item.IndexValue),
-      vn30: parseFloat(vn30Data[idx]?.IndexValue ?? 0),
-      hnxindex: parseFloat(hnxindexData[idx]?.IndexValue ?? 0),
-      hnx30: parseFloat(hnx30Data[idx]?.IndexValue ?? 0),
+      vnindex: parseFloat(item.RatioChange),
+      vn30: parseFloat(vn30Data[idx]?.RatioChange ?? 0),
+      hnxindex: parseFloat(hnxindexData[idx]?.RatioChange ?? 0),
+      hnx30: parseFloat(hnx30Data[idx]?.RatioChange ?? 0),
     }));
 
     return data.sort((a, b) => {
@@ -128,21 +144,41 @@ const Market = ({ onSelectIndex }) => {
     });
   }, [vnindexData, vn30Data, hnxindexData, hnx30Data]);
 
-  //   if (vnindexData) console.log(vnindexData);
+  const yDomain = useMemo(() => {
+    const allRatios = chartData.flatMap((item) => [
+      item.vnindex,
+      item.vn30,
+      item.hnxindex,
+      item.hnx30,
+    ]);
+
+    const minRatio = Math.min(...allRatios);
+    const maxRatio = Math.max(...allRatios);
+
+    const padding = (maxRatio - minRatio) * 0.1;
+    return [minRatio - padding, maxRatio + padding];
+  }, [chartData]);
 
   return (
-    <div className="flex flex-col w-[1300px] bg-red-200// ">
+    <div
+      className={`flex flex-col w-full
+        ${theme === "dark-theme" ? "text-white" : "text-black"}
+        `}
+    >
       <div className="flex flex-col items-start">
         <button
-          className={`flex items-center justify-center uppercase tracking-widest font-bold text-[15px] text-black gap-2 `}
+          className={`flex items-center w-full justify-between uppercase tracking-widest font-bold text-[15px] gap-2 `}
           onClick={handleExpandClick}
         >
-          {isExpanded ? (
-            <ChevronsUpDown size={20} />
-          ) : (
-            <ChevronsDownUp size={20} />
-          )}
-          Visualize
+          <div className={`flex gap-2 items-center`}>
+            {isExpanded ? (
+              <ChevronsUpDown size={20} />
+            ) : (
+              <ChevronsDownUp size={20} />
+            )}
+            <h1>Show graph</h1>
+          </div>
+          <h1>{now.toLocaleString("vi-VN")}</h1>
         </button>
 
         {!isExpanded && (
@@ -163,6 +199,14 @@ const Market = ({ onSelectIndex }) => {
                   Change={first.Change}
                   IndexValue={first.IndexValue}
                   RatioChange={first.RatioChange}
+                  TotalVol={first.TotalVol}
+                  TotalVal={first.TotalVal}
+                  TradingSession={first.TradingSession}
+                  Advances={first.Advances}
+                  NoChanges={first.NoChanges}
+                  Declines={first.Declines}
+                  Ceilings={first.Ceilings}
+                  Floors={first.Floors}
                   isExpanded={isExpanded}
                 />
               );
@@ -172,27 +216,34 @@ const Market = ({ onSelectIndex }) => {
       </div>
 
       {isExpanded && (
-        <div className="flex w-full items-center justify-between mt-4 pr-4 bg-white rounded-lg border-[1px] border-gray-100 shadow-xl">
+        <div className="flex w-full items-center justify-between mt-4 pr-4 bg-white// rounded-lg border-[1px] border-gray-500 shadow-xl/">
           <div className="w-[70%] py-10 bg-red-100//">
+            <h1 className="w-full text-center text-xl font-bold mb-5">test</h1>
             <ResponsiveContainer width="100%" height={300}>
-              <ComposedChart data={chartData} margin={{ left: 10, right: 20 }}>
-                <CartesianGrid strokeDasharray="5 5" />
+              <ComposedChart data={chartData} margin={{ left: 10, right: 80 }}>
                 <XAxis
                   dataKey="TradingDate"
                   type="category"
-                  axisLine={false}
-                  tickLine={false}
-                  padding={{ left: 10, right: 10 }}
+                  axisLine={true}
+                  tickLine={true}
+                  stroke="#ffff"
                 />
                 <YAxis
                   domain={[
-                    (dataMin) => dataMin - 200,
-                    (dataMax) => dataMax + 200,
+                    (dataMin) => Math.min(dataMin, -3),
+                    (dataMax) => Math.max(dataMax, 3),
                   ]}
-                  tickFormatter={(v) => v.toFixed(0)}
+                  tickFormatter={(v) => v.toFixed(0) + "%"}
+                  axisLine={true}
+                  stroke="#ffff"
+                  padding={{ top: 0, bottom: 0 }}
                 />
+                {/* <CartesianGrid stroke="#797979" strokeDasharray="5 5" /> */}
+
+                <ReferenceLine y={0} stroke="#ffffff" strokeWidth={1} />
+
                 <Tooltip formatter={(val, name) => [val, name]} />
-                <Legend verticalAlign="top" />
+                {/* <Legend verticalAlign="top" /> */}
                 <Line
                   dataKey="vnindex"
                   name="VN-Index"
@@ -260,4 +311,4 @@ const Market = ({ onSelectIndex }) => {
   );
 };
 
-export default Market;
+export default StockMarket;

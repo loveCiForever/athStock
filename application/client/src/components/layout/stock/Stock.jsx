@@ -1,5 +1,5 @@
 // src/components/layout/stock/Stock.jsx
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
 import axios from "axios";
 import { BlinkBlur } from "react-loading-indicators";
 import {
@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { ThemeContext } from "../../../hooks/useTheme";
 
 const indexMap = {
   VNINDEX: "vn100",
@@ -27,7 +28,7 @@ const Stock = ({ indexId }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
   const [isLoadingModal, setIsLoadingModal] = useState(false);
-
+  const { theme } = useContext(ThemeContext);
   const formatDate = (date) => {
     const d = date.getDate().toString().padStart(2, "0");
     const m = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -134,7 +135,7 @@ const Stock = ({ indexId }) => {
   if (isLoadingList) {
     return (
       <div className="flex flex-col w-full items-center justify-center mt-10">
-        <BlinkBlur color="#86ff4d" size="large" />
+        <BlinkBlur color="#fdff12" size="large" />
         <h1 className="mt-5 text-2xl font-bold animate-pulse">
           Loading {indexId} …
         </h1>
@@ -145,17 +146,17 @@ const Stock = ({ indexId }) => {
   //   console.log(modalData);
 
   return (
-    <>
+    <div className={`${theme === "dark-theme" ? "text-white" : "text-black"}`}>
       {showModal && modalData && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl p-4">
+        <div className="fixed inset-0 bg-black/50// flex items-center justify-center z-50">
+          <div className="bg-white// rounded-lg shadow-lg w-[90%] max-w-3xl p-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">
                 {modalData.symbol} — 30-Day OHLC
               </h2>
               <button
                 onClick={closeModal}
-                className="text-gray-500 hover:text-gray-800 text-2xl"
+                className="text-gray-500// hover:text-gray-800 text-2xl"
               >
                 &times;
               </button>
@@ -213,10 +214,9 @@ const Stock = ({ indexId }) => {
       )}
 
       <div className="w-full">
-        <div className="grid grid-cols-13 text-start items-center gap-4 mb-2 p-2 bg-gray-100 font-bold text-gray-700">
+        <div className="grid grid-cols-12 text-start items-center gap-4 mb-2 p-2 bg-gray-00// font-bold text-gray-700//">
           <div>Symbol</div>
           <div className="col-span-5 text-start">Company</div>
-          <div>Time</div>
           <div>Open</div>
           <div>High</div>
           <div>Low</div>
@@ -232,10 +232,10 @@ const Stock = ({ indexId }) => {
             <div
               key={row.symbol}
               onClick={() => fetchStockIntraday(row.symbol)}
-              className="cursor-pointer grid grid-cols-13 items-center gap-4 mb-4 p-2 bg-white rounded hover:bg-gray-100 min-w-0"
+              className="cursor-pointer grid grid-cols-12 items-center gap-4 mb-4 p-2 bg-white// rounded hover:bg-gray-100 min-w-0"
             >
               <div>
-                <span className="text-white tracking-wide bg-orange-400 px-3 py-1 font-bold rounded font-mono">
+                <span className="text-white// tracking-wide bg-orange-400// px-3 py-1 font-bold rounded font-mono">
                   {row.symbol}
                 </span>
               </div>
@@ -246,7 +246,6 @@ const Stock = ({ indexId }) => {
                 </p>
               </div>
 
-              <div className="text-gray-500">{ohlc.Time}</div>
               <div className="text-blue-500">
                 {formatPriceWithSpaces(ohlc.Open)}
               </div>
@@ -270,7 +269,7 @@ const Stock = ({ indexId }) => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 

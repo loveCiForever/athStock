@@ -1,37 +1,61 @@
 import { ArrowUp, ArrowDown, Minus } from "lucide-react";
+import { formatNumber } from "../../../utils/formatNumber.jsx";
+import { ThemeContext } from "../../../hooks/useTheme.jsx";
+import { useContext } from "react";
 
 const MarketCard = ({
   IndexName,
   Change,
   IndexValue,
   RatioChange,
+  TotalVol,
+  TotalVal,
+  TradingSession,
+  Advances,
+  NoChanges,
+  Declines,
+  Ceilings,
+  Floors,
   isExpanded,
   onClick,
 }) => {
+  // const { theme } = useContext(ThemeContext);
+  const theme = "dark-theme";
+  const IndexValueFloat = parseFloat(IndexValue);
+  const ChangeFloat = parseFloat(Change);
+  const RatioChangeFloat = parseFloat(RatioChange);
+  const TotalVolFloat = parseFloat(TotalVol);
+  const TotalValFloat = parseFloat(TotalVal);
+  const AdvancesFloat = parseFloat(Advances);
+  const NoChangesFloat = parseFloat(NoChanges);
+  const DeclinesFloat = parseFloat(Declines);
+  const CeilingsFloat = parseFloat(Ceilings);
+  const FloorsFloat = parseFloat(Floors);
+
   const getBgColor = (Change) => {
-    // if (checkData(Change)) {
-    if (parseFloat(Change) > 0) {
+    if (Change > 0) {
       return "bg-green-200";
     } else if (Change < 0) {
       return "bg-red-200";
     }
-    // }
 
     return "bg-gray-200";
   };
 
-  const getStatusArrow = (Change) => {
-    if (parseFloat(Change) > 0) {
-      return <ArrowUp size={20} />;
-    } else if (parseFloat(Change) < 0) {
-      return <ArrowDown size={20} />;
+  const getStatusArrow = (Change, size = 20) => {
+    if (Change > 0) {
+      return <ArrowUp size={size} color="green" />;
+    } else if (Change < 0) {
+      return <ArrowDown size={size} color="red" />;
+    } else if ((Change = 0)) {
+      return <Minus size={size} color="yellow" />;
     }
 
-    return <Minus size={20} />;
+    return <Minus size={size} color="gray" />;
   };
 
   const getTextColor = (Change) => {
-    if (parseFloat(Change) > 0) {
+    if (Change > 0) {
       return "text-green-700";
     } else if (parseFloat(Change) < 0) {
       return "text-red-700";
@@ -43,47 +67,102 @@ const MarketCard = ({
     return data ? true : false;
   };
 
-  // console.log(onClick);
+  const getTradingSession = (TradingSession) => {
+    if (TradingSession == "C") return "Đóng cửa";
+    if (TradingSession == "O") return "Mở cửa";
+    return TradingSession;
+  };
 
   return (
     <>
       {!isExpanded ? (
         <button
           onClick={onClick}
-          className={`flex bg-white border border-gray-200 rounded-lg p-2 w-[23%] text-[14px] hover:bg-gray-100 ${
-            onClick ? "" : ""
-          }`}
+          className={`
+            flex flex-col border rounded-md p-2 w-[24%] text-[14px] font-mono
+            ${
+              theme === "dark-theme"
+                ? "text-white border-gray-50 border-[1px] bg-black/30"
+                : "border-gray-200 bg-gray-100"
+            }
+          `}
         >
-          <div
-            className={`py-2 px-3 rounded-md flex justify-center items-center ${getBgColor(
-              Change
-            )} ${getTextColor(Change)}`}
-          >
-            {getStatusArrow(Change)}
+          <div className="flex w-full">
+            {/* <div
+              className={`
+              px-3 aspect-square rounded-md content-center justify-items-center
+              ${getBgColor(Change)}
+              ${getTextColor(ChangeFloat)}
+            `}
+            >
+              {getStatusArrow(ChangeFloat)}
+            </div> */}
+
+            <div className="flex flex-col w-1/2 ml-2 text-start">
+              <span className="font-bold text-gray-800/ tracking-widest">
+                {IndexName}
+              </span>
+              <span>{IndexValue}pt</span>
+              <span>{formatNumber(TotalVolFloat)} CP</span>
+            </div>
+
+            <div
+              className={`flex flex-col items-end w-1/2 mr-1 tracking-wide `}
+            >
+              <span
+                className={`
+                font-bold ${getTextColor(ChangeFloat)}
+                `}
+              >
+                {RatioChangeFloat > 0 ? "+" : ""}
+                {RatioChangeFloat}
+                {checkData(RatioChangeFloat) ? "%" : ""}
+              </span>
+              <span
+                className={`
+                font-semibold ${getTextColor(ChangeFloat)}
+              `}
+              >
+                {ChangeFloat > 0 ? "+" : ""}
+                {IndexName === "VNINDEX" || IndexName === "VN30"
+                  ? (ChangeFloat * 100).toFixed(2)
+                  : ChangeFloat.toFixed(2)}
+                pt
+              </span>
+              <span className="">{formatNumber(TotalValFloat)}</span>
+            </div>
           </div>
 
-          <div className="flex flex-col w-[50%] ml-2 text-start">
-            <div className="font-bold text-gray-700 tracking-widest">
-              {IndexName}
+          <div className="flex justify-between mt-2">
+            <div className="flex items-center">
+              <ArrowUp size={15} color="var(--stock-up)" strokeWidth="3" />
+              <span className="font-semibold text-[var(--stock-up)]">
+                {AdvancesFloat + CeilingsFloat}
+              </span>
+              <span className="text-[var(--stock-ceiling)]">
+                ({CeilingsFloat})
+              </span>
             </div>
-            <div>{IndexValue} pt</div>
-          </div>
-
-          <div
-            className={`flex flex-col items-end w-[30%] ml-2 tracking-wide ${getTextColor(
-              Change
-            )}`}
-          >
-            <div className="font-semibold">
-              {RatioChange > 0 ? "+" : ""}
-              {RatioChange}
-              {checkData(RatioChange) ? "%" : ""}
+            <div className="flex items-center">
+              <Minus size={15} color="var(--stock-no)" strokeWidth="3" />
+              <span className="font-semibold text-[var(--stock-no)]">
+                {NoChangesFloat}
+              </span>
             </div>
-            <div>{parseFloat(Change).toFixed(2)} pt</div>
+            <div className="flex items-center">
+              <ArrowDown size={15} color="var(--stock-down)" strokeWidth="3" />
+              <span className="font-semibold text-[var(--stock-down)]">
+                {DeclinesFloat + FloorsFloat}
+              </span>
+              <span className="text-[var(--stock-floor)]">
+                ({DeclinesFloat})
+              </span>
+            </div>
+            <span>{getTradingSession(TradingSession)}</span>
           </div>
         </button>
       ) : (
-        <div className="flex items-center justify-between w-full my-3 text-gray-600 rounded-md hover:bg-gray-100// text-[17px]">
+        <div className="flex items-center justify-between w-full my-3 text-gray-600// rounded-md hover:bg-gray-100// text-[17px]">
           {IndexName === "VNINDEX" && (
             <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-green-500"></div>
           )}
@@ -102,26 +181,30 @@ const MarketCard = ({
 
           <span className="flex ml-2 w-[25%] ">{IndexName}</span>
           <span className="flex items-center justify-end w-[25%]">
-            {parseFloat(IndexValue).toFixed(2)}
+            {IndexValueFloat.toFixed(2)}
           </span>
           <span
-            className={`flex items-center justify-end w-[20%] mr-4 ${getTextColor(
-              Change
-            )}`}
+            className={`flex items-center justify-end w-[20%] mr-4 
+              ${getTextColor(ChangeFloat)}`}
           >
-            {/* {parseFloat(Change) > 0 ? "+" : ""} */}
-            {parseFloat(Change).toFixed(2)}
+            {IndexName === "VNINDEX" || IndexName === "VN30"
+              ? (ChangeFloat * 100).toFixed(2)
+              : ChangeFloat.toFixed(2)}
           </span>
           <div className="flex items-center justify-end w-[25%]">
             <div
-              className={`flex w-full items-center justify-between py-[4px] rounded-md px-2 ${getBgColor(
-                Change
-              )} ${getTextColor(Change)}`}
+              className={`flex w-full items-center justify-between py-[4px] rounded-md px-2
+                ${getBgColor(ChangeFloat)}
+                ${getTextColor(ChangeFloat)}
+              `}
             >
-              {getStatusArrow(Change)}
-              <span className={`${getTextColor(Change)}`}>
-                {parseFloat(RatioChange).toFixed(2)}{" "}
-                {checkData(Change) ? "%" : ""}
+              {getStatusArrow(ChangeFloat)}
+              <span
+                className={`
+                ${getTextColor(ChangeFloat)}`}
+              >
+                {RatioChangeFloat.toFixed(2)}{" "}
+                {checkData(ChangeFloat) ? "%" : ""}
               </span>
             </div>
           </div>

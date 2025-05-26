@@ -55,8 +55,8 @@ const Header = () => {
           currentBasePath={currentBasePath}
         />
         <NavPageButton
-          navigateTo={"/markets"}
-          name={"Market"}
+          navigateTo={"/finance"}
+          name={"Finance"}
           currentBasePath={currentBasePath}
         />
 

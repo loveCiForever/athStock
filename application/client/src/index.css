@@ -21,6 +21,12 @@
 
   --bg-navbar-light: rgb(104, 104, 255);
   --bg-navbar-dark: rgb(29, 29, 58);
+
+  --stock-up: rgb(11, 223, 57); /* Green */
+  --stock-no: #fdff12; /* Yellow */
+  --stock-down: rgb(255, 13, 13); /* Red */
+  --stock-ceiling: rgb(253, 2, 253); /* Pink */
+  --stock-floor: rgb(82, 211, 249); /* Light Blue */
 }
 
 .light-theme {

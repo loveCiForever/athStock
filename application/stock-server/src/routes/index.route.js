@@ -12,44 +12,37 @@ const indexListCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 const dailyIndexCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 
 router.post("/IndexComponents", async (req, res) => {
-  const { indexCode = "", pageIndex = 4, pageSize = 100 } = req.body;
-  const cacheKey = `indexComp_${indexCode}_${pageIndex}_${pageSize}`;
-
-  const cached = indexComponentsCache.get(cacheKey);
-  if (cached) {
-    return res.status(200).json({
-      success: true,
-      message: `Fetch index component of ${indexCode} successful (from cache)`,
-      data: cached,
-    });
-  }
+  // const { indexCode = "HOSE", pageIndex = 4, pageSize = 100 } = req.body;
 
   try {
+    // const response = await axios.get(
+    //   `${config.market.ApiUrl}${client.api.GET_INDEX_COMPONENTS}`,
+    //   {
+    //     params: {
+    //       "lookupRequest.indexCode": indexCode,
+    //       "lookupRequest.pageIndex": pageIndex,
+    //       "lookupRequest.pageSize": pageSize,
+    //     },
+    //   }
+    // );
+
     const response = await axios.get(
-      `${config.market.ApiUrl}${client.api.GET_INDEX_COMPONENTS}`,
-      {
-        params: {
-          "lookupRequest.indexCode": indexCode,
-          "lookupRequest.pageIndex": pageIndex,
-          "lookupRequest.pageSize": pageSize,
-        },
-      }
+      `https://msh-appdata.cafef.vn/rest-api/api/v1/StockMarket`
     );
 
-    const list = response.data.data || [];
-    // lưu vào cache
-    indexComponentsCache.set(cacheKey, list);
+    // const list = response;
+    console.log(response.data.data);
 
     return res.status(200).json({
       success: true,
-      message: `Fetch index component of ${indexCode} successful`,
-      data: list,
+      message: `Fetch index component of successful`,
+      data: response.data,
     });
   } catch (error) {
     console.error("Error /IndexComponents:", error);
     return res.status(500).json({
       success: false,
-      message: `Fetch index component of ${indexCode} failed`,
+      message: `Fetch index component of failed`,
       error: error.stack,
     });
   }
