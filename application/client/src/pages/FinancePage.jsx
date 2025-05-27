@@ -26,7 +26,7 @@ const FinancePage = () => {
             <StockMarket onSelectIndex={setSelectedIndex} />
           </div>
           <div className="flex items-start justify-start w-full mt-10 px-6 sm:px-10 md:px-14 xl:px-20 bg-green-100//">
-            <Stock indexId={selectedIndex} />
+            {/* <Stock indexId={selectedIndex} /> */}
           </div>
         </div>
       </div>

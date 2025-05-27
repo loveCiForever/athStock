@@ -112,7 +112,7 @@ router.post("/DailyIndex", async (req, res) => {
   }
 
   const cached = dailyIndexCache.get(cacheKey);
-  // console.log(cached);
+  console.log(cached);
   if (cached) {
     return res.status(200).json({
       success: true,

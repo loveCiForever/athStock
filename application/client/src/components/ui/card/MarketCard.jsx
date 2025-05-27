@@ -19,18 +19,23 @@ const MarketCard = ({
   isExpanded,
   onClick,
 }) => {
-  // const { theme } = useContext(ThemeContext);
-  const theme = "dark-theme";
-  const IndexValueFloat = parseFloat(IndexValue);
-  const ChangeFloat = parseFloat(Change);
-  const RatioChangeFloat = parseFloat(RatioChange);
-  const TotalVolFloat = parseFloat(TotalVol);
-  const TotalValFloat = parseFloat(TotalVal);
-  const AdvancesFloat = parseFloat(Advances);
-  const NoChangesFloat = parseFloat(NoChanges);
-  const DeclinesFloat = parseFloat(Declines);
-  const CeilingsFloat = parseFloat(Ceilings);
-  const FloorsFloat = parseFloat(Floors);
+  const safeNumber = (value, fallback = 0) => {
+    const num = parseFloat(value);
+    return isNaN(num) ? fallback : num;
+  };
+
+  const { theme } = useContext(ThemeContext);
+  // const { theme } = "dark-theme";
+  const IndexValueFloat = safeNumber(IndexValue);
+  const ChangeFloat = safeNumber(Change);
+  const RatioChangeFloat = safeNumber(RatioChange);
+  const TotalVolFloat = safeNumber(TotalVol);
+  const TotalValFloat = safeNumber(TotalVal);
+  const AdvancesFloat = safeNumber(Advances);
+  const NoChangesFloat = safeNumber(NoChanges);
+  const DeclinesFloat = safeNumber(Declines);
+  const CeilingsFloat = safeNumber(Ceilings);
+  const FloorsFloat = safeNumber(Floors);
 
   const getBgColor = (Change) => {
     if (Change > 0) {
@@ -70,6 +75,9 @@ const MarketCard = ({
   const getTradingSession = (TradingSession) => {
     if (TradingSession == "C") return "Đóng cửa";
     if (TradingSession == "O") return "Mở cửa";
+    if (TradingSession) return "Liên tục";
+    if (TradingSession == "BREAK") return "Tạm nghỉ";
+    if (TradingSession == "ATC") return "ATC";
     return TradingSession;
   };
 
@@ -154,9 +162,7 @@ const MarketCard = ({
               <span className="font-semibold text-[var(--stock-down)]">
                 {DeclinesFloat + FloorsFloat}
               </span>
-              <span className="text-[var(--stock-floor)]">
-                ({DeclinesFloat})
-              </span>
+              <span className="text-[var(--stock-floor)]">({FloorsFloat})</span>
             </div>
             <span>{getTradingSession(TradingSession)}</span>
           </div>
