@@ -26,7 +26,6 @@ const StockMarket = ({ onSelectIndex }) => {
     setIsExpanded(!isExpanded);
   };
   const [now, setNow] = useState(new Date());
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setNow(new Date());
@@ -89,10 +88,16 @@ const StockMarket = ({ onSelectIndex }) => {
     const from = new Date(to);
     from.setDate(from.getDate() - 30);
 
-    const fetchCurrentIndex = () => {
-      const indexes = ["VNINDEX", "HNXINDEX", "VN30", "HNX30"];
+    let isFetching = false;
 
-      indexes.forEach(async (idx) => {
+    const fetchCurrentIndex = async () => {
+      if (isFetching) return;
+      isFetching = true;
+
+      const indexes = ["VNINDEX", "HNXINDEX", "VN30", "HNX30"];
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      for (const idx of indexes) {
         const payload = {
           indexId: idx,
           fromDate: formatDate(from),
@@ -120,7 +125,11 @@ const StockMarket = ({ onSelectIndex }) => {
         } catch (err) {
           console.error(`Error fetching ${idx}:`, err);
         }
-      });
+
+        await sleep(3000);
+      }
+
+      isFetching = false;
     };
 
     fetchCurrentIndex();
@@ -226,7 +235,24 @@ const StockMarket = ({ onSelectIndex }) => {
                   type="category"
                   axisLine={true}
                   tickLine={true}
-                  stroke="#ffff"
+                  stroke={`${theme === "dark-theme" ? "#ffff" : "#202020"}`}
+                  tickMargin={0}
+                  tickFormatter={(date) => {
+                    // Convert "DD/MM/YYYY" to "YYYY-MM-DD" for parsing
+                    const [day, month, year] = date.split("/");
+                    const parsedDate = new Date(`${year}-${month}-${day}`);
+
+                    // Adjust to Vietnamese local time (GMT+7)
+                    const vietnamTime = new Date(
+                      parsedDate.getTime() + 7 * 60 * 60 * 1000
+                    );
+
+                    const dayOfWeek = vietnamTime.getDay();
+                    return dayOfWeek === 2 || dayOfWeek === 4 || dayOfWeek == 6
+                      ? date
+                      : ""; // Show date only for Monday or Thursday
+                    //  1 2 3 4 5 6 7
+                  }}
                 />
                 <YAxis
                   domain={[
@@ -235,7 +261,7 @@ const StockMarket = ({ onSelectIndex }) => {
                   ]}
                   tickFormatter={(v) => v.toFixed(0) + "%"}
                   axisLine={true}
-                  stroke="#ffff"
+                  stroke={`${theme === "dark-theme" ? "#ffff" : "#202020"}`}
                   padding={{ top: 0, bottom: 0 }}
                 />
                 {/* <CartesianGrid stroke="#797979" strokeDasharray="5 5" /> */}

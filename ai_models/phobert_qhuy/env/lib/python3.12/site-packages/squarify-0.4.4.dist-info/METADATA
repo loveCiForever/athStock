@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: squarify
+Version: 0.4.4
+Summary: Pure Python implementation of the squarify treemap layout algorithm
+Home-page: https://github.com/laserson/squarify
+Author: Uri Laserson
+Author-email: uri.laserson@gmail.com
+License: Apache License 2.0
+Keywords: treemap visualization squarify layout graphics
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+License-File: LICENSE.txt
+

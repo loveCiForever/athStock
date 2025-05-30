@@ -11,24 +11,32 @@ const indexComponentsCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 const indexListCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 const dailyIndexCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 
+const isEmpty = (string) => {
+  if (typeof string !== "string" || string === null || string === undefined) {
+    return true;
+  }
+
+  return string.trim().length === 0;
+};
+
 router.post("/IndexComponents", async (req, res) => {
   // const { indexCode = "HOSE", pageIndex = 4, pageSize = 100 } = req.body;
 
   try {
-    // const response = await axios.get(
-    //   `${config.market.ApiUrl}${client.api.GET_INDEX_COMPONENTS}`,
-    //   {
-    //     params: {
-    //       "lookupRequest.indexCode": indexCode,
-    //       "lookupRequest.pageIndex": pageIndex,
-    //       "lookupRequest.pageSize": pageSize,
-    //     },
-    //   }
-    // );
-
     const response = await axios.get(
-      `https://msh-appdata.cafef.vn/rest-api/api/v1/StockMarket`
+      `${config.market.ApiUrl}${client.api.GET_INDEX_COMPONENTS}`,
+      {
+        params: {
+          "lookupRequest.indexCode": indexCode,
+          "lookupRequest.pageIndex": pageIndex,
+          "lookupRequest.pageSize": pageSize,
+        },
+      }
     );
+
+    // const response = await axios.get(
+    //   `https://msh-appdata.cafef.vn/rest-api/api/v1/StockMarket`
+    // );
 
     // const list = response;
     console.log(response.data.data);
@@ -95,32 +103,52 @@ router.post("/IndexList", async (req, res) => {
 
 router.post("/DailyIndex", async (req, res) => {
   const {
-    indexId = "HNX30",
-    fromDate = "16/12/2021",
-    toDate = "16/12/2021",
+    indexId = "",
+    fromDate = "",
+    toDate = "",
     pageIndex = 1,
     pageSize = 1000,
     ascending = true,
   } = req.body;
 
-  const cacheKey = `dailyIndex_${indexId}_${fromDate}_${toDate}_${pageIndex}_${pageSize}_${ascending}`;
-  if (!indexId) {
+  if (isEmpty(indexId)) {
     return res.status(400).json({
       success: false,
-      message: "Miss indexId",
+      message: "indexId is required. Try VNINDEX, VN30, HNXINDEX, HNX30",
     });
   }
 
-  const cached = dailyIndexCache.get(cacheKey);
-  console.log(cached);
-  if (cached) {
-    return res.status(200).json({
-      success: true,
-      message: `Fetch daily index of ${indexId} successful (from cache)`,
-      data: cached.data,
-      total_record: cached.total_record,
+  if (isEmpty(fromDate) || isEmpty(toDate)) {
+    return res.status(400).json({
+      success: false,
+      message: "fromDate and toDate are required",
     });
   }
+
+  if (
+    indexId != "VNINDEX" &&
+    indexId != "VN30" &&
+    indexId != "HNXINDEX" &&
+    indexId != "HNX30"
+  ) {
+    return res.status(400).json({
+      success: false,
+      message: `${indexId} is not supported. Try VNINDEX, VN30, HNXINDEX, HNX30`,
+    });
+  }
+
+  // const cacheKey = `dailyIndex_${indexId}_${fromDate}_${toDate}_${pageIndex}_${pageSize}_${ascending}`;
+
+  // const cached = dailyIndexCache.get(cacheKey);
+  // // console.log(cached);
+  // if (cached) {
+  //   return res.status(200).json({
+  //     success: true,
+  //     message: `Fetch daily index of ${indexId} successful (from cache)`,
+  //     data: cached.data,
+  //     total_record: cached.total_record,
+  //   });
+  // }
 
   try {
     const response = await axios.get(
@@ -137,12 +165,21 @@ router.post("/DailyIndex", async (req, res) => {
       }
     );
 
+    console.log(`Daily index of ${indexId}: `, response.data);
+
+    if (response.data.status == 429) {
+      return res.status(429).json({
+        success: false,
+        message: response.data.message,
+      });
+    }
+
     const list = response.data.data || [];
     const total = Array.isArray(list) ? list.length : 0;
 
-    if (list.length > 0) {
-      dailyIndexCache.set(cacheKey, { data: list, total_record: total });
-    }
+    // if (list.length > 0) {
+    //   dailyIndexCache.set(cacheKey, { data: list, total_record: total });
+    // }
 
     return res.status(200).json({
       success: true,
