@@ -39,12 +39,12 @@ const MarketCard = ({
 
   const getBgColor = (Change) => {
     if (Change > 0) {
-      return "bg-green-200";
+      return "bg-green-100";
     } else if (Change < 0) {
-      return "bg-red-200";
+      return "bg-red-200/90";
     }
 
-    return "bg-gray-200";
+    return "bg-gray-200/30";
   };
 
   const getStatusArrow = (Change, size = 20) => {
@@ -61,11 +61,14 @@ const MarketCard = ({
 
   const getTextColor = (Change) => {
     if (Change > 0) {
-      return "text-green-700";
+      return "text-[var(--stock-up)]";
     } else if (parseFloat(Change) < 0) {
-      return "text-red-700";
+      return "text-[var(--stock-down)]";
+    } else if (parseFloat(Change) == 0) {
+      return theme === `dark-theme`
+        ? "text-[var(--stock-no)]"
+        : "text-yellow-500";
     }
-    return "text-gray-700";
   };
 
   const checkData = (data) => {
@@ -91,7 +94,7 @@ const MarketCard = ({
             ${
               theme === "dark-theme"
                 ? "text-white border-gray-50 border-[1px] bg-black/30"
-                : "border-gray-200 bg-gray-100"
+                : "border-gray-700 bg-gray-50"
             }
           `}
         >
@@ -141,7 +144,9 @@ const MarketCard = ({
             </div>
           </div>
 
-          <div className="flex justify-between mt-2">
+          <div
+            className={`flex justify-between mt-2 ${getTextColor(ChangeFloat)}`}
+          >
             <div className="flex items-center">
               <ArrowUp size={15} color="var(--stock-up)" strokeWidth="3" />
               <span className="font-semibold text-[var(--stock-up)]">
@@ -152,8 +157,8 @@ const MarketCard = ({
               </span>
             </div>
             <div className="flex items-center">
-              <Minus size={15} color="var(--stock-no)" strokeWidth="3" />
-              <span className="font-semibold text-[var(--stock-no)]">
+              <Minus size={15} color="var(--stock-no)//" strokeWidth="3" />
+              <span className="font-semibold text-[var(--stock-no)]//">
                 {NoChangesFloat}
               </span>
             </div>
@@ -187,17 +192,17 @@ const MarketCard = ({
 
           <span className="flex ml-2 w-[25%] ">{IndexName}</span>
           <span className="flex items-center justify-end w-[25%]">
-            {IndexValueFloat.toFixed(2)}
+            {IndexValueFloat == 0 ? "Loading" : IndexValueFloat.toFixed(2)}
           </span>
           <span
-            className={`flex items-center justify-end w-[20%] mr-4 
+            className={`flex items-center justify-end w-[20%] mr-4
               ${getTextColor(ChangeFloat)}`}
           >
             {IndexName === "VNINDEX" || IndexName === "VN30"
               ? (ChangeFloat * 100).toFixed(2)
               : ChangeFloat.toFixed(2)}
           </span>
-          <div className="flex items-center justify-end w-[25%]">
+          <div className="flex items-center justify-end w-[20%]">
             <div
               className={`flex w-full items-center justify-between py-[4px] rounded-md px-2
                 ${getBgColor(ChangeFloat)}
