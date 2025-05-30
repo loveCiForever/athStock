@@ -1,25 +1,11 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import axios from "axios";
-
 import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
-
 import { ThemeContext } from "../../../hooks/useTheme";
 import MarketCard from "../../ui/card/MarketCard";
-
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  Brush,
-  ReferenceLine,
-  Bar,
-} from "recharts";
-
+import { formatDateViEn } from "../../../utils/formatDate";
+import ReactApexChart from "react-apexcharts";
+import "../../../index.css";
 const StockMarket = ({ onSelectIndex }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpandClick = () => {
@@ -33,66 +19,46 @@ const StockMarket = ({ onSelectIndex }) => {
 
     return () => clearInterval(intervalId);
   }, []);
+  const [chartType, setChartType] = useState("line");
   const { theme } = useContext(ThemeContext);
 
-  const [vnindexData, setVnindexData] = useState([
-    {
-      IndexValue: 0,
-      Change: 0,
-      RatioChange: 0,
-      TotalVol: 0,
-    },
-  ]);
+  const parseTradingDate = (str) => {
+    const [day, month, year] = str.split("/");
+    return new Date(+year, +month - 1, +day).getTime();
+  };
 
-  const [vn30Data, setVn30Data] = useState([
-    {
-      IndexValue: 0,
-      Change: 0,
-      RatioChange: 0,
-      TotalVol: 0,
-    },
-  ]);
-  const [hnxindexData, setHnxindexData] = useState([
-    {
-      IndexValue: 0,
-      Change: 0,
-      RatioChange: 0,
-      TotalVol: 0,
-    },
-  ]);
-  const [hnx30Data, setHnx30Data] = useState([
-    {
-      IndexValue: 0,
-      Change: 0,
-      RatioChange: 0,
-      TotalVol: 0,
-    },
-  ]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [dataMap, setDataMap] = useState({
+    VNINDEX: [],
+    VN30: [],
+    HNXINDEX: [],
+    HNX30: [],
+  });
 
-  const dataMap = {
-    VNINDEX: vnindexData,
-    VN30: vn30Data,
-    HNXINDEX: hnxindexData,
-    HNX30: hnx30Data,
+  const [selectedIndex, setSelectedIndex] = useState("");
+  const handleSelectedIndex = (index) => {
+    if (index === selectedIndex) {
+      setSelectedIndex("");
+    } else {
+      setSelectedIndex(index);
+    }
+
+    // console.log(index);
   };
 
   useEffect(() => {
-    const formatDate = (date) => {
-      const d = date.getDate().toString().padStart(2, "0");
-      const m = (date.getMonth() + 1).toString().padStart(2, "0");
-      const y = date.getFullYear();
-      return `${d}/${m}/${y}`;
-    };
+    const now = new Date();
+    const currentHour = now.getHours();
 
+    const shouldFetchData = currentHour >= 15 || currentHour < 9;
+
+    if (!shouldFetchData) return;
     const to = new Date();
     const from = new Date(to);
     from.setDate(from.getDate() - 30);
 
-    let isFetching = false;
-
     const fetchCurrentIndex = async () => {
-      if (isFetching) return;
-      isFetching = true;
+      setIsFetching(true);
 
       const indexes = ["VNINDEX", "HNXINDEX", "VN30", "HNX30"];
       const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -100,8 +66,8 @@ const StockMarket = ({ onSelectIndex }) => {
       for (const idx of indexes) {
         const payload = {
           indexId: idx,
-          fromDate: formatDate(from),
-          toDate: formatDate(to),
+          fromDate: formatDateViEn(from),
+          toDate: formatDateViEn(to),
           pageIndex: 1,
           pageSize: 10,
           ascending: false,
@@ -113,15 +79,15 @@ const StockMarket = ({ onSelectIndex }) => {
             payload
           );
 
-          console.log(res);
-
           if (res.data.status !== 429 && res.data.data?.[0]) {
             const item = res.data.data;
-            if (idx === "VNINDEX") setVnindexData(item);
-            else if (idx === "VN30") setVn30Data(item);
-            else if (idx === "HNXINDEX") setHnxindexData(item);
-            else if (idx === "HNX30") setHnx30Data(item);
+            setDataMap((prevDataMap) => ({
+              ...prevDataMap,
+              [idx]: item,
+            }));
           }
+
+          // console.log(res.data);
         } catch (err) {
           console.error(`Error fetching ${idx}:`, err);
         }
@@ -129,44 +95,127 @@ const StockMarket = ({ onSelectIndex }) => {
         await sleep(3000);
       }
 
-      isFetching = false;
+      setIsFetching(false);
     };
 
     fetchCurrentIndex();
-    const intervalId = setInterval(fetchCurrentIndex, 10000);
-    return () => clearInterval(intervalId);
   }, []);
 
-  const chartData = useMemo(() => {
-    const data = vnindexData.map((item, idx) => ({
-      TradingDate: item.TradingDate,
-      vnindex: parseFloat(item.RatioChange),
-      vn30: parseFloat(vn30Data[idx]?.RatioChange ?? 0),
-      hnxindex: parseFloat(hnxindexData[idx]?.RatioChange ?? 0),
-      hnx30: parseFloat(hnx30Data[idx]?.RatioChange ?? 0),
+  const candleChartData = useMemo(() => {
+    if (!selectedIndex) return [];
+    return (dataMap[selectedIndex] || []).map((item) => ({
+      x: item.TradingDate,
+      y: [
+        parseFloat(item.Open ?? 0),
+        parseFloat(item.High ?? 0),
+        parseFloat(item.Low ?? 0),
+        parseFloat(item.Close ?? 0),
+      ],
     }));
+  }, [selectedIndex, dataMap]);
 
-    return data.sort((a, b) => {
-      const [da, ma, ya] = a.TradingDate.split("/").map(Number);
-      const [db, mb, yb] = b.TradingDate.split("/").map(Number);
-      return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
-    });
-  }, [vnindexData, vn30Data, hnxindexData, hnx30Data]);
+  // const [day, month, year] = item.TradingDate.split("/");
+  // const ts = new Date(+year, +month - 1, +day).getTime();
 
-  const yDomain = useMemo(() => {
-    const allRatios = chartData.flatMap((item) => [
-      item.vnindex,
-      item.vn30,
-      item.hnxindex,
-      item.hnx30,
-    ]);
+  const chartOptions = useMemo(
+    () => ({
+      chart: {
+        type: "area",
+        stacked: false,
+        height: 350,
+        zoom: {
+          type: "x",
+          enabled: true,
+          autoScaleYaxis: true,
+        },
+        toolbar: {
+          autoSelected: "zoom",
+        },
+      },
+      stroke: {
+        width: 2,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      markers: {
+        size: 0,
+      },
+      title: {
+        text: "Stock Price Change Movement",
+        align: "center",
+        style: {
+          fontSize: "20px",
+          fontWeight: "bold",
+          fontFamily: undefined,
+          color: "#b6b7b8",
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          inverseColors: false,
+          opacityFrom: 0,
+          opacityTo: 0,
+          stops: [0, 50, 100],
+        },
+      },
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val.toFixed(2);
+          },
+          style: {
+            colors: "#ffffff",
+            fontSize: "12px",
+            fontWeight: "bold",
+          },
+        },
 
-    const minRatio = Math.min(...allRatios);
-    const maxRatio = Math.max(...allRatios);
+        title: {
+          text: "Ratio Change (%)",
+          style: {
+            fontSize: "18px",
+            fontWeight: "bold",
+            fontFamily: undefined,
+            color: "#ffffff",
+          },
+        },
+      },
+      xaxis: {
+        type: "datetime",
+        labels: {
+          style: {
+            colors: "#ffffff",
+            fontSize: "12px",
+            fontWeight: "bold",
+          },
+        },
+      },
+      tooltip: {
+        shared: false,
+        intersect: false,
+        cssClass: "my-custom-tooltip",
+        y: { formatter: (v) => v.toFixed(2) },
+      },
+      legend: {
+        show: false,
+      },
+    }),
+    []
+  );
 
-    const padding = (maxRatio - minRatio) * 0.1;
-    return [minRatio - padding, maxRatio + padding];
-  }, [chartData]);
+  const lineChartData = useMemo(() => {
+    const indexes = ["VNINDEX", "VN30", "HNXINDEX", "HNX30"];
+    return indexes.map((index) => ({
+      name: index,
+      data: (dataMap[index] || []).map((item) => ({
+        x: parseTradingDate(item.TradingDate),
+        y: parseFloat(item.RatioChange),
+      })),
+    }));
+  }, [dataMap]);
 
   return (
     <div
@@ -185,7 +234,7 @@ const StockMarket = ({ onSelectIndex }) => {
             ) : (
               <ChevronsDownUp size={20} />
             )}
-            <h1>Show graph</h1>
+            <h1>Expand</h1>
           </div>
           <h1>{now.toLocaleString("vi-VN")}</h1>
         </button>
@@ -225,111 +274,54 @@ const StockMarket = ({ onSelectIndex }) => {
       </div>
 
       {isExpanded && (
-        <div className="flex w-full items-center justify-between mt-4 pr-4 bg-white// rounded-lg border-[1px] border-gray-500 shadow-xl/">
-          <div className="w-[70%] py-10 bg-red-100//">
-            <h1 className="w-full text-center text-xl font-bold mb-5">test</h1>
-            <ResponsiveContainer width="100%" height={300}>
-              <ComposedChart data={chartData} margin={{ left: 10, right: 80 }}>
-                <XAxis
-                  dataKey="TradingDate"
-                  type="category"
-                  axisLine={true}
-                  tickLine={true}
-                  stroke={`${theme === "dark-theme" ? "#ffff" : "#202020"}`}
-                  tickMargin={0}
-                  tickFormatter={(date) => {
-                    // Convert "DD/MM/YYYY" to "YYYY-MM-DD" for parsing
-                    const [day, month, year] = date.split("/");
-                    const parsedDate = new Date(`${year}-${month}-${day}`);
+        <div className="mt-4 pr-4 bg-white// rounded-lg border-[1px] border-gray-500 shadow-xl/">
+          <div className="flex w-full items-center justify-between">
+            <div className="w-[70%] py-10 bg-red-100// px-5 //">
+              {/* <h1 className="w-full text-center text-xl font-bold mb-5">
+                {selectedIndex
+                  ? `Candlestick Chart for ${selectedIndex}`
+                  : "Close price in 30 days"}
+              </h1> */}
+              <ReactApexChart
+                options={chartOptions}
+                series={lineChartData}
+                type="area"
+                height={350}
+              />
+            </div>
+            <div className="flex flex-col h-[300px] w-[35%] ml-6 items-center justify-between font-semibold text-[15px] bg-red-100//">
+              {["VNINDEX", "VN30", "HNXINDEX", "HNX30"].map((idx) => {
+                const arr = dataMap[idx] || [];
+                const first = arr[0] || {
+                  IndexValue: 0,
+                  Change: 0,
+                  RatioChange: 0,
+                };
 
-                    // Adjust to Vietnamese local time (GMT+7)
-                    const vietnamTime = new Date(
-                      parsedDate.getTime() + 7 * 60 * 60 * 1000
-                    );
-
-                    const dayOfWeek = vietnamTime.getDay();
-                    return dayOfWeek === 2 || dayOfWeek === 4 || dayOfWeek == 6
-                      ? date
-                      : ""; // Show date only for Monday or Thursday
-                    //  1 2 3 4 5 6 7
-                  }}
-                />
-                <YAxis
-                  domain={[
-                    (dataMin) => Math.min(dataMin, -3),
-                    (dataMax) => Math.max(dataMax, 3),
-                  ]}
-                  tickFormatter={(v) => v.toFixed(0) + "%"}
-                  axisLine={true}
-                  stroke={`${theme === "dark-theme" ? "#ffff" : "#202020"}`}
-                  padding={{ top: 0, bottom: 0 }}
-                />
-                {/* <CartesianGrid stroke="#797979" strokeDasharray="5 5" /> */}
-
-                <ReferenceLine y={0} stroke="#ffffff" strokeWidth={1} />
-
-                <Tooltip formatter={(val, name) => [val, name]} />
-                {/* <Legend verticalAlign="top" /> */}
-                <Line
-                  dataKey="vnindex"
-                  name="VN-Index"
-                  stroke="#22c55e"
-                  dot={false}
-                  strokeWidth={2}
-                />
-                <Line
-                  dataKey="hnxindex"
-                  name="HNX-Index"
-                  dot={false}
-                  stroke="#ef4444"
-                  strokeWidth={2}
-                />
-                <Line
-                  dataKey="vn30"
-                  name="VN30"
-                  dot={false}
-                  strokeWidth={2}
-                  stroke="#3b82f6"
-                />
-                <Line
-                  dataKey="hnx30"
-                  name="HNX30"
-                  stroke="#eab308"
-                  dot={false}
-                  strokeWidth={2}
-                />
-              </ComposedChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="flex flex-col h-[300px] w-[35%] ml-6 items-center justify-between font-semibold text-[15px] bg-red-100//">
-            <MarketCard
-              IndexName={"VNINDEX"}
-              Change={vnindexData[0].Change}
-              IndexValue={vnindexData[0].IndexValue}
-              RatioChange={vnindexData[0].RatioChange}
-              isExpanded={isExpanded}
-            />
-            <MarketCard
-              IndexName={"VN30"}
-              Change={vn30Data[0].Change}
-              IndexValue={vn30Data[0].IndexValue}
-              RatioChange={vn30Data[0].RatioChange}
-              isExpanded={isExpanded}
-            />
-            <MarketCard
-              IndexName={"HNXINDEX"}
-              Change={hnxindexData[0].Change}
-              IndexValue={hnxindexData[0].IndexValue}
-              RatioChange={hnxindexData[0].RatioChange}
-              isExpanded={isExpanded}
-            />
-            <MarketCard
-              IndexName={"HNX30"}
-              Change={hnx30Data[0].Change}
-              IndexValue={hnx30Data[0].IndexValue}
-              RatioChange={hnx30Data[0].RatioChange}
-              isExpanded={isExpanded}
-            />
+                return (
+                  <MarketCard
+                    key={idx}
+                    IndexName={idx}
+                    onClick={() => handleSelectedIndex(idx)}
+                    Change={first.Change}
+                    IndexValue={first.IndexValue}
+                    RatioChange={first.RatioChange}
+                    TotalVol={first.TotalVol}
+                    TotalVal={first.TotalVal}
+                    TradingSession={first.TradingSession}
+                    Advances={first.Advances}
+                    NoChanges={first.NoChanges}
+                    Declines={first.Declines}
+                    Ceilings={first.Ceilings}
+                    Floors={first.Floors}
+                    isExpanded={isExpanded}
+                    className={`cursor-pointer ${
+                      selectedIndex == idx ? "bg-gray-500/10" : ""
+                    }`}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

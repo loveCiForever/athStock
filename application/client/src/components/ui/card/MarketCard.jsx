@@ -18,6 +18,7 @@ const MarketCard = ({
   Floors,
   isExpanded,
   onClick,
+  className,
 }) => {
   const safeNumber = (value, fallback = 0) => {
     const num = parseFloat(value);
@@ -39,12 +40,12 @@ const MarketCard = ({
 
   const getBgColor = (Change) => {
     if (Change > 0) {
-      return "bg-green-100";
+      return "bg-green-500/10";
     } else if (Change < 0) {
-      return "bg-red-200/90";
+      return "bg-red-500/10";
     }
 
-    return "bg-gray-200/30";
+    return "bg-gray-500/10";
   };
 
   const getStatusArrow = (Change, size = 20) => {
@@ -88,7 +89,6 @@ const MarketCard = ({
     <>
       {!isExpanded ? (
         <button
-          onClick={onClick}
           className={`
             flex flex-col border rounded-md p-2 w-[24%] text-[14px] font-mono
             ${
@@ -96,7 +96,7 @@ const MarketCard = ({
                 ? "text-white border-gray-50 border-[1px] bg-black/30"
                 : "border-gray-700 bg-gray-50"
             }
-          `}
+         `}
         >
           <div className="flex w-full">
             {/* <div
@@ -173,21 +173,26 @@ const MarketCard = ({
           </div>
         </button>
       ) : (
-        <div className="flex items-center justify-between w-full my-3 text-gray-600// rounded-md hover:bg-gray-100// text-[17px]">
+        <button
+          onClick={onClick}
+          className={`flex items-center justify-between w-full py-1/ my-3 text-gray-600// rounded-md hover:bg-gray-100// text-[17px] ${
+            theme === "dark-theme" ? "hover:bg-black/30" : ""
+          }  ${className}`}
+        >
           {IndexName === "VNINDEX" && (
-            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-green-500"></div>
-          )}
-
-          {IndexName === "HNXINDEX" && (
-            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-red-500"></div>
-          )}
-
-          {IndexName === "VN30" && (
             <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-blue-500"></div>
           )}
 
-          {IndexName === "HNX30" && (
+          {IndexName === "HNXINDEX" && (
             <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-yellow-500"></div>
+          )}
+
+          {IndexName === "VN30" && (
+            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-green-500"></div>
+          )}
+
+          {IndexName === "HNX30" && (
+            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-red-500"></div>
           )}
 
           <span className="flex ml-2 w-[25%] ">{IndexName}</span>
@@ -219,7 +224,7 @@ const MarketCard = ({
               </span>
             </div>
           </div>
-        </div>
+        </button>
       )}
     </>
   );
