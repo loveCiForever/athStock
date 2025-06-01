@@ -1,0 +1,321 @@
+# vnstock/core/utils/parser.py
+
+import re
+import requests
+import pandas as pd
+import numpy as np
+from pytz import timezone
+from datetime import date, datetime, timedelta
+from typing import Dict, Union, Literal, Any, Optional
+from vnstock.core.config.const import UA
+from vnstock.core.utils.logger import get_logger
+
+logger = get_logger(__name__)
+
+def parse_timestamp(time_value):
+    """
+    Convert a datetime object or a string representation of time to a Unix timestamp.
+    Parameters:
+        - time_value: A datetime object or a string representation of time. Supported formats are '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', and '%Y-%m-%d' or datetime object.
+    """
+    try:
+        if isinstance(time_value, datetime):
+            time_value = timezone('Asia/Ho_Chi_Minh').localize(time_value)
+        elif isinstance(time_value, str):
+            if ' ' in time_value and ':' in time_value.split(' ')[1]:
+                try:
+                    time_value = datetime.strptime(time_value, '%Y-%m-%d %H:%M:%S')
+                except ValueError:
+                    time_value = datetime.strptime(time_value, '%Y-%m-%d %H:%M')
+            else:
+                time_value = datetime.strptime(time_value, '%Y-%m-%d')
+        else:
+            print("Invalid input type. Supported types are datetime or string.")
+            return None
+
+        timestamp = int(time_value.timestamp())
+        return timestamp
+    except ValueError:
+        print("Invalid timestamp format")
+        return None
+
+# Utility to convert timestamps to Vietnam timezone
+def localize_timestamp (
+    timestamp: Union[pd.Series, int, float, list, np.ndarray, pd.Timestamp, Any], 
+    unit: Literal['s', 'ms', 'us', 'ns'] = 's',
+    return_scalar: bool = False,
+    return_string: bool = False,
+    string_format: str = '%Y-%m-%d %H:%M:%S'
+) -> Union[pd.Series, pd.Timestamp, str]:
+    """
+    Convert timestamp values to Vietnam timezone (UTC+7).
+    
+    Parameters:
+        timestamp: Timestamp value(s) - can be Series, list, array, or scalar
+        unit: Unit for timestamp conversion ('s' for seconds, 'ms' for milliseconds, etc.)
+        return_scalar: If True and input can be treated as scalar, return a single value
+        return_string: If True, return string representation(s) instead of datetime objects
+        string_format: Format for datetime strings if return_string=True
+        
+    Returns:
+        - Series of datetime objects (default)
+        - Series of formatted strings (if return_string=True)
+        - Single Timestamp (if return_scalar=True and input is scalar-like)
+        - Formatted string (if return_scalar=True, return_string=True and input is scalar-like)
+        
+    Examples:
+        # Convert a single timestamp (returns Series by default)
+        convert_to_vietnam_time(1647851234)
+        
+        # Convert a single timestamp (return scalar Timestamp)
+        convert_to_vietnam_time(1647851234, return_scalar=True)
+        
+        # Convert a single timestamp (return string)
+        convert_to_vietnam_time(1647851234, return_string=True)
+        
+        # Convert multiple timestamps to string Series
+        convert_to_vietnam_time([1647851234, 1647851235], return_string=True)
+    """
+    # Determine if input should be treated as a scalar value
+    treat_as_scalar = False
+    
+    # Direct scalar types
+    if np.isscalar(timestamp) or isinstance(timestamp, (pd.Timestamp, datetime)):
+        treat_as_scalar = True
+        timestamp_series = pd.Series([timestamp])
+    # Series with one element
+    elif isinstance(timestamp, pd.Series) and len(timestamp) == 1:
+        treat_as_scalar = True
+        timestamp_series = timestamp
+    # List, array, etc. with one element
+    elif hasattr(timestamp, '__len__') and len(timestamp) == 1:
+        treat_as_scalar = True
+        timestamp_series = pd.Series(timestamp)
+    # Other cases - treat as non-scalar
+    else:
+        timestamp_series = pd.Series(timestamp) if not isinstance(timestamp, pd.Series) else timestamp
+    
+    # Convert to datetime with timezone
+    dt_series = pd.to_datetime(timestamp_series, unit=unit)
+    vietnam_series = dt_series.dt.tz_localize('UTC').dt.tz_convert('Asia/Ho_Chi_Minh')
+    
+    # Apply string formatting if requested
+    if return_string:
+        vietnam_series = vietnam_series.dt.strftime(string_format)
+    
+    # Return scalar if requested and input was scalar-like
+    if return_scalar and treat_as_scalar:
+        return vietnam_series.iloc[0]
+    
+    return vietnam_series
+
+def get_asset_type(symbol: str) -> str:
+    """
+    Xác định loại tài sản dựa trên mã chứng khoán được cung cấp.
+    Hỗ trợ cả định dạng mã cũ và mã mới theo KRX.
+    
+    Tham số: 
+        - symbol (str): Mã chứng khoán hoặc mã chỉ số.
+    
+    Trả về:
+        - 'index' nếu mã chứng khoán là mã chỉ số.
+        - 'stock' nếu mã chứng khoán là mã cổ phiếu.
+        - 'derivative' nếu mã chứng khoán là mã hợp đồng tương lai hoặc quyền chọn.
+        - 'bond' nếu mã chứng khoán là mã trái phiếu (chính phủ hoặc doanh nghiệp).
+        - 'coveredWarr' nếu mã chứng khoán là mã chứng quyền.
+    """
+    symbol = symbol.upper()
+    
+    # Index symbols
+    if symbol in [
+        'VNINDEX', 'HNXINDEX', 'UPCOMINDEX', 'VN30', 'VN100', 'HNX30',
+        'VNSML', 'VNMID', 'VNALL', 'VNREAL', 'VNMAT', 'VNIT', 'VNHEAL',
+        'VNFINSELECT', 'VNFIN', 'VNENE', 'VNDIAMOND', 'VNCONS', 'VNCOND'
+    ]:
+        return 'index'
+    
+    # Stock symbols (assumed to have 3 characters)
+    elif len(symbol) == 3:
+        return 'stock'
+    
+    # New KRX derivative format (e.g., 41I1F4000)
+    krx_derivative_pattern = re.compile(r'^4[12][A-Z0-9]{2}[0-9A-HJ-NP-TV-W][1-9A-C]\d{3}$')
+    if krx_derivative_pattern.match(symbol):
+        return 'derivative'
+    
+    # For symbols that could be derivative or bond (length 7 or 9)
+    elif len(symbol) in [7, 9]:
+        # VN30 derivative patterns:
+        fm_pattern = re.compile(r'^VN30F\d{1,2}M$')
+        ym_pattern = re.compile(r'^VN30F\d{4}$')
+        
+        # Bond patterns:
+        # Government bond: e.g., GB05F2506 or GB10F2024
+        gov_bond_pattern = re.compile(r'^GB\d{2}F\d{4}$')
+        # Company bond: e.g., BAB122032; exclude those starting with VN30F.
+        comp_bond_pattern = re.compile(r'^(?!VN30F)[A-Z]{3}\d{6}$')
+        
+        if gov_bond_pattern.match(symbol) or comp_bond_pattern.match(symbol):
+            return 'bond'
+        elif fm_pattern.match(symbol) or ym_pattern.match(symbol):
+            return 'derivative'
+        else:
+            raise ValueError('Invalid derivative or bond symbol. Symbol must be in format of VN30F1M, VN30F2024, GB10F2024, or for company bonds, e.g., BAB122032')
+    
+    # Covered warrant symbols (assumed to have 8 characters)
+    elif len(symbol) == 8:
+        return 'coveredWarr'
+    
+    else:
+        raise ValueError('Invalid symbol. Your symbol format is not recognized!')
+
+def camel_to_snake(name):
+    """
+    Chuyển đổi tên biến từ dạng CamelCase sang snake_case.
+
+    Tham số:
+        - name (str): Tên biến dạng CamelCase.
+
+    Trả về:
+        - str: Tên biến dạng snake_case.
+    """
+    str1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    output = re.sub('([a-z0-9])([A-Z])', r'\1_\2', str1).lower()
+    # replace . with _
+    output = output.replace('.', '_')
+    return output
+
+def flatten_data(json_data, parent_key='', sep='_'):
+    """
+    Làm phẳng dữ liệu JSON thành dạng dict tiêu chuẩn.
+
+    Tham số:
+        - json_data: Dữ liệu JSON trả về từ API.
+        - parent_key: Key cha của dữ liệu JSON.
+        - sep: Ký tự phân cách giữa các key.
+    """
+    items = []
+    for k, v in json_data.items():
+        new_key = f"{parent_key}{sep}{k}" if parent_key else k
+        if isinstance(v, dict):
+            items.extend(flatten_data(v, new_key, sep=sep).items())
+        else:
+            items.append((new_key, v))
+    return dict(items)
+
+def last_n_days(n):
+    """
+    Return a date value in YYYY-MM-DD format for last n days. If n = 0, return today's date.
+    """
+    date_value = (datetime.today() - timedelta(days=n)).strftime('%Y-%m-%d')
+    return date_value
+    
+def decd(byte_data):
+    from cryptography.fernet import Fernet
+    import base64
+    kb = UA['Chrome'].replace(' ', '').ljust(32)[:32].encode('utf-8')
+    kb64 = base64.urlsafe_b64encode(kb)
+    cipher = Fernet(kb64)
+    return cipher.decrypt(byte_data).decode('utf-8')
+
+# VN30 Future contract parser
+
+_QUARTER_MONTHS = [3, 6, 9, 12]
+
+def vn30_expand_contract(abbrev: str, today: date) -> str:
+    """
+    Convert a VN30 futures abbreviation (e.g. 'VN30F2M') into its full code 'VN30FYYMM'.
+    
+    Parameters
+    ----------
+    abbrev : str
+        Short code in format 'VN30F<n><M|Q>', where n is 1–9.
+    today : datetime.date
+        Reference date used to determine the year and month.
+
+    Returns
+    -------
+    str
+        Full contract code, e.g. 'VN30F2506'.
+
+    Raises
+    ------
+    TypeError
+        If inputs are not of expected types.
+    ValueError
+        If the abbreviation format is invalid or out of supported range.
+    """
+    if not isinstance(abbrev, str):
+        raise TypeError(f"Expected abbrev as str, got {type(abbrev).__name__}")
+    if not isinstance(today, date):
+        raise TypeError(f"Expected today as datetime.date, got {type(today).__name__}")
+
+    m = re.match(r"^VN30F([1-9])([MQ])$", abbrev)
+    if not m:
+        raise ValueError(f"Invalid abbrev format: '{abbrev}'. Expect 'VN30F<n><M|Q>'")
+    n, cycle = int(m.group(1)), m.group(2)
+
+    yy = today.year % 100
+    if cycle == "M":
+        mm = today.month + (n - 1)
+    else:  # cycle == "Q"
+        future_q = [q for q in _QUARTER_MONTHS if q > today.month]
+        seq = future_q + _QUARTER_MONTHS
+        try:
+            mm = seq[n - 1]
+        except IndexError:
+            raise ValueError(f"No quarterly F{n}Q from month {today.month}")
+
+    # Adjust year rollover
+    add_years = (mm - 1) // 12
+    mm = ((mm - 1) % 12) + 1
+    yy = (yy + add_years) % 100
+
+    return f"VN30F{yy:02d}{mm:02d}"
+
+def vn30_abbrev_contract(full: str, today: date) -> str:
+    """
+    Convert full code 'VN30FYYMM' to short form 'VN30F<n><M|Q>'.
+    Logic: any quarter‐month (03,06,09,12) → Q; else → M.
+    """
+    if not isinstance(full, str):
+        raise TypeError(f"Expected full as str, got {type(full).__name__}")
+    if not isinstance(today, date):
+        raise TypeError(f"Expected today as datetime.date, got {type(today).__name__}")
+
+    m = re.match(r"^VN30F(\d{2})(\d{2})$", full)
+    if not m:
+        raise ValueError(f"Invalid full format: '{full}'. Expect 'VN30FYYMM'")
+    yy, mm = int(m.group(1)), int(m.group(2))
+
+    # Rebuild the target year/month as a date
+    century = today.year - (today.year % 100)
+    year = century + yy
+    if mm < today.month:
+        year += 100
+    target = date(year, mm, 1)
+
+    # How many months ahead is it?
+    delta = (target.year - today.year) * 12 + (target.month - today.month)
+    if delta < 0:
+        raise ValueError("Target contract is before today's date.")
+
+    # ALWAYS use Q if it's a standard quarter month:
+    if mm in _QUARTER_MONTHS:
+        # Build the sequence of upcoming quarter‐months from today
+        future_q = [q for q in _QUARTER_MONTHS if q > today.month]
+        seq = future_q + _QUARTER_MONTHS
+        try:
+            n = seq.index(mm) + 1
+        except ValueError:
+            raise ValueError(f"Cannot determine quarterly sequence for month {mm}")
+        cycle = 'Q'
+    else:
+        # Otherwise, simple “n months ahead” → M
+        n = delta + 1
+        cycle = 'M'
+
+    if not (1 <= n <= 9):
+        raise ValueError(f"Sequence number {n} out of supported range.")
+
+    return f"VN30F{n}{cycle}"

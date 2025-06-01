@@ -2,21 +2,12 @@
 import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
 import axios from "axios";
 import { BlinkBlur } from "react-loading-indicators";
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+import ReactApexChart from "react-apexcharts";
 import { ThemeContext } from "../../../hooks/useTheme";
 
 const indexMap = {
-  VNINDEX: "vn100",
-  HNXINDEX: "hnx100",
+  VNINDEX: "vn30",
+  HNXINDEX: "hnx30",
   VN30: "vn30",
   HNX30: "hnx30",
 };
@@ -29,6 +20,7 @@ const Stock = ({ indexId }) => {
   const [modalData, setModalData] = useState(null);
   const [isLoadingModal, setIsLoadingModal] = useState(false);
   const { theme } = useContext(ThemeContext);
+
   const formatDate = (date) => {
     const d = date.getDate().toString().padStart(2, "0");
     const m = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -112,11 +104,22 @@ const Stock = ({ indexId }) => {
         pageSize: 1000,
         ascending: false,
       });
-      console.log(res);
+
       const arr = Array.isArray(res.data.data)
         ? res.data.data
         : res.data.data?.data || [];
-      setModalData({ symbol, data: arr });
+
+      const formattedData = arr.map((item) => ({
+        x: new Date(item.TradingDate).getTime(),
+        y: [
+          parseFloat(item.Open),
+          parseFloat(item.High),
+          parseFloat(item.Low),
+          parseFloat(item.Close),
+        ],
+      }));
+
+      setModalData({ symbol, data: formattedData });
       setShowModal(true);
     } catch (err) {
       console.error(`Fetch IntradayOhlc for ${symbol} failed:`, err);
@@ -127,7 +130,6 @@ const Stock = ({ indexId }) => {
 
   const closeModal = () => setShowModal(false);
 
-  // Formatter cho XAxis
   const monthFmt = useMemo(
     () => new Intl.DateTimeFormat("en-US", { month: "short" }),
     []
@@ -137,7 +139,27 @@ const Stock = ({ indexId }) => {
     return `${d} ${monthFmt.format(new Date(y, m - 1, d))}`;
   };
 
-  // Tính ticks trên chart
+  const chartOptions = useMemo(
+    () => ({
+      chart: {
+        type: "candlestick",
+        height: 350,
+        toolbar: {
+          show: true,
+        },
+      },
+      xaxis: {
+        type: "datetime",
+      },
+      yaxis: {
+        tooltip: {
+          enabled: true,
+        },
+      },
+    }),
+    []
+  );
+
   const ticks = useMemo(() => {
     const arr = modalData?.data || [];
     return arr.filter((_, i) => i % 5 === 0).map((d) => d.TradingDate);
@@ -159,7 +181,7 @@ const Stock = ({ indexId }) => {
   return (
     <div className={`${theme === "dark-theme" ? "text-white" : "text-black"}`}>
       {showModal && modalData && (
-        <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-zinc-900 rounded-lg shadow-lg w-full max-w-3xl p-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">
@@ -167,23 +189,28 @@ const Stock = ({ indexId }) => {
               </h2>
               <button
                 onClick={closeModal}
-                className="text-gray-500// hover:text-gray-800 text-2xl"
+                className="text-gray-500 hover:text-gray-800 text-2xl"
               >
                 &times;
               </button>
             </div>
             {isLoadingModal ? (
               <div className="flex justify-center">
-                <BlinkBlur color="#86ff4d" size="small" />
+                <span>Loading...</span>
               </div>
             ) : (
-              ""
+              <ReactApexChart
+                options={chartOptions}
+                series={[{ data: modalData.data }]}
+                type="candlestick"
+                height={350}
+              />
             )}
           </div>
         </div>
       )}
 
-      {/* <div className="w-full">
+      <div className="w-full">
         <div className="grid grid-cols-12 text-start items-center gap-4 mb-2 p-2 bg-gray-00// font-bold text-gray-700//">
           <div>Symbol</div>
           <div className="col-span-5 text-start">Company</div>
@@ -238,7 +265,7 @@ const Stock = ({ indexId }) => {
             </div>
           );
         })}
-      </div> */}
+      </div>
     </div>
   );
 };

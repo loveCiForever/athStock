@@ -33,7 +33,7 @@ def listing_symbols_by_group(group, to_csv):
 
     df = stock.listing.symbols_by_group(group)
 
-    output_dir = "./data/symbols"
+    output_dir = "./data/raw/symbols"
     os.makedirs(output_dir, exist_ok=True)
 
     if(to_csv):
@@ -44,6 +44,9 @@ def listing_symbols_by_group(group, to_csv):
     return df
 
 
+# groups = ['VN100', 'VN30', 'HNX', 'HNX30']
+# for group in groups:
+#     listing_symbols_by_group(group=group,to_csv=True)
 """
 Fetches the stock prices immediately before and 1 hour after a specific datetime.
 

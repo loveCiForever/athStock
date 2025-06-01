@@ -324,7 +324,7 @@ const StockMarket = ({ onSelectIndex }) => {
                   <MarketCard
                     key={idx}
                     IndexName={idx}
-                    onClick={() => handleSelectedIndex(idx)}
+                    // onClick={() => handleSelectedIndex(idx)}
                     Change={first.Change}
                     IndexValue={first.IndexValue}
                     RatioChange={first.RatioChange}

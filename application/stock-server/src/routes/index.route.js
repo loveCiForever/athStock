@@ -20,7 +20,7 @@ const isEmpty = (string) => {
 };
 
 router.post("/IndexComponents", async (req, res) => {
-  // const { indexCode = "HOSE", pageIndex = 4, pageSize = 100 } = req.body;
+  const { indexCode = "HOSE", pageIndex = 4, pageSize = 100 } = req.body;
 
   try {
     const response = await axios.get(
@@ -39,7 +39,7 @@ router.post("/IndexComponents", async (req, res) => {
     // );
 
     // const list = response;
-    console.log(response.data.data);
+    console.log(response);
 
     return res.status(200).json({
       success: true,
