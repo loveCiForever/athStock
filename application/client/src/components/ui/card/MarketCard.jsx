@@ -169,7 +169,9 @@ const MarketCard = ({
               </span>
               <span className="text-[var(--stock-floor)]">({FloorsFloat})</span>
             </div>
-            <span>{getTradingSession(TradingSession)}</span>
+            <span>
+              {TradingSession ? getTradingSession(TradingSession) : "Loading"}
+            </span>
           </div>
         </button>
       ) : (
@@ -207,7 +209,7 @@ const MarketCard = ({
               ? (ChangeFloat * 100).toFixed(2)
               : ChangeFloat.toFixed(2)}
           </span>
-          <div className="flex items-center justify-end w-[20%]">
+          <div className="flex items-center justify-end w-[25%]">
             <div
               className={`flex w-full items-center justify-between py-[4px] rounded-md px-2
                 ${getBgColor(ChangeFloat)}

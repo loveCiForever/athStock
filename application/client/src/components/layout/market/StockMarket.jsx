@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useContext } from "react";
+import { useEffect, useState, useMemo, useContext, useRef } from "react";
 import axios from "axios";
 import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
 import { ThemeContext } from "../../../hooks/useTheme";
@@ -19,7 +19,6 @@ const StockMarket = ({ onSelectIndex }) => {
 
     return () => clearInterval(intervalId);
   }, []);
-  const [chartType, setChartType] = useState("line");
   const { theme } = useContext(ThemeContext);
 
   const parseTradingDate = (str) => {
@@ -46,13 +45,21 @@ const StockMarket = ({ onSelectIndex }) => {
     // console.log(index);
   };
 
+  const hasFetchedData = useRef(false);
+
+  const dayIndex = now.getDay();
+  const isWeekend = dayIndex === 0 || dayIndex === 6;
+
   useEffect(() => {
     const now = new Date();
     const currentHour = now.getHours();
 
-    const shouldFetchData = currentHour >= 15 || currentHour < 9;
+    // const shouldFetchDataOneTime = currentHour >= 15 || currentHour < 9;
 
-    if (!shouldFetchData) return;
+    // if (!shouldFetchDataOneTime || hasFetchedData.current) return;
+
+    // hasFetchedData.current = true;
+
     const to = new Date();
     const from = new Date(to);
     from.setDate(from.getDate() - 30);
@@ -73,11 +80,14 @@ const StockMarket = ({ onSelectIndex }) => {
           ascending: false,
         };
 
+        console.log(payload);
+
         try {
           const res = await axios.post(
             "http://localhost:3000/ssi/DailyIndex",
             payload
           );
+          console.log(res);
 
           if (res.data.status !== 429 && res.data.data?.[0]) {
             const item = res.data.data;
@@ -86,8 +96,6 @@ const StockMarket = ({ onSelectIndex }) => {
               [idx]: item,
             }));
           }
-
-          // console.log(res.data);
         } catch (err) {
           console.error(`Error fetching ${idx}:`, err);
         }
@@ -101,23 +109,7 @@ const StockMarket = ({ onSelectIndex }) => {
     fetchCurrentIndex();
   }, []);
 
-  const candleChartData = useMemo(() => {
-    if (!selectedIndex) return [];
-    return (dataMap[selectedIndex] || []).map((item) => ({
-      x: item.TradingDate,
-      y: [
-        parseFloat(item.Open ?? 0),
-        parseFloat(item.High ?? 0),
-        parseFloat(item.Low ?? 0),
-        parseFloat(item.Close ?? 0),
-      ],
-    }));
-  }, [selectedIndex, dataMap]);
-
-  // const [day, month, year] = item.TradingDate.split("/");
-  // const ts = new Date(+year, +month - 1, +day).getTime();
-
-  const chartOptions = useMemo(
+  const lineChartOptions = useMemo(
     () => ({
       chart: {
         type: "area",
@@ -194,10 +186,32 @@ const StockMarket = ({ onSelectIndex }) => {
         },
       },
       tooltip: {
-        shared: false,
+        enabled: true,
+        enabledOnSeries: undefined,
+        shared: true,
+        followCursor: false,
         intersect: false,
+        inverseOrder: false,
+        hideEmptySeries: true,
+        fillSeriesColor: false,
+        onDatasetHover: {
+          highlightDataSeries: false,
+        },
         cssClass: "my-custom-tooltip",
-        y: { formatter: (v) => v.toFixed(2) },
+        x: {
+          show: true,
+          format: "dd MMM",
+          formatter: undefined,
+        },
+        marker: {
+          show: true,
+        },
+        fixed: {
+          enabled: false,
+          position: "topRight",
+          offsetX: 0,
+          offsetY: 0,
+        },
       },
       legend: {
         show: false,
@@ -236,7 +250,15 @@ const StockMarket = ({ onSelectIndex }) => {
             )}
             <h1>Expand</h1>
           </div>
-          <h1>{now.toLocaleString("vi-VN")}</h1>
+          <div className="flex gap-2">
+            {now.toLocaleDateString("vi-VN", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}{" "}
+            {isWeekend && <h1 className="text-gray-500">(ĐÓNG CỬA)</h1>}
+          </div>
         </button>
 
         {!isExpanded && (
@@ -276,14 +298,14 @@ const StockMarket = ({ onSelectIndex }) => {
       {isExpanded && (
         <div className="mt-4 pr-4 bg-white// rounded-lg border-[1px] border-gray-500 shadow-xl/">
           <div className="flex w-full items-center justify-between">
-            <div className="w-[70%] py-10 bg-red-100// px-5 //">
+            <div className="w-[60%] py-10 bg-red-100// px-5 //">
               {/* <h1 className="w-full text-center text-xl font-bold mb-5">
                 {selectedIndex
                   ? `Candlestick Chart for ${selectedIndex}`
                   : "Close price in 30 days"}
               </h1> */}
               <ReactApexChart
-                options={chartOptions}
+                options={lineChartOptions}
                 series={lineChartData}
                 type="area"
                 height={350}

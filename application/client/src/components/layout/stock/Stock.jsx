@@ -46,6 +46,10 @@ const Stock = ({ indexId }) => {
 
   useEffect(() => {
     if (!indexId) return;
+
+    const now = new Date();
+    const hour = now.getHours();
+
     const code = indexMap[indexId] || indexId.toLowerCase();
     const endpoint = `http://localhost:3000/ssi/${code}-intraday`;
 
@@ -53,6 +57,7 @@ const Stock = ({ indexId }) => {
     const from = new Date(to);
     from.setDate(from.getDate() - 30);
 
+    // Hàm fetch data
     const fetchList = async () => {
       setIsLoadingList(true);
       try {
@@ -72,9 +77,16 @@ const Stock = ({ indexId }) => {
       }
     };
 
+    if (hour >= 15 || hour < 9) {
+      fetchList();
+
+      return;
+    }
+
     fetchList();
-    const id = setInterval(fetchList, 60 * 10 * 1000);
-    return () => clearInterval(id);
+    const intervalId = setInterval(fetchList, 10 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
   }, [indexId]);
 
   const fetchStockIntraday = async (symbol) => {
@@ -131,7 +143,6 @@ const Stock = ({ indexId }) => {
     return arr.filter((_, i) => i % 5 === 0).map((d) => d.TradingDate);
   }, [modalData]);
 
-  // Render
   if (isLoadingList) {
     return (
       <div className="flex flex-col w-full items-center justify-center mt-10">
@@ -143,13 +154,13 @@ const Stock = ({ indexId }) => {
     );
   }
 
-  //   console.log(modalData);
+  // console.log(modalData);
 
   return (
     <div className={`${theme === "dark-theme" ? "text-white" : "text-black"}`}>
       {showModal && modalData && (
-        <div className="fixed inset-0 bg-black/50// flex items-center justify-center z-50">
-          <div className="bg-white// rounded-lg shadow-lg w-[90%] max-w-3xl p-4">
+        <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
+          <div className="bg-zinc-900 rounded-lg shadow-lg w-full max-w-3xl p-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">
                 {modalData.symbol} — 30-Day OHLC
@@ -166,54 +177,13 @@ const Stock = ({ indexId }) => {
                 <BlinkBlur color="#86ff4d" size="small" />
               </div>
             ) : (
-              <ResponsiveContainer width="100%" height={400}>
-                <ComposedChart data={modalData.data.data}>
-                  <CartesianGrid strokeDasharray="5 5" />
-                  <XAxis
-                    dataKey="TradingDate"
-                    type="category"
-                    ticks={ticks}
-                    tickFormatter={formatDayMonth}
-                  />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend verticalAlign="top" />
-                  <Line
-                    type="monotone"
-                    dataKey="Open"
-                    name="Open"
-                    dot={false}
-                    stroke="#8884d8"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="High"
-                    name="High"
-                    dot={false}
-                    stroke="#82ca9d"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="Low"
-                    name="Low"
-                    dot={false}
-                    stroke="#d88484"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="Close"
-                    name="Close"
-                    dot={false}
-                    stroke="#ffc658"
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
+              ""
             )}
           </div>
         </div>
       )}
 
-      <div className="w-full">
+      {/* <div className="w-full">
         <div className="grid grid-cols-12 text-start items-center gap-4 mb-2 p-2 bg-gray-00// font-bold text-gray-700//">
           <div>Symbol</div>
           <div className="col-span-5 text-start">Company</div>
@@ -268,7 +238,7 @@ const Stock = ({ indexId }) => {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };
