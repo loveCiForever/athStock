@@ -3,26 +3,41 @@ import axios from "axios";
 import { ssiConfig } from "../configs/ssi.config.js";
 import client from "ssi-fcdata";
 import NodeCache from "node-cache";
+import { isNumberEmpty, isStringEmpty } from "../services/helper-function.js";
 
 const router = express.Router();
 const config = ssiConfig();
 
 const indexComponentsCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
-const indexListCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
-const dailyIndexCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
-
-const isEmpty = (string) => {
-  if (typeof string !== "string" || string === null || string === undefined) {
-    return true;
-  }
-
-  return string.trim().length === 0;
-};
-
 router.post("/IndexComponents", async (req, res) => {
-  const { indexCode = "HOSE", pageIndex = 4, pageSize = 100 } = req.body;
+  const { indexCode, pageIndex, pageSize } = req.body;
 
   try {
+    if (
+      isStringEmpty(indexCode) ||
+      isNumberEmpty(pageIndex) ||
+      isNumberEmpty(pageSize)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: `Fetch index components failed`,
+        error: `indexCode, pageIndex, pageSize are required`,
+      });
+    }
+
+    const callingDate = new Date().toISOString().split("T")[0];
+    const cacheKey = `indexComponents_${indexCode}_${pageIndex}_${pageSize}_${callingDate}`;
+
+    const cachedData = indexComponentsCache.get(cacheKey);
+    if (cachedData && cachedData.TotalSymbolNo !== 0) {
+      return res.status(200).json({
+        success: true,
+        message: `Fetch index components of ${indexCode} successful (from cache)`,
+        fromCache: true,
+        data: cachedData,
+      });
+    }
+
     const response = await axios.get(
       `${config.market.ApiUrl}${client.api.GET_INDEX_COMPONENTS}`,
       {
@@ -34,20 +49,23 @@ router.post("/IndexComponents", async (req, res) => {
       }
     );
 
-    // const response = await axios.get(
-    //   `https://msh-appdata.cafef.vn/rest-api/api/v1/StockMarket`
-    // );
+    if (response.data.status === "NoDataFound") {
+      return res.status(404).json({
+        success: false,
+        message: `Fetch index components of ${indexCode} failed`,
+        error: response.data.message,
+      });
+    }
 
-    // const list = response;
-    console.log(response);
+    indexComponentsCache.set(cacheKey, response.data.data);
 
     return res.status(200).json({
-      success: true,
-      message: `Fetch index component of successful`,
-      data: response.data,
+      success: false,
+      fromCache: false,
+      message: `Fetch index components of ${indexCode} successful`,
+      data: response.data.data,
     });
   } catch (error) {
-    console.error("Error /IndexComponents:", error);
     return res.status(500).json({
       success: false,
       message: `Fetch index component of failed`,
@@ -56,21 +74,35 @@ router.post("/IndexComponents", async (req, res) => {
   }
 });
 
+const indexListCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 router.post("/IndexList", async (req, res) => {
-  const { exchange = "HOSE", pageIndex = 1, pageSize = 100 } = req.body;
-  const cacheKey = `indexList_${exchange}_${pageIndex}_${pageSize}`;
-
-  const cached = indexListCache.get(cacheKey);
-  if (cached) {
-    return res.status(200).json({
-      success: true,
-      message: `Fetch index list of ${exchange} successful (from cache)`,
-      data: cached,
-      total_record: Array.isArray(cached) ? cached.length : 0,
-    });
-  }
+  const { exchange, pageIndex, pageSize } = req.body;
 
   try {
+    if (
+      isStringEmpty(exchange) ||
+      isNumberEmpty(pageIndex) ||
+      isNumberEmpty(pageSize)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: `Fetch index list failed`,
+        error: `exchange code, pageIndex, pageSize are required`,
+      });
+    }
+
+    const callingDate = new Date().toISOString().split("T")[0];
+    const cacheKey = `indexList_${exchange}_${pageIndex}_${pageSize}_${callingDate}`;
+
+    const cachedData = indexListCache.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json({
+        success: true,
+        message: `Fetch index list of ${exchange} successful (from cache)`,
+        fromCache: true,
+        data: cachedData,
+      });
+    }
     const response = await axios.get(
       `${config.market.ApiUrl}${client.api.GET_INDEX_LIST}`,
       {
@@ -81,18 +113,22 @@ router.post("/IndexList", async (req, res) => {
         },
       }
     );
-    const list = response.data.data || [];
 
-    indexListCache.set(cacheKey, list);
+    if (response.data.status === "Error") {
+      return res.status(404).json({
+        success: false,
+        message: `Fetch index list of ${exchange} failed`,
+        error: response.data.message,
+      });
+    }
 
+    indexListCache.set(cacheKey, response.data.data);
     return res.status(200).json({
       success: true,
       message: `Fetch index list of ${exchange} successful`,
-      data: list,
-      total_record: list.length,
+      data: response.data.data,
     });
   } catch (error) {
-    console.error("Error /IndexList:", error);
     return res.status(500).json({
       success: false,
       message: `Fetch index list of ${exchange} failed`,
@@ -101,56 +137,48 @@ router.post("/IndexList", async (req, res) => {
   }
 });
 
+const dailyIndexCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 router.post("/DailyIndex", async (req, res) => {
   const {
-    indexId = "",
-    fromDate = "",
-    toDate = "",
-    pageIndex = 1,
-    pageSize = 1000,
-    ascending = true,
+    indexId,
+    fromDate,
+    toDate,
+    pageIndex,
+    pageSize,
+    ascending = false,
   } = req.body;
 
-  if (isEmpty(indexId)) {
-    return res.status(400).json({
-      success: false,
-      message: "indexId is required. Try VNINDEX, VN30, HNXINDEX, HNX30",
-    });
-  }
-
-  if (isEmpty(fromDate) || isEmpty(toDate)) {
-    return res.status(400).json({
-      success: false,
-      message: "fromDate and toDate are required",
-    });
-  }
-
-  if (
-    indexId != "VNINDEX" &&
-    indexId != "VN30" &&
-    indexId != "HNXINDEX" &&
-    indexId != "HNX30"
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: `${indexId} is not supported. Try VNINDEX, VN30, HNXINDEX, HNX30`,
-    });
-  }
-
-  // const cacheKey = `dailyIndex_${indexId}_${fromDate}_${toDate}_${pageIndex}_${pageSize}_${ascending}`;
-
-  // const cached = dailyIndexCache.get(cacheKey);
-  // // console.log(cached);
-  // if (cached) {
-  //   return res.status(200).json({
-  //     success: true,
-  //     message: `Fetch daily index of ${indexId} successful (from cache)`,
-  //     data: cached.data,
-  //     total_record: cached.total_record,
-  //   });
-  // }
-
   try {
+    if (
+      isStringEmpty(indexId) ||
+      isStringEmpty(fromDate) ||
+      isStringEmpty(toDate) ||
+      isNumberEmpty(pageIndex) ||
+      isNumberEmpty(pageSize)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: `Fetch index list failed`,
+        error: `indexId, date, pageIndex, pageSize are required`,
+      });
+    }
+
+    const now = new Date();
+    const callingDateTime = `${
+      now.toISOString().split("T")[0]
+    }_${now.getHours()}:${now.getMinutes()}`;
+    const cacheKey = `dailyIndex_${indexId}_${fromDate}_${toDate}_${pageIndex}_${pageSize}_${ascending}_${callingDateTime}`;
+    const cachedData = dailyIndexCache.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json({
+        success: true,
+        cacheKey: cacheKey,
+        fromCache: true,
+        message: `Fetch daily index of ${indexId} successful (from cache)`,
+        data: cachedData,
+      });
+    }
+
     const response = await axios.get(
       `${config.market.ApiUrl}${client.api.GET_DAILY_INDEX}`,
       {
@@ -165,30 +193,22 @@ router.post("/DailyIndex", async (req, res) => {
       }
     );
 
-    console.log(`Daily index of ${indexId}: `, response.data);
-
-    if (response.data.status == 429) {
-      return res.status(429).json({
+    if (response.data.status === "NoDataFound") {
+      return res.status(404).json({
         success: false,
-        message: response.data.message,
+        message: `Fetch daily index point of ${indexId} failed`,
+        error: response.data.message,
       });
     }
 
-    const list = response.data.data || [];
-    const total = Array.isArray(list) ? list.length : 0;
-
-    // if (list.length > 0) {
-    //   dailyIndexCache.set(cacheKey, { data: list, total_record: total });
-    // }
+    dailyIndexCache.set(cacheKey, response.data.data);
 
     return res.status(200).json({
       success: true,
       message: `Fetch daily index of ${indexId} successful`,
-      data: list,
-      total_record: total,
+      data: response.data.data,
     });
   } catch (error) {
-    console.error("Error /DailyIndex:", error);
     return res.status(500).json({
       success: false,
       message: `Fetch daily index of ${indexId} failed`,
