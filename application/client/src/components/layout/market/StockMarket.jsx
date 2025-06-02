@@ -6,6 +6,7 @@ import MarketCard from "../../ui/card/MarketCard";
 import { formatDateViEn } from "../../../utils/formatDate";
 import ReactApexChart from "react-apexcharts";
 import "../../../index.css";
+
 const StockMarket = ({ onSelectIndex }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpandClick = () => {

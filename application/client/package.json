@@ -37,7 +37,11 @@
     "react-loading-indicators": "^1.0.1",
     "react-router-dom": "^7.6.0",
     "react-toastify": "^11.0.5",
-    "recharts": "^2.15.3"
+    "recharts": "^2.15.3",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "ssi-fcdata": "^2.2.0",
+    "websocket": "^1.0.35"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

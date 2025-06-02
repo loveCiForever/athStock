@@ -2,7 +2,7 @@
   "name": "stock-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,6 +17,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "node-cache": "^5.1.2",
+    "socket.io": "^4.8.1",
     "ssi-fcdata": "^2.2.0"
   },
   "devDependencies": {
