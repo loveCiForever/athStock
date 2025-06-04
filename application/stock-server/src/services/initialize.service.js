@@ -1,8 +1,11 @@
+// /src/services/initialize.js
+
 import axios from "axios";
 import { ssiConfig } from "../configs/ssi.config.js";
 import client from "ssi-fcdata";
+import { logger } from "./helper.service.js";
 
-export async function initializeStreaming() {
+export async function initializeStreaming(io) {
   const cfg = ssiConfig();
 
   try {
@@ -20,25 +23,24 @@ export async function initializeStreaming() {
       client.initStream({ url: cfg.market.HubUrl, token });
 
       client.bind(client.events.onData, (message) => {
-        let parsed = JSON.parse(message);
-        let content = parsed.Content;
-        console.log(content);
+        logger.data(`[ssi-wss-onData] raw message \n${message}`);
+        io.emit("stockData", message);
       });
 
       client.bind(client.events.onConnected, () => {
-        console.log("[SSI Streaming] Connected");
-        client.switchChannel("MI:VN30");
+        logger.success("[ssi-wss-onConnected] ssi-fc-data wss connected");
+        client.switchChannel("MI:VNINDEX-VN30-HNXINDEX-HNX30");
       });
 
       client.start();
     } else {
       console.error(
-        "[STREAMING] Failed to fetch access token:",
+        "[ssi-wss] Failed to fetch access token:",
         response.data.message || "No access token returned"
       );
     }
   } catch (error) {
-    console.error("[STREAMING] Error initializing streaming:", error);
+    console.error("[ssi-wss] Error initializing streaming:", error);
   }
 }
 
@@ -62,14 +64,14 @@ export async function initializeRestApi() {
         return axios_config;
       });
 
-      console.log("[REST API] Authorization setup complete");
+      logger.success("[rest-api] ssi-fc-data authorization setup complete");
     } else {
-      console.error(
-        "[REST API] Failed to fetch access token:",
+      logger.error(
+        "[rest-api] failed to fetch access token:",
         response.data.message
       );
     }
   } catch (error) {
-    console.error("[REST API] Error initializing REST API connection:", error);
+    logger.error("[rest-api] error initializing REST API connection:", error);
   }
 }

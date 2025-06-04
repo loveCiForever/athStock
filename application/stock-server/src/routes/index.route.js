@@ -3,7 +3,11 @@ import axios from "axios";
 import { ssiConfig } from "../configs/ssi.config.js";
 import client from "ssi-fcdata";
 import NodeCache from "node-cache";
-import { isNumberEmpty, isStringEmpty } from "../services/helper-function.js";
+import {
+  isNumberEmpty,
+  isStringEmpty,
+  logger,
+} from "../services/helper.service.js";
 
 const router = express.Router();
 const config = ssiConfig();
@@ -193,8 +197,13 @@ router.post("/DailyIndex", async (req, res) => {
       }
     );
 
-    if (response.data.status === "NoDataFound") {
-      return res.status(404).json({
+    logger.info(`[daily-index] ${response.data.message}`);
+
+    if (
+      response.data.status === "NoDataFound" ||
+      response.data.status === 429
+    ) {
+      return res.status(429).json({
         success: false,
         message: `Fetch daily index point of ${indexId} failed`,
         error: response.data.message,

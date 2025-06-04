@@ -2,8 +2,7 @@ import express from "express";
 import axios from "axios";
 import { ssiConfig } from "../configs/ssi.config.js";
 import client from "ssi-fcdata";
-import NodeCache from "node-cache";
-import { isStringEmpty, isNumberEmpty } from "../services/helper-function.js";
+import { isStringEmpty, isNumberEmpty } from "../services/helper.service.js";
 
 const router = express.Router();
 const config = ssiConfig();
@@ -56,8 +55,6 @@ router.post("/Securities", async (req, res) => {
     });
   }
 });
-
-
 
 router.post("/SecuritiesDetails", async (req, res) => {
   const { market, symbol, pageIndex, pageSize } = req.body;

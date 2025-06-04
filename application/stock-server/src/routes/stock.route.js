@@ -21,7 +21,7 @@ router.post("/DailyStockPrice", (req, res) => {
       params: {
         "lookupRequest.symbol": symbol,
         "lookupRequest.market": market,
-        "lookupRequest.fromDate": fromDate,
+        // "lookupRequest.fromDate": fromDate
         "lookupRequest.toDate": toDate,
         "lookupRequest.pageIndex": pageIndex,
         "lookupRequest.pageSize": pageSize,
@@ -34,6 +34,5 @@ router.post("/DailyStockPrice", (req, res) => {
       console.log(error);
     });
 });
-
 
 export default router;
