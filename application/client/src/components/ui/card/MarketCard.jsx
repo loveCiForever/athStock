@@ -2,6 +2,7 @@ import { ArrowUp, ArrowDown, Minus } from "lucide-react";
 import { formatNumber } from "../../../utils/formatNumber.jsx";
 import { ThemeContext } from "../../../hooks/useTheme.jsx";
 import { useContext } from "react";
+import PropTypes from "prop-types";
 
 const MarketCard = ({
   IndexName,
@@ -20,13 +21,12 @@ const MarketCard = ({
   onClick,
   className,
 }) => {
-  const safeNumber = (value, fallback = 0) => {
+  const safeNumber = (value) => {
     const num = parseFloat(value);
-    return isNaN(num) ? fallback : num;
+    return isNaN(num) ? 0 : num;
   };
 
   const { theme } = useContext(ThemeContext);
-  // const { theme } = "dark-theme";
   const IndexValueFloat = safeNumber(IndexValue);
   const ChangeFloat = safeNumber(Change);
   const RatioChangeFloat = safeNumber(RatioChange);
@@ -37,6 +37,17 @@ const MarketCard = ({
   const DeclinesFloat = safeNumber(Declines);
   const CeilingsFloat = safeNumber(Ceilings);
   const FloorsFloat = safeNumber(Floors);
+
+  const TRADING_SESSIONS = {
+    LO: "Liên tục",
+    C: "Đóng cửa",
+    O: "Mở cửa",
+    BREAK: "Tạm nghỉ",
+    ATO: "ATO",
+    ATC: "ATC",
+    HALT: "HALT",
+    PT: "PT",
+  };
 
   const getBgColor = (Change) => {
     if (Change > 0) {
@@ -72,17 +83,23 @@ const MarketCard = ({
     }
   };
 
-  const checkData = (data) => {
+  const checkDataNull = (data) => {
     return data ? true : false;
   };
 
   const getTradingSession = (TradingSession) => {
+    if (TradingSession === null) return "Unknown";
+    if (TradingSession == "LO") return "Liên tục";
     if (TradingSession == "C") return "Đóng cửa";
     if (TradingSession == "O") return "Mở cửa";
-    if (TradingSession) return "Liên tục";
     if (TradingSession == "BREAK") return "Tạm nghỉ";
-    if (TradingSession == "ATC") return "ATC";
-    return TradingSession;
+    if (
+      TradingSession == "ATO" ||
+      TradingSession == "ATC" ||
+      TradingSession == "HALT" ||
+      TradingSession == "PT"
+    )
+      return TradingSession;
   };
 
   return (
@@ -127,7 +144,7 @@ const MarketCard = ({
               >
                 {RatioChangeFloat > 0 ? "+" : ""}
                 {RatioChangeFloat}
-                {checkData(RatioChangeFloat) ? "%" : ""}
+                {checkDataNull(RatioChangeFloat) ? "%" : ""}
               </span>
               <span
                 className={`
@@ -136,7 +153,7 @@ const MarketCard = ({
               >
                 {ChangeFloat > 0 ? "+" : ""}
                 {IndexName === "VNINDEX" || IndexName === "VN30"
-                  ? (ChangeFloat * 100).toFixed(2)
+                  ? (ChangeFloat * 1).toFixed(2)
                   : ChangeFloat.toFixed(2)}
                 pt
               </span>
@@ -169,9 +186,7 @@ const MarketCard = ({
               </span>
               <span className="text-[var(--stock-floor)]">({FloorsFloat})</span>
             </div>
-            <span>
-              {TradingSession ? getTradingSession(TradingSession) : "Loading"}
-            </span>
+            <span>{getTradingSession(TradingSession)}</span>
           </div>
         </button>
       ) : (
@@ -206,7 +221,7 @@ const MarketCard = ({
               ${getTextColor(ChangeFloat)}`}
           >
             {IndexName === "VNINDEX" || IndexName === "VN30"
-              ? (ChangeFloat * 100).toFixed(2)
+              ? (ChangeFloat * 1).toFixed(2)
               : ChangeFloat.toFixed(2)}
           </span>
           <div className="flex items-center justify-end w-[25%]">
@@ -222,7 +237,7 @@ const MarketCard = ({
                 ${getTextColor(ChangeFloat)}`}
               >
                 {RatioChangeFloat.toFixed(2)}{" "}
-                {checkData(ChangeFloat) ? "%" : ""}
+                {checkDataNull(ChangeFloat) ? "%" : ""}
               </span>
             </div>
           </div>

@@ -6,28 +6,17 @@ import MarketCard from "../../ui/card/MarketCard";
 import { formatDateViEn } from "../../../utils/formatDate";
 import ReactApexChart from "react-apexcharts";
 import "../../../index.css";
+import useSocket from "../../../hooks/useSocket";
 
 const StockMarket = ({ onSelectIndex }) => {
+  const { marketData, isConnected, switchChannel } = useSocket();
   const [isExpanded, setIsExpanded] = useState(false);
-  const handleExpandClick = () => {
-    setIsExpanded(!isExpanded);
-  };
   const [now, setNow] = useState(new Date());
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setNow(new Date());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
   const { theme } = useContext(ThemeContext);
-
-  const parseTradingDate = (str) => {
-    const [day, month, year] = str.split("/");
-    return new Date(+year, +month - 1, +day).getTime();
-  };
-
-  const [isFetching, setIsFetching] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState("");
+  const dayIndex = now.getDay();
+  const isWeekend = dayIndex === 0 || dayIndex === 6;
+  const [isLoading, setIsLoading] = useState(false);
   const [dataMap, setDataMap] = useState({
     VNINDEX: [],
     VN30: [],
@@ -35,81 +24,44 @@ const StockMarket = ({ onSelectIndex }) => {
     HNX30: [],
   });
 
-  const [selectedIndex, setSelectedIndex] = useState("");
-  const handleSelectedIndex = (index) => {
-    if (index === selectedIndex) {
-      setSelectedIndex("");
-    } else {
-      setSelectedIndex(index);
-    }
-
-    // console.log(index);
+  const parseTradingDate = (str) => {
+    const [day, month, year] = str.split("/");
+    return new Date(+year, +month - 1, +day).getTime();
   };
 
-  const hasFetchedData = useRef(false);
-
-  const dayIndex = now.getDay();
-  const isWeekend = dayIndex === 0 || dayIndex === 6;
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
-    const now = new Date();
-    const currentHour = now.getHours();
+    const intervalId = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
 
-    // const shouldFetchDataOneTime = currentHour >= 15 || currentHour < 9;
-
-    // if (!shouldFetchDataOneTime || hasFetchedData.current) return;
-
-    // hasFetchedData.current = true;
-
-    const to = new Date();
-    const from = new Date(to);
-    from.setDate(from.getDate() - 30);
-
-    const fetchCurrentIndex = async () => {
-      setIsFetching(true);
-
-      const indexes = ["VNINDEX", "HNXINDEX", "VN30", "HNX30"];
-      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-      for (const idx of indexes) {
-        const payload = {
-          indexId: idx,
-          fromDate: formatDateViEn(from),
-          toDate: formatDateViEn(to),
-          pageIndex: 1,
-          pageSize: 10,
-          ascending: false,
-        };
-
-        console.log(payload);
-
-        try {
-          const res = await axios.post(
-            "http://localhost:3000/ssi/DailyIndex",
-            payload
-          );
-          console.log(res);
-
-          if (res.data.status !== 429 && res.data.data?.[0]) {
-            const item = res.data.data;
-            setDataMap((prevDataMap) => ({
-              ...prevDataMap,
-              [idx]: item,
-            }));
-          }
-        } catch (err) {
-          console.error(`Error fetching ${idx}:`, err);
-        }
-
-        await sleep(3000);
-      }
-
-      setIsFetching(false);
-    };
-
-    fetchCurrentIndex();
+    return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    // console.log(marketData);
+    if (marketData && marketData.IndexId) {
+      let indexKey = marketData.IndexId.toUpperCase();
+      const indexMapping = {
+        HNXINDEX: "HNXINDEX",
+        HNX30: "HNX30",
+        VNINDEX: "VNINDEX",
+        VN30: "VN30",
+      };
+      indexKey = indexMapping[indexKey] || indexKey;
+
+      setDataMap((prevDataMap) => {
+        const newDataMap = {
+          ...prevDataMap,
+          [indexKey]: [marketData, ...(prevDataMap[indexKey] || [])],
+        };
+        return newDataMap;
+      });
+    }
+  }, [marketData]);
+
+  const [historicalData, setHistoricalData] = useState({});
   const lineChartOptions = useMemo(
     () => ({
       chart: {
@@ -225,12 +177,85 @@ const StockMarket = ({ onSelectIndex }) => {
     const indexes = ["VNINDEX", "VN30", "HNXINDEX", "HNX30"];
     return indexes.map((index) => ({
       name: index,
-      data: (dataMap[index] || []).map((item) => ({
-        x: parseTradingDate(item.TradingDate),
-        y: parseFloat(item.RatioChange),
-      })),
+      data: isExpanded
+        ? (historicalData[index]?.data || []).map((item) => ({
+            x: parseTradingDate(item.TradingDate),
+            y: parseFloat(item.RatioChange),
+          }))
+        : [],
     }));
-  }, [dataMap]);
+  }, [historicalData, isExpanded]);
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  const handleExpandClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  useEffect(() => {
+    let intervalId;
+
+    const fetchHistoricalData = async () => {
+      if (!isExpanded || isFetching) return;
+
+      try {
+        setIsFetching(true);
+        setIsLoading(true);
+        const today = new Date();
+        const thirtyDaysAgo = new Date(today);
+        thirtyDaysAgo.setDate(today.getDate() - 30);
+
+        const fromDate = formatDateViEn(thirtyDaysAgo);
+        const toDate = formatDateViEn(today);
+
+        const indices = ["VNINDEX", "VN30", "HNXINDEX", "HNX30"];
+
+        const responses = await Promise.all(
+          indices.map((indexId) =>
+            axios.post("http://localhost:3000/ssi/DailyIndex", {
+              indexId,
+              fromDate,
+              toDate,
+              pageIndex: 1,
+              pageSize: 1000,
+              ascending: false,
+            })
+          )
+        );
+        // console.log(responses);
+        const historicalDataMap = {};
+        responses.forEach((response, index) => {
+          if (response.data?.data) {
+            historicalDataMap[indices[index]] = {
+              data: response.data.data,
+            };
+          }
+        });
+
+        await sleep(2000);
+        if (Object.keys(historicalDataMap).length === indices.length) {
+          setHistoricalData(historicalDataMap);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Failed to fetch historical data:", error);
+        setIsLoading(false);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+
+    if (isExpanded) {
+      fetchHistoricalData();
+      intervalId = setInterval(fetchHistoricalData, 20000);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [isExpanded]);
 
   return (
     <div
@@ -280,8 +305,8 @@ const StockMarket = ({ onSelectIndex }) => {
                   Change={first.Change}
                   IndexValue={first.IndexValue}
                   RatioChange={first.RatioChange}
-                  TotalVol={first.TotalVol}
-                  TotalVal={first.TotalVal}
+                  TotalVol={first.AllQty}
+                  TotalVal={first.AllValue}
                   TradingSession={first.TradingSession}
                   Advances={first.Advances}
                   NoChanges={first.NoChanges}
@@ -300,17 +325,23 @@ const StockMarket = ({ onSelectIndex }) => {
         <div className="mt-4 pr-4 bg-white// rounded-lg border-[1px] border-gray-500 shadow-xl/">
           <div className="flex w-full items-center justify-between">
             <div className="w-[60%] py-10 bg-red-100// px-5 //">
-              {/* <h1 className="w-full text-center text-xl font-bold mb-5">
-                {selectedIndex
-                  ? `Candlestick Chart for ${selectedIndex}`
-                  : "Close price in 30 days"}
-              </h1> */}
-              <ReactApexChart
-                options={lineChartOptions}
-                series={lineChartData}
-                type="area"
-                height={350}
-              />
+              {isLoading ? (
+                <div
+                  className={`flex flex-col items-center justify-center h-[400px]`}
+                >
+                  <div className="animate-spin rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500"></div>
+                  <p className="mt-4 text-xl text-gray-300">
+                    Loading historical data...
+                  </p>
+                </div>
+              ) : (
+                <ReactApexChart
+                  options={lineChartOptions}
+                  series={lineChartData}
+                  type="area"
+                  height={350}
+                />
+              )}
             </div>
             <div className="flex flex-col h-[300px] w-[35%] ml-6 items-center justify-between font-semibold text-[15px] bg-red-100//">
               {["VNINDEX", "VN30", "HNXINDEX", "HNX30"].map((idx) => {

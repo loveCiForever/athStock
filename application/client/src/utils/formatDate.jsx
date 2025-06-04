@@ -29,15 +29,35 @@ const DAYS = [
 ];
 
 /**
- * Gets day and month in Vietnamese format
- * @param {number|string|Date} timestamp - Date input
- * @returns {string} Formatted date (e.g., "15 Tháng 6")
- * @throws {Error} If timestamp is invalid
+ * Standardize input into milliseconds
+ * @param {number|string|Date}
+ * @returns {number|string|Date}
+ * @example 1749050069 -> 1749050069000
  */
-export const getDay = (timestamp) => {
+const toMilliseconds = (timestamp) => {
+  if (typeof timestamp === "number" && timestamp < 1e12) {
+    return timestamp * 1000;
+  }
+
+  return timestamp;
+};
+
+/**
+ * Get day and month in Vietnamese format (D Tháng M)
+ * @param {number|iso-string|Date}
+ * @returns {string}
+ * @throws {Error}
+ * @example "15 Tháng 6"
+ */
+export const getDayMonth = (timestamp) => {
   try {
-    const date = new Date(timestamp);
-    if (isNaN(date.getTime())) throw new Error("Invalid date");
+    const realTimestamp = toMilliseconds(timestamp);
+    const date = new Date(realTimestamp);
+
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
+
     return `${date.getDate()} ${MONTHS[date.getMonth()]}`;
   } catch (error) {
     throw new Error(`Invalid date format: ${error.message}`);
@@ -46,14 +66,19 @@ export const getDay = (timestamp) => {
 
 /**
  * Gets full date in Vietnamese format
- * @param {number|string|Date} timestamp - Date input
- * @returns {string} Formatted date (e.g., "15 Tháng 6 2025")
- * @throws {Error} If timestamp is invalid
+ * @param {number|iso-string|Date} timestamp
+ * @returns {string
+ * @throws {Error}
+ * @example "15 Tháng 6 2025"
  */
-export const getFullDay = (timestamp) => {
+export const getDayMonthYear = (timestamp) => {
   try {
-    const date = new Date(timestamp);
-    if (isNaN(date.getTime())) throw new Error("Invalid date");
+    const realTimestamp = toMilliseconds(timestamp);
+    const date = new Date(realTimestamp);
+
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
     return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
   } catch (error) {
     throw new Error(`Invalid date format: ${error.message}`);
@@ -62,9 +87,10 @@ export const getFullDay = (timestamp) => {
 
 /**
  * Formats date in DD/MM/YYYY format
- * @param {Date} date - Date object
- * @returns {string} Formatted date (e.g., "15/06/2025")
- * @throws {Error} If date is invalid
+ * @param {Date} date
+ * @returns {string}
+ * @throws {Error}
+ * @example "15/06/2025"
  */
 export const formatDateViEn = (date) => {
   try {

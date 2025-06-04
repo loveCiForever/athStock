@@ -30,6 +30,7 @@ const FinancePage = () => {
           </div>
         </div>
       </div>
+
       {/* <Footer /> */}
     </div>
   );
