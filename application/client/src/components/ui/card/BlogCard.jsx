@@ -4,9 +4,10 @@ import {
   UppercaseFirstLetterEachWord,
   UppercaseFullString,
 } from "../../../utils/formatString";
-import { getFullDay } from "../../../utils/formatDate";
+import { getDayMonthYear } from "../../../utils/formatDate";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
+
 const BlogCard = ({ author, content, viewMode }) => {
   let {
     publishedAt,
@@ -14,11 +15,11 @@ const BlogCard = ({ author, content, viewMode }) => {
     title,
     intro,
     category,
-    activity: { total_likes, total_dislikes, comments },
+    activity: { total_likes, total_dislikes },
     blog_id: id,
     banner,
   } = content;
-  let { full_name, profile_img, user_name } = author;
+  let { full_name } = author;
   const { theme } = useContext(ThemeContext);
   return (
     <Link
@@ -40,7 +41,7 @@ const BlogCard = ({ author, content, viewMode }) => {
               {category ? UppercaseFullString(category) : "CHƯA PHÂN LOẠI"}
             </h1>
             <h2 className="text-sm lg:text-base xl:text-lg">
-              {getFullDay(publishedAt)}
+              {getDayMonthYear(publishedAt)}
             </h2>
           </div>
 

@@ -1,4 +1,4 @@
-let categories = [
+export const categories = [
   "Nhận định thị trường",
   "Phân tích kỹ thuật",
   "Giao dịch nội bộ",
@@ -16,5 +16,3 @@ let categories = [
   "Niêm yết",
   "Doanh nhân và khởi nghiệp",
 ];
-
-export default categories;
