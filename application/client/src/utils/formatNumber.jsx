@@ -1,6 +1,7 @@
 // application/client/src/utils/formatNumber.jsx
 
 import { checkNumber } from "./checkNumber";
+
 /**
  * Formats a number with Vietnamese units (nghìn, triệu, tỷ, nghìn tỷ)
  * @param {number} value - The number to format
