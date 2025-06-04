@@ -57,6 +57,7 @@ const MarketCard = ({
     }
 
     return "bg-gray-500/10";
+
   };
 
   const getStatusArrow = (Change, size = 20) => {
@@ -224,7 +225,7 @@ const MarketCard = ({
               ? (ChangeFloat * 1).toFixed(2)
               : ChangeFloat.toFixed(2)}
           </span>
-          <div className="flex items-center justify-end w-[25%]">
+          <div className="flex items-center justify-end w-[20%]">
             <div
               className={`flex w-full items-center justify-between py-[4px] rounded-md px-2
                 ${getBgColor(ChangeFloat)}

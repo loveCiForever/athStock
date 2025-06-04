@@ -182,7 +182,6 @@ router.post("/DailyIndex", async (req, res) => {
         data: cachedData,
       });
     }
-
     const response = await axios.get(
       `${config.market.ApiUrl}${client.api.GET_DAILY_INDEX}`,
       {
