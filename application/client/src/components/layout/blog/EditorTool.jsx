@@ -1,10 +1,9 @@
-// EditorTools.jsx
+// application/client/src/components/layout/blog/EditorTools.jsx
 
 import CheckList from "@editorjs/checklist";
 import Code from "@editorjs/code";
 import Delimiter from "@editorjs/delimiter";
 import Embed from "@editorjs/embed";
-// import Image from "@editorjs/image";
 import InlineCode from "@editorjs/inline-code";
 import LinkTool from "@editorjs/link";
 import List from "@editorjs/list";
@@ -15,10 +14,8 @@ import Table from "@editorjs/table";
 import Warning from "@editorjs/warning";
 import Paragraph from "@editorjs/paragraph";
 import Header from "@editorjs/header";
-import SimpleImage from "@editorjs/simple-image";
 
 export const tools = {
-  image: SimpleImage,
   paragraph: {
     class: Paragraph,
     inlineToolbar: true,
@@ -40,7 +37,6 @@ export const tools = {
       defaultLevel: 1,
     },
   },
-
   raw: Raw,
   quote: Quote,
   marker: Marker,

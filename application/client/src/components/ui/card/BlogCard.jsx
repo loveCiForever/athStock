@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import {
   UppercaseFirstLetterEachWord,
   UppercaseFullString,
+  checkStringBo,
 } from "../../../utils/formatString";
 import { getDayMonthYear } from "../../../utils/formatDate";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
-
+import DefaultBanner from "../../../assets/images/blogBanner.png";
 const BlogCard = ({ author, content, viewMode }) => {
-  let {
+  const {
     publishedAt,
-    tags,
     title,
     intro,
     category,
@@ -19,26 +19,35 @@ const BlogCard = ({ author, content, viewMode }) => {
     blog_id: id,
     banner,
   } = content;
-  let { full_name } = author;
+  const { full_name } = author;
   const { theme } = useContext(ThemeContext);
+
   return (
     <Link
       to={`/blog/${id}`}
       className={`flex flex-col lg:flex-row items-start w-full border-b border-gray-300 py-0 md:py-8 ${
-        theme === "dark-theme" ? "hover:bg-black/10" : "hover:bg-gray-200"
+        theme === "dark-theme"
+          ? "hover:bg-black/10"
+          : "hover:bg-gray-100 text-gray-700"
       }`}
     >
       {viewMode === "list" && (
-        <div className="w-full lg:w-[500px] lg:h-[200px] xl:w-[500px] xl:h-[250px]">
-          <img src={banner} className="w-full h-full object-cover rounded-md" />
+        <div className="w-full lg:w-[500px] lg:h-[250px]">
+          <img
+            src={banner ? banner : DefaultBanner}
+            alt={title}
+            className="w-full h-full object-cover rounded-lg"
+          />
         </div>
       )}
 
-      <div className="flex flex-col items-stretch// justify-between w-full ml-0 lg:ml-6 mt-4 lg:mt-0 bg-green-200// lg:h-[200px] xl:h-[250px]">
+      <div className="flex flex-col justify-between w-full ml-0 lg:ml-6 mt-4 lg:mt-0 lg:h-[200px] xl:h-[250px]">
         <div className="w-full">
           <div className="w-full flex gap-4 items-center justify-start">
             <h1 className="text-orange-500 text-sm lg:text-base xl:text-lg font-extrabold tracking-wide bg-green-200//">
-              {category ? UppercaseFullString(category) : "CHƯA PHÂN LOẠI"}
+              {checkStringBo(category)
+                ? UppercaseFullString(category)
+                : "Failed to get category"}
             </h1>
             <h2 className="text-sm lg:text-base xl:text-lg">
               {getDayMonthYear(publishedAt)}
@@ -46,10 +55,10 @@ const BlogCard = ({ author, content, viewMode }) => {
           </div>
 
           <h1 className="blog-title text-base md:text-xl xl:text-2xl font-semibold line-clamp-2 mt-2">
-            {title}
+            {checkStringBo(title) ? title : "Failed to get title"}
           </h1>
           <p className="blog-head text-sm md:text-base tracking-wider line-clamp-3 mt-2 xl:mt-4 bg-green-200//">
-            {intro}
+            {checkStringBo(intro) ? intro : "Failed to get introduction"}
           </p>
         </div>
 
@@ -72,7 +81,9 @@ const BlogCard = ({ author, content, viewMode }) => {
 
           <h2 className="text-sm md:text-base xl:text-base font-semibold">
             Tác giả:{" "}
-            {author ? UppercaseFirstLetterEachWord(full_name) : "Khuyết danh"}
+            {checkStringBo(full_name)
+              ? UppercaseFirstLetterEachWord(full_name)
+              : "Failed to get full_name"}
           </h2>
         </div>
       </div>

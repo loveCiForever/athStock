@@ -1,4 +1,4 @@
-// ./client/src/components/blog/BlogEditor.jsx
+// application/client/src/components/blog/BlogEditor.jsx
 
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { toast } from "react-toastify";
@@ -6,25 +6,16 @@ import { tools } from "./EditorTool.jsx";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { EditorContext } from "../../../pages/BlogEditorPage.jsx";
 import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 import categories from "../../../utils/CategoryList.jsx";
 import { X } from "lucide-react";
-
+import { BlogStructure } from "./BlogStructure.jsx";
 import { ThemeContext } from "../../../hooks/useTheme.jsx";
-
+import { EditorContext } from "../../../pages/SingleBlogPage.jsx";
 const BlogEditor = () => {
   const textRef = useRef();
   const [selectedCategory, setSelectedCategory] = useState("");
-  const { user, getAccessToken } = useAuthContext();
   const [bannerUrl, setBannerUrl] = useState("");
-  const access_token = getAccessToken();
-  const navigate = useNavigate();
-  const VITE_BASE_URL =
-    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
-  const { theme } = useContext(ThemeContext);
-
-  const tagLimit = 10;
   const {
     blog,
     blog: { title, intro, content, tags },
@@ -34,17 +25,22 @@ const BlogEditor = () => {
     setEditorState,
   } = useContext(EditorContext);
 
+  const { user, getAccessToken } = useAuthContext();
+  const access_token = getAccessToken();
+  const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
+
+  const VITE_BASE_URL =
+    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
+  const tagLimit = 10;
+
   const handleTitleChange = (e) => {
     let input = e.target;
 
     input.style.height = "auto";
     input.style.height = input.scrollHeight + "px";
 
-    setBlog({ ...blog, title: input.value.trim() });
-  };
-
-  const handleBannerUrl = (e) => {
-    setBannerUrl(e.target.value);
+    setBlog({ ...blog, title: input.value });
   };
 
   const handleTitleKeyDown = (e) => {
@@ -59,30 +55,23 @@ const BlogEditor = () => {
     input.style.height = "auto";
     input.style.height = input.scrollHeight + "px";
 
-    setBlog({ ...blog, intro: input.value.trim() });
-  };
-
-  const handleIntroKeyDown = (e) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
+    setBlog({ ...blog, intro: input.value });
   };
 
   const handleTag = (e) => {
-    if (e.keyCode == 13 || e.keyCode == 188) {
+    if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
 
-      let tag = e.target.value;
+      let tag = e.target.value.trim().toLowerCase();
 
-      if (tags.length < tagLimit) {
-        if (!tags.includes(tag) && tag.length) {
+      if (tag.length && !tags.includes(tag)) {
+        if (tags.length < tagLimit) {
           setBlog({ ...blog, tags: [...tags, tag] });
+          e.target.value = "";
+        } else {
+          toast.error(`Bạn chỉ có thể thêm tối đa ${tagLimit} tags`);
         }
-      } else {
-        toast.error(`You can add max ${tagLimit} Tags`);
       }
-
-      e.target.value = "";
     }
   };
 
@@ -90,179 +79,211 @@ const BlogEditor = () => {
     if (textEditor.isReady) {
       textEditor.clear();
     }
-
-    setBlog({ ...blog, title: "", intro: "", content: {}, tag: [] });
+    setBlog({
+      ...BlogStructure,
+      content: {},
+      tags: [],
+    });
     setSelectedCategory("");
+    setBannerUrl("");
   };
 
-  const handleExit = () => {
-    navigate("/");
-  };
-
-  const handlePublish = () => {
+  const handlePublish = async () => {
     if (!title.length) {
       return toast.error("You must enter the title for your blog");
     }
 
-    if (textEditor.isReady) {
-      textEditor
-        .save()
-        .then((data) => {
-          if (data.blocks.length) {
-            const blogObj = {
-              title,
-              intro,
-              content: data,
-              tags,
-              category: selectedCategory,
-              banner: bannerUrl,
-            };
+    if (!textEditor || !textEditor.isReady) {
+      return toast.error("Editor is not ready");
+    }
 
-            // console.log(blogObj);
+    try {
+      const data = await textEditor.save();
 
-            axios
-              .post(`${VITE_BASE_URL}/api/blog/create-blog`, blogObj, {
-                headers: {
-                  Authorization: `Bearer ${access_token}`,
-                },
-              })
-              .then(() => {
-                toast.success("Blog published successfully!");
-                navigate("/blog");
-                setEditorState("editor");
-              })
-              .catch((error) => {
-                console.error(
-                  "Error publishing blog:",
-                  error.response ? error.response.data : error.message
-                );
-                toast.error("Failed to publish blog. Please try again.");
-              });
-          } else {
-            return toast.error("Write something in your blog to publish it");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (!data.blocks.length) {
+        return toast.error("Write something in your blog to publish it");
+      }
+
+      const blogObj = {
+        ...blog,
+        title,
+        intro,
+        content: data,
+        tags,
+        category: selectedCategory,
+        banner: bannerUrl,
+      };
+
+      await axios.post(`${VITE_BASE_URL}/api/blog/create-blog`, blogObj, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      toast.success("Blog published successfully!");
+      navigate("/blog");
+    } catch (error) {
+      console.error(
+        "Error publishing blog:",
+        error.response ? error.response.data : error.message
+      );
+      toast.error("Failed to publish blog. Please try again.");
     }
   };
 
   useEffect(() => {
-    if (!textEditor.isReady) {
-      setTextEditor(
-        new EditorJS({
-          holder: "textEditor",
-          data: Array.isArray(content) ? content[0] : content,
-          tools: tools,
-        })
-      );
+    const titleInput = document.querySelector(".auto-resize-title");
+    if (titleInput) {
+      titleInput.style.height = "auto";
+      titleInput.style.height = titleInput.scrollHeight + "px";
     }
+  }, [title]);
+
+  useEffect(() => {
+    if (!textRef.current) return;
+
+    const initEditor = async () => {
+      const editor = new EditorJS({
+        holder: textRef.current,
+        tools: tools,
+        placeholder: "Bắt đầu viết bài...",
+        minHeight: 100,
+        autofocus: true,
+        // Remove defaultBlock to prevent double lines
+        defaultBlock: "paragraph",
+        preserveBlank: false,
+        onChange: () => {
+          console.log("Editor content changed");
+        },
+      });
+
+      try {
+        await editor.isReady;
+        setTextEditor(editor);
+        console.log("Editor.js is ready to work!");
+      } catch (error) {
+        console.error("Editor.js initialization failed:", error);
+      }
+    };
+
+    initEditor();
+
+    return () => {
+      const destroyEditor = async () => {
+        if (textEditor && textEditor.destroy) {
+          try {
+            await textEditor.destroy();
+          } catch (err) {
+            console.error("Failed to destroy editor:", err);
+          }
+        }
+      };
+
+      destroyEditor();
+    };
   }, []);
 
   return (
     <div
-      className={`w-[1000px] min-h-40 py-10 rounded-md ${
-        theme === "dark-theme" ? " " : "bg-white text-black"
-      }`}
+      className={`blog-page w-full max-w-6xl mb-20 mx-auto border-[1px]// ${
+        theme === "dark-theme"
+          ? "bg-gray-800//"
+          : "bg-white// border-gray-200//"
+      } rounded-lg shadow-xl// `}
     >
-      {/* <nav className="flex items-center justify-end py-6">
-        <button className="p-1 mr-6 rounded-full bg-white" onClick={handleExit}>
-          <X />
-        </button>
-      </nav> */}
-
-      <div className="w-full px-16 mt-10 flex justify-start items-center">
-        <div className="w-full">
+      <div className="p-10">
+        <>
           <textarea
-            ref={textRef}
-            onChange={handleTitleChange}
-            value={title}
             placeholder="Blog Title"
+            onChange={handleTitleChange}
             onKeyDown={handleTitleKeyDown}
-            className="
-                w-full
-                h-auto
-                pl-3
-                text-3xl
-                font-bold
-                leading-tight
-                outline-none
-                resize-none
-                placeholder:opacity-80
-                text-black
-                text-start
-            "
-            style={{ textAlignLast: "start" }}
+            value={title}
+            rows={1}
+            className="auto-resize-title w-full text-3xl font-bold mb-4 p-4 bg-transparent border-b border-gray-300 focus:border-orange-500 outline-none resize-none overflow-hidden"
           />
 
           <textarea
-            ref={textRef}
+            placeholder="Write a brief introduction..."
             onChange={handleIntroChange}
             value={intro}
-            placeholder="Introduction"
-            onKeyDown={handleIntroKeyDown}
-            className="w-full h-10 pl-3 mt-3 text-lg font-semibold leading-normal bg-transparent outline-none resize-none placeholder:opacity-60"
-          ></textarea>
+            className="w-full px-4 min-h-[50px] bg-transparent border// border-gray-300// rounded resize-none focus:border-orange-500 outline-none"
+          />
 
-          <section className="w-full justify-start h-auto bg-red-200">
-            <div
-              id="textEditor"
-              className="flex flex-col justify-start h-auto mt-3 font-gelasio "
-            />
-          </section>
+          <div
+            ref={textRef}
+            className="min-h-[400px] border// border-gray-300 rounded-lg px-4 mb-6"
+            id="textEditor"
+          />
+        </>
+
+        <div className="flex w-full items-start justify-start gap-10 mb-4 px-4">
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <h1 className="font-semibold whitespace-nowrap">Phân loại</h1>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="p-2 rounded border// border-gray-300// bg-transparent outline-none focus:border-orange-500"
+            >
+              <option value="">Thể loại bài viết</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <hr className="w-[1px] h-8 bg-black" />
+
+          <div className="flex items-start gap-2">
+            <div className="flex items-center gap-2">
+              <h1 className="font-semibold">Tags</h1>
+              <input
+                type="text"
+                placeholder="Nhấn Enter để thêm tag"
+                onKeyDown={handleTag}
+                className=" p-2 rounded border/ border-gray-300/ bg-transparent outline-none focus:border-orange-500"
+              />
+            </div>
+
+            <div className="flex flex-wrap gap-2 py-2">
+              {tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-black/60 text-white"
+                >
+                  {tag}
+                  <button
+                    onClick={() => {
+                      setBlog({
+                        ...blog,
+                        tags: tags.filter((_, i) => i !== index),
+                      });
+                    }}
+                    className="hover:text-gray-200"
+                  >
+                    <X size={14} />
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* <input
-          type="text"
-          name="bannerlink"
-          id="bannerlink"
-          placeholder="Enter you banner's url"
-          value={bannerUrl}
-          onChange={handleBannerUrl}
-          className="w-full p-2 pl-3 mb-5 bg-white border rounded-md outline-none"
-        />
-        <div className="mb-5">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full p-2 pl-3 bg-white border rounded-md outline-none"
-          >
-            <option value="">Select a category</option>
-            {categories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div> */}
-
-        {/* <div className="flex items-center justify-center gap-4">
+        <div className="flex gap-4 justify-end">
           <button
-            className={`flex items-center justify-center w-1/4 active:scale-[.97] active:duration-75 transition-all shadow-xs rounded-lg py-2 ${
-              theme === "light"
-                ? "bg-black text-white hover:bg-orange-500"
-                : "bg-white text-black hover hover:bg-gray-300"
-            }`}
             onClick={handleClearAll}
+            className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-300"
           >
-            <p className="text-sm font-semibold tracking-wider lg:text-base">
-              Clear
-            </p>
+            Clear
           </button>
           <button
-            className={`flex items-center justify-center flex-1 active:scale-[.97] active:duration-75 transition-all shadow-xs rounded-lg py-2 ${
-              theme === "light"
-                ? "bg-black text-white hover:bg-green-500"
-                : "bg-white text-black hover hover:bg-gray-300"
-            }`}
             onClick={handlePublish}
+            className="px-6 py-2 bg-orange-500 text-white rounded hover:bg-orange-300"
           >
-            <p className="text-sm font-semibold tracking-wider lg:text-base">
-              Publish
-            </p>
+            Publish
           </button>
-        </div> */}
+        </div>
       </div>
     </div>
   );
