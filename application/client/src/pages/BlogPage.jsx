@@ -8,6 +8,7 @@ import CategorySlider from "../components/layout/slider/CategorySlider.jsx";
 import { ThemeContext } from "../hooks/useTheme.jsx";
 import NewBlog from "../components/ui/button/NewBlog.jsx";
 import { List, LayoutGrid } from "lucide-react";
+
 const BlogPage = () => {
   const [blogs, setBlog] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);

@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../../hooks/useTheme.jsx";
 import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 
-import { getBasePath } from "../../../utils/splitPath.jsx";
+import { getBasePath } from "../../../utils/formatString.jsx";
 import NavPageButton from "../../ui/button/NavPageButton.jsx";
 import UserAvatar from "../user/UserAvatar.jsx";
 import LoginButton from "../../ui/button/LoginButton.jsx";
