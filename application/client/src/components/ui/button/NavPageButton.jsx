@@ -1,4 +1,6 @@
-import { getBasePath } from "../../../utils/splitPath";
+// application/src/components/ui/button/NavPageButton.jsx
+
+import { getBasePath } from "../../../utils/formatString.jsx";
 
 import { useNavigate } from "react-router-dom";
 
