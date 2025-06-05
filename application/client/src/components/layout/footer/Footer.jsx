@@ -1,6 +1,15 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../../hooks/useTheme";
+
 const Footer = () => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <footer className="footer w-full bg-white shadow-sm text-sm md:text-base lg:text-lg text-black px-6 sm:px-10 md:px-14 xl:px-40 py-10 lg:py-10 border-t-[1px] border-gray-200">
+    <footer
+      className={`footer w-full bg-white// shadow-sm text-sm md:text-base lg:text-lg text-black// px-6 sm:px-10 md:px-14 xl:px-40 py-10 lg:py-10 border-t-[1px] ${
+        theme === "dark-theme" ? "border-black/50" : "border-gray-300"
+      }`}
+    >
       <div className="w-full md:py-8">
         <div className="items-center w-full">
           <div className="flex flex-col items-start w-full mb-8 xl:mb-0">
@@ -42,7 +51,9 @@ const Footer = () => {
           </div>
 
           <ul
-            className={`flex flex-wrap items-center font-medium justify-between sm:gap-10 p-4 xl:px-10 bg-gray-100 rounded-lg mt-10`}
+            className={`flex flex-wrap items-center font-medium justify-between sm:gap-10 p-4 xl:px-10 ${
+              theme === "dark-theme" ? "bg-black/20" : "bg-gray-100"
+            } rounded-lg mt-10`}
           >
             <li>
               <a href="#" className="hover:underline me-4 md:me-6">

@@ -5,13 +5,11 @@
  * @param {string}
  * @returns {string}
  */
-export const UppercaseFirstLetterEachWord = (fullName) => {
+export const UppercaseFirstLetterEachWord = (string) => {
   try {
-    if (!fullName || typeof fullName !== "string") {
-      throw new Error("Invalid string");
-    }
+    checkStringTr(string);
 
-    return fullName
+    return string
       .toLowerCase()
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -28,9 +26,8 @@ export const UppercaseFirstLetterEachWord = (fullName) => {
  */
 export const UppercaseFullString = (string) => {
   try {
-    if (!string || typeof string !== "string") {
-      throw new Error("Invalid string");
-    }
+    checkStringTr(string);
+
     return string.toUpperCase();
   } catch (error) {
     throw new Error(`Invalid string format: ${error.message}`);
@@ -45,9 +42,7 @@ export const UppercaseFullString = (string) => {
  */
 export const TruncateString = (string, maxLength) => {
   try {
-    if (!string || typeof string !== "string") {
-      throw new Error("Invalid string");
-    }
+    checkStringTr(string);
 
     if (!maxLength || typeof maxLength !== "number" || maxLength < 0) {
       throw new Error("Invalid maxLength");
@@ -83,4 +78,28 @@ export const getBasePath = (path) => {
     console.error("Error parsing path:", error);
     return "";
   }
+};
+
+export const checkStringTr = (string) => {
+  if (!isStringNotNull(string)) {
+    throw new Error("String is null");
+  } else if (!isString(string)) {
+    throw new Error("Value is not string");
+  }
+  return true;
+};
+
+export const checkStringBo = (string) => {
+  if (!isStringNotNull(string) || !isString(string)) {
+    return false;
+  }
+  return true;
+};
+
+export const isStringNotNull = (string) => {
+  return string;
+};
+
+export const isString = (string) => {
+  return typeof string !== "string" ? false : true;
 };

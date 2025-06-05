@@ -7,7 +7,6 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import VerifyPage from "./pages/VerifyPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import BlogEditorPage from "./pages/BlogEditorPage.jsx";
 import SingleBlogPage from "./pages/SingleBlogPage.jsx";
 import { ToastContainer } from "react-toastify";
 
@@ -22,7 +21,6 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/verify-email" element={<VerifyPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/new-blog" element={<BlogEditorPage />} />
         <Route path="/blog/new" element={<SingleBlogPage />} />
         <Route path="/blog/:blog_id" element={<SingleBlogPage />} />
       </Routes>

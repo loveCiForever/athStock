@@ -45,7 +45,7 @@
   --bg-navbar: var(--bg-navbar-dark);
 }
 
-.home-page, .blog-page, .stocks-page, .profile-page, .blog-editor-page,  .user-panel, .footer {
+.home-page, .blog-page, .single-blog-page, .stocks-page, .profile-page, .blog-editor-page,  .user-panel, .footer {
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
@@ -66,4 +66,37 @@
   opacity: 1 !important;
   backdrop-filter: none !important;
   color: black;
+}
+
+/* Editor container */
+.codex-editor {
+  width: 100% !important;
+  max-width: 900px !important;
+  margin: 0 auto;
+}
+
+.codex-editor__redactor {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Style for editor blocks */
+.ce-block__content {
+  max-width: 780px !important; 
+  margin: 0 auto;
+  background: transparent !important;
+}
+
+/* Style for toolbar */
+.ce-toolbar__content {
+  max-width: 820px !important;
+  margin: 0 auto;
+  background: white !important;
+}
+
+
+.ce-inline-toolbar {
+  max-width: 800px !important;
+  background: white !important;
+  border: 1px solid #E8E8EB !important;
 }

@@ -1,26 +1,85 @@
+// application/client/src/page/SingleBlogPage.jsx
+
 import axios from "axios";
 import { CircleChevronDown, CircleChevronUp, CircleX } from "lucide-react";
-import { createContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { createContext, useEffect, useState, useContext } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import DefaultBanner from "../assets/images/blogBanner.png";
-import { blogStructure } from "../components/layout/blog/BlogStructure";
-import Footer from "../components/layout/footer/Footer.jsx";
+import { BlogStructure } from "../components/layout/blog/BlogStructure";
+import BlogEditor from "../components/layout/blog/BlogEditor";
+import Footer from "../components/layout/footer/Footer";
 import Header from "../components/layout/header/Header";
-import { useAuthContext } from "../hooks/AuthContext.jsx";
-import { UppercaseFirstLetterEachWord } from "../utils/formatString.jsx";
+import { useAuthContext } from "../hooks/AuthContext";
+import { ThemeContext } from "../hooks/useTheme";
+import {
+  checkStringBo,
+  UppercaseFirstLetterEachWord,
+} from "../utils/formatString";
+import { Link } from "react-router-dom";
+
 export const BlogContext = createContext({});
+export const EditorContext = createContext({});
 
-const SingleBlogPage = ({ theme }) => {
-  let { blog_id } = useParams();
-  let [blog, setBlog] = useState(blogStructure);
+const SingleBlogPage = () => {
+  const [blog, setBlog] = useState(BlogStructure);
+  const [editorState, setEditorState] = useState("editor");
+  const [textEditor, setTextEditor] = useState({ isReady: false });
+
+  const location = useLocation();
+  const { theme } = useContext(ThemeContext);
+  const { user } = useAuthContext();
+
+  if (location.pathname === "/blog/new") {
+    if (!user) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <h1 className="text-2xl font-bold mb-4">
+            Please login to create a blog
+          </h1>
+          <Link
+            to="/login"
+            className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+          >
+            Login
+          </Link>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
+      >
+        <Header />
+        <main className="flex-1 w-full mx-auto px-6 sm:px-10 md:px-14 xl:px-80 ">
+          <EditorContext.Provider
+            value={{
+              blog,
+              setBlog,
+              editorState,
+              setEditorState,
+              textEditor,
+              setTextEditor,
+            }}
+          >
+            <BlogEditor />
+          </EditorContext.Provider>
+        </main>
+      </div>
+    );
+  }
+
+  const { blog_id } = useParams();
   const [loading, setLoading] = useState(true);
-  const { user, userLoading, getAccessToken } = useAuthContext();
-  const [blogPoint, setBlogPoint] = useState();
+  const [blogPoint, setBlogPoint] = useState(0);
+  const [voteStatus, setVoteStatus] = useState("");
+  const { logout, getAccessToken } = useAuthContext();
   const authHeaders = user
-    ? { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+    ? {
+        headers: { Authorization: `Bearer ${getAccessToken()}` },
+      }
     : {};
-
   const VITE_BASE_URL =
     import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
@@ -79,7 +138,6 @@ const SingleBlogPage = ({ theme }) => {
     }
   };
 
-  const [voteStatus, setVoteStatus] = useState("");
   const fetchVoteStatusByBlogIdUserID = async ({ blog_id }) => {
     setLoading(true);
     try {
@@ -136,11 +194,7 @@ const SingleBlogPage = ({ theme }) => {
 
   return (
     <div
-      className={`
-        blog-page
-        flex flex-col items-center min-h-screen w-full
-        ${theme === "light" ? "bg-white" : "bg-black/90"}
-      `}
+      className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
     >
       <Header />
 
@@ -153,11 +207,11 @@ const SingleBlogPage = ({ theme }) => {
             </h1>
 
             <div className="flex items-center justify-between w-full mt-3 text-sm xl:mt-5 md:text-base xl:text-lg">
-              <h2 className="text-black/60 text-[16px]">
+              <h2 className=" text-[16px]">
                 {new Date(blog.publishedAt).toLocaleDateString()}
               </h2>
-              <h2 className="font-bold text-black/80">
-                {blog.author
+              <h2 className="font-bold">
+                {checkStringBo(blog.author.personal_info.full_name)
                   ? UppercaseFirstLetterEachWord(
                       blog.author.personal_info.full_name
                     )
@@ -188,11 +242,10 @@ const SingleBlogPage = ({ theme }) => {
             )}
           </div>
 
-          {/* —— STICKY PANEL —— */}
           <aside
             className={`
               flex flex-row flex-1
-              sticky top-10
+              sticky// top-10//
               w-full
               xl:top-[calc(100px+2.5rem)]
               xl:mb-0 xl:ml-10 my-10 xl:my-0
@@ -200,13 +253,13 @@ const SingleBlogPage = ({ theme }) => {
             `}
           >
             <div className="flex flex-col items-center justify-center gap-4 pr-2 rounded-lg">
-              <div className="flex flex-col items-center rounded-lg justify-center gap-4 p-4 bg-white">
+              <div className="flex flex-col items-center rounded-lg justify-center gap-4 p-4 bg-whit//">
                 {" "}
                 <button
                   onClick={() => {
                     likeByBlogId({ blog_id: blog.blog_id });
                   }}
-                  className={`rounded-full hover:bg-gray-300 ${
+                  className={`rounded-full hover:text-green-400 ${
                     voteStatus === "like" ? "" : ""
                   }`}
                 >
@@ -221,7 +274,7 @@ const SingleBlogPage = ({ theme }) => {
                   onClick={() => {
                     dislikeByBlogId({ blog_id: blog.blog_id });
                   }}
-                  className={`rounded-full hover:bg-gray-300 ${
+                  className={`rounded-full hover:text-red-400 ${
                     voteStatus === "dislike" ? "" : ""
                   }`}
                 >
@@ -244,15 +297,15 @@ const SingleBlogPage = ({ theme }) => {
                     voteStatus: voteStatus,
                   });
                 }}
-                className={`p-4 rounded-lg bg-white hover:bg-gray-300 ${
+                className={`p-4 rounded-lg bg-white// hover:text-gray-300 text-orange-400 ${
                   voteStatus === "dislike" ? "" : ""
                 }`}
               >
-                <CircleX size={35} strokeWidth={2} color="red" />
+                <CircleX size={35} strokeWidth={2} />
               </button>
             </div>
 
-            <div className="w-full h-auto p-4 text-center bg-white rounded-lg xl:flex-1">
+            <div className="w-full h-auto p-4 text-center bg-white// rounded-lg xl:flex-1">
               comment panel
             </div>
           </aside>
