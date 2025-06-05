@@ -1,6 +1,6 @@
 // application/client/src/components/blog/BlogEditor.jsx
 
-import React, { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { tools } from "./EditorTool.jsx";
 import EditorJS from "@editorjs/editorjs";
@@ -8,31 +8,28 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 import categories from "../../../utils/CategoryList.jsx";
-import { X } from "lucide-react";
 import { BlogStructure } from "./BlogStructure.jsx";
 import { ThemeContext } from "../../../hooks/useTheme.jsx";
-import { EditorContext } from "../../../pages/SingleBlogPage.jsx";
-const BlogEditor = () => {
-  const textRef = useRef();
+import { EditorContext } from "../../../pages/NewBlogPage.jsx";
+import {
+  DEVELOPMENT_BLOG_SERVER_BASE_URL,
+  MAX_BLOG_TAGS,
+} from "../../../utils/config.jsx";
+const PublishBlog = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [bannerUrl, setBannerUrl] = useState("");
   const {
     blog,
     blog: { title, intro, content, tags },
     setBlog,
     textEditor,
     setTextEditor,
+    editorState,
     setEditorState,
   } = useContext(EditorContext);
 
-  const { user, getAccessToken } = useAuthContext();
-  const access_token = getAccessToken();
+  const { getAccessToken } = useAuthContext();
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
-
-  const VITE_BASE_URL =
-    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
-  const tagLimit = 10;
 
   const handleTitleChange = (e) => {
     let input = e.target;
@@ -65,7 +62,7 @@ const BlogEditor = () => {
       let tag = e.target.value.trim().toLowerCase();
 
       if (tag.length && !tags.includes(tag)) {
-        if (tags.length < tagLimit) {
+        if (tags.length < MAX_BLOG_TAGS) {
           setBlog({ ...blog, tags: [...tags, tag] });
           e.target.value = "";
         } else {
@@ -85,7 +82,6 @@ const BlogEditor = () => {
       tags: [],
     });
     setSelectedCategory("");
-    setBannerUrl("");
   };
 
   const handlePublish = async () => {
@@ -111,14 +107,17 @@ const BlogEditor = () => {
         content: data,
         tags,
         category: selectedCategory,
-        banner: bannerUrl,
       };
 
-      await axios.post(`${VITE_BASE_URL}/api/blog/create-blog`, blogObj, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
+      await axios.post(
+        `${DEVELOPMENT_BLOG_SERVER_BASE_URL}/api/blog/create-blog`,
+        blogObj,
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
 
       toast.success("Blog published successfully!");
       navigate("/blog");
@@ -140,56 +139,22 @@ const BlogEditor = () => {
   }, [title]);
 
   useEffect(() => {
-    if (!textRef.current) return;
-
-    const initEditor = async () => {
-      const editor = new EditorJS({
-        holder: textRef.current,
-        tools: tools,
-        placeholder: "Bắt đầu viết bài...",
-        minHeight: 100,
-        autofocus: true,
-        // Remove defaultBlock to prevent double lines
-        defaultBlock: "paragraph",
-        preserveBlank: false,
-        onChange: () => {
-          console.log("Editor content changed");
-        },
-      });
-
-      try {
-        await editor.isReady;
-        setTextEditor(editor);
-        console.log("Editor.js is ready to work!");
-      } catch (error) {
-        console.error("Editor.js initialization failed:", error);
-      }
-    };
-
-    initEditor();
-
-    return () => {
-      const destroyEditor = async () => {
-        if (textEditor && textEditor.destroy) {
-          try {
-            await textEditor.destroy();
-          } catch (err) {
-            console.error("Failed to destroy editor:", err);
-          }
-        }
-      };
-
-      destroyEditor();
-    };
+    if (!textEditor.isReady) {
+      setTextEditor(
+        new EditorJS({
+          holder: "textEditor",
+          data: content,
+          tools: tools,
+        })
+      );
+    }
   }, []);
 
   return (
     <div
-      className={`blog-page w-full max-w-6xl mb-20 mx-auto border-[1px]// ${
-        theme === "dark-theme"
-          ? "bg-gray-800//"
-          : "bg-white// border-gray-200//"
-      } rounded-lg shadow-xl// `}
+      className={`blog-page w-full max-w-6xl pl-10// mb-20 mx-auto  ${
+        theme === "dark-theme" ? "border-black/20//" : "border-gray-200//"
+      } rounded-lg border-[1px]//`}
     >
       <div className="p-10">
         <>
@@ -206,12 +171,11 @@ const BlogEditor = () => {
             placeholder="Write a brief introduction..."
             onChange={handleIntroChange}
             value={intro}
-            className="w-full px-4 min-h-[50px] bg-transparent border// border-gray-300// rounded resize-none focus:border-orange-500 outline-none"
+            className="w-full px-4 min-h-[50px] bg-transparent rounded resize-none focus:border-orange-500 outline-none"
           />
 
           <div
-            ref={textRef}
-            className="min-h-[400px] border// border-gray-300 rounded-lg px-4 mb-6"
+            className="min-h-[400px] border-gray-300 rounded-lg py-8 mb-6 bg-gray-50/"
             id="textEditor"
           />
         </>
@@ -222,7 +186,7 @@ const BlogEditor = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="p-2 rounded border// border-gray-300// bg-transparent outline-none focus:border-orange-500"
+              className="p-2 rounded bg-transparent outline-none focus:border-orange-500"
             >
               <option value="">Thể loại bài viết</option>
               {categories.map((cat) => (
@@ -242,12 +206,12 @@ const BlogEditor = () => {
                 type="text"
                 placeholder="Nhấn Enter để thêm tag"
                 onKeyDown={handleTag}
-                className=" p-2 rounded border/ border-gray-300/ bg-transparent outline-none focus:border-orange-500"
+                className=" p-2 rounded bg-transparent outline-none focus:border-orange-500"
               />
             </div>
 
             <div className="flex flex-wrap gap-2 py-2">
-              {tags.map((tag, index) => (
+              {/* {tags.map((tag, index) => (
                 <span
                   key={index}
                   className="flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-black/60 text-white"
@@ -265,7 +229,7 @@ const BlogEditor = () => {
                     <X size={14} />
                   </button>
                 </span>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
@@ -273,13 +237,13 @@ const BlogEditor = () => {
         <div className="flex gap-4 justify-end">
           <button
             onClick={handleClearAll}
-            className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-300"
+            className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-300"
           >
             Clear
           </button>
           <button
             onClick={handlePublish}
-            className="px-6 py-2 bg-orange-500 text-white rounded hover:bg-orange-300"
+            className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-300"
           >
             Publish
           </button>
@@ -289,4 +253,4 @@ const BlogEditor = () => {
   );
 };
 
-export default BlogEditor;
+export default PublishBlog;

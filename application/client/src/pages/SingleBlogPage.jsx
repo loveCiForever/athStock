@@ -3,11 +3,10 @@
 import axios from "axios";
 import { CircleChevronDown, CircleChevronUp, CircleX } from "lucide-react";
 import { createContext, useEffect, useState, useContext } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import DefaultBanner from "../assets/images/blogBanner.png";
 import { BlogStructure } from "../components/layout/blog/BlogStructure";
-import BlogEditor from "../components/layout/blog/BlogEditor";
 import Footer from "../components/layout/footer/Footer";
 import Header from "../components/layout/header/Header";
 import { useAuthContext } from "../hooks/AuthContext";
@@ -16,72 +15,22 @@ import {
   checkStringBo,
   UppercaseFirstLetterEachWord,
 } from "../utils/formatString";
-import { Link } from "react-router-dom";
-
-export const BlogContext = createContext({});
-export const EditorContext = createContext({});
 
 const SingleBlogPage = () => {
   const [blog, setBlog] = useState(BlogStructure);
-  const [editorState, setEditorState] = useState("editor");
-  const [textEditor, setTextEditor] = useState({ isReady: false });
-
-  const location = useLocation();
   const { theme } = useContext(ThemeContext);
   const { user } = useAuthContext();
-
-  if (location.pathname === "/blog/new") {
-    if (!user) {
-      return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
-          <h1 className="text-2xl font-bold mb-4">
-            Please login to create a blog
-          </h1>
-          <Link
-            to="/login"
-            className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-          >
-            Login
-          </Link>
-        </div>
-      );
-    }
-
-    return (
-      <div
-        className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
-      >
-        <Header />
-        <main className="flex-1 w-full mx-auto px-6 sm:px-10 md:px-14 xl:px-80 ">
-          <EditorContext.Provider
-            value={{
-              blog,
-              setBlog,
-              editorState,
-              setEditorState,
-              textEditor,
-              setTextEditor,
-            }}
-          >
-            <BlogEditor />
-          </EditorContext.Provider>
-        </main>
-      </div>
-    );
-  }
 
   const { blog_id } = useParams();
   const [loading, setLoading] = useState(true);
   const [blogPoint, setBlogPoint] = useState(0);
   const [voteStatus, setVoteStatus] = useState("");
-  const { logout, getAccessToken } = useAuthContext();
+  const { getAccessToken } = useAuthContext();
   const authHeaders = user
     ? {
         headers: { Authorization: `Bearer ${getAccessToken()}` },
       }
     : {};
-  const VITE_BASE_URL =
-    import.meta.env.VITE_IP + ":" + import.meta.env.VITE_SERVER_PORT;
 
   const fetchBlogById = async ({ blog_id }) => {
     setLoading(true);
@@ -189,7 +138,7 @@ const SingleBlogPage = () => {
   }, [user, blog_id]);
 
   useEffect(() => {
-    document.title = blog.category + " - " + blog.title;
+    document.title = blog.category ? blog.category : "" + blog.title;
   });
 
   return (
