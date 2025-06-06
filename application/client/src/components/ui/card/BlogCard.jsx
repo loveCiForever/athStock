@@ -51,8 +51,16 @@ const BlogCard = ({ author, content, viewMode }) => {
                 ? UppercaseFullString(category)
                 : "Failed to get category"}
             </h1>
-            <hr className="h-4 w-[2px] bg-black/30 border-none" />
-            <h2 className="text-sm lg:text-base xl:text-sm text-black/60">
+            <hr
+              className={`h-4 w-[2px] border-none ${
+                theme === "dark-theme" ? "bg-gray-300" : "bg-black/30"
+              }`}
+            />
+            <h2
+              className={`text-sm lg:text-base xl:text-sm ${
+                theme === "dark-theme" ? "" : "text-black/60"
+              }`}
+            >
               {getDayMonthYear(publishedAt)}
             </h2>
           </div>
@@ -70,7 +78,9 @@ const BlogCard = ({ author, content, viewMode }) => {
             {tags?.map((tag, index) => (
               <span
                 key={index}
-                className="px-4 py-1 bg-gray-200 text-xs rounded-full"
+                className={`px-4 py-1 text-xs rounded-lg ${
+                  theme === "dark-theme" ? "bg-black/30" : "bg-gray-200"
+                }`}
               >
                 {tag}
               </span>
