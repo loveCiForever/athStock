@@ -16,6 +16,7 @@ import {
   MAX_BLOG_TAGS,
 } from "../../../utils/config.jsx";
 import { X } from "lucide-react";
+
 const PublishBlog = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const {

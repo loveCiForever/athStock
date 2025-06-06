@@ -10,6 +10,7 @@ import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
 import DefaultBanner from "../../../assets/images/blogBanner.png";
 const BlogCard = ({ author, blog, viewMode }) => {
+
   const {
     publishedAt,
     title,
@@ -115,6 +116,7 @@ const BlogCard = ({ author, blog, viewMode }) => {
                 : "Failed to get full_name"}
             </h2>
           </div>
+
         </div>
       </div>
     </Link>
