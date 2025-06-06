@@ -15,6 +15,7 @@ import {
   DEVELOPMENT_BLOG_SERVER_BASE_URL,
   MAX_BLOG_TAGS,
 } from "../../../utils/config.jsx";
+import { X } from "lucide-react";
 const PublishBlog = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const {
@@ -66,7 +67,8 @@ const PublishBlog = () => {
           setBlog({ ...blog, tags: [...tags, tag] });
           e.target.value = "";
         } else {
-          toast.error(`Bạn chỉ có thể thêm tối đa ${tagLimit} tags`);
+          console.log("max tags");
+          toast.error(`Bạn chỉ có thể thêm tối đa ${MAX_BLOG_TAGS} tags`);
         }
       }
     }
@@ -197,9 +199,9 @@ const PublishBlog = () => {
             </select>
           </div>
 
-          <hr className="w-[1px] h-8 bg-black" />
+          <hr className="w-[1px] border-none h-8 bg-black" />
 
-          <div className="flex items-start gap-2">
+          <div className="flex flex-col items-start gap-2">
             <div className="flex items-center gap-2">
               <h1 className="font-semibold">Tags</h1>
               <input
@@ -211,7 +213,7 @@ const PublishBlog = () => {
             </div>
 
             <div className="flex flex-wrap gap-2 py-2">
-              {/* {tags.map((tag, index) => (
+              {tags.map((tag, index) => (
                 <span
                   key={index}
                   className="flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-black/60 text-white"
@@ -229,7 +231,7 @@ const PublishBlog = () => {
                     <X size={14} />
                   </button>
                 </span>
-              ))} */}
+              ))}
             </div>
           </div>
         </div>

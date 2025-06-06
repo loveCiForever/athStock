@@ -18,6 +18,7 @@ const BlogCard = ({ author, content, viewMode }) => {
     activity: { total_likes, total_dislikes },
     blog_id: id,
     banner,
+    tags,
   } = content;
   const { full_name } = author;
   const { theme } = useContext(ThemeContext);
@@ -62,29 +63,41 @@ const BlogCard = ({ author, content, viewMode }) => {
           </p>
         </div>
 
-        <div className="flex items-center justify-between w-full mt-2 lg:mt-2 bg-red-200//">
-          <div className="flex items-center justify-start gap-6 lg:gap-6">
-            <div className="flex items-center justify-center gap-2 ">
-              <h1 className="text-md md:text-lg xl:text-lg font-semibold pt-1">
-                {total_likes}
-              </h1>
-              <ThumbsUp size={20} />
-            </div>
-
-            <div className="flex items-center justify-center gap-2 ">
-              <h1 className="text-md md:text-lg xl:text-lg font-semibold pt-1">
-                {total_dislikes}
-              </h1>
-              <ThumbsUp size={20} />
-            </div>
+        <div className="flex flex-col items-start justify-between w-full mt-2 lg:mt-2 bg-red-200//">
+          <div className="flex flex-wrap gap-2 mb-4">
+            {tags?.map((tag, index) => (
+              <span
+                key={index}
+                className="px-4 py-1 bg-gray-200 text-sm rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-start gap-6 lg:gap-6">
+              <div className="flex items-center justify-center gap-2 ">
+                <h1 className="text-md md:text-lg xl:text-lg font-semibold pt-1">
+                  {total_likes}
+                </h1>
+                <ThumbsUp size={20} />
+              </div>
 
-          <h2 className="text-sm md:text-base xl:text-base font-semibold">
-            Tác giả:{" "}
-            {checkStringBo(full_name)
-              ? UppercaseFirstLetterEachWord(full_name)
-              : "Failed to get full_name"}
-          </h2>
+              <div className="flex items-center justify-center gap-2 ">
+                <h1 className="text-md md:text-lg xl:text-lg font-semibold pt-1">
+                  {total_dislikes}
+                </h1>
+                <ThumbsUp size={20} />
+              </div>
+            </div>
+
+            <h2 className="text-sm md:text-base xl:text-base font-semibold">
+              Tác giả:{" "}
+              {checkStringBo(full_name)
+                ? UppercaseFirstLetterEachWord(full_name)
+                : "Failed to get full_name"}
+            </h2>
+          </div>
         </div>
       </div>
     </Link>

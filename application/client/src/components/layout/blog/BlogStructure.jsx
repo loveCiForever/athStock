@@ -5,6 +5,7 @@ export const BlogStructure = {
   intro: "",
   banner: "",
   content: [],
+  tags: [],
   author: { personal_info: {} },
   activity: {},
   publishedAt: "",
