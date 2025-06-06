@@ -3,10 +3,15 @@ import { LogOut, Sun, Moon, BookOpen, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
-import { UppercaseFirstLetterEachWord } from "../../../utils/formatString";
+import {
+  UppercaseFirstLetterEachWord,
+  TruncateString,
+} from "../../../utils/formatString";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 import axios from "axios";
+
+import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../../../utils/config.jsx";
 const UserPanel = ({ user }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -15,12 +20,14 @@ const UserPanel = ({ user }) => {
   const authHeaders = user
     ? { headers: { Authorization: `Bearer ${getAccessToken()}` } }
     : {};
-  const VITE_BASE_URL = import.meta.env.VITE_LOCAL_BLOG_API_SERVER;
 
   const handleLogout = async () => {
     try {
       console.log(authHeaders);
-      await axios.get(`${VITE_BASE_URL}/api/auth/logout`, authHeaders);
+      await axios.get(
+        `${DEVELOPMENT_BLOG_SERVER_BASE_URL}/api/auth/logout`,
+        authHeaders
+      );
       toast.success("Sign out successful");
       logout();
     } catch (error) {
@@ -47,7 +54,7 @@ const UserPanel = ({ user }) => {
               : "Full name error"}
           </span>
           <span className="text-md font-medium text-dark-grey hover:text-blue-600">
-            @{user ? user.user_name : "User name error"}
+            @{user ? TruncateString(user.user_name, 20) : "User name error"}
           </span>
         </Link>
 

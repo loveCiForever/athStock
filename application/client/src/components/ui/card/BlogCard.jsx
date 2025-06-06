@@ -9,7 +9,7 @@ import { getDayMonthYear } from "../../../utils/formatDate";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
 import DefaultBanner from "../../../assets/images/blogBanner.png";
-const BlogCard = ({ author, content, viewMode }) => {
+const BlogCard = ({ author, blog, viewMode }) => {
   const {
     publishedAt,
     title,
@@ -17,13 +17,18 @@ const BlogCard = ({ author, content, viewMode }) => {
     category,
     activity: { total_likes, total_dislikes },
     blog_id: id,
-    banner,
+    images,
     tags,
-  } = content;
+    blocks,
+  } = blog;
   const { full_name } = author;
   const { theme } = useContext(ThemeContext);
 
-  console.log(publishedAt);
+  // console.log(blog.content[0]);
+  const bannerImage = blog?.content[0]?.blocks?.find(
+    (block) => block.type === "image"
+  )?.data?.file?.url;
+
   return (
     <Link
       to={`/blog/${id}`}
@@ -36,7 +41,7 @@ const BlogCard = ({ author, content, viewMode }) => {
       {viewMode === "list" && (
         <div className="w-full lg:w-[500px] lg:h-[250px]">
           <img
-            src={banner ? banner : DefaultBanner}
+            src={bannerImage || DefaultBanner}
             alt={title}
             className="w-full h-full object-cover rounded-lg"
           />
@@ -73,8 +78,8 @@ const BlogCard = ({ author, content, viewMode }) => {
           </p>
         </div>
 
-        <div className="flex flex-col items-start justify-between w-full mt-2 lg:mt-2 bg-red-200//">
-          <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-col items-start justify-between w-full mt-2 lg:mt-2 gap-2 bg-red-200//">
+          <div className="flex flex-wrap gap-2 mb-4//">
             {tags?.map((tag, index) => (
               <span
                 key={index}

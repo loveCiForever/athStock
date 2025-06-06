@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useContext } from "react";
 import { toast } from "react-toastify";
-import { tools } from "./EditorTool.jsx";
+import { getTools } from "./EditorTool.jsx";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -101,7 +101,7 @@ const PublishBlog = () => {
       if (!data.blocks.length) {
         return toast.error("Write something in your blog to publish it");
       }
-
+      console.log(blog);
       const blogObj = {
         ...blog,
         title,
@@ -146,7 +146,7 @@ const PublishBlog = () => {
         new EditorJS({
           holder: "textEditor",
           data: content,
-          tools: tools,
+          tools: getTools(setBlog),
         })
       );
     }
@@ -177,7 +177,7 @@ const PublishBlog = () => {
           />
 
           <div
-            className="min-h-[400px] border-gray-300 rounded-lg py-8 mb-6 bg-gray-50/"
+            className="min-h-[100px] border-gray-300 rounded-lg py-8 mb-6 bg-gray-50/"
             id="textEditor"
           />
         </>

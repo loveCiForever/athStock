@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.9.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
@@ -24,6 +25,7 @@
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
+    "multer": "^2.0.1",
     "nanoid": "^5.0.9",
     "nodemailer": "^7.0.3"
   },
@@ -32,6 +34,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "^1.4.12",
     "nodemon": "^3.1.9"
   }
 }

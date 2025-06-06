@@ -6,7 +6,7 @@ import AuthFormInput from "../../ui/input/AuthFormInput";
 import { toast } from "react-toastify";
 
 import axios from "axios";
-// import { useAuthContext } from "../../../hooks/useAuthContext.jsx";
+import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../../../utils/config.jsx";
 
 const RegisterForm = () => {
   const [fullname, setFullname] = useState("");
@@ -14,8 +14,6 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  const VITE_BASE_URL = import.meta.env.VITE_LOCAL_BLOG_API_SERVER;
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -37,13 +35,11 @@ const RegisterForm = () => {
 
     setIsLoading(true);
     try {
-      // console.log(VITE_BASE_URL);
-      const response = await axios.post(`${VITE_BASE_URL}/api/auth/register`, {
+      const response = await axios.post(`${DEVELOPMENT_BLOG_SERVER_BASE_URL}/api/auth/register`, {
         full_name: fullname,
         email,
         password,
       });
-      // console.log(response);
 
       toast.success(
         "Registration successful. Check your email to verify account"

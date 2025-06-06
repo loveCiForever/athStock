@@ -15,6 +15,8 @@ const categories = [
   "Hoạt động kinh doanh",
   "Niêm yết",
   "Doanh nhân và khởi nghiệp",
+  "Kinh tế thế giới",
+  "Vàng và kim loại quý",
 ];
 
 export default categories;

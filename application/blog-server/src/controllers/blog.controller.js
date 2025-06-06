@@ -37,7 +37,6 @@ const createBlog = async (req, res) => {
       tags,
       category,
       author: currentUserId,
-      banner,
     }).save();
 
     await UserModel.findOneAndUpdate(
@@ -77,7 +76,7 @@ const fetchLatestBlog = async (req, res) => {
       .sort({ publishedAt: -1 })
 
       .select(
-        "blog_id title intro category activity tags publishedAt -_id banner author"
+        "blog_id title intro banner content tags category activity comments publishedAt -_id "
       )
       .skip((page - 1) * maxLimit)
       .limit(maxLimit)
@@ -113,12 +112,12 @@ const fetchBlogByCategory = async (req, res) => {
       .find({ category: category })
       .populate(
         "author",
-        "personal_info.profile_img personal_info.userName personal_info.fullName -_id"
+        "personal_info.profile_img personal_info.user_name personal_info.full_name -_id"
       )
       .sort({ publishedAt: -1 })
 
       .select(
-        "blog_id title intro category activity tags publishedAt -_id banner"
+        "blog_id title intro banner content tags category activity comments publishedAt -_id "
       )
       .skip((page - 1) * maxLimit)
       .limit(maxLimit)

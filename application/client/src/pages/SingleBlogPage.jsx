@@ -142,7 +142,7 @@ const SingleBlogPage = () => {
     document.title = blog.category ? blog.category : "" + blog.title;
   });
 
-  console.log(blog.publishedAt);
+  console.log(blog);
   return (
     <div
       className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
@@ -178,23 +178,41 @@ const SingleBlogPage = () => {
               {blog.intro}
             </h2>
 
-            <div className="flex items-center justify-center w-full mt-4 mb-6">
-              <img
-                src={blog.banner || DefaultBanner}
-                alt="banner"
-                className="w-full"
-              />
-            </div>
-
-            {blog.content[0]?.blocks.map((block) =>
-              block.type === "paragraph" ? (
-                <p
-                  key={block.id}
-                  className="mt-2 text-base tracking-wide xl:text-lg"
-                  dangerouslySetInnerHTML={{ __html: block.data.text }}
-                />
-              ) : null
-            )}
+            {blog.content[0]?.blocks.map((block) => {
+              switch (block.type) {
+                case "paragraph":
+                  return (
+                    <p
+                      key={block.id}
+                      className="mt-2 text-base tracking-wide xl:text-lg"
+                      dangerouslySetInnerHTML={{ __html: block.data.text }}
+                    />
+                  );
+                case "image":
+                  return (
+                    <div key={block.id} className="my-8">
+                      <img
+                        src={block.data.file.url}
+                        alt={block.data.caption || "Blog image"}
+                        className={`w-full ${
+                          block.data.stretched ? "" : "max-w-xl mx-auto"
+                        } ${
+                          block.data.withBorder ? "border border-gray-300" : ""
+                        } ${
+                          block.data.withBackground ? "bg-gray-100 p-3" : ""
+                        }`}
+                      />
+                      {block.data.caption && (
+                        <p className="mt-2 text-center text-sm text-gray-500">
+                          {block.data.caption}
+                        </p>
+                      )}
+                    </div>
+                  );
+                default:
+                  return null;
+              }
+            })}
           </div>
 
           <aside

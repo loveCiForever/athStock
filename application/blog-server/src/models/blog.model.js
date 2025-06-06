@@ -14,8 +14,9 @@ const blogSchema = mongoose.Schema(
       type: String,
       maxLength: 500,
     },
-    banner: {
-      type: String,
+    images: {
+      type: [String],
+      default: [],
     },
     content: {
       type: [],

@@ -119,7 +119,7 @@ const BlogPage = () => {
             blogs.map((blog) => (
               <BlogCard
                 key={blog.blog_id}
-                content={blog}
+                blog={blog}
                 author={blog.author ? blog.author.personal_info : ""}
                 viewMode={viewMode}
               />

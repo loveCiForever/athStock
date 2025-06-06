@@ -3,7 +3,7 @@
 export const BlogStructure = {
   title: "",
   intro: "",
-  banner: "",
+  images: [],
   content: [],
   tags: [],
   author: { personal_info: {} },
