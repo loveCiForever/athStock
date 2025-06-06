@@ -85,12 +85,36 @@
 .ce-toolbar__content {
   max-width: 800px !important;
   margin: 0 auto;
-  background: white !important;
+  /* background: white !important; */
+}
+
+.ce-toolbar__plus {
+  color: #ff6b00 !important; 
+  background-color: transparent !important;
+}
+
+.ce-toolbar__plus:hover {
+  background-color: #313131 !important; 
+  color: #ff4d00 !important;
+}
+
+.ce-toolbar__settings-btn {
+  color: #ff4d00 !important;
+  background-color: transparent !important;
+}
+
+.ce-toolbar__settings-btn:hover {
+  background-color: #313131 !important; 
+  color: #ff4d00 !important;
 }
 
 /* inline-toolbar */
 .ce-inline-toolbar {
   max-width: 800px !important;
   background: white !important;
-  border: 1px solid #E8E8EB !important;
+}
+
+.ce-inline-toolbar__buttons {
+  color: #ff6b00 !important; 
+  background-color: transparent !important;
 }

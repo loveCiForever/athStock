@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../utils/config";
 const VerifyPage = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
@@ -21,10 +21,8 @@ const VerifyPage = () => {
       });
       return;
     }
-
-    const API_URL = import.meta.env.VITE_LOCAL_BLOG_API_SERVER;
     axios
-      .get(`${API_URL}/api/auth/verify-email`, { params: { token } })
+      .get(`${DEVELOPMENT_BLOG_SERVER_BASE_URL}/api/auth/verify-email`, { params: { token } })
       .then((res) => {
         const data = res.data;
         if (res.status === 200 && data.success) {

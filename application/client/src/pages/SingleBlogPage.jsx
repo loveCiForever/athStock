@@ -15,6 +15,7 @@ import {
   checkStringBo,
   UppercaseFirstLetterEachWord,
 } from "../utils/formatString";
+import { getDayMonthYear } from "../utils/formatDate";
 
 const SingleBlogPage = () => {
   const [blog, setBlog] = useState(BlogStructure);
@@ -141,6 +142,7 @@ const SingleBlogPage = () => {
     document.title = blog.category ? blog.category : "" + blog.title;
   });
 
+  console.log(blog);
   return (
     <div
       className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
@@ -157,14 +159,18 @@ const SingleBlogPage = () => {
 
             <div className="flex items-center justify-between w-full mt-3 text-sm xl:mt-5 md:text-base xl:text-lg">
               <h2 className=" text-[16px]">
-                {new Date(blog.publishedAt).toLocaleDateString()}
+                {blog.publishedAt
+                  ? getDayMonthYear(blog.publishedAt)
+                  : "Failed to get publishedAt"}
               </h2>
               <h2 className="font-bold">
-                {checkStringBo(blog.author.personal_info.full_name)
-                  ? UppercaseFirstLetterEachWord(
-                      blog.author.personal_info.full_name
-                    )
-                  : "Khuyết danh"}
+                {blog.author
+                  ? checkStringBo(blog.author.personal_info.full_name)
+                    ? UppercaseFirstLetterEachWord(
+                        blog.author.personal_info.full_name
+                      )
+                    : "Khuyết danh"
+                  : "Failed to get full_name"}
               </h2>
             </div>
 
@@ -172,23 +178,41 @@ const SingleBlogPage = () => {
               {blog.intro}
             </h2>
 
-            <div className="flex items-center justify-center w-full mt-4 mb-6">
-              <img
-                src={blog.banner || DefaultBanner}
-                alt="banner"
-                className="w-full"
-              />
-            </div>
-
-            {blog.content[0]?.blocks.map((block) =>
-              block.type === "paragraph" ? (
-                <p
-                  key={block.id}
-                  className="mt-2 text-base tracking-wide xl:text-lg"
-                  dangerouslySetInnerHTML={{ __html: block.data.text }}
-                />
-              ) : null
-            )}
+            {blog.content[0]?.blocks.map((block) => {
+              switch (block.type) {
+                case "paragraph":
+                  return (
+                    <p
+                      key={block.id}
+                      className="mt-2 text-base tracking-wide xl:text-lg"
+                      dangerouslySetInnerHTML={{ __html: block.data.text }}
+                    />
+                  );
+                case "image":
+                  return (
+                    <div key={block.id} className="my-8">
+                      <img
+                        src={block.data.file.url}
+                        alt={block.data.caption || "Blog image"}
+                        className={`w-full ${
+                          block.data.stretched ? "" : "max-w-xl mx-auto"
+                        } ${
+                          block.data.withBorder ? "border border-gray-300" : ""
+                        } ${
+                          block.data.withBackground ? "bg-gray-100 p-3" : ""
+                        }`}
+                      />
+                      {block.data.caption && (
+                        <p className="mt-2 text-center text-sm text-gray-500">
+                          {block.data.caption}
+                        </p>
+                      )}
+                    </div>
+                  );
+                default:
+                  return null;
+              }
+            })}
           </div>
 
           <aside

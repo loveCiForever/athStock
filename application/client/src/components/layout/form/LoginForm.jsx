@@ -6,14 +6,13 @@ import AuthFormInput from "../../ui/input/AuthFormInput";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuthContext } from "../../../hooks/AuthContext.jsx";
-
+import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../../../utils/config.jsx";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { user, configUser } = useAuthContext();
-  const VITE_BASE_URL = import.meta.env.VITE_LOCAL_BLOG_API_SERVER;
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,10 +29,13 @@ const LoginForm = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post(`${VITE_BASE_URL}/api/auth/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${DEVELOPMENT_BLOG_SERVER_BASE_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
       console.log(response);
       toast.success("Login successful");
       configUser(response.data.data.user, response.data.data.access_token);
