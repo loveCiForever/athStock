@@ -65,20 +65,36 @@ export const getDayMonth = (timestamp) => {
 };
 
 /**
- * Gets full date in Vietnamese format
- * @param {number|iso-string|Date} timestamp
- * @returns {string
- * @throws {Error}
- * @example "15 Tháng 6 2025"
+ * Formats date in Vietnamese format with relative time for today's posts
+ * @param {string|number|Date} timestamp - ISO string, Unix timestamp, or Date object
+ * @returns {string} Formatted date string in Vietnamese
+ * @throws {Error} If timestamp is invalid
+ * @example
+ * getDayMonthYear("2025-06-06T05:52:41.454Z") // "2 giờ trước"
+ * getDayMonthYear("2025-05-06T05:52:41.454Z") // "6 Tháng 5 2025"
  */
 export const getDayMonthYear = (timestamp) => {
   try {
     const realTimestamp = toMilliseconds(timestamp);
     const date = new Date(realTimestamp);
+    const now = new Date();
 
     if (isNaN(date.getTime())) {
       throw new Error("Invalid date");
     }
+
+    const isToday = date.toDateString() === now.toDateString();
+
+    if (isToday) {
+      const diffInMilliseconds = now - date;
+      const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+      const diffInHours = Math.floor(diffInMinutes / 60);
+
+      if (diffInMinutes < 1) return "Vừa xong";
+      if (diffInMinutes < 60) return `${diffInMinutes} phút trước`;
+      if (diffInHours < 24) return `${diffInHours} giờ trước`;
+    }
+
     return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
   } catch (error) {
     throw new Error(`Invalid date format: ${error.message}`);

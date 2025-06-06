@@ -15,6 +15,7 @@ import {
   checkStringBo,
   UppercaseFirstLetterEachWord,
 } from "../utils/formatString";
+import { getDayMonthYear } from "../utils/formatDate";
 
 const SingleBlogPage = () => {
   const [blog, setBlog] = useState(BlogStructure);
@@ -141,6 +142,7 @@ const SingleBlogPage = () => {
     document.title = blog.category ? blog.category : "" + blog.title;
   });
 
+  console.log(blog.publishedAt);
   return (
     <div
       className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
@@ -157,14 +159,18 @@ const SingleBlogPage = () => {
 
             <div className="flex items-center justify-between w-full mt-3 text-sm xl:mt-5 md:text-base xl:text-lg">
               <h2 className=" text-[16px]">
-                {new Date(blog.publishedAt).toLocaleDateString()}
+                {blog.publishedAt
+                  ? getDayMonthYear(blog.publishedAt)
+                  : "Failed to get publishedAt"}
               </h2>
               <h2 className="font-bold">
-                {checkStringBo(blog.author.personal_info.full_name)
-                  ? UppercaseFirstLetterEachWord(
-                      blog.author.personal_info.full_name
-                    )
-                  : "Khuyết danh"}
+                {blog.author
+                  ? checkStringBo(blog.author.personal_info.full_name)
+                    ? UppercaseFirstLetterEachWord(
+                        blog.author.personal_info.full_name
+                      )
+                    : "Khuyết danh"
+                  : "Failed to get full_name"}
               </h2>
             </div>
 

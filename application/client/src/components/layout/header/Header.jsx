@@ -1,3 +1,5 @@
+// application/client/src/components/layout/header/Header.jsx
+
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 
@@ -37,7 +39,10 @@ const Header = () => {
         }}
       >
         <div className="flex flex-col">
-          <h1 className={`flex text-3xl font-bold `}>athStock.</h1>
+          <div className={`flex text-3xl font-bold `}>
+            <h1>ath</h1>
+            <h1 className="text-orange-500">Stock.</h1>
+          </div>
         </div>
       </button>
 
