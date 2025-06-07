@@ -1,6 +1,6 @@
 // application/client/src/components/layout/slider/CategorySlider.jsx
 
-import React, { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { ThemeContext } from "../../../hooks/useTheme";
 
@@ -121,8 +121,8 @@ export default function CategorySlider({
         <div
           ref={sliderRef}
           className={`
-            flex items-center gap-3 px-6 py-4 overflow-x-auto no-scrollbar
-            ${theme === "dark-theme" ? "bg-zinc-900/50//" : "bg-gray-50/50//"}
+            flex items-center gap-3 px-12 py-4 overflow-x-auto no-scrollbar
+            ${theme === "dark-theme" ? "" : ""}
             transition-all duration-300 scroll-smooth
             ${isScrolling ? "cursor-grabbing" : "cursor-grab"}
           `}
@@ -155,7 +155,7 @@ export default function CategorySlider({
                       focus:ring-gray-500/50 hover:shadow-md
                     `
                       : `
-                      bg-white/80// text-gray-900 hover:bg-orange-300
+                       text-gray-900 hover:bg-orange-300
                       border border-gray-200/80 hover:border-gray-300
                       focus:ring-gray-400/10 hover:shadow-md
                     `
@@ -177,7 +177,7 @@ export default function CategorySlider({
                   ${
                     isSelected
                       ? "bg-white/10 hover:opacity-100"
-                      : "bg-orange-500// hover:opacity-100"
+                      : " hover:opacity-100"
                   }
                 `}
                 />

@@ -80,22 +80,24 @@ const BlogPage = () => {
           handleCategoryClick={handleCategoryClick}
         />
 
-        <div className="mt-4">
+        <div className="my-4">
           {viewMode === "list" ? (
             <button
               onClick={() => {
                 setViewMode("grid");
               }}
+              className="text-orange-500"
             >
-              <LayoutGrid />
+              <LayoutGrid strokeWidth="2px" />
             </button>
           ) : (
             <button
               onClick={() => {
                 setViewMode("list");
               }}
+              className="text-orange-500"
             >
-              <List />
+              <List strokeWidth="2px" />
             </button>
           )}
         </div>

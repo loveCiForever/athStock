@@ -1,3 +1,5 @@
+// applications/client/src/components/ui/card/BlogCard.jsx
+
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -9,6 +11,7 @@ import { getDayMonthYear } from "../../../utils/formatDate";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
 import DefaultBanner from "../../../assets/images/blogBanner.png";
+
 const BlogCard = ({ author, blog, viewMode }) => {
   const {
     publishedAt,
@@ -17,14 +20,11 @@ const BlogCard = ({ author, blog, viewMode }) => {
     category,
     activity: { total_likes, total_dislikes },
     blog_id: id,
-    images,
     tags,
-    blocks,
   } = blog;
   const { full_name } = author;
   const { theme } = useContext(ThemeContext);
 
-  // console.log(blog.content[0]);
   const bannerImage = blog?.content[0]?.blocks?.find(
     (block) => block.type === "image"
   )?.data?.file?.url;
@@ -32,14 +32,16 @@ const BlogCard = ({ author, blog, viewMode }) => {
   return (
     <Link
       to={`/blog/${id}`}
-      className={`flex flex-col lg:flex-row items-start w-full border-b border-gray-300 py-0 md:py-8 ${
-        theme === "dark-theme"
-          ? "hover:bg-black/10"
-          : "hover:bg-gray-100 text-gray-700"
-      }`}
+      className={`blog-card flex flex-col lg:flex-row items-start w-full p-6
+        ${viewMode === "list" && "border-b border-gray-300"}
+        ${
+          viewMode === "grid" &&
+          "border-1 rounded-lg border-gray-100 hover:shadow-xl"
+        }
+        ${theme === "dark-theme" ? "hover:bg-black/10" : "hover:bg-gray-100"}`}
     >
       {viewMode === "list" && (
-        <div className="w-full lg:w-[500px] lg:h-[250px]">
+        <div className="w-full lg:w-[500px] lg:h-[250px] mr-6">
           <img
             src={bannerImage || DefaultBanner}
             alt={title}
@@ -48,7 +50,13 @@ const BlogCard = ({ author, blog, viewMode }) => {
         </div>
       )}
 
-      <div className="flex flex-col justify-between w-full ml-0 lg:ml-6 mt-4 lg:mt-0 lg:h-[200px] xl:h-[250px]">
+      <div
+        className={`flex flex-col justify-between w-full ${
+          viewMode === "grid"
+            ? "lg:h-[200px] xl:h-[300px]"
+            : "lg:h-[200px] xl:h-[250px]"
+        }  `}
+      >
         <div className="w-full">
           <div className="w-full flex gap-4 items-center justify-start">
             <h1 className="text-orange-500 text-sm lg:text-base xl:text-md font-extrabold tracking-wide">
@@ -78,8 +86,8 @@ const BlogCard = ({ author, blog, viewMode }) => {
           </p>
         </div>
 
-        <div className="flex flex-col items-start justify-between w-full mt-2 lg:mt-2 gap-2 bg-red-200//">
-          <div className="flex flex-wrap gap-2 mb-4//">
+        <div className="flex flex-col items-start justify-between w-full mt-2 lg:mt-2 gap-2">
+          <div className="flex flex-wrap gap-2">
             {tags?.map((tag, index) => (
               <span
                 key={index}

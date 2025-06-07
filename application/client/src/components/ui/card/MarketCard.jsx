@@ -1,8 +1,9 @@
+// applications/client/src/components/ui/card/MarketCard.jsx
+
 import { ArrowUp, ArrowDown, Minus } from "lucide-react";
 import { formatNumber } from "../../../utils/formatNumber.jsx";
 import { ThemeContext } from "../../../hooks/useTheme.jsx";
 import { useContext } from "react";
-import PropTypes from "prop-types";
 
 const MarketCard = ({
   IndexName,
@@ -116,16 +117,6 @@ const MarketCard = ({
          `}
         >
           <div className="flex w-full">
-            {/* <div
-              className={`
-              px-3 aspect-square rounded-md content-center justify-items-center
-              ${getBgColor(Change)}
-              ${getTextColor(ChangeFloat)}
-            `}
-            >
-              {getStatusArrow(ChangeFloat)}
-            </div> */}
-
             <div className="flex flex-col w-1/2 ml-2 text-start">
               <span className="font-bold text-gray-800/ tracking-widest">
                 {IndexName}
@@ -192,7 +183,7 @@ const MarketCard = ({
       ) : (
         <button
           onClick={onClick}
-          className={`flex items-center justify-between w-full py-1/ my-3 text-gray-600// rounded-md hover:bg-gray-100// text-[17px] ${
+          className={`flex items-center justify-between w-full my-3 rounded-md text-[17px] ${
             theme === "dark-theme" ? "hover:bg-black/30" : ""
           }  ${className}`}
         >
