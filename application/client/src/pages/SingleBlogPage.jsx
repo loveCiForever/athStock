@@ -1,7 +1,7 @@
 // application/client/src/page/SingleBlogPage.jsx
 
 import axios from "axios";
-import { CircleChevronDown, CircleChevronUp, CircleX } from "lucide-react";
+import { CircleChevronDown, CircleChevronUp, CircleX, Tag } from "lucide-react";
 import { createContext, useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -139,20 +139,23 @@ const SingleBlogPage = () => {
   }, [user, blog_id]);
 
   useEffect(() => {
-    document.title = blog.category ? blog.category : "" + blog.title;
+    document.title =
+      (blog.category ? blog.category : "") +
+      " - " +
+      (blog.title ? blog.title : "");
   });
 
-  console.log(blog);
+  // console.log(blog.tags);
   return (
     <div
       className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
     >
       <Header />
 
-      <div className="body flex flex-col flex-1 w-full mt-5 ">
-        <div className="flex flex-col items-start justify-start flex-1 w-full px-6 mt-5 xl:flex-row sm:px-10 md:px-14 xl:px-40">
+      <div className="body flex flex-col flex-1 w-full mt-30 ">
+        <div className="flex flex-col items-start justify-start flex-1 w-full px-6 mt-5 xl:flex-row sm:px-10 md:px-14 xl:px-80">
           {/* —— MAIN CONTENT —— */}
-          <div className="w-full xl:w-[65%] xl:mb-20">
+          <div className="w-full xl:mb-20">
             <h1 className="text-xl font-extrabold tracking-wide md:text-2xl xl:text-3xl">
               {blog.title}
             </h1>
@@ -213,20 +216,33 @@ const SingleBlogPage = () => {
                   return null;
               }
             })}
+
+            <div className="flex flex-wrap gap-2 mt-8 items-center">
+              <Tag className="" size={18} />
+              {blog.tags?.map((tag, index) => (
+                <span
+                  key={index}
+                  className={`px-4 py-1 text-sm rounded-md ${
+                    theme === "dark-theme" ? "bg-black/30" : "bg-gray-200"
+                  } `}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
 
           <aside
             className={`
               flex flex-row flex-1
-              sticky// top-10//
-              w-full
+              sticky top-10
               xl:top-[calc(100px+2.5rem)]
               xl:mb-0 xl:ml-10 my-10 xl:my-0
               z-10 gap-2
             `}
           >
             <div className="flex flex-col items-center justify-center gap-4 pr-2 rounded-lg">
-              <div className="flex flex-col items-center rounded-lg justify-center gap-4 p-4 bg-whit//">
+              <div className="flex flex-col items-center rounded-lg justify-center gap-4 p-4">
                 {" "}
                 <button
                   onClick={() => {
@@ -270,16 +286,12 @@ const SingleBlogPage = () => {
                     voteStatus: voteStatus,
                   });
                 }}
-                className={`p-4 rounded-lg bg-white// hover:text-gray-300 text-orange-400 ${
+                className={`p-4 rounded-lg hover:text-gray-300 text-orange-400 ${
                   voteStatus === "dislike" ? "" : ""
                 }`}
               >
                 <CircleX size={35} strokeWidth={2} />
               </button>
-            </div>
-
-            <div className="w-full h-auto p-4 text-center bg-white// rounded-lg xl:flex-1">
-              comment panel
             </div>
           </aside>
         </div>

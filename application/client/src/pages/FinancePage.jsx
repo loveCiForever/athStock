@@ -20,7 +20,7 @@ const FinancePage = () => {
     >
       <Header />
 
-      <div className="body flex flex-col flex-1 w-full mt-5 mb-20">
+      <div className="body flex flex-col flex-1 w-full mt-30 mb-20">
         <div className="flex flex-col items-center justify-start flex-1 w-full">
           <div className="flex items-center justify-center w-full px-6 sm:px-10 md:px-14 xl:px-20">
             <StockMarket onSelectIndex={setSelectedIndex} />

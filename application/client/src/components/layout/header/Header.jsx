@@ -13,10 +13,13 @@ import LoginButton from "../../ui/button/LoginButton.jsx";
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const { theme } = useContext(ThemeContext);
+  const { user } = useAuthContext();
+  const [isScrolled, setIsScrolled] = useState(false);
   const [currentBasePath, setCurrentBasePath] = useState(
     getBasePath(window.location.pathname)
   );
+
   const handleBasePathChange = () => {
     setCurrentBasePath(getBasePath(window.location.pathname));
   };
@@ -24,12 +27,21 @@ const Header = () => {
     handleBasePathChange();
   }, [currentBasePath]);
 
-  const { theme } = useContext(ThemeContext);
-  const { user } = useAuthContext();
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div
-      className={`header flex w-full items-center justify-between h-[100px] px-6 sm:px-10 md:px-14 xl:px-40`}
+      className={`header flex w-full items-center justify-between h-[80px] px-6 sm:px-10 md:px-14 xl:px-40 fixed z-50 transition-all duration-300 ${
+        isScrolled ? "shadow-lg" : ""
+      }`}
+      style={{ backgroundColor: "var(--bg-primary)" }}
     >
       {/* LEFT-SECTION: LOGO */}
       <button

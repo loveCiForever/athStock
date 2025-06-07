@@ -103,6 +103,57 @@ const fetchLatestBlog = async (req, res) => {
   }
 };
 
+const fetchBlogsByAuthorId = async (req, res) => {
+  try {
+    const { author_id } = req.params;
+    let { page = 1, limit = 10 } = req.query;
+
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const blogs = await BlogModel.find({
+      author: author_id,
+      draft: false,
+    })
+      .populate(
+        "author",
+        "personal_info.profile_img personal_info.user_name personal_info.full_name -_id"
+      )
+      .sort({ publishedAt: -1 })
+      .select(
+        "blog_id title intro images content tags category activity comments publishedAt -_id"
+      )
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const total = await BlogModel.countDocuments({
+      author: author_id,
+      draft: false,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Fetch author's blogs successfully",
+      data: {
+        blogs,
+        pagination: {
+          total,
+          page,
+          totalPages: Math.ceil(total / limit),
+          hasMore: page * limit < total,
+        },
+      },
+    });
+  } catch (error) {
+    console.error("[FETCH_AUTHOR_BLOGS] Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch author's blogs",
+      error: error.message,
+    });
+  }
+};
+
 const fetchBlogByCategory = async (req, res) => {
   try {
     let { page, category } = req.body;
@@ -166,8 +217,8 @@ const fetchBlogById = async (req, res) => {
 };
 
 const getVoteStatusByBlogIdUserId = async (req, res) => {
-  const { blog_id } = req.body; // your string id
-  const user_id = req.user; // JWT middleware gave you this
+  const { blog_id } = req.body;
+  const user_id = req.user;
 
   try {
     const blog = await BlogModel.findOne({ blog_id });
@@ -219,13 +270,9 @@ const getVoteStatusByBlogIdUserId = async (req, res) => {
 
 const likeByBlogId = async (req, res) => {
   try {
-    // 1) Pull IDs
-    const userId = req.user; // either ObjectId or string
-    const { blog_id } = req.body; // your slug/identifier
+    const userId = req.user;
+    const { blog_id } = req.body;
 
-    // console.log(`[LIKEBYBLOGID] userid: ${userId}`);
-
-    // 2) Load the blog
     const blog = await BlogModel.findOne({ blog_id });
     if (!blog) {
       return res.status(404).json({
@@ -235,7 +282,6 @@ const likeByBlogId = async (req, res) => {
       });
     }
 
-    // 3) Load the user
     const user = await UserModel.findById(userId);
     if (!user) {
       return res.status(404).json({
@@ -245,7 +291,6 @@ const likeByBlogId = async (req, res) => {
       });
     }
 
-    // 4) Check if already liked
     if (blog.activity.likesBy.some((id) => id.equals(user._id))) {
       return res.status(400).json({
         success: false,
@@ -257,19 +302,16 @@ const likeByBlogId = async (req, res) => {
     const blogObjId = blog._id;
     const userObjId = user._id;
 
-    // 5) Remove a previous dislike, if any
     if (blog.activity.dislikesBy.some((id) => id.equals(userObjId))) {
       blog.activity.dislikesBy.pull(userObjId);
       blog.activity.total_dislikes--;
       user.activities.dislike.pull(blogObjId);
     }
 
-    // 6) Add the like
     blog.activity.likesBy.push(userObjId);
     blog.activity.total_likes++;
     user.activities.like.push(blogObjId);
 
-    // 7) Persist changes
     await blog.save();
     await user.save();
 
@@ -292,8 +334,6 @@ const unVote = async (req, res) => {
   const userId = req.user;
   const { blog_id } = req.body;
 
-  // console.log(`[UNVOTE] userid: ${userId}, blogid: ${blog_id}`);
-
   try {
     const blog = await BlogModel.findOne({ blog_id });
     if (!blog) {
@@ -304,7 +344,6 @@ const unVote = async (req, res) => {
       });
     }
 
-    // 3) Load the user
     const user = await UserModel.findById(userId);
     if (!user) {
       return res.status(404).json({
@@ -346,10 +385,9 @@ const unVote = async (req, res) => {
 
 const dislikeByBlogId = async (req, res) => {
   try {
-    const userId = req.user; // string or ObjectId
+    const userId = req.user;
     const { blog_id } = req.body;
 
-    // 1) Load blog
     const blog = await BlogModel.findOne({ blog_id });
     if (!blog) {
       return res.status(404).json({
@@ -359,7 +397,6 @@ const dislikeByBlogId = async (req, res) => {
       });
     }
 
-    // 2) Load user
     const user = await UserModel.findById(userId);
     if (!user) {
       return res.status(404).json({
@@ -369,7 +406,6 @@ const dislikeByBlogId = async (req, res) => {
       });
     }
 
-    // 3) Abort if already down-voted
     if (blog.activity.dislikesBy.some((id) => id.equals(user._id))) {
       return res.status(400).json({
         success: false,
@@ -381,23 +417,19 @@ const dislikeByBlogId = async (req, res) => {
     const blogObjId = blog._id;
     const userObjId = user._id;
 
-    // 4) Remove existing like, if any
     if (blog.activity.likesBy.some((id) => id.equals(userObjId))) {
       blog.activity.likesBy.pull(userObjId);
       blog.activity.total_likes--;
       user.activities.like.pull(blogObjId);
     }
 
-    // 5) Add the dislike
     blog.activity.dislikesBy.push(userObjId);
     blog.activity.total_dislikes++;
     user.activities.dislike.push(blogObjId);
 
-    // 6) Persist changes one after the other
     await blog.save();
     await user.save();
 
-    // 7) Return result
     return res.json({
       success: true,
       message: "Downvote successfully",
@@ -422,4 +454,5 @@ export {
   dislikeByBlogId,
   getVoteStatusByBlogIdUserId,
   unVote,
+  fetchBlogsByAuthorId,
 };

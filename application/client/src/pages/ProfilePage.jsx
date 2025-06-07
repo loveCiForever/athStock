@@ -7,12 +7,17 @@ import { UppercaseFirstLetterEachWord } from "../utils/formatString";
 import { useAuthContext } from "../hooks/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../utils/config";
+import { BlogStructure } from "../components/layout/blog/BlogStructure";
+import { Link } from "react-router-dom";
+import DefaultBanner from "../assets/images/blogBanner.png";
+import { GridIcon, List as ListIcon } from "lucide-react";
 const ProfilePage = () => {
   useEffect(() => {
     document.title = "Profile";
   }, []);
 
+  const [displayType, setDisplayType] = useState("grid");
   const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
   const [renderUser, setRenderUser] = useState();
@@ -21,7 +26,6 @@ const ProfilePage = () => {
     socialLinks: false,
   });
   const { logout, getAccessToken, user } = useAuthContext();
-
   const authHeaders = user
     ? { headers: { Authorization: `Bearer ${getAccessToken()}` } }
     : {};
@@ -63,10 +67,10 @@ const ProfilePage = () => {
     const handleGetUserInfo = async () => {
       try {
         const response = await axios.get(
-          `${VITE_BASE_URL}/api/user/get-user-info`,
+          `${DEVELOPMENT_BLOG_SERVER_BASE_URL}/api/user/get-user-info`,
           authHeaders
         );
-        // console.log(response.data.data.user);
+        console.log(response);
         setRenderUser(response.data.data.user);
         setLoading(false);
       } catch (error) {
@@ -98,6 +102,34 @@ const ProfilePage = () => {
     }));
   };
 
+  const [userBlogs, setUserBlogs] = useState([]);
+  const [loadingBlogs, setLoadingBlogs] = useState(false);
+
+  useEffect(() => {
+    const fetchUserBlogs = async () => {
+      if (!renderUser?._id) return;
+
+      setLoadingBlogs(true);
+      try {
+        const response = await axios.get(
+          `${DEVELOPMENT_BLOG_SERVER_BASE_URL}/api/blog/author/${renderUser._id}`,
+          {
+            params: { page: 1, limit: 10 },
+            ...authHeaders,
+          }
+        );
+        setUserBlogs(response.data.data.blogs);
+      } catch (error) {
+        console.error("Error fetching user blogs:", error);
+        toast.error("Failed to fetch blogs");
+      } finally {
+        setLoadingBlogs(false);
+      }
+    };
+
+    fetchUserBlogs();
+  }, [renderUser?._id]);
+
   if (loading) {
     return (
       <div
@@ -113,7 +145,7 @@ const ProfilePage = () => {
     <div className={`${theme} profile-page flex flex-col min-h-screen`}>
       <Header />
 
-      <main className="container mx-auto py-8 px-6 sm:px-10 md:px-14 xl:px-40 ">
+      <main className="container mx-auto py-8 px-6 sm:px-10 md:px-14 xl:px-40 mt-20 ">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             className={`md:col-span-1 py-6  rounded-lg ${
@@ -490,102 +522,100 @@ const ProfilePage = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-6 ">
-              <div
-                className={`bg-bg-secondary rounded-lg p-10 ${
-                  theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
-                }`}
-              >
-                <h2 className="text-xl font-bold mb-4">Recent Posts</h2>
 
-                {renderUser.blogs.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {user.blogs.map((blog) => (
-                      <div
-                        key={blog._id}
-                        className="border-gray-400 border-[1px] rounded-lg overflow-hidden hover:shadow-md transition-shadow"
-                      >
+            <div
+              className={`bg-bg-secondary rounded-lg p-10 mt-6 ${
+                theme === "dark-theme" ? "bg-zinc-900/50" : "bg-gray-100"
+              }`}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold">Recent Posts</h2>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setDisplayType("grid")}
+                    className={`p-2 rounded-md transition-all ${
+                      displayType === "grid"
+                        ? "bg-orange-500 text-white"
+                        : "text-gray-500 hover:bg-gray-200 dark:hover:bg-zinc-700"
+                    }`}
+                    title="Grid view"
+                  >
+                    <GridIcon size={20} />
+                  </button>
+                  <button
+                    onClick={() => setDisplayType("list")}
+                    className={`p-2 rounded-md transition-all ${
+                      displayType === "list"
+                        ? "bg-orange-500 text-white"
+                        : "text-gray-500 hover:bg-gray-200 dark:hover:bg-zinc-700"
+                    }`}
+                    title="List view"
+                  >
+                    <ListIcon size={20} />
+                  </button>
+                </div>
+              </div>
+
+              {loadingBlogs ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-orange-500"></div>
+                </div>
+              ) : userBlogs.length > 0 ? (
+                <div
+                  className={`grid gap-4 ${
+                    displayType === "grid"
+                      ? "grid-cols-1 md:grid-cols-2"
+                      : "grid-cols-1"
+                  }`}
+                >
+                  {userBlogs.map((blog) => (
+                    <Link
+                      to={`/blog/${blog.blog_id}`}
+                      key={blog.blog_id}
+                      className={`border-gray-200 border-[1px] rounded-md overflow-hidden hover:shadow-md transition-shadow ${
+                        displayType === "list" ? "flex" : ""
+                      }`}
+                    >
+                      <div className={displayType === "list" ? "w-1/3" : ""}>
                         <img
                           src={
-                            blog.banner_img ||
-                            "/placeholder.svg?height=150&width=300"
+                            blog.content?.[0]?.blocks?.find(
+                              (block) => block.type === "image"
+                            )?.data?.file?.url || "/placeholder.svg"
                           }
                           alt={blog.title}
                           className="w-full h-40 object-cover"
                         />
-                        <div className="p-4">
-                          <h3 className="font-bold mb-2">{blog.title}</h3>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            {new Date(blog.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-0 border-gray-200">
-                    <p className="text-gray-500 dark:text-gray-400">
-                      You had not publish any blog
-                    </p>
-                    <button className="mt-4 px-4 text-black py-2 bg-orange-100/ font-bold rounded-md  transition-colors hover:underline">
-                      Create Your First Post
-                    </button>
-                  </div>
-                )}
-
-                {renderUser.blogs.length > 0 && (
-                  <div className="mt-6 text-center">
-                    <button className="px-4 py-3 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors">
-                      View All Posts
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Activity */}
-              {/* <div className="bg-bg-secondary rounded-lg shadow-md p-6 mt-6">
-                <h2 className="text-xl font-bold mb-4">Activity</h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-medium mb-3">
-                      Liked Posts ({user.activities.like.length})
-                    </h3>
-                    {user.activities.like.length > 0 ? (
-                      <ul className="space-y-2">
-                        {user.activities.like.map((id) => (
-                          <li key={id} className="p-2 bg-bg-primary rounded-md">
-                            Post #{id}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-gray-500 dark:text-gray-400">
-                        No liked posts yet.
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <h3 className="font-medium mb-3">
-                      Disliked Posts ({user.activities.dislike.length})
-                    </h3>
-                    {user.activities.dislike.length > 0 ? (
-                      <ul className="space-y-2">
-                        {user.activities.dislike.map((id) => (
-                          <li key={id} className="p-2 bg-bg-primary rounded-md">
-                            Post #{id}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-gray-500 dark:text-gray-400">
-                        No disliked posts.
-                      </p>
-                    )}
-                  </div>
+                      <div
+                        className={`p-4 ${
+                          displayType === "list" ? "w-2/3" : ""
+                        }`}
+                      >
+                        <h3 className="font-bold mb-2">{blog.title}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
+                          {blog.intro}
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {new Date(blog.publishedAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-              </div> */}
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 dark:text-gray-400">
+                    No published blogs yet
+                  </p>
+                  <Link
+                    to="/blog/editor"
+                    className="mt-4 inline-block px-4 py-2 text-orange-500 font-bold rounded-md border border-orange-500 hover:bg-orange-500 hover:text-white transition-colors"
+                  >
+                    Create Your First Post
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

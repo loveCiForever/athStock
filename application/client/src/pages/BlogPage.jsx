@@ -73,7 +73,7 @@ const BlogPage = () => {
     >
       <Header />
 
-      <div className="body flex flex-col flex-1 w-full mt-4 px-6 sm:px-10 md:px-14 xl:px-40">
+      <div className="body flex flex-col flex-1 w-full mt-30 px-6 sm:px-10 md:px-14 xl:px-40">
         <CategorySlider
           categories={categories}
           selectedCategory={selectedCategory}
