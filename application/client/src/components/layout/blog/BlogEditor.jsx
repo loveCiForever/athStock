@@ -201,14 +201,14 @@ const PublishBlog = () => {
 
           <hr className="w-[1px] border-none h-8 bg-black" />
 
-          <div className="flex flex-col items-start gap-2">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col items-start gap-2 w-full">
+            <div className="flex items-center gap-2 w-full">
               <h1 className="font-semibold">Tags</h1>
               <input
                 type="text"
                 placeholder="Nhấn Enter để thêm tag"
                 onKeyDown={handleTag}
-                className=" p-2 rounded bg-transparent outline-none focus:border-orange-500"
+                className=" p-2 rounded w-full bg-transparent outline-none focus:border-orange-500"
               />
             </div>
 

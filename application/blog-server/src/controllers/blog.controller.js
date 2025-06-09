@@ -445,6 +445,117 @@ const dislikeByBlogId = async (req, res) => {
   }
 };
 
+const searchBlogs = async (req, res) => {
+  try {
+    const { query, page = 1, limit = 10 } = req.body;
+
+    // Create search criteria
+    const searchCriteria = {
+      draft: false,
+      $or: [
+        { title: { $regex: query, $options: "i" } }, // Case insensitive search
+        { tags: { $in: [new RegExp(query, "i")] } }, // Search in tags array
+      ],
+    };
+
+    const blogs = await BlogModel.find(searchCriteria)
+      .populate(
+        "author",
+        "personal_info.profile_img personal_info.user_name personal_info.full_name -_id"
+      )
+      .sort({ publishedAt: -1 })
+      .select(
+        "blog_id title intro banner category content activity tags publishedAt -_id"
+      )
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const total = await BlogModel.countDocuments(searchCriteria);
+
+    return res.status(200).json({
+      success: true,
+      message: "Search completed successfully",
+      data: {
+        blogs,
+        pagination: {
+          total,
+          page,
+          totalPages: Math.ceil(total / limit),
+        },
+      },
+    });
+  } catch (error) {
+    console.error("[SEARCH_BLOGS] Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Search failed",
+      error: error.message,
+    });
+  }
+};
+
+const searchBlogsByTag = async (req, res) => {
+  try {
+    const { tag, page = 1, limit = 10 } = req.body;
+
+    if (!tag) {
+      return res.status(400).json({
+        success: false,
+        message: "Tag parameter is required",
+      });
+    }
+
+    console.log(tag);
+    const blogs = await BlogModel.find({
+      draft: false,
+      tags: { $regex: new RegExp(tag, "i") }, // Case-insensitive tag search
+    })
+      .populate(
+        "author",
+        "personal_info.profile_img personal_info.user_name personal_info.full_name -_id"
+      )
+      .sort({ publishedAt: -1 })
+      .select(
+        "blog_id title intro banner content tags category activity comments publishedAt -_id"
+      )
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const total = await BlogModel.countDocuments({
+      draft: false,
+      tags: { $regex: new RegExp(tag, "i") },
+    });
+
+    if (blogs.length <= 0) {
+      return res.status(404).json({
+        success: false,
+        message: `No blog of tag ${tag} found`,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Blogs fetched successfully",
+      data: {
+        blogs,
+        pagination: {
+          total,
+          page,
+          totalPages: Math.ceil(total / limit),
+          hasMore: page * limit < total,
+        },
+      },
+    });
+  } catch (error) {
+    console.error("[SEARCH_BY_TAG] Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to search blogs by tag",
+      error: error.message,
+    });
+  }
+};
+
 export {
   createBlog,
   fetchLatestBlog,
@@ -455,4 +566,6 @@ export {
   getVoteStatusByBlogIdUserId,
   unVote,
   fetchBlogsByAuthorId,
+  searchBlogs,
+  searchBlogsByTag,
 };

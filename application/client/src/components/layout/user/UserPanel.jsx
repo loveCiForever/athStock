@@ -1,6 +1,6 @@
 import { LogOut, Sun, Moon, BookOpen, User } from "lucide-react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
 import {
@@ -12,10 +12,9 @@ import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 import axios from "axios";
 
 import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../../../utils/config.jsx";
+
 const UserPanel = ({ user }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const navigate = useNavigate();
-
   const { logout, getAccessToken } = useAuthContext();
   const authHeaders = user
     ? { headers: { Authorization: `Bearer ${getAccessToken()}` } }

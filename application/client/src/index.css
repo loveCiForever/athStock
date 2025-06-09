@@ -45,7 +45,7 @@
   --bg-navbar: var(--bg-navbar-dark);
 }
 
-.home-page, .blog-page, .single-blog-page, .stocks-page, .profile-page, .blog-editor-page,  .user-panel, .footer {
+.home-page, .blog-page, .single-blog-page, .stocks-page, .profile-page, .blog-editor-page, .tagged-blogs-page,  .user-panel, .footer {
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }

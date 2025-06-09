@@ -45,10 +45,10 @@ const NewBlogPage = () => {
 
     return (
       <div
-        className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary`}
+        className={`single-blog-page ${theme} flex flex-col items-center min-h-screen bg-bg-primary text-text-primary `}
       >
         <Header />
-        <main className="flex-1 w-full mx-auto px-6 sm:px-10 md:px-14 xl:px-80 ">
+        <main className="flex-1 w-full mx-auto px-6 sm:px-10 md:px-14 xl:px-80 mt-20">
           <EditorContext.Provider
             value={{
               blog,

@@ -10,6 +10,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import SingleBlogPage from "./pages/SingleBlogPage.jsx";
 import { ToastContainer } from "react-toastify";
 import NewBlogPage from "./pages/NewBlogPage.jsx";
+import TaggedBlogsPage from "./pages/TaggedBlogsPage.jsx";
 const App = () => {
   return (
     <Router>
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/blog/new" element={<NewBlogPage />} />
         <Route path="/blog/:blog_id" element={<SingleBlogPage />} />
+        <Route path="/blog/tag/:tag" element={<TaggedBlogsPage />} />
       </Routes>
       <ToastContainer />
     </Router>

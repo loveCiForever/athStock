@@ -64,8 +64,8 @@ export default function CategorySlider({
         disabled={!canScrollLeft}
         aria-label="Scroll categories left"
         className={`
-          absolute left-2 top-1/2 transform -translate-y-1/2 z-20
-          w-10 h-10 rounded-full shadow-xl backdrop-blur-2xl
+          absolute -left-0 top-1/2 transform -translate-y-1/2 z-20
+          px-2 h-11 rounded-l-lg shadow-xl backdrop-blur-2xl//
           transition-all duration-300 ease-out
           ${
             canScrollLeft
@@ -81,18 +81,19 @@ export default function CategorySlider({
           focus:outline-none focus:ring-2 focus:ring-orange-500/50
           hover:scale-105 active:scale-95
           disabled:opacity-50 disabled:cursor-not-allowed
+          hover:text-orange-500
         `}
       >
         <ChevronLeft
           size={18}
           className={`mx-auto transition-colors ${
-            theme === "dark-theme" ? "text-gray-200" : "text-gray-600"
+            theme === "dark-theme" ? "text-gray-200//" : "text-gray-600//"
           }`}
         />
       </button>
 
       <div className="relative overflow-hidden rounded-md">
-        <div
+        {/* <div
           className={`
           absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none
           ${canScrollLeft ? "opacity-100" : "opacity-0"}
@@ -103,9 +104,9 @@ export default function CategorySlider({
           }
           transition-opacity duration-300
         `}
-        />
+        /> */}
 
-        <div
+        {/* <div
           className={`
           absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none
           ${canScrollRight ? "opacity-100" : "opacity-0"}
@@ -116,12 +117,12 @@ export default function CategorySlider({
           }
           transition-opacity duration-300
         `}
-        />
+        /> */}
 
         <div
           ref={sliderRef}
           className={`
-            flex items-center gap-3 px-12 py-4 overflow-x-auto no-scrollbar
+            flex items-center gap-3 px-4 mx-4 py-4 overflow-x-auto no-scrollbar
             ${theme === "dark-theme" ? "" : ""}
             transition-all duration-300 scroll-smooth
             ${isScrolling ? "cursor-grabbing" : "cursor-grab"}
@@ -146,18 +147,18 @@ export default function CategorySlider({
                       ? `
                       bg-gradient-to-r from-orange-500 to-orange-600 text-white
                       shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40
-                      focus:ring-orange-500/50 border-2 border-orange-400/50
+                      focus:ring-orange-500/50 border-[1px] border-orange-400/50
                     `
                       : theme === "dark-theme"
                       ? `
                       bg-gray-700/20 text-gray-200 hover:bg-gray-600/80
                       border border-gray-600/50 hover:border-gray-500/50
-                      focus:ring-gray-500/50 hover:shadow-md
+                      focus:ring-gray-500/50 hover:shadow-md//
                     `
                       : `
                        text-gray-900 hover:bg-orange-300
                       border border-gray-200/80 hover:border-gray-300
-                      focus:ring-gray-400/10 hover:shadow-md
+                      focus:ring-gray-400/10 hover:shadow-md//
                     `
                   }
                 `}
@@ -192,8 +193,8 @@ export default function CategorySlider({
         disabled={!canScrollRight}
         aria-label="Scroll categories right"
         className={`
-          absolute right-2 top-1/2 transform -translate-y-1/2 z-20
-          w-10 h-10 rounded-full shadow-xl backdrop-blur-2xl
+          absolute -right-0 top-1/2 transform -translate-y-1/2 z-20
+          px-2 h-11 rounded-r-lg shadow-xl backdrop-blur-2xl
           transition-all duration-300 ease-out
           ${
             canScrollRight
@@ -209,19 +210,20 @@ export default function CategorySlider({
           focus:outline-none focus:ring-2 focus:ring-orange-500/50
           hover:scale-105 active:scale-95
           disabled:opacity-50 disabled:cursor-not-allowed
+                    hover:text-orange-500
         `}
       >
         <ChevronRight
           size={18}
           className={`mx-auto transition-colors ${
-            theme === "dark-theme" ? "text-gray-200" : "text-gray-600"
+            theme === "dark-theme" ? "text-gray-200//" : "text-gray-600//"
           }`}
         />
       </button>
 
       <div
         className={`
-        absolute bottom-0 left-6 right-6 h-0.5 rounded-full overflow-hidden
+        absolute bottom-0 left-0 right-0 h-0.5 rounded-full overflow-hidden
         ${theme === "dark-theme" ? "bg-gray-700/50" : "bg-gray-200/50"}
         transition-opacity duration-300
         ${categories.length > 5 ? "opacity-100" : "opacity-0"}

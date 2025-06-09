@@ -3,7 +3,7 @@
 import axios from "axios";
 import { CircleChevronDown, CircleChevronUp, CircleX, Tag } from "lucide-react";
 import { createContext, useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import DefaultBanner from "../assets/images/blogBanner.png";
 import { BlogStructure } from "../components/layout/blog/BlogStructure";
@@ -21,6 +21,7 @@ const SingleBlogPage = () => {
   const [blog, setBlog] = useState(BlogStructure);
   const { theme } = useContext(ThemeContext);
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const { blog_id } = useParams();
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,10 @@ const SingleBlogPage = () => {
         headers: { Authorization: `Bearer ${getAccessToken()}` },
       }
     : {};
+  const handleTagClick = (e, tag) => {
+    e.preventDefault(); // Prevent Link navigation
+    navigate(`/blog/tag/${encodeURIComponent(tag)}`);
+  };
 
   const fetchBlogById = async ({ blog_id }) => {
     setLoading(true);
@@ -222,9 +227,11 @@ const SingleBlogPage = () => {
               {blog.tags?.map((tag, index) => (
                 <span
                   key={index}
-                  className={`px-4 py-1 text-sm rounded-md ${
-                    theme === "dark-theme" ? "bg-black/30" : "bg-gray-200"
-                  } `}
+                  onClick={(e) => handleTagClick(e, tag)}
+                  className={`px-4 py-1 text-xs rounded-lg cursor-pointer
+              ${theme === "dark-theme" ? "bg-black/30" : "bg-gray-200"}
+              hover:bg-orange-500 hover:text-white transition-colors
+            `}
                 >
                   {tag}
                 </span>

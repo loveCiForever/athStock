@@ -7,12 +7,13 @@ import {
   UppercaseFullString,
   checkStringBo,
 } from "../../../utils/formatString";
+
 import { getDayMonthYear } from "../../../utils/formatDate";
 import { ThemeContext } from "../../../hooks/useTheme";
 import { useContext } from "react";
 import DefaultBanner from "../../../assets/images/blogBanner.png";
-
-const BlogCard = ({ author, blog, viewMode }) => {
+import { useNavigate } from "react-router-dom";
+const BlogCard = ({ author, blog, viewMode, maxTags = 3 }) => {
   const {
     publishedAt,
     title,
@@ -28,6 +29,16 @@ const BlogCard = ({ author, blog, viewMode }) => {
   const bannerImage = blog?.content[0]?.blocks?.find(
     (block) => block.type === "image"
   )?.data?.file?.url;
+  const navigate = useNavigate();
+  const displayTags = tags?.slice(0, maxTags);
+  const remainingTags = tags?.length > maxTags ? tags.length - maxTags : 0;
+  const handleTagClick = (e, tag) => {
+    e.preventDefault(); // Prevent Link navigation
+    navigate(`/blog/tag/${encodeURIComponent(tag)}`);
+  };
+
+  // console.log(author);
+  // console.log(blog);
 
   return (
     <Link
@@ -88,16 +99,27 @@ const BlogCard = ({ author, blog, viewMode }) => {
 
         <div className="flex flex-col items-start justify-between w-full mt-2 lg:mt-2 gap-2">
           <div className="flex flex-wrap gap-2">
-            {tags?.map((tag, index) => (
+            {displayTags?.map((tag, index) => (
               <span
                 key={index}
-                className={`px-4 py-1 text-xs rounded-lg ${
-                  theme === "dark-theme" ? "bg-black/30" : "bg-gray-200"
-                }`}
+                onClick={(e) => handleTagClick(e, tag)}
+                className={`px-4 py-1 text-xs rounded-lg cursor-pointer
+              ${theme === "dark-theme" ? "bg-black/30" : "bg-gray-200"}
+              hover:bg-orange-500 hover:text-white transition-colors
+            `}
               >
                 {tag}
               </span>
             ))}
+            {remainingTags > 0 && (
+              <span
+                className={`px-4 py-1 text-xs rounded-lg ${
+                  theme === "dark-theme" ? "bg-black/30" : "bg-gray-200"
+                }`}
+              >
+                +{remainingTags} more
+              </span>
+            )}
           </div>
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center justify-start gap-6 lg:gap-6">
@@ -112,12 +134,11 @@ const BlogCard = ({ author, blog, viewMode }) => {
                 <h1 className="text-md md:text-lg xl:text-md font-semibold pt-1">
                   {total_dislikes}
                 </h1>
-                <ThumbsUp size={18} />
+                <ThumbsDown size={18} />
               </div>
             </div>
 
             <h2 className="text-sm md:text-base xl:text-base font-semibold">
-              Tác giả:{" "}
               {checkStringBo(full_name)
                 ? UppercaseFirstLetterEachWord(full_name)
                 : "Failed to get full_name"}

@@ -1,3 +1,5 @@
+// ./applications/client/src/components/layout/user/UserAvatar.jsx
+
 import { useState } from "react";
 
 import DefaultAvatar from "../../../assets/logos/facebookLogo.svg";
@@ -9,7 +11,7 @@ const UserAvatar = ({ user }) => {
   return (
     <>
       <button
-        className={`border-3 border-gray-400 rounded-full ${
+        className={`user-avatar border-3 border-gray-400 rounded-full ${
           toggleUserPanel && "border-orange-400"
         }`}
         onClick={() => {

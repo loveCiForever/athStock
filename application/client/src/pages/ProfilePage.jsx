@@ -25,12 +25,10 @@ const ProfilePage = () => {
     personalInfo: false,
     socialLinks: false,
   });
-  const { logout, getAccessToken, user } = useAuthContext();
+  const { getAccessToken, user } = useAuthContext();
   const authHeaders = user
     ? { headers: { Authorization: `Bearer ${getAccessToken()}` } }
     : {};
-
-  const VITE_BASE_URL = import.meta.env.VITE_LOCAL_BLOG_API_SERVER;
 
   const [formData, setFormData] = useState({
     personal_info: {
@@ -572,9 +570,15 @@ const ProfilePage = () => {
                     <Link
                       to={`/blog/${blog.blog_id}`}
                       key={blog.blog_id}
-                      className={`border-gray-200 border-[1px] rounded-md overflow-hidden hover:shadow-md transition-shadow ${
-                        displayType === "list" ? "flex" : ""
-                      }`}
+                      className={`
+                         border-[1px] rounded-md overflow-hidden hover:shadow-md transition-shadow cursor-pointer
+                        ${
+                          theme === "dark-theme"
+                            ? "border-black/70 hover:bg-black/10"
+                            : "bg-white border-gray-300"
+                        }
+                        ${displayType === "list" ? "flex" : ""}
+                      `}
                     >
                       <div className={displayType === "list" ? "w-1/3" : ""}>
                         <img
@@ -592,10 +596,14 @@ const ProfilePage = () => {
                           displayType === "list" ? "w-2/3" : ""
                         }`}
                       >
-                        <h3 className="font-bold mb-2">{blog.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
-                          {blog.intro}
-                        </p>
+                        {/* <di className="flex flex-col justify-center h-full w-full items-end"> */}
+                          <h3 className="font-bold mb-2 line-clamp-2">
+                            {blog.title}
+                          </h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
+                            {blog.intro}
+                          </p>
+                        {/* </di> */}
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                           {new Date(blog.publishedAt).toLocaleDateString()}
                         </p>

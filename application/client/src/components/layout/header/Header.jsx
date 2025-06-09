@@ -1,9 +1,7 @@
 // application/client/src/components/layout/header/Header.jsx
 
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-
-import { ThemeContext } from "../../../hooks/useTheme.jsx";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../hooks/AuthContext.jsx";
 
 import { getBasePath } from "../../../utils/formatString.jsx";
@@ -13,7 +11,6 @@ import LoginButton from "../../ui/button/LoginButton.jsx";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { theme } = useContext(ThemeContext);
   const { user } = useAuthContext();
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentBasePath, setCurrentBasePath] = useState(
@@ -38,19 +35,18 @@ const Header = () => {
 
   return (
     <div
-      className={`header flex w-full items-center justify-between h-[80px] px-6 sm:px-10 md:px-14 xl:px-40 fixed z-50 transition-all duration-300 ${
+      className={`header flex w-full items-center justify-between h-[80px] md:px-14 xl:px-40 fixed z-50 transition-all duration-300 ${
         isScrolled ? "shadow-lg" : ""
       }`}
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
-      {/* LEFT-SECTION: LOGO */}
       <button
-        className={`athstock-logo flex items-center justify-center active:scale-[.95] active:duration-90 transition-all`}
+        className={`left-section flex items-center justify-center active:scale-[.95] active:duration-90 transition-all`}
         onClick={() => {
           navigate("/");
         }}
       >
-        <div className="flex flex-col">
+        <div className="logo flex flex-col">
           <div className={`flex text-3xl font-bold `}>
             <h1>ath</h1>
             <h1 className="text-orange-500">Stock.</h1>
@@ -58,9 +54,7 @@ const Header = () => {
         </div>
       </button>
 
-      {/* RIGHT-SECTION */}
       <div className="right-section flex items-center justify-center gap-20">
-        {/* PAGE NAVIGATION BUTTON */}
         <NavPageButton
           navigateTo={"/"}
           name={"Home"}
@@ -77,8 +71,7 @@ const Header = () => {
           currentBasePath={currentBasePath}
         />
 
-        {/* LOGIN/USER PROFILE DROPDOWN */}
-        {user ? <UserAvatar user={user} /> : <LoginButton theme={theme} />}
+        {user ? <UserAvatar user={user} /> : <LoginButton />}
       </div>
     </div>
   );
