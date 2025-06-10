@@ -121,3 +121,28 @@ export const formatDateViEn = (date) => {
     throw new Error(`Invalid date format: ${error.message}`);
   }
 };
+
+export const isWeekend = (dayIndex) => {
+  return dayIndex === 0 || dayIndex === 6;
+};
+
+/**
+ * Check if market is open at given date (9:00-15:00, weekdays only)
+ * @param {Date} date - Date to check
+ * @returns {boolean} True if market is open
+ */
+export const isOpen = (date) => {
+  const day = date.getDay();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const currentTime = hours * 60 + minutes;
+
+  if (isWeekend(day)) return false;
+
+  return currentTime >= 540 && currentTime < 900;
+};
+
+export const parseTradingDate = (str) => {
+  const [day, month, year] = str.split("/");
+  return new Date(+year, +month - 1, +day).getTime();
+};

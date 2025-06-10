@@ -24,15 +24,14 @@ export default function useSocket() {
     });
 
     socketRef.current.on("stockData", (content) => {
-      console.log("[Socket.IO Client] Raw data received:", content);
+      // console.log("[Socket.IO Client] Raw data received:", content);
       // console.log("[Socket.IO Client] Data type:", typeof content);
 
       try {
-        // Only parse if content is a string
-        // const parsedContent =
-        //   typeof content === "string" ? JSON.parse(content) : content;
+        const parsedContent =
+          typeof content === "string" ? JSON.parse(content) : content;
         // console.log("[Socket.IO Client] Parsed data:", parsedContent);
-        setMarketData(content);
+        setMarketData(parsedContent);
       } catch (err) {
         console.error("[Socket.IO Client] Failed to parse stockData:", err);
         // If parsing fails, try to set the raw data

@@ -1,4 +1,4 @@
-// /src/services/initialize.js
+// ./application/stock-server/src/services/initialize.js
 
 import axios from "axios";
 import { ssiConfig } from "../configs/ssi.config.js";
@@ -23,13 +23,27 @@ export async function initializeStreaming(io) {
       client.initStream({ url: cfg.market.HubUrl, token });
 
       client.bind(client.events.onData, (message) => {
+        const data = JSON.parse(message);
         logger.data(`[ssi-wss-onData] raw message \n${message}`);
-        io.emit("stockData", message);
+
+        if (data.MessageType === "X") {
+          io.emit("stockQuote", message);
+        } else if (data.MessageType === "MI") {
+          io.emit("marketData", message);
+        }
       });
 
       client.bind(client.events.onConnected, () => {
         logger.success("[ssi-wss-onConnected] ssi-fc-data wss connected");
+
         client.switchChannel("MI:VNINDEX-VN30-HNXINDEX-HNX30");
+
+        // client.switchChannel("X-QUOTE:SSI"); // Single stock
+        // client.switchChannel("X-QUOTE:SSI-ACB-VND"); // Multiple stocks
+        // client.switchChannel("X-QUOTE:ALL"); // All stocks
+
+        // client.switchChannel("X-TRADE:SSI");
+        // client.switchChannel("X-TRADE:ALL");
       });
 
       client.start();

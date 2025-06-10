@@ -1,22 +1,22 @@
-import { useEffect, useState, useMemo, useContext, useRef } from "react";
-import axios from "axios";
-import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
-import { ThemeContext } from "../../../hooks/useTheme";
-import MarketCard from "../../ui/card/MarketCard";
-import { formatDateViEn } from "../../../utils/formatDate";
-import ReactApexChart from "react-apexcharts";
-import "../../../index.css";
-import useSocket from "../../../hooks/useSocket";
+// ./application/client/src/components/layout/market/StockMarket.jsx
 
+import { ThemeContext } from "../../../hooks/useTheme";
+import { useContext, useEffect, useState, useMemo } from "react";
+import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
+import {
+  isOpen,
+  formatDateViEn,
+  parseTradingDate,
+} from "../../../utils/formatDate";
+import { DEVELOPMENT_STOCK_SERVER_BASE_URL } from "../../../utils/config";
+import axios from "axios";
+import MarketCard from "../../ui/card/MarketCard";
+import ReactApexChart from "react-apexcharts";
+import useSocket from "../../../hooks/useSocket";
 const StockMarket = ({ onSelectIndex }) => {
-  const { marketData, isConnected, switchChannel } = useSocket();
+  const { theme } = useContext(ThemeContext);
   const [isExpanded, setIsExpanded] = useState(false);
   const [now, setNow] = useState(new Date());
-  const { theme } = useContext(ThemeContext);
-  const [selectedIndex, setSelectedIndex] = useState("");
-  const dayIndex = now.getDay();
-  const isWeekend = dayIndex === 0 || dayIndex === 6;
-  const [isLoading, setIsLoading] = useState(false);
   const [dataMap, setDataMap] = useState({
     VNINDEX: [],
     VN30: [],
@@ -24,20 +24,17 @@ const StockMarket = ({ onSelectIndex }) => {
     HNX30: [],
   });
 
-  const parseTradingDate = (str) => {
-    const [day, month, year] = str.split("/");
-    return new Date(+year, +month - 1, +day).getTime();
-  };
+  const [realtimeDataMap, setRealtimeDataMap] = useState({
+    VNINDEX: [],
+    VN30: [],
+    HNXINDEX: [],
+    HNX30: [],
+  });
 
+  const { marketData, isConnected, switchChannel } = useSocket();
+  const [selectedIndex, setSelectedIndex] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setNow(new Date());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   useEffect(() => {
     // console.log(marketData);
@@ -51,7 +48,7 @@ const StockMarket = ({ onSelectIndex }) => {
       };
       indexKey = indexMapping[indexKey] || indexKey;
 
-      setDataMap((prevDataMap) => {
+      setRealtimeDataMap((prevDataMap) => {
         const newDataMap = {
           ...prevDataMap,
           [indexKey]: [marketData, ...(prevDataMap[indexKey] || [])],
@@ -61,7 +58,19 @@ const StockMarket = ({ onSelectIndex }) => {
     }
   }, [marketData]);
 
-  const [historicalData, setHistoricalData] = useState({});
+  const lineChartData = useMemo(() => {
+    const indices = ["VNINDEX", "VN30", "HNXINDEX", "HNX30"];
+    return indices.map((index) => ({
+      name: index,
+      data: isExpanded
+        ? (dataMap[index] || []).map((item) => ({
+            x: parseTradingDate(item.TradingDate),
+            y: parseFloat(item.RatioChange),
+          }))
+        : [],
+    }));
+  }, [dataMap, isExpanded]);
+
   const lineChartOptions = useMemo(
     () => ({
       chart: {
@@ -173,100 +182,70 @@ const StockMarket = ({ onSelectIndex }) => {
     []
   );
 
-  const lineChartData = useMemo(() => {
-    const indexes = ["VNINDEX", "VN30", "HNXINDEX", "HNX30"];
-    return indexes.map((index) => ({
-      name: index,
-      data: isExpanded
-        ? (historicalData[index]?.data || []).map((item) => ({
-            x: parseTradingDate(item.TradingDate),
-            y: parseFloat(item.RatioChange),
-          }))
-        : [],
-    }));
-  }, [historicalData, isExpanded]);
-
-  const [isFetching, setIsFetching] = useState(false);
-
-  const handleExpandClick = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   useEffect(() => {
-    let intervalId;
-
-    const fetchHistoricalData = async () => {
-      if (!isExpanded || isFetching) return;
-
-      try {
-        setIsFetching(true);
+    const fetchStockMarketDataByRestApi = async () => {
+      if (!isOpen(now) || isExpanded) {
         setIsLoading(true);
-        const today = new Date();
-        const thirtyDaysAgo = new Date(today);
-        thirtyDaysAgo.setDate(today.getDate() - 30);
+        try {
+          const indices = ["VNINDEX", "VN30", "HNXINDEX", "HNX30"];
+          const today = new Date();
+          // console.log(today);
+          const thirtyDaysAgo = new Date(today);
+          thirtyDaysAgo.setDate(today.getDate() - 30);
 
-        const fromDate = formatDateViEn(thirtyDaysAgo);
-        const toDate = formatDateViEn(today);
+          const fromDate = formatDateViEn(thirtyDaysAgo);
+          const toDate = formatDateViEn(today);
 
-        const indices = ["VNINDEX", "VN30", "HNXINDEX", "HNX30"];
+          const responses = [];
+          for (const indexId of indices) {
+            try {
+              if (responses.length > 0) {
+                await sleep(1000);
+              }
 
-        const responses = await Promise.all(
-          indices.map((indexId) =>
-            axios.post("http://localhost:3000/ssi/DailyIndex", {
-              indexId,
-              fromDate,
-              toDate,
-              pageIndex: 1,
-              pageSize: 1000,
-              ascending: false,
-            })
-          )
-        );
-        // console.log(responses);
-        const historicalDataMap = {};
-        responses.forEach((response, index) => {
-          if (response.data?.data) {
-            historicalDataMap[indices[index]] = {
-              data: response.data.data,
-            };
+              const response = await axios.post(
+                `${DEVELOPMENT_STOCK_SERVER_BASE_URL}/ssi/DailyIndex`,
+                {
+                  indexId,
+                  fromDate,
+                  toDate,
+                  pageIndex: 1,
+                  pageSize: 1000,
+                  ascending: false,
+                }
+              );
+
+              responses.push(response);
+
+              setDataMap((prev) => ({
+                ...prev,
+                [indexId]: response.data.data,
+              }));
+            } catch (error) {
+              console.error(`Error fetching ${indexId}:`, error);
+            }
           }
-        });
-
-        await sleep(2000);
-        if (Object.keys(historicalDataMap).length === indices.length) {
-          setHistoricalData(historicalDataMap);
+        } catch (error) {
+          console.error(error);
+        } finally {
           setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Failed to fetch historical data:", error);
-        setIsLoading(false);
-      } finally {
-        setIsFetching(false);
       }
     };
 
-    if (isExpanded) {
-      fetchHistoricalData();
-      intervalId = setInterval(fetchHistoricalData, 20000);
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [isExpanded]);
+    fetchStockMarketDataByRestApi();
+  }, [isOpen(now), isExpanded, now]);
 
   return (
     <div
-      className={`flex flex-col w-full
+      className={`stock-market flex flex-col w-full
         ${theme === "dark-theme" ? "text-white" : "text-black"}
         `}
     >
-      <div className="flex flex-col items-start">
+      <div className="header flex flex-col items-start">
         <button
-          className={`flex items-center w-full justify-between uppercase tracking-widest font-bold text-[15px] gap-2 `}
-          onClick={handleExpandClick}
+          className={`expand-button flex items-center w-full justify-between uppercase tracking-widest font-bold text-[15px] gap-2 `}
+          onClick={() => setIsExpanded(!isExpanded)}
         >
           <div className={`flex gap-2 items-center`}>
             {isExpanded ? (
@@ -276,21 +255,20 @@ const StockMarket = ({ onSelectIndex }) => {
             )}
             <h1>Expand</h1>
           </div>
-          <div className="flex gap-2">
+          <div className="date-time flex gap-2">
             {now.toLocaleDateString("vi-VN", {
               weekday: "long",
               year: "numeric",
               month: "long",
               day: "numeric",
-            })}{" "}
-            {isWeekend && <h1 className="text-gray-500">(ĐÓNG CỬA)</h1>}
+            })}
+            {<h1 className="text-gray-500">{isOpen(now) ? "" : "ĐÓNG CỬA"}</h1>}
           </div>
         </button>
-
         {!isExpanded && (
           <div className="flex flex-row items-center justify-between w-full mt-2">
             {["VNINDEX", "VN30", "HNXINDEX", "HNX30"].map((idx) => {
-              const arr = dataMap[idx] || [];
+              const arr = realtimeDataMap[idx] || [];
               const first = arr[0] || {
                 IndexValue: 0,
                 Change: 0,
@@ -301,7 +279,10 @@ const StockMarket = ({ onSelectIndex }) => {
                 <MarketCard
                   key={idx}
                   IndexName={idx}
-                  onClick={() => onSelectIndex(idx)}
+                  onClick={() => {
+                    setSelectedIndex(idx);
+                    onSelectIndex(idx);
+                  }}
                   Change={first.Change}
                   IndexValue={first.IndexValue}
                   RatioChange={first.RatioChange}
@@ -314,6 +295,9 @@ const StockMarket = ({ onSelectIndex }) => {
                   Ceilings={first.Ceilings}
                   Floors={first.Floors}
                   isExpanded={isExpanded}
+                  className={`cursor-pointer ${
+                    selectedIndex == idx ? "border-orange-500" : ""
+                  }`}
                 />
               );
             })}
@@ -351,12 +335,14 @@ const StockMarket = ({ onSelectIndex }) => {
                   Change: 0,
                   RatioChange: 0,
                 };
-
                 return (
                   <MarketCard
                     key={idx}
                     IndexName={idx}
-                    // onClick={() => handleSelectedIndex(idx)}
+                    onClick={() => {
+                      setSelectedIndex(idx);
+                      onSelectIndex(idx);
+                    }}
                     Change={first.Change}
                     IndexValue={first.IndexValue}
                     RatioChange={first.RatioChange}

@@ -1,271 +1,148 @@
-// src/components/layout/stock/Stock.jsx
-import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { BlinkBlur } from "react-loading-indicators";
-import ReactApexChart from "react-apexcharts";
 import { ThemeContext } from "../../../hooks/useTheme";
-
-const indexMap = {
-  VNINDEX: "vn30",
-  HNXINDEX: "hnx30",
-  VN30: "vn30",
-  HNX30: "hnx30",
-};
+import { DEVELOPMENT_STOCK_SERVER_BASE_URL } from "../../../utils/config";
+import { getStockCache, setStockCache } from "../../../utils/stockCache";
+import StockCard from "../../ui/card/StockCard";
+import { TruncateString } from "../../../utils/formatString";
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Stock = ({ indexId }) => {
-  const [listData, setListData] = useState([]);
-  const [isLoadingList, setIsLoadingList] = useState(false);
-
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(null);
-  const [isLoadingModal, setIsLoadingModal] = useState(false);
+  const [stocks, setStocks] = useState([]);
+  const [isLoadingList, setIsLoadingList] = useState(true);
   const { theme } = useContext(ThemeContext);
 
-  const formatDate = (date) => {
-    const d = date.getDate().toString().padStart(2, "0");
-    const m = (date.getMonth() + 1).toString().padStart(2, "0");
-    const y = date.getFullYear();
-    return `${d}/${m}/${y}`;
-  };
+  async function fetchIndexComponents(indexId) {
+    const indexMap = {
+      vnindex: "VN100",
+      vn30: "VN30",
+      hnxindex: "HNX30",
+      hnx30: "HNX30",
+    };
 
-  const formatPriceWithSpaces = (value) => {
-    const num = Number(value);
-    if (isNaN(num)) return value;
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  };
-  const lastReqTimeRef = useRef(0);
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const indexCode = indexMap[indexId.toLowerCase()] || "VN30";
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/ssi/IndexComponents",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            indexCode,
+            pageIndex: 1,
+            pageSize: 100,
+          }),
+        }
+      );
+      const result = await response.json();
+      const components = result?.data?.[0]?.IndexComponent || [];
+      return components.map((item) => item.StockSymbol);
+    } catch (err) {
+      console.error("Fetch index component error", err);
+      return [];
+    }
+  }
+
+  async function fetchCompanyName(symbol) {
+    const cached = localStorage.getItem("stockCache");
+    const cacheData = cached ? JSON.parse(cached) : {};
+
+    if (cacheData[symbol]) return cacheData[symbol];
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/ssi/SecuritiesDetails",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            market: "HOSE",
+            symbol,
+            pageIndex: 1,
+            pageSize: 100,
+          }),
+        }
+      );
+
+      const result = await response.json();
+      const name = result?.data?.[0]?.RepeatedInfo?.[0]?.SymbolEngName;
+      if (name) {
+        cacheData[symbol] = name;
+        localStorage.setItem("stockCache", JSON.stringify(cacheData));
+        return name;
+      }
+    } catch (err) {
+      console.error(`Error fetching company name for ${symbol}`, err);
+    }
+
+    return null;
+  }
 
   useEffect(() => {
-    if (!indexId) return;
-
-    const now = new Date();
-    const hour = now.getHours();
-
-    const code = indexMap[indexId] || indexId.toLowerCase();
-    const endpoint = `http://localhost:3000/ssi/${code}-intraday`;
-
-    const to = new Date();
-    const from = new Date(to);
-    from.setDate(from.getDate() - 30);
-
-    // Hàm fetch data
-    const fetchList = async () => {
-      setIsLoadingList(true);
+    const loadData = async () => {
       try {
-        const res = await axios.post(endpoint, {
-          fromDate: formatDate(from),
-          toDate: formatDate(to),
-          pageIndex: 1,
-          pageSize: 100,
-          ascending: false,
-        });
-        setListData(res.data.data || []);
-      } catch (err) {
-        console.error(`Fetch ${endpoint} failed:`, err);
-        setListData([]);
+        setIsLoadingList(true);
+        const symbols = await fetchIndexComponents(indexId);
+        const stockData = [];
+
+        for (let symbol of symbols) {
+          const name = await fetchCompanyName(symbol);
+          if (name) stockData.push({ symbol, name });
+        }
+
+        setStocks(stockData);
+      } catch (error) {
+        console.error("Error loading data:", error);
       } finally {
         setIsLoadingList(false);
       }
     };
 
-    if (hour >= 15 || hour < 9) {
-      fetchList();
-
-      return;
-    }
-
-    fetchList();
-    const intervalId = setInterval(fetchList, 10 * 60 * 1000);
-
-    return () => clearInterval(intervalId);
+    loadData();
   }, [indexId]);
-
-  const fetchStockIntraday = async (symbol) => {
-    const now = Date.now();
-    const wait = 1000 - (now - lastReqTimeRef.current);
-    if (wait > 0) {
-      await sleep(wait);
-    }
-
-    lastReqTimeRef.current = Date.now();
-
-    const to = new Date();
-    const from = new Date(to);
-    from.setDate(from.getDate() - 30);
-
-    setIsLoadingModal(true);
-    try {
-      const res = await axios.post("http://localhost:3000/ssi/IntradayOhlc", {
-        symbol,
-        fromDate: formatDate(from),
-        toDate: formatDate(to),
-        pageIndex: 1,
-        pageSize: 1000,
-        ascending: false,
-      });
-
-      const arr = Array.isArray(res.data.data)
-        ? res.data.data
-        : res.data.data?.data || [];
-
-      const formattedData = arr.map((item) => ({
-        x: new Date(item.TradingDate).getTime(),
-        y: [
-          parseFloat(item.Open),
-          parseFloat(item.High),
-          parseFloat(item.Low),
-          parseFloat(item.Close),
-        ],
-      }));
-
-      setModalData({ symbol, data: formattedData });
-      setShowModal(true);
-    } catch (err) {
-      console.error(`Fetch IntradayOhlc for ${symbol} failed:`, err);
-    } finally {
-      setIsLoadingModal(false);
-    }
-  };
-
-  const closeModal = () => setShowModal(false);
-
-  const monthFmt = useMemo(
-    () => new Intl.DateTimeFormat("en-US", { month: "short" }),
-    []
-  );
-  const formatDayMonth = (dateStr) => {
-    const [d, m, y] = dateStr.split("/").map(Number);
-    return `${d} ${monthFmt.format(new Date(y, m - 1, d))}`;
-  };
-
-  const chartOptions = useMemo(
-    () => ({
-      chart: {
-        type: "candlestick",
-        height: 350,
-        toolbar: {
-          show: true,
-        },
-      },
-      xaxis: {
-        type: "datetime",
-      },
-      yaxis: {
-        tooltip: {
-          enabled: true,
-        },
-      },
-    }),
-    []
-  );
-
-  const ticks = useMemo(() => {
-    const arr = modalData?.data || [];
-    return arr.filter((_, i) => i % 5 === 0).map((d) => d.TradingDate);
-  }, [modalData]);
 
   if (isLoadingList) {
     return (
-      <div className="flex flex-col w-full items-center justify-center mt-10">
+      <div className="flex flex-col w-full items-center mt-10">
         <BlinkBlur color="#fdff12" size="large" />
         <h1 className="mt-5 text-2xl font-bold animate-pulse">
-          Loading {indexId} …
+          Loading {indexId} ...
         </h1>
       </div>
     );
   }
 
-  // console.log(modalData);
+  stocks.map((stock) => {
+    console.log(stock);
+  });
 
   return (
-    <div className={`${theme === "dark-theme" ? "text-white" : "text-black"}`}>
-      {showModal && modalData && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 rounded-lg shadow-lg w-full max-w-3xl p-4">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">
-                {modalData.symbol} — 30-Day OHLC
-              </h2>
-              <button
-                onClick={closeModal}
-                className="text-gray-500 hover:text-gray-800 text-2xl"
-              >
-                &times;
-              </button>
-            </div>
-            {isLoadingModal ? (
-              <div className="flex justify-center">
-                <span>Loading...</span>
-              </div>
-            ) : (
-              <ReactApexChart
-                options={chartOptions}
-                series={[{ data: modalData.data }]}
-                type="candlestick"
-                height={350}
-              />
-            )}
-          </div>
-        </div>
-      )}
-
-      <div className="w-full">
-        <div className="grid grid-cols-12 text-start items-center gap-4 mb-2 p-2 bg-gray-00// font-bold text-gray-700//">
-          <div>Symbol</div>
-          <div className="col-span-5 text-start">Company</div>
-          <div>Open</div>
-          <div>High</div>
-          <div>Low</div>
-          <div>Close</div>
-          <div>Value</div>
-          <div>Predicted</div>
-        </div>
-
-        {listData.map((row) => {
-          if (!Array.isArray(row.data) || row.data.length === 0) return null;
-          const ohlc = row.data[0];
-          return (
-            <div
-              key={row.symbol}
-              onClick={() => fetchStockIntraday(row.symbol)}
-              className="cursor-pointer grid grid-cols-12 items-center gap-4 mb-4 p-2 bg-white// rounded hover:bg-gray-100 min-w-0"
-            >
-              <div>
-                <span className="text-white// tracking-wide bg-orange-400// px-3 py-1 font-bold rounded font-mono">
-                  {row.symbol}
-                </span>
-              </div>
-
-              <div className="col-span-5 min-w-0">
-                <p className="truncate font-semibold" title={row.stockEnName}>
-                  {row.stockEnName}
-                </p>
-              </div>
-
-              <div className="text-blue-500">
-                {formatPriceWithSpaces(ohlc.Open)}
-              </div>
-              <div className="text-green-600">
-                {formatPriceWithSpaces(ohlc.High)}
-              </div>
-              <div className="text-red-600">
-                {formatPriceWithSpaces(ohlc.Low)}
-              </div>
-              <div className="text-yellow-500">
-                {formatPriceWithSpaces(ohlc.Close)}
-              </div>
-              <div className="text-gray-500">
-                {formatPriceWithSpaces(ohlc.Value)}
-              </div>
-
-              <div className="text-purple-600 font-semibold">
-                {parseFloat(ohlc.Close) - 1000}
-              </div>
-            </div>
-          );
-        })}
+    <div
+      className={`${
+        theme === "dark-theme" ? "text-white" : "text-black"
+      } w-full`}
+    >
+      <h2 className="text-xl font-bold mb-4">
+        Danh sách cổ phiếu ({indexId.toUpperCase()})
+      </h2>
+      <div className="grid grid-cols-[0.5fr_2fr_1fr_1fr_1fr_1fr_1fr] p-2 font-bold bg-black/20 w-full mb-2 gap-2 text-right">
+        <span className="text-left">Mã</span>
+        <span className="text-left">Công ty</span>
+        <span className="">Giá mở cửa</span>
+        <span className="">Giá trần</span>
+        <span className="">Giá đóng cửa</span>
+        <span className="">Giá sàn</span>
+        <span className="">Khối lượng</span>
       </div>
+      {stocks.map((stock) => (
+        <StockCard
+          key={stock.symbol}
+          Symbol={stock.symbol}
+          SymbolName={stock.name}
+        />
+      ))}
     </div>
   );
 };

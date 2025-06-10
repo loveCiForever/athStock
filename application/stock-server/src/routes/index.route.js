@@ -53,6 +53,8 @@ router.post("/IndexComponents", async (req, res) => {
       }
     );
 
+    console.log(response.data.status);
+
     if (response.data.status === "NoDataFound") {
       return res.status(404).json({
         success: false,

@@ -107,13 +107,14 @@ const MarketCard = ({
     <>
       {!isExpanded ? (
         <button
+          onClick={onClick}
           className={`
             flex flex-col border rounded-md p-2 w-[24%] text-[14px] font-mono
             ${
               theme === "dark-theme"
                 ? "text-white border-gray-50 border-[1px] bg-black/30"
                 : "border-gray-700 bg-gray-50"
-            }
+            } ${className}
          `}
         >
           <div className="flex w-full">
@@ -188,19 +189,19 @@ const MarketCard = ({
           }  ${className}`}
         >
           {IndexName === "VNINDEX" && (
-            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-blue-500"></div>
+            <div className="w-[8px] h-full rounded-l-sm rounded-r-sm bg-blue-500"></div>
           )}
 
           {IndexName === "HNXINDEX" && (
-            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-yellow-500"></div>
+            <div className="w-[8px] h-full rounded-l-sm rounded-r-sm bg-yellow-500"></div>
           )}
 
           {IndexName === "VN30" && (
-            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-green-500"></div>
+            <div className="w-[8px] h-full rounded-l-sm rounded-r-sm bg-green-500"></div>
           )}
 
           {IndexName === "HNX30" && (
-            <div className="w-[8px] h-[20px] rounded-l-sm rounded-r-sm bg-red-500"></div>
+            <div className="w-[8px] h-full rounded-l-sm rounded-r-sm bg-red-500"></div>
           )}
 
           <span className="flex ml-2 w-[25%] ">{IndexName}</span>
@@ -212,7 +213,7 @@ const MarketCard = ({
               ${getTextColor(ChangeFloat)}`}
           >
             {IndexName === "VNINDEX" || IndexName === "VN30"
-              ? (ChangeFloat * 1).toFixed(2)
+              ? (ChangeFloat * 100).toFixed(2)
               : ChangeFloat.toFixed(2)}
           </span>
           <div className="flex items-center justify-end w-[25%]">

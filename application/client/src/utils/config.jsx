@@ -2,7 +2,7 @@ export const DEVELOPMENT_BLOG_SERVER_BASE_URL = import.meta.env
   .VITE_BLOG_SERVER_BASE_URL;
 
 export const DEVELOPMENT_STOCK_SERVER_BASE_URL = import.meta.env
-  .VITE_BLOG_SERVER_BASE_URL;
+  .VITE_STOCK_SERVER_BASE_URL;
 
 export const MAX_BLOG_TAGS = 10;
 
