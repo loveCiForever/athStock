@@ -2,7 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "../../../hooks/AuthContext.jsx";
+import { useAuthContext } from "../../../contexts/AuthContext.jsx";
 
 import { getBasePath } from "../../../utils/formatString.jsx";
 import NavPageButton from "../../ui/button/NavPageButton.jsx";

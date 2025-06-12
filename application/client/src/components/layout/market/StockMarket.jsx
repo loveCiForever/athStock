@@ -32,12 +32,12 @@ const StockMarket = ({ onSelectIndex }) => {
   });
 
   const { marketData, isConnected, switchChannel } = useSocket();
+
   const [selectedIndex, setSelectedIndex] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
-    // console.log(marketData);
     if (marketData && marketData.IndexId) {
       let indexKey = marketData.IndexId.toUpperCase();
       const indexMapping = {

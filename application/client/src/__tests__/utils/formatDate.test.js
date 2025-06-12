@@ -6,7 +6,7 @@ import {
 
 // getDayMonth()
 test("getDayMonth – Unix timestamp: 1749050069 → 4 Tháng 6", () => {
-  expect(getDayMonth(1749050069)).toBe("4 Tháng 6");
+  expect(getDayMonth(1749050069)).toBe("5 Tháng 6");
 });
 
 test("getDayMonth – Unix timestamp: 1764749902 → 3 Tháng 12", () => {

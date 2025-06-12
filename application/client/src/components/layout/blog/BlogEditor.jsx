@@ -6,7 +6,7 @@ import { getTools } from "./EditorTool.jsx";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../../../hooks/AuthContext.jsx";
+import { useAuthContext } from "../../../contexts/AuthContext.jsx";
 import categories from "../../../utils/CategoryList.jsx";
 import { BlogStructure } from "./BlogStructure.jsx";
 import { ThemeContext } from "../../../hooks/useTheme.jsx";

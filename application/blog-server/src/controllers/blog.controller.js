@@ -505,7 +505,7 @@ const searchBlogsByTag = async (req, res) => {
       });
     }
 
-    console.log(tag);
+    // console.log(tag);
     const blogs = await BlogModel.find({
       draft: false,
       tags: { $regex: new RegExp(tag, "i") }, // Case-insensitive tag search

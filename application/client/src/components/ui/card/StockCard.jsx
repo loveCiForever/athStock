@@ -1,8 +1,20 @@
 import { TruncateString } from "../../../utils/formatString";
 
-const StockCard = ({ Symbol, SymbolName, Open, High, Close, Low, Volume }) => {
+const StockCard = ({
+  Symbol,
+  SymbolName,
+  Open,
+  High,
+  Close,
+  Low,
+  Volume,
+  onClick,
+}) => {
   return (
-    <div className="grid grid-cols-[0.5fr_2fr_1fr_1fr_1fr_1fr_1fr] p-2 font-medium text-white w-full gap-2 hover:bg-black/10 text-right">
+    <button
+      className="cursor-pointer grid grid-cols-[0.5fr_2fr_1fr_1fr_1fr_1fr_1fr] p-2 font-medium text-white w-full gap-2 hover:bg-black/10 text-right"
+      onClick={() => onClick(Symbol)}
+    >
       <span className="text-left">
         {Symbol ? Symbol : "Failed to get symbol"}
       </span>
@@ -16,7 +28,7 @@ const StockCard = ({ Symbol, SymbolName, Open, High, Close, Low, Volume }) => {
       <span className="text-[var(--stock-down)]">{Close ? Close : 0}</span>
       <span className="text-[var(--stock-floor)]">{Low ? Low : 0}</span>
       <span>{Volume ? Volume : 0}</span>
-    </div>
+    </button>
   );
 };
 

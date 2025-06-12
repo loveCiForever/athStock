@@ -21,3 +21,6 @@ def main_cli():
         print("📈 Predicting...")
         prediction = model.predict(tokens)
         print(f"✅ Predicted trend: {prediction}\n")
+        
+        
+        lstm ()

@@ -8,8 +8,8 @@ import { BlogStructure } from "../components/layout/blog/BlogStructure";
 import PublishBlog from "../components/layout/blog/BlogEditor";
 import Footer from "../components/layout/footer/Footer";
 import Header from "../components/layout/header/Header";
-import { useAuthContext } from "../hooks/AuthContext";
-import { ThemeContext } from "../hooks/useTheme";
+import { useAuthContext } from "../contexts/AuthContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 import { Link } from "react-router-dom";
 
 export const EditorContext = createContext({});

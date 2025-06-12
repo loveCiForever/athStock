@@ -5,8 +5,9 @@ import AuthFormInput from "../../ui/input/AuthFormInput";
 
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useAuthContext } from "../../../hooks/AuthContext.jsx";
+import { useAuthContext } from "../../../contexts/AuthContext.jsx";
 import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../../../utils/config.jsx";
+
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

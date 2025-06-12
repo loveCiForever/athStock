@@ -9,7 +9,7 @@ import DefaultBanner from "../assets/images/blogBanner.png";
 import { BlogStructure } from "../components/layout/blog/BlogStructure";
 import Footer from "../components/layout/footer/Footer";
 import Header from "../components/layout/header/Header";
-import { useAuthContext } from "../hooks/AuthContext";
+import { useAuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../hooks/useTheme";
 import {
   checkStringBo,

@@ -76,7 +76,7 @@
 
 /* editor blocks */
 .ce-block__content {
-  max-width: 770px !important; 
+  max-width: 1000px !important; 
   margin: 0 auto;
   background: transparent !important;
 }

@@ -26,11 +26,7 @@ export async function initializeStreaming(io) {
         const data = JSON.parse(message);
         logger.data(`[ssi-wss-onData] raw message \n${message}`);
 
-        if (data.MessageType === "X") {
-          io.emit("stockQuote", message);
-        } else if (data.MessageType === "MI") {
-          io.emit("marketData", message);
-        }
+        io.emit("marketData", message);
       });
 
       client.bind(client.events.onConnected, () => {

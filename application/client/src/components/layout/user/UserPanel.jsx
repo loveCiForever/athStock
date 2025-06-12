@@ -1,14 +1,14 @@
 import { LogOut, Sun, Moon, BookOpen, User } from "lucide-react";
 
 import { Link } from "react-router-dom";
-import { ThemeContext } from "../../../hooks/useTheme";
+import { ThemeContext } from "../../../contexts/ThemeContext.jsx";
 import { useContext } from "react";
 import {
   UppercaseFirstLetterEachWord,
   TruncateString,
 } from "../../../utils/formatString";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../../../hooks/AuthContext.jsx";
+import { useAuthContext } from "../../../contexts/AuthContext.jsx";
 import axios from "axios";
 
 import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../../../utils/config.jsx";

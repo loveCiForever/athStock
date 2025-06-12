@@ -4,7 +4,7 @@ import Header from "../components/layout/header/Header";
 import { PencilIcon, CheckIcon, XIcon } from "lucide-react";
 import "../index.css";
 import { UppercaseFirstLetterEachWord } from "../utils/formatString";
-import { useAuthContext } from "../hooks/AuthContext";
+import { useAuthContext } from "../contexts/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { DEVELOPMENT_BLOG_SERVER_BASE_URL } from "../utils/config";
@@ -597,12 +597,12 @@ const ProfilePage = () => {
                         }`}
                       >
                         {/* <di className="flex flex-col justify-center h-full w-full items-end"> */}
-                          <h3 className="font-bold mb-2 line-clamp-2">
-                            {blog.title}
-                          </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
-                            {blog.intro}
-                          </p>
+                        <h3 className="font-bold mb-2 line-clamp-2">
+                          {blog.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
+                          {blog.intro}
+                        </p>
                         {/* </di> */}
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                           {new Date(blog.publishedAt).toLocaleDateString()}
