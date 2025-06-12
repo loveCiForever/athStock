@@ -1,6 +1,8 @@
 // ./application/client/src/pages/HomePage.jsx
 
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
+import { ColorPattern } from "../components/layout/test/ColorPattern";
+import { ToggleThemeButton } from "../components/layout/test/ToggleThemeButton";
 import { useTheme } from "../hooks/useTheme";
 
 const HomePage = () => {
@@ -13,22 +15,10 @@ const HomePage = () => {
 
   return (
     <div
-      className={`home-page w-full h-screen flex flex-col items-center justify-center `}
+      className={`home-page w-full h-screen flex flex-col items-center justify-center gap-10`}
     >
-      <h1 className={`text-3xl font-semibold`}>Toggle Theme Button</h1>
-      <button
-        className={`
-            toggle-theme-button
-            mt-5 py-4 px-8
-            rounded-lg
-            text-stock-up
-            ${theme === "dark-theme" ? "bg-black/20" : "bg-gray-200"}
-
-        `}
-        onClick={toggleTheme}
-      >
-        Switch to {theme === "dark-theme" ? "light mode" : "dark mode"}
-      </button>
+      <ToggleThemeButton theme={theme} toggleTheme={toggleTheme} />
+      <ColorPattern theme={theme} />
     </div>
   );
 };

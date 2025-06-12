@@ -6,19 +6,13 @@
   /* Theme colors */
   --text-primary-light: black;
   --text-primary-dark: white;
-  --text-secondary-light: rgb(70, 70, 70);
-  --text-secondary-dark: rgb(160, 160, 160);
-  --bg-primary-light: rgb(255, 255, 255);
+  --text-secondary-light: #464646;
+  --text-secondary-dark: #a0a0a0;
+  --bg-primary-light: #ffffff;
   --bg-primary-dark: #242424;
-  --bg-secondary-light: rgb(212, 212, 212);
-  --bg-secondary-dark: rgb(34, 34, 34);
+  --bg-secondary-light: #d4d4d4;
+  --bg-secondary-dark: #222222;
 
-  /* Stock colors */
-  --stock-green: rgb(11, 223, 57);
-  --stock-yellow: #fdff12;
-  --stock-red: rgb(255, 13, 13);
-  --stock-purple: rgb(253, 2, 253);
-  --stock-blue: rgb(82, 211, 249);
 }
 
 /* Theme specific variables */
@@ -40,3 +34,4 @@
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
+
