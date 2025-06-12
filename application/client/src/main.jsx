@@ -1,15 +1,16 @@
-import React, { StrictMode } from "react";
+// ./applications/client/src/main.jsx
+
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 
 import { ThemeProvider } from "./contexts/ThemeContext.jsx";
-import AuthContext from "./contexts/AuthContext.jsx";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <AuthContext>
+  <AuthProvider>
     <ThemeProvider>
       <App />
     </ThemeProvider>
-  </AuthContext>
+  </AuthProvider>
 );

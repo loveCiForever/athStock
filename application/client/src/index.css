@@ -2,39 +2,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
-
 :root {
-  --primary-blue: rgb(0, 0, 255);
-  --secondary-blue: rgb(96, 96, 182);
-
+  /* Theme colors */
   --text-primary-light: black;
   --text-primary-dark: white;
-
   --text-secondary-light: rgb(70, 70, 70);
   --text-secondary-dark: rgb(160, 160, 160);
-
   --bg-primary-light: rgb(255, 255, 255);
   --bg-primary-dark: #242424;
-
   --bg-secondary-light: rgb(212, 212, 212);
   --bg-secondary-dark: rgb(34, 34, 34);
 
-  --bg-navbar-light: rgb(104, 104, 255);
-  --bg-navbar-dark: rgb(29, 29, 58);
-
-  --stock-up: rgb(11, 223, 57); /* Green */
-  --stock-no: #fdff12; /* Yellow */
-  --stock-down: rgb(255, 13, 13); /* Red */
-  --stock-ceiling: rgb(253, 2, 253); /* Pink */
-  --stock-floor: rgb(82, 211, 249); /* Light Blue */
+  /* Stock colors */
+  --stock-green: rgb(11, 223, 57);
+  --stock-yellow: #fdff12;
+  --stock-red: rgb(255, 13, 13);
+  --stock-purple: rgb(253, 2, 253);
+  --stock-blue: rgb(82, 211, 249);
 }
 
+/* Theme specific variables */
 .light-theme {
   --text-primary: var(--text-primary-light);
   --text-secondary: var(--text-secondary-light);
   --bg-primary: var(--bg-primary-light);
   --bg-secondary: var(--bg-secondary-light);
-  --bg-navbar: var(--bg-navbar-light);
 }
 
 .dark-theme {
@@ -42,79 +34,9 @@
   --text-secondary: var(--text-secondary-dark);
   --bg-primary: var(--bg-primary-dark);
   --bg-secondary: var(--bg-secondary-dark);
-  --bg-navbar: var(--bg-navbar-dark);
 }
 
-.home-page, .blog-page, .single-blog-page, .stocks-page, .profile-page, .blog-editor-page, .tagged-blogs-page,  .user-panel, .footer {
+.home-page {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.example::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.example, .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.my-custom-tooltip {
-  background: #ffffff !important;
-  opacity: 1 !important;
-  backdrop-filter: none !important;
-  color: black;
-}
-
-/* editor container */
-.codex-editor {
-  width: 100% !important;
-  margin: 0 auto;
-}
-
-/* editor blocks */
-.ce-block__content {
-  max-width: 1000px !important; 
-  margin: 0 auto;
-  background: transparent !important;
-}
-
-/* toolbar */
-.ce-toolbar__content {
-  max-width: 800px !important;
-  margin: 0 auto;
-  /* background: white !important; */
-}
-
-.ce-toolbar__plus {
-  color: #ff6b00 !important; 
-  background-color: transparent !important;
-}
-
-.ce-toolbar__plus:hover {
-  background-color: #313131 !important; 
-  color: #ff4d00 !important;
-}
-
-.ce-toolbar__settings-btn {
-  color: #ff4d00 !important;
-  background-color: transparent !important;
-}
-
-.ce-toolbar__settings-btn:hover {
-  background-color: #313131 !important; 
-  color: #ff4d00 !important;
-}
-
-/* inline-toolbar */
-.ce-inline-toolbar {
-  max-width: 800px !important;
-  background: white !important;
-}
-
-.ce-inline-toolbar__buttons {
-  color: #ff6b00 !important; 
-  background-color: transparent !important;
 }

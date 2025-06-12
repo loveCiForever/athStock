@@ -1,6 +1,6 @@
 // ./application/client/src/contexts/ThemeContext.jsx
 
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const ThemeContext = createContext();
 
@@ -8,7 +8,7 @@ const getInitialTheme = () => {
   return localStorage.getItem("theme") || "dark-theme";
 };
 
-export function ThemeProvider({ children }) {
+export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(getInitialTheme);
 
   const toggleTheme = () =>
@@ -17,9 +17,10 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
     const root = window.document.documentElement;
     if (theme === "dark-theme") {
-      root.classList.add("dark");
+      root.classList.remove("light-theme", "dark-theme");
+      root.classList.add(theme);
     } else {
-      root.classList.remove("dark");
+      root.classList.remove("dark-theme");
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
@@ -29,4 +30,4 @@ export function ThemeProvider({ children }) {
       {children}
     </ThemeContext.Provider>
   );
-}
+};

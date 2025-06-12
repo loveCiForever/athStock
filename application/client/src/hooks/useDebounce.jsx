@@ -1,3 +1,5 @@
+// ./application/client/src/hooks/useDebounce.jsx
+
 import { useCallback, useRef } from "react";
 
 export const useDebounce = (callback, delay) => {

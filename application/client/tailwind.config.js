@@ -6,8 +6,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        "bg-primary": "var(--bg-primary)",
-        "text-primary": "var(--text-primary)",
+        "stock-green": "var(--stock-green)",
+        "stock-yellow": "var(--stock-yellow)",
+        "stock-red": "var(--stock-red)",
+        "stock-purple": "var(--stock-purple)",
+        "stock-blue": "var(--stock-blue)",
       },
     },
   },

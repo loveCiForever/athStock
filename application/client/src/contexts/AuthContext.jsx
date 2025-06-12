@@ -1,58 +1,58 @@
-// AuthContext.jsx
+// ./application/client/src/contexts/AuthContext.jsx
 
-import React from "react";
-import { createContext, useContext, useEffect, useState } from "react";
-import { deleteSession, getSession, setSession } from "../hooks/useSession.jsx";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { getSession, setSession, clearAllSession } from "../hooks/useSession";
 
-const authContext = createContext();
-export const useAuthContext = () => useContext(authContext);
+const AuthContext = createContext();
+export const useAuthContext = () => useContext(AuthContext);
 
-const AuthContext = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [accessToken, setAccessToken] = useState(() =>
+    typeof window !== "undefined" ? localStorage.getItem("access_token") : null
+  );
 
   useEffect(() => {
-    const data = getSession();
-    if (data) {
-      setUser(data);
+    const sessionUser = getSession();
+    if (sessionUser) {
+      setUser(sessionUser);
     }
     setLoading(false);
   }, []);
 
-  const configUser = (user, access_token) => {
-    setSession(user);
-    setUser(user);
-    if (access_token) {
-      setAccessToken(access_token);
-      localStorage.setItem("access_token", access_token);
+  const configUser = (userData, token) => {
+    setSession(userData);
+    setUser(userData);
+    if (token) {
+      setAccessToken(token);
+      localStorage.setItem("access_token", token);
     }
   };
 
   const getAccessToken = () => {
-    return accessToken || localStorage.getItem("access_token");
+    if (accessToken) return accessToken;
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("access_token");
+    }
+    return null;
   };
 
   const logout = () => {
     setUser(null);
     setAccessToken(null);
-    deleteSession();
-    localStorage.removeItem("access_token");
+    clearAllSession();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access_token");
+    }
   };
 
+  const contextValue = useMemo(
+    () => ({ user, configUser, logout, getAccessToken, loading }),
+    [user, accessToken, loading]
+  );
+
   return (
-    <authContext.Provider
-      value={{
-        user,
-        configUser,
-        logout,
-        getAccessToken,
-        loading,
-      }}
-    >
-      {children}
-    </authContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
-
-export default AuthContext;
