@@ -5,17 +5,16 @@ import { useTheme } from "../hooks/useTheme";
 
 import Header from "../components/layout/header/Header";
 
-const HomePage = () => {
+const FinancePage = () => {
   useEffect(() => {
-    document.title =
-      "athStock - Hỗ trợ đầu tư chứng khoán bằng trí tuệ nhân tạo";
+    document.title = "athStock - Chỉ số và giá theo thời gian thực";
   }, []);
 
   const { theme, toggleTheme } = useTheme();
 
   return (
     <div
-      className={`home-page w-full min-h-screen flex flex-col items-center justify-start gap-10`}
+      className={`finance-page w-full min-h-screen flex flex-col items-center justify-start gap-10`}
     >
       <Header />
       <div className="body flex flex-col w-full mt-[80px] px-6 sm:px-10 md:px-14 xl:px-40"></div>
@@ -23,4 +22,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default FinancePage;

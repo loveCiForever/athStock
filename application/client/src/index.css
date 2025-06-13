@@ -30,7 +30,7 @@
   --bg-secondary: var(--bg-secondary-dark);
 }
 
-.home-page {
+.home-page, .blog-page, .finance-page,  .header, .test-component {
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
