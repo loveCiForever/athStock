@@ -19,6 +19,19 @@ const Header = () => {
   const [currentBasePath, setCurrentBasePath] = useState(
     getBasePath(window.location.pathname)
   );
+
+  const [currentInnerWidth, setCurrentInnerWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentInnerWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleBasePathChange = () => {
     setCurrentBasePath(getBasePath(window.location.pathname));
   };
@@ -67,7 +80,7 @@ const Header = () => {
       <div
         className={`
         fixed top-0 right-0 h-full w-[250px] bg-inherit md:relative md:w-auto md:h-auto
-        flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-20
+        flex flex-col md:flex-row md:items-center  items-start  gap-8 md:gap-20
         p-8 md:p-0 pt-24 md:pt-0
         transition-transform duration-300 md:translate-x-0
         ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
@@ -86,6 +99,7 @@ const Header = () => {
           currentBasePath={currentBasePath}
           onClick={() => setIsMenuOpen(false)}
         />
+
         <NavPageButton
           navigateTo={"/finance"}
           name={"Finance"}
@@ -93,7 +107,20 @@ const Header = () => {
           onClick={() => setIsMenuOpen(false)}
         />
 
-        {user ? <UserAvatar user={user} /> : <LoginButton />}
+        {currentInnerWidth >= 768 ? (
+          user ? (
+            <UserAvatar user={user} />
+          ) : (
+            <LoginButton />
+          )
+        ) : (
+          <NavPageButton
+            navigateTo={"/profile"}
+            name={"My Profile"}
+            currentBasePath={currentBasePath}
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
       </div>
     </div>
   );

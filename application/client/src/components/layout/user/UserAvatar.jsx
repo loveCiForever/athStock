@@ -23,7 +23,7 @@ const UserAvatar = ({ user }) => {
   return (
     <div ref={avatarRef} className="relative">
       <button
-        className={`user-avatar border-3 border-gray-400 rounded-full 
+        className={`user-avatar border-3 border-gray-400 rounded-full
           ${toggleUserPanel && "border-orange-400"}
           transition-all duration-200 hover:scale-105
         `}
